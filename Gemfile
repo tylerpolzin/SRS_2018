@@ -19,7 +19,7 @@ gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.
 gem 'bootstrap-sass'
 gem 'font-awesome-sass'
 gem 'hirb'
-gem 'devise' # Install along with Upskill tutorial---------------------------------------------------------<<<
+gem 'devise'
 gem 'rolify' # Use generator https://github.com/RolifyCommunity/rolify
 gem 'cancancan' # Use generator after Devise setup
 gem "paperclip" # Install along with Upskill tutorial------------------------------------------------------<<<
