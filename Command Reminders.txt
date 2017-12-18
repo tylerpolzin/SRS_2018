@@ -1,4 +1,31 @@
 
 
-
+# GIT Related Commands ########################################
 git checkout -b new_branch # Creates a new branch for Github
+
+bundle install # installs all pending gems
+bundle update # updates all gems
+
+git status # gives status for edited files
+git add .
+git commit -m "Description of Update"
+git push origin current_branch
+
+###############################################################
+
+Hirb.enable
+
+rails g scaffold branch_name
+rails g scaffold CreateTable / EditTable
+
+rails db:migrate
+
+rails c --sandbox # use for testing
+
+Remember to populate the assets.rb file ->
+images under custom folder won't compile. You need to add something like 
+
+config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif) 
+
+because everything under vendor/ and lib/ have to manually be added to the precompile list. 
+If you need a separate file.js or file.css, you also need to add it to the precompile list.

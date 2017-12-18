@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# Default Installs
 gem 'rails', '~> 5.1.4' # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'puma', '~> 3.7' # Use Puma as the app server
 gem 'sass-rails', '~> 5.0' # Use SCSS for stylesheets
@@ -14,32 +15,32 @@ gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'turbolinks', '~> 5' # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 
-# Custom Installs #############################################################################
-
+# Custom Installs
 gem 'bootstrap-sass'
 gem 'font-awesome-sass'
 gem 'hirb'
-gem 'devise'
-gem 'rolify'
-# gem 'active_shipping'
-# gem 'rubyzip', '~> 1.1.0'
-# gem 'axlsx', '2.1.0.pre'
-# gem 'axlsx_rails'
-# gem 'acts_as_xlsx',
-#   :git => "git://github.com/straydogstudio/acts_as_xlsx.git"
-gem "paperclip", "~> 5.0.0"
-# gem 'twitter-bootstrap-rails-confirm'
-gem 'best_in_place'
+gem 'devise' # Install along with Upskill tutorial---------------------------------------------------------<<<
+gem 'rolify' # Use generator https://github.com/RolifyCommunity/rolify
+gem 'cancancan' # Use generator after Devise setup
+gem "paperclip" # Install along with Upskill tutorial------------------------------------------------------<<<
+gem 'twitter-bootstrap-rails-confirm'
+gem 'best_in_place' # Now has best_in_place_if options, use with CanCan
 gem 'underscore-rails'
 gem 'gmaps4rails'
-# gem 'ajax-datatables-rails'
+gem 'ajax-datatables-rails' # Didn't use before, https://github.com/jbox-web/ajax-datatables-rails
+gem 'jquery-datatables-rails' # Using Bootstrap 3, hopefully no conflicts with Bootstrap 4
+gem 'jquery-ui-rails'
 gem 'jquery-fileupload-rails'
 gem 'jquery_context_menu-rails'
 gem 'select2-rails'
-gem 'jquery-turbolinks'
 
-###############################################################################################
+# gem 'active_shipping'
 
+# gem 'rubyzip' # Use for zipping files, not sure if needed yet
+
+# gem 'axlsx', '2.1.0.pre'
+# gem 'axlsx_rails'
+# gem 'acts_as_xlsx', :git => "git://github.com/straydogstudio/acts_as_xlsx.git"
 
 
 # See https://github.com/rails/execjs#readme for more supported runtimes

@@ -12,4 +12,21 @@
 //
 //= require rails-ujs
 //= require turbolinks
+//= require jquery3
+//= require jquery_ujs
+//= require jquery-ui
+//= require jquery-fileupload
+//= require jquery.contextMenu.js
+//= require twitter/bootstrap/rails/confirm
+//= require best_in_place
+//= require best_in_place.jquery-ui
+//= require best_in_place.purr
+//= require select2-full
+//= require bootstrap-sprockets
+//= require datatables.min.js
+//= require underscore
+//= require gmaps/google
+//= require dataTables/jquery.dataTables
+//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+//= require jquery-bootstrap-purr.min.js
 //= require_tree .
