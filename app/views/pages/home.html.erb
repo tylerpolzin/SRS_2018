@@ -1,3 +1,19 @@
-<h2>Home Page</h2>
 
-<h2>Create New User</h2>
+<% content_for :head do %>
+  <%= javascript_include_tag 'pages' %>
+<% end %>
+<% @title = "SRS Portal | Please Sign In" %>
+<div id="homeDiv">
+  <p class="homeHeader">Please Sign In</p>
+  <div class="form-horizontal homeForm">
+      <% if user_signed_in? %>
+        <div class="form-group form-group-sm">
+          <%= link_to "<i class='fa fa-sign-out'></i> Log Out".html_safe, destroy_user_session_path, method: :delete, class: 'btn btn-default navbar-btn' %>
+        </div>
+      <% else %>
+        <div class="form-group form-group-sm">
+          <%= link_to " Sign In", login_path, class: "btn btn-default navbar-btn fa fa-sign-in" %>
+        </div>
+      <% end %>
+  </div>
+</div>

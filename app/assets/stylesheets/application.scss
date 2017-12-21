@@ -1,0 +1,247 @@
+/*
+ *= require_self
+ *= require jquery-ui
+ *= require_tree .
+ *
+ */
+ 
+
+@import "bootstrap-sprockets"; // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+@import "bootstrap";
+@import "datatables.min.scss";
+@import "jquery-ui";
+@import "jquery.fileupload";
+@import "jquery.fileupload-ui";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "dataTables/jquery.dataTables";
+@import "dataTables/bootstrap/3/jquery.dataTables.bootstrap";
+@import "jquery.contextMenu.css";
+@import "select2";
+@import "select2-bootstrap";
+
+
+body {
+  background-image: url("main-content-bg-3.jpg");
+}
+
+// Bootstrap form glow color
+.form-control:focus {
+  border-color: #ffc55f;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 188, 0, 0.4);
+}
+
+
+// Navbar Top Menu related CSS
+.navbar {
+  border: none;
+  margin-bottom: 0;
+  position: fixed;
+  width: 100%;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+.navbar-brand {
+  font-family: 'Abel', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  padding-left: 45px;
+  padding-top: 7%;
+}
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav > li > a {
+  font-family: 'Abel', sans-serif;
+  color: white;
+  &:hover {
+    color: white;
+    opacity: 0.75;
+  }
+}
+.navbar-right {
+  margin-right: 80px;
+}
+.navbar-default .navbar-toggle .icon-bar .dropdown-menu {
+  background-color: black;
+}
+.navbar-default .navbar-toggle {
+  border: 2px solid black;
+  &:hover, &:focus {
+    background-color: #black;
+  }
+}
+.navbar .navbar-btn {
+  background-color: #23282e;
+  border: 2px solid #d19b3d;
+  color: white;
+  font-size: 12px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: 30px;
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  height: 75%;
+  width: 125%;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  &:hover, &:focus {
+    background-color: solid blue;
+  }
+}
+.navbar-bg {
+    background-color: #2e353d;
+}
+// Navbar Side related CSS
+
+.nav-side-menu {
+  overflow: auto;
+  font-family: 'Abel', sans-serif;
+  font-size: 1em;
+  font-weight: 200;
+  background-color: #2e353d;
+  position: fixed;
+  top: 60px;
+  width: 15%;
+  height: 100%;
+  color: #e1ffff;
+  box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+.nav-side-menu .brand {
+  background-color: #23282e;
+  line-height: 50px;
+  display: block;
+  text-align: center;
+  font-size: 14px;
+}
+.nav-side-menu .toggle-btn {
+  display: none;
+}
+.nav-side-menu ul,
+.nav-side-menu li {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  line-height: 35px;
+  cursor: pointer;
+.collapsed{
+  .arrow:before{
+            font-family: FontAwesome;
+            content: "\f053";
+            display: inline-block;
+            padding-left:10px;
+            padding-right: 10px;
+            vertical-align: middle;
+            float:right;
+        }
+}
+}
+.nav-side-menu ul :not(collapsed) .arrow:before,
+.nav-side-menu li :not(collapsed) .arrow:before {
+  font-family: FontAwesome;
+  content: "\f078";
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: middle;
+  float: right;
+}
+.nav-side-menu ul .active,
+.nav-side-menu li .active {
+  border-left: 3px solid #d19b3d;
+  background-color: #4f5b69;
+}
+.nav-side-menu ul .sub-menu li.active,
+.nav-side-menu li .sub-menu li.active {
+  color: #d19b3d;
+}
+.nav-side-menu ul .sub-menu li.active a,
+.nav-side-menu li .sub-menu li.active a {
+  color: #d19b3d;
+}
+.nav-side-menu ul .sub-menu li,
+.nav-side-menu li .sub-menu li {
+  background-color: #181c20;
+  border: none;
+  line-height: 28px;
+  border-bottom: 1px solid #23282e;
+  margin-left: 0px;
+}
+.nav-side-menu ul .sub-menu li:hover,
+.nav-side-menu li .sub-menu li:hover {
+  background-color: #020203;
+}
+.nav-side-menu ul .sub-menu li:before,
+.nav-side-menu li .sub-menu li:before {
+  font-family: FontAwesome;
+  content: "\f105";
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+.nav-side-menu li {
+  padding-left: 0px;
+  border-left: 3px solid #2e353d;
+  border-bottom: 1px solid #23282e;
+}
+.nav-side-menu li a {
+  text-decoration: none;
+  color: #e1ffff;
+}
+.nav-side-menu li a i {
+  padding-left: 10px;
+  width: 20px;
+  padding-right: 20px;
+}
+.nav-side-menu li:hover {
+  border-left: 3px solid #d19b3d;
+  background-color: #4f5b69;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+@media (max-width: 767px) {
+  .nav-side-menu {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .nav-side-menu .toggle-btn {
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10 !important;
+    padding: 3px;
+    background-color: #ffffff;
+    color: #000;
+    width: 40px;
+    text-align: center;
+  }
+  .brand {
+    text-align: left !important;
+    font-size: 22px;
+    padding-left: 20px;
+    line-height: 50px !important;
+  }
+}
+@media (min-width: 767px) {
+  .nav-side-menu .menu-list .menu-content {
+    display: block;
+  }
+  #main {
+  	width:calc(100% - 300px);
+  	float: right;
+  }
+}
+
+#main-content {
+  width: 85%;
+  height: auto;
+  position: absolute;
+  left: 15%;
+  top: 85px;
+}
+

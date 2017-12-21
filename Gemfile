@@ -20,8 +20,8 @@ gem 'bootstrap-sass'
 gem 'font-awesome-sass'
 gem 'hirb'
 gem 'devise'
-gem 'rolify' # Use generator https://github.com/RolifyCommunity/rolify
-gem 'cancancan' # Use generator after Devise setup
+gem 'rolify'
+gem 'cancancan'
 gem "paperclip" # Install along with Upskill tutorial------------------------------------------------------<<<
 gem 'twitter-bootstrap-rails-confirm'
 gem 'best_in_place' # Now has best_in_place_if options, use with CanCan

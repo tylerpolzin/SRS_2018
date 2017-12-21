@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= @title || "SRS Portal" %></title>
+    <title><%= @title || "SRS Portal 2018" %></title>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width initial-scale=1.0">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,10 +9,125 @@
     <link href="//fonts.googleapis.com/css?family=Alegreya+Sans:100|Quicksand:400,700|Abel" rel="stylesheet">
     <%= yield (:head) %>
   </head>
-
   <body>
-    <div class="container">
-      <%= yield %>
-    </div>
+    <% if user_signed_in? %>
+      <!--Top Navigation -->
+      <nav class="navbar navbar-default navbar-static-top navbar-bg" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
+              <span class="sr-only">Toggle navigation</span>
+            </button>
+            <%= link_to "//www.strategicretailsolutions.com", class: "navbar-brand" do %>
+              Strategic Retail Solutions
+            <% end %>
+          </div>
+          <div class="collapse navbar-collapse" id="main-nav-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Product Lines <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Colonial Elegance</a></li>
+                  <li><a href="#">Genie</a></li>
+                  <li><a href="#">Honeywell</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">All Stone</a></li>
+                  <li><a href="#">Tuscany</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Rep Tools <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li>User Index</li>
+                </ul>
+              </li>
+              <li>
+                <%= link_to "<i class='fa fa-sign-out'></i> Log Out".html_safe, destroy_user_session_path, method: :delete, class: 'btn btn-default navbar-btn' %>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div>
+      </nav>
+  <!--Sidebar Navigation-->
+      <nav class="nav-side-menu">
+        <div class="brand">Rep Portal</div>
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+        <div class="menu-list">
+          <ul id="menu-content" class="menu-content collapse out">
+            <li>
+              <a>
+                <i class="fa fa-tasks fa-lg"></i>Assignments
+              </a>
+            </li>
+            <li data-toggle="collapse" data-target="#tasks" class="collapsed">
+              <a data-target="#"><i class="fa fa-tasks fa-lg"></i> Tasks<span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="tasks">
+              <li>Create New Task</li>
+              <li>Customer & Store Orders</li>
+              <li>Vendor Uploads</li>
+            </ul>
+            <li data-toggle="collapse" data-target="#products" class="collapsed">
+              <a data-target="#"><i class="fa fa-shopping-bag fa-lg"></i> Products<span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="products">
+              <li>All Products</li>
+              <li>Inventory Adjustments</li>
+              <li>Create New Product</li>
+              <li>All Parts</li>
+              <li>Create New Part</li>
+            </ul>
+            <li data-toggle="collapse" data-target="#uploads" class="collapsed">
+              <a data-target="#"><i class="fa fa-upload fa-lg"></i> Uploads<span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="uploads">
+              <li>View All Uploads</li>
+              <li>Upload New Files</li>
+            </ul>
+            <li><a><i class="fa fa-building-o fa-lg"></i> Store List</a></li>
+            <li><a><i class="fa fa-map-pin fa-lg"></i> Territory Map</a></li>
+            <li><a><i class="fa fa-calculator fa-lg"></i> Shipment Calculator</a></li>
+            <li><a><i class="fa fa-users fa-lg"></i> User List</a></li>
+            <li><a><i class="fa fa-user-circle-o fa-lg"></i> My Profile</a></li>
+            <li><a><i class="fa fa-sitemap fa-lg"></i> Site Map</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div id="main-content">
+        <%= yield %>
+      </div>
+    <% else %>
+      <nav class="navbar navbar-default navbar-static-top navbar-bg" role="navigation">
+        <div class='container'>
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <%= link_to "//www.strategicretailsolutions.com", class: "navbar-brand" do %>
+              Strategic Retail Solutions //
+            <% end %>
+            <%= link_to root_path, class: "navbar-brand" do %>
+            Rep Portal
+            <% end %>
+          </div>
+          <div class="collapse navbar-collapse" id="main-nav-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <%= link_to " Log In", login_path, class: "btn btn-default navbar-btn fa fa-sign-in" %>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div>
+      </nav>
+  
+      
+      
+      
+        <%= yield %>
+    <% end %>
   </body>
 </html>
