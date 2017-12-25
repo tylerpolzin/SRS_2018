@@ -1,6 +1,6 @@
 /*
  *= require_self
- *= require jquery-ui
+ * require jquery-ui
  *= require_tree .
  *
  */
@@ -9,30 +9,46 @@
 @import "bootstrap-sprockets"; // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 @import "bootstrap";
 @import "datatables.min.scss";
+@import "autoFill.bootstrap4.min.scss";
+@import "buttons.bootstrap4.min.scss";
+@import "colReorder.bootstrap4.min.scss";
+//DISABLED "dataTables.bootstrap4.min.scss";
+@import "fixedColumns.bootstrap4.min.scss";
+@import "fixedHeader.bootstrap4.min.scss";
+@import "keyTable.bootstrap4.min.scss";
+@import "responsive.bootstrap4.min.scss";
 @import "jquery-ui";
 @import "jquery.fileupload";
 @import "jquery.fileupload-ui";
 @import "font-awesome-sprockets";
 @import "font-awesome";
 @import "dataTables/jquery.dataTables";
-@import "dataTables/bootstrap/3/jquery.dataTables.bootstrap";
+//DISABLED "dataTables/bootstrap/3/jquery.dataTables.bootstrap";
 @import "jquery.contextMenu.css";
 @import "select2";
 @import "select2-bootstrap";
 
 
+// Default blue textured background
 body {
   background-image: url("main-content-bg-3.jpg");
 }
 
-// Bootstrap form glow color
+// Bootstrap form orange glow color
 .form-control:focus {
   border-color: #ffc55f;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 188, 0, 0.4);
 }
 
+// Fixes bottom margin for search box on tables in conjunction with clear "X"
+.add-clear-span {
+  margin-bottom: 0;
+}
+//------------------------------------------------
+//              NAVIGATION MENUS                 |
+//------------------------------------------------
 
-// Navbar Top Menu related CSS
+// Navbar top menu related CSS
 .navbar {
   border: none;
   margin-bottom: 0;
@@ -44,9 +60,9 @@ body {
 .navbar-brand {
   font-family: 'Abel', sans-serif;
   font-weight: 500;
-  font-size: 20px;
-  padding-left: 45px;
-  padding-top: 7%;
+  font-size: 22px;
+  padding-left: 25px;
+  padding-top: 20px;
 }
 .navbar-default .navbar-brand,
 .navbar-default .navbar-nav > li > a {
@@ -89,8 +105,8 @@ body {
 .navbar-bg {
     background-color: #2e353d;
 }
-// Navbar Side related CSS
 
+// Navbar side menu related CSS
 .nav-side-menu {
   overflow: auto;
   font-family: 'Abel', sans-serif;
@@ -124,14 +140,14 @@ body {
   cursor: pointer;
 .collapsed{
   .arrow:before{
-            font-family: FontAwesome;
-            content: "\f053";
-            display: inline-block;
-            padding-left:10px;
-            padding-right: 10px;
-            vertical-align: middle;
-            float:right;
-        }
+    font-family: FontAwesome;
+    content: "\f053";
+    display: inline-block;
+    padding-left:10px;
+    padding-right: 10px;
+    vertical-align: middle;
+    float:right;
+  }
 }
 }
 .nav-side-menu ul :not(collapsed) .arrow:before,
@@ -245,3 +261,174 @@ body {
   top: 85px;
 }
 
+//------------------------------------------------
+//               BEST IN PLACE                   |
+//------------------------------------------------
+
+.best_in_place {
+  cursor: hand;
+  cursor: pointer;
+  white-space: pre-wrap;
+  padding: 4px;
+  &:hover {
+    background-color: #c0ffcb;
+  }
+  &:active {
+    background-color: none;
+  }
+}
+
+.on-top-fix { // Use this for the inner-class of best_in_place text_area's so the text box stays inline
+  height: inherit;
+}
+
+
+//------------------------------------------------
+//                DATATABLES                     |
+//------------------------------------------------
+
+// DataTables table fix (do a test on new site)
+table.dataTable tbody td {
+  vertical-align: middle;
+}
+
+
+// Dropdown for Datatable rows
+.details-control {
+    background: url('details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('details_close.png') no-repeat center center;
+    
+.glider-table {
+  padding-left: 0;
+}
+
+}
+div.glider {
+    display: none;
+}
+table.dataTable tbody td.no-padding {
+    padding-top: 0;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
+// Removing bottom margin in address field on tasks dashboard
+.address-margin p {
+  margin-bottom: 0;
+  vertical-align: top;
+  text-align: center;
+}
+.notes-margin p {
+  margin-bottom: 0;
+  vertical-align: top;
+  text-align: left;
+}
+
+// Navigation tabs styling
+
+  .tab-background {
+    cursor: context-menu;
+    background-color: #181c20;
+    color: #e1ffff;
+    // box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3)
+  }
+  .active > .tab-background, 
+  .dropdown .active {
+    cursor: context-menu;
+    background-color: #2e353d;
+    color: #e1ffff;
+  }
+  .nav-tabs > li {
+    margin-bottom: 0;
+    a {
+      font-family: 'Abel', sans-serif;
+      font-size: 1.1em;
+    }
+  }
+
+
+// Flash animation for "Archiving" and "Restoring" tasks in tables
+
+.flash {
+  -moz-animation: flash 1s ease-out;
+  -moz-animation-iteration-count: 1;
+
+  -webkit-animation: flash 1s ease-out;
+  -webkit-animation-iteration-count: 1;
+
+  -ms-animation: flash 1s ease-out;
+  -ms-animation-iteration-count: 1;
+}
+
+@-webkit-keyframes flash {
+    0% { background-color: #181c20; }
+    10% { background-color: orange; }
+    100% { background-color: #181c20; }
+}
+
+@-moz-keyframes flash {
+    0% { background-color: #181c20; }
+    10% { background-color: orange; }
+    100% { background-color: #181c20; }
+}
+
+@-ms-keyframes flash {
+    0% { background-color: #181c20; }
+    10% { background-color: orange; }
+    100% { background-color: #181c20; }
+}
+
+// Header color modifications
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button,
+html .ui-button.ui-state-disabled:hover,
+html .ui-button.ui-state-disabled:active {
+  border: 1px solid #2e353d;
+  background: #2e353d;
+  font-weight: bold;
+  color: #e1ffff;
+  font-family: 'Quicksand', sans-serif;
+  font-size: .9em;
+  padding-left: 0;
+  padding-top: 0;
+  margin-left: -1px;
+  margin-right: -1px;
+  margin-bottom: 0px;
+  box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.4);
+  th {
+    text-align: center;
+  }
+}
+
+.dataTables_paginate > ul > li {
+  padding: 0px;
+  border: 0px;
+  margin: 5px;
+  border-radius: 3px;
+  cursor:context-menu;
+  a {
+    margin: 0.5px;
+    color: #e1ffff !important;
+    background-color: #4f5b69 !important;
+    border-color: #d19b3d !important;
+    border-radius: 3px !important;
+    cursor:context-menu !important;
+    &:hover, &:focus {
+      background: #0078a3 url("ui-bg_glass_40_0078a3_1x400.png") 50% 50% repeat-x;
+    }
+    &:active {
+      background: #d19b3d url("ui-bg_inset-soft_30_d19b3d_1x100.png") 50% 50% repeat-x;
+    }
+  }
+}
+
+// Removes blank space between Datatables header and rows
+.no-footer {
+  margin-bottom: 0;
+}

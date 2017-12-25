@@ -17,32 +17,49 @@
 //= require jquery-ui
 //= require jquery-fileupload
 //= require jquery.contextMenu.js
+//= require bootstrap-sprockets
+//= require jquery-bootstrap-purr.min.js
 //= require twitter/bootstrap/rails/confirm
+//= require bootstrap-add-clear.js
 //= require best_in_place
 //= require best_in_place.jquery-ui
 //= require best_in_place.purr
 //= require select2-full
-//= require bootstrap-sprockets
 //= require dataTables.min.js
-//= require autoFill.bootstrap4.min.js
-//= require autoFill.jqueryui.min.js
-//= require buttons.bootstrap4.min.js
+//= require dataTables/jquery.dataTables
+//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+//X require autoFill.bootstrap4.min.js
+//X require autoFill.jqueryui.min.js
+//X require buttons.bootstrap4.min.js
+//X require dataTables.colReorder.min.js
+//= require dataTables.buttons.min.js
 //= require buttons.colVis.min.js
 //= require buttons.html5.min.js
 //= require buttons.print.min.js
 //= require dataTables.autoFill.min.js
-//= require dataTables.buttons.min.js
-//= require dataTables.colReorder.min.js
 //= require dataTables.fixedColumns.min.js
 //= require dataTables.fixedHeader.min.js
 //= require dataTables.keyTable.min.js
 //= require dataTables.responsive.min.js
-//= require jszip.min.js
-//= require pdfmake.min.js
 //= require responsive.bootstrap4.min.js
+//= require jszip.min.js
+//X require pdfmake.min.js.map
 //= require underscore
 //= require gmaps/google
-//= require dataTables/jquery.dataTables
-//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
-//= require jquery-bootstrap-purr.min.js
 //= require_tree .
+/*global $*/
+
+
+// Activating Best In Place
+$(document).on("turbolinks:load", function() {
+  $(".best_in_place").best_in_place();
+});
+
+// Activating basic datatable
+$(document).on("turbolinks:load", function() {
+  $('#datatable-basic').DataTable( {
+    "scrollX": true,
+    "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+    "pageLength": 100
+  });
+});

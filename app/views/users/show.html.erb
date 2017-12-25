@@ -1,0 +1,32 @@
+<% @title = "SRS Portal | My Dashboard" %>
+<div style="width: 850px;" id="showProfileDiv">
+  <p class="showProfileHeader">My Dashboard</p>
+  <div class="form-horizontal showProfileForm">
+    <ul class="nav nav-tabs">
+      <li class="active"><a id="showProfileForm" href="#show-profile-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> My Profile</a></li>
+      <li><a id="showTaskForm" href="#show-task-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> My Tasks</a></li>
+      <li><a id="showProductsForm" href="#show-products-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> My Products</a></li>
+      <li><a id="showFilesForm" href="#show-files-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> My Files</a></li>
+    </ul>
+    
+    <div id="showProfileTabs">
+      <div class="tab-content">
+        <div id="show-profile-form" class="tab-pane fade in active">
+          <%= render "show_profile_form" %>
+          <div class="form-group" style="margin:0;padding:0;"></div>
+        </div>
+        <div id="show-task-form" class="tab-pane fade">
+          <%= render "show_task_form" %>
+          <div class="form-group" style="margin:0;padding:0;"></div>
+        </div>
+        <div id="show-products-form" class="tab-pane fade">
+          <%= render "show_products_form" %>
+          <div class="form-group" style="margin:0;padding:0;"></div>
+        </div>
+        <div id="show-files-form" class="tab-pane fade">
+          <%= render "show_files_form" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

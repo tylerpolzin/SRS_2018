@@ -1,0 +1,130 @@
+<div class="show-profile-top">
+  <p class="show-profile-vendor-name"><%= @user.profile.name %></p>
+  <p class="show-profile-description"><%= @user.profile.company %></p>
+</div>
+
+<table class="table table-bordered" id="showProfileTable">
+  <thead></thead>
+  <tbody>
+    <tr>
+      <td colspan="2" class="show-profile-details">Profile Details</td>
+    </tr>
+    <tr>
+      <td>Name</td>
+      <td>
+        <% if @user.profile.name.present? %>
+          <%= @user.profile.name %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Company</td>
+      <td>
+        <% if @user.profile.company.present? %>
+          <%= @user.profile.company %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Position</td>
+      <td>
+        <% if @user.profile.position.present? %>
+          <%= @user.profile.position %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Address</td>
+      <td>
+        <% if @user.profile.address.present? %>
+          <p><%= @user.profile.address %></p>
+          <p><%= @user.profile.city %>, <%= @user.profile.state %> <%= @user.profile.zipcode %></p>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Phone #1</td>
+      <td>
+        <% if @user.profile.phone1.present? %>
+          <%= @user.profile.phone1 %> (<%= @user.profile.phone1_type %>)
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Phone #2</td>
+      <td>
+        <% if @user.profile.phone2.present? %>
+          <%= @user.profile.phone2 %> (<%= @user.profile.phone2_type %>)
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td>
+        <% if @user.profile.email.present? %>
+          <%= @user.profile.email %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Profile Creation Date</td>
+      <td><%= @user.profile.created_at.strftime('%B %d, %Y') %></td>
+    </tr>
+    <tr>
+      <td>Profile Last Updated</td>
+      <td><%= @user.profile.updated_at.strftime('%B %d, %Y') %></td>
+    </tr>
+    <tr>
+      <td colspan="2" class="show-profile-edit-button"><form class="button_to" method="get" action="/users/<%= @user.id %>/profile/edit">
+                               <input class="btn btn-primary" type="submit" value="Edit Profile">
+                             </form></td>
+    </tr>
+  </tbody>
+</table>
+<div id="show-profile-wrapper">
+  <table class="table table-bordered" id="showProfileNotes">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td class="show-profile-details">Notes</td>
+      </tr>
+      <tr>
+        <td style="height: 68px;">
+          <% if @user.profile.notes.present? %>
+            <%#= best_in_place @user.profile, :notes, :as => :textarea, inner_class: "input-small" %>
+            <%= @user.profile.notes %>
+          <% else %>
+            N/A
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered" id="showProfileActivity">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td class="show-profile-details">Recent Activity</td>
+      </tr>
+      <tr>
+        <td style="height: 68px;">
+          Recent Activity Goes Here
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

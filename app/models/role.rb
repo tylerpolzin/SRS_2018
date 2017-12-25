@@ -10,4 +10,8 @@ class Role < ApplicationRecord
             :allow_nil => true
 
   scopify
+  
+  def self.defined_roles
+    self.all.map { |role| role.name }
+  end
 end

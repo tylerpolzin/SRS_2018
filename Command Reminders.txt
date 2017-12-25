@@ -1,4 +1,4 @@
-
+password is always "temppassword"
 
 # GIT Related Commands ########################################
 git checkout -b new_branch # Creates a new branch for Github
@@ -29,3 +29,15 @@ config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
 
 because everything under vendor/ and lib/ have to manually be added to the precompile list. 
 If you need a separate file.js or file.css, you also need to add it to the precompile list.
+
+
+Roles:
+    
+    :admin
+    :employee
+    :vendor
+    :drsharp
+    :colonial
+    :padula
+    :firplak
+    :guest
