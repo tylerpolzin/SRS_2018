@@ -1,12 +1,20 @@
 class UsersController < ApplicationController
 
+  before_action :authenticate_user!
+  #before_action :only_current_user
+  
+
   def show
     @user = User.find(params[:id])
     # @roles = Role.includes(:users_role).where(:users_roles => {:user_id => params[:id]})
   end
   
   def index
-    @users = User.includes(:profile)
+    if current_user.admin? or current_user.has_role? (:employee)
+      @users = User.includes(:profile)
+    else
+      @users = User.where(:id => current_user)
+    end
   end
   
   def edit
@@ -18,7 +26,7 @@ class UsersController < ApplicationController
     @profile = @user.build_profile ( profile_params )
     if @profile.save
       flash[:success] = "Profile Updated!"
-      redirect_to users_path
+      redirect_to users_path, notice: "// User has been created!"
     else
       render action: :new
     end
@@ -28,12 +36,23 @@ class UsersController < ApplicationController
     @users = User.find(params[:id])
     respond_to do |format|
       if @users.update(user_params)
-        format.html { redirect_to @users, notice: 'User was successfully updated.' }
+        format.html { redirect_to @users, notice: '// User has been updated!' }
         format.json { respond_with_bip(@users) }
       else
         format.html { render :edit }
         format.json { respond_with_bip(@users) }
       end
+    end
+  end
+  
+  def update_password
+    @user = current_user
+    if @user.update(user_params)
+      # Sign in the user by passing validation in case their password changed
+      bypass_sign_in(@user)
+      redirect_to root_path
+    else
+      render "edit"
     end
   end
   
@@ -58,6 +77,10 @@ class UsersController < ApplicationController
     
     def profile_params
       params.require(:profile).permit!
+    end
+
+    def only_current_user
+      redirect_to(root_url, :notice => "// You can't do that!") unless current_user.id.to_s == params[:id]
     end
 
 end

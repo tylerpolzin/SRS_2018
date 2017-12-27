@@ -17,6 +17,7 @@ gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.
 
 # Custom Installs
 gem 'bootstrap-sass'
+gem 'bootstrap-form'
 gem 'font-awesome-sass'
 gem 'hirb'
 gem 'devise'

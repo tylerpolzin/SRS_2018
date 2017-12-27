@@ -45,7 +45,7 @@
       "bJQueryUI": true,
       "columnDefs": [
         {
-        "targets": [6],
+          "targets": [6],
         "visible": false,
         },
         {
@@ -113,10 +113,10 @@
   });
 
 //-----------------------------------------------------------------------------------
-//          START 'USERS SHOW' JS                                                   |
+//          START 'USERS DASHBOARD' JS                                              |
 //-----------------------------------------------------------------------------------
 
-  $(document).ready(function () {
+  $(document).on("turbolinks:load", function() {
     $("#showProfileDiv").animate({left: 0, opacity: 100}, 500);
   });
 

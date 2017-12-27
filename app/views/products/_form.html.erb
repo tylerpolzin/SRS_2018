@@ -1,0 +1,160 @@
+<form class="form-inline">
+  <form class="form-group form-group-sm col-sm-4">
+    <%= f.label :vendor_name, "Vendor Name:", class: 'control-label', :id => 'vendorNameSelect' %>
+      <select id="vendorSelect" class="form-control">
+        <option disabled selected>Select Vendor...</option>
+        <% @vendor.each do |v| %>
+          <option><%= v %></option>
+        <% end %>
+        <option>Other...</option>
+      </select>
+      <%= f.text_field :vendor_name, id: 'vendorHidden', class: 'hidden form-control', :placeholder => "Test" %>
+  </form>
+  <form class="form-group form-group-sm col-sm-4">
+    <%= f.label :brand_name, "Brand Name:", class: 'control-label' %>
+    <%= f.text_field :brand_name, class: 'form-control' %>
+  </form>
+  <form class="form-group form-group-sm col-sm-4">
+    <%= f.label :manufacturer_model_number, "Manufacturer Model Number:", class: 'control-label' %>
+    <%= f.text_field :manufacturer_model_number, class: 'form-control' %>
+  </form>
+</form>
+
+<br/>
+
+<form class="form-inline">
+  <form class="form-group form-group-sm">
+    <%= f.label :srs_sku, "SRS SKU:", class: 'control-label' %>
+    <%= f.text_field :srs_sku, class: 'form-control' %>
+  </form>
+  <form class="form-group form-group-sm">
+    <%= f.label :upc, "UPC:", class: 'control-label' %>
+    <%= f.text_field :upc, class: 'form-control' %>
+  </form>
+  <form class="form-group form-group-sm">
+    <%= f.label :description, "Description:", class: 'control-label' %>
+    <%= f.text_field :description, class: 'form-control' %>
+  </form>
+</form>
+
+<br/>
+
+<form class="form-inline">
+  <form class="form-group form-group-sm">
+    <%= f.label :count_on_hand, "Quantity On Hand:", class: 'col-sm-3 control-label' %>
+    <%= f.text_field :count_on_hand, class: 'form-control col-sm-9' %>
+  </form>
+  <form class="form-inline">
+    <div class="form-group form-group-sm">
+      <%= f.label :weight_pounds, "Weight:", class: "control-label col-sm-3" %>
+      <div class="input-icon input-icon-right col-sm-2" style="width:13%;">
+        <i>lbs.</i>
+        <%= f.text_field :weight_pounds, class: 'form-control', :value => "0", 'type' => 'number' %>
+      </div>
+      <div class="input-icon input-icon-right col-sm-2" style="width:13%;">
+        <i>oz.</i>
+        <%= f.text_field :weight_ounces, class: 'form-control', :value => "0", 'type' => 'number' %>
+      </div>
+    </div>
+  </form>
+</form>
+
+<br/>
+
+<form class="form-inline">
+  <div class="form-group form-group-sm">
+    <%= f.label :product_dims_l, "Product Length:", class: 'control-label' %>
+    <%= f.text_field :product_dims_l, class: 'form-control' %>
+  </div>
+  <div class="form-group form-group-sm">
+    <%= f.label :product_dims_w, "Product Width:", class: 'control-label' %>
+    <%= f.text_field :product_dims_w, class: 'form-control' %>
+  </div>
+  <div class="form-group form-group-sm">
+    <%= f.label :product_dims_h, "Product Height:", class: 'control-label' %>
+    <%= f.text_field :product_dims_h, class: 'form-control' %>
+  </div>
+</form>
+
+<br/>
+
+<form class="form-inline">
+  <div class="form-group form-group-sm">
+    <%= f.label :packaged_dims_l, "Packaged Length:", class: 'control-label' %>
+    <%= f.text_field :packaged_dims_l, class: 'form-control' %>
+  </div>
+  <div class="form-group form-group-sm">
+    <%= f.label :packaged_dims_w, "Packaged Width:", class: 'control-label' %>
+    <%= f.text_field :packaged_dims_w, class: 'form-control' %>
+  </div>
+  <div class="form-group form-group-sm">
+    <%= f.label :packaged_dims_h, "Packaged Height:", class: 'control-label' %>
+    <%= f.text_field :packaged_dims_h, class: 'form-control' %>
+  </div>
+</form>
+
+<br/>
+
+<form class="form-inline">
+  <form class="form-group form-group-sm">
+    <%= f.label :vendor_cost, "Vendor Cost:", class: 'control-label col-sm-3' %>
+    <div class="input-icon col-sm-3">
+      <i>$</i>
+      <%= f.text_field :vendor_cost, class: 'form-control', :style => "padding-left:25px;" %>
+    </div>
+  </form>
+  <form class="form-group form-group-sm">
+    <%= f.label :retail_cost, "Retail Cost:", class: 'control-label col-sm-3' %>
+    <div class="input-icon col-sm-3">
+      <i>$</i>
+      <%= f.text_field :retail_cost, class: 'form-control', :style => "padding-left:25px;" %>
+    </div>
+  </form>
+  <form class="form-group form-group-sm">
+    <%= f.label :shipping_cost, "Shipping Cost:", class: 'control-label col-sm-3' %>
+    <div class="input-icon col-sm-3">
+      <i>$</i>
+      <%= f.text_field :shipping_cost, class: 'form-control', :style => "padding-left:25px;" %>
+    </div>
+  </form>
+</form>
+
+<br/>
+
+<form class="form-group form-group-sm">
+  <%= f.label :location, "Location:", class: 'control-label' %>
+  <%= f.text_field :location, class: 'form-control' %>
+</form>
+
+<br/>
+
+<form class="form-inline">
+  <form class="form-group form-group-sm">
+    <%= f.label :store_orderable, "Store Orderable?", class: 'control-label' %>
+    <%= f.select :store_orderable, options_for_select([['Yes', 'true'],['No','false']]),{}, class: 'form-control' %>
+  </form>
+  <form class="form-group form-group-sm">
+    <%= f.label :warranty_orderable, "Warranty Orderable?", class: 'control-label' %>
+    <%= f.select :warranty_orderable, options_for_select([['Yes', 'true'],['No','false']]),{}, class: 'form-control' %>
+  </form>
+</form>
+
+<br/>
+
+<form class="form-inline">
+  <form class="form-group form-group-sm">
+    <%= f.label :ecomm_sku, "E-Commerce SKU?", class: 'control-label' %>
+    <%= f.select :ecomm_sku, options_for_select([['Yes', 'true'],['No','false']]),{}, class: 'form-control' %>
+  </form>
+  <form class="form-group form-group-sm">
+    <%= f.label :active, "Active?", class: 'control-label' %>
+    <%= f.select :active, options_for_select([['True', 'true'],['False','false']]),{}, class: 'form-control' %>
+  </form>
+</form>
+
+<br/>
+
+<form class="form-group form-group-sm">
+  <%= f.label :notes, "Notes:", class: 'control-label' %>
+  <%= f.text_area :notes, class: 'form-control' %>
+</form>

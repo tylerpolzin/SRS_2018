@@ -9,10 +9,13 @@
             <th><div></div></th>
             <th><div>UID</div></th>
             <th><div>Email (Login)</div></th>
-            <th><div>Map Marker Info</div></th>
+            <th><div>Custom Datasets</div></th>
             <th><div>User Created At</div></th>
             <th><div>Entry Last Updated</div></th>
             <th></th>
+            <% if current_user.admin? %>
+              <th><div>Admin?</div></th>
+            <% else %><% end %>
           </tr>
         </thead>
         <tbody class="users-table">
@@ -59,13 +62,18 @@
               <td class="details-control"></td>
               <td><%= link_to u.id, user_path(id: u.id), method: :get %></td>
               <td><%= best_in_place u, :email, class: 'form-control' %></td>
-              <td><%= best_in_place u, :user_color, class: 'form-control' %></td>
+              <td><%= best_in_place_if current_user.admin?, u, :user_color, class: 'form-control' %></td>
               <td><div style='width: 170px'><%= u.created_at %></div></td>
               <td><div style='width: 170px'><%= u.updated_at %></div></td>
               <!-- Hidden field to add table search ability to Child Rows in next 18 lines -->
               <td>
-  
+                All hidden data goes here
               </td>
+              <% if current_user.admin? %>
+                <td>
+                  <%= best_in_place u, :admin, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %>
+                </td>
+              <% else %><% end %>
             </tr>
           <% end %>
         </tbody>

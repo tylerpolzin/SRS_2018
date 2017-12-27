@@ -10,9 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171221042021) do
+ActiveRecord::Schema.define(version: 20171226044736) do
 
   create_table "pages", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "vendor_name"
+    t.string "brand_name"
+    t.string "manufacturer_model_number"
+    t.string "srs_sku"
+    t.boolean "store_orderable", default: false
+    t.boolean "warranty_orderable", default: false
+    t.boolean "ecomm_sku", default: false
+    t.string "upc"
+    t.text "description"
+    t.integer "weight_pounds", default: 0
+    t.integer "weight_ounces", default: 0
+    t.integer "product_dims_l", default: 0
+    t.integer "product_dims_w", default: 0
+    t.integer "product_dims_h", default: 0
+    t.integer "packaged_dims_l", default: 0
+    t.integer "packaged_dims_w", default: 0
+    t.integer "packaged_dims_h", default: 0
+    t.string "location"
+    t.integer "count_on_hand", default: 0
+    t.decimal "vendor_cost", default: "0.0"
+    t.decimal "retail_cost", default: "0.0"
+    t.decimal "shipping_cost", default: "0.0"
+    t.boolean "active", default: true
+    t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -63,6 +92,7 @@ ActiveRecord::Schema.define(version: 20171221042021) do
     t.string "user_color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

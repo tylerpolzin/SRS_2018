@@ -21,7 +21,8 @@
             <%= link_to "//www.strategicretailsolutions.com", class: "navbar-brand" do %>
               Strategic Retail Solutions
             <% end %>
-            <p class="navbar-brand" style="padding-left:10px">//&nbsp;&nbsp;<%= @user.profile.name %></p>
+            <span class="navbar-brand" style="padding-left:10px">//&nbsp;&nbsp;<%= current_user.profile.name || current_user.profile.company || current_user.email %></span>
+            <span class="navbar-brand navbar-animated navbar-fade" style="margin-left:-30px;"><%= notice %></span>
           </div>
           <div class="collapse navbar-collapse" id="main-nav-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -72,11 +73,11 @@
               <a data-target="#"><i class="fa fa-shopping-bag fa-lg"></i> Products<span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="products">
-              <li>All Products</li>
-              <li>Inventory Adjustments</li>
-              <li>Create New Product</li>
+              <li><%= link_to "All Products", products_path %></li>
+              <li><%= link_to "Create New Product", new_product_path, method: :get %></li>
               <li>All Parts</li>
               <li>Create New Part</li>
+              <li>Inventory Adjustments</li>
             </ul>
             <li data-toggle="collapse" data-target="#uploads" class="collapsed">
               <a data-target="#"><i class="fa fa-upload fa-lg"></i> Uploads<span class="arrow"></span></a>
@@ -89,7 +90,7 @@
             <li><a><i class="fa fa-map-pin fa-lg"></i> Territory Map</a></li>
             <li><a><i class="fa fa-calculator fa-lg"></i> Shipment Calculator</a></li>
             <li><a><i class="fa fa-users fa-lg"></i><%= link_to " User List", users_path %></a></li>
-            <li><a><i class="fa fa-user-circle-o fa-lg"></i> <%= link_to "My Profile", user_path(id: current_user.id), method: :get %></a></li>
+            <li><a><i class="fa fa-user-circle-o fa-lg"></i> <%= link_to "My Dashboard", user_path(id: current_user.id), method: :get %></a></li>
             <li><a><i class="fa fa-sitemap fa-lg"></i> Site Map</a></li>
           </ul>
         </div>

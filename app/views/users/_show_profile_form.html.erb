@@ -10,6 +10,20 @@
       <td colspan="2" class="show-profile-details">Profile Details</td>
     </tr>
     <tr>
+      <td>Login</td>
+      <td>
+        <%= @user.email %>
+      </td>
+    </tr>
+    <tr>
+      <td>Password</td>
+      <td>
+        <% if current_user == @user %>
+          <%= link_to "Change Password", edit_user_registration_path, class: "btn btn-primary", :style => "padding:1px 6px 1px 6px;margin:-4px 0 -4px -2px;" %>
+        <% else %><% end %>
+      </td>
+    </tr>
+    <tr>
       <td>Name</td>
       <td>
         <% if @user.profile.name.present? %>
@@ -89,9 +103,13 @@
       <td><%= @user.profile.updated_at.strftime('%B %d, %Y') %></td>
     </tr>
     <tr>
-      <td colspan="2" class="show-profile-edit-button"><form class="button_to" method="get" action="/users/<%= @user.id %>/profile/edit">
-                               <input class="btn btn-primary" type="submit" value="Edit Profile">
-                             </form></td>
+      <td colspan="2" class="show-profile-edit-button">
+        <% if current_user == @user %>
+          <form class="button_to" method="get" action="/users/<%= @user.id %>/profile/edit">
+            <input class="btn btn-primary" type="submit" value="Edit Profile">
+          </form>
+        <% else %><% end %>
+      </td>
     </tr>
   </tbody>
 </table>

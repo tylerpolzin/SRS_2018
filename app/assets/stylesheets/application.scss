@@ -1,6 +1,7 @@
 /*
  *= require_self
  * require jquery-ui
+ *= require rails_bootstrap_forms
  *= require_tree .
  *
  */
@@ -70,9 +71,29 @@ body {
   color: white;
   &:hover {
     color: white;
-    opacity: 0.75;
   }
 }
+  .navbar-animated {
+    color: green;
+    -webkit-animation-duration: 5s;animation-duration: 5s;
+    -webkit-animation-fill-mode: both;animation-fill-mode: both;
+  }
+  
+  @-webkit-keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+  }
+  
+  @keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+  }
+  
+  .navbar-fade {
+    -webkit-animation-name: fadeOut;
+    animation-name: fadeOut;
+  }
+
 .navbar-right {
   margin-right: 80px;
 }

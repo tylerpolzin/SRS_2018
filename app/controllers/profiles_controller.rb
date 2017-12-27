@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
   # before_action :set_profile, only: [:show, :edit, :update, :destroy]
+  before_action :only_current_user
 
   def index
     @profiles = Profile.all
@@ -10,6 +11,7 @@ class ProfilesController < ApplicationController
   end
 
   def new
+    @user = User.find( params[:user_id] )
     @profile = Profile.new
   end
 
@@ -22,8 +24,8 @@ class ProfilesController < ApplicationController
     @user = User.find( params[:user_id] )
     @profile = @user.build_profile ( profile_params )
     if @profile.save
-      flash[:success] = "Profile Updated!"
-      redirect_to users_path
+      flash[:success] = "Profile updated!"
+      redirect_to users_path, :notice => "// Profile has been updated!"
     else
       render action: :new
     end
@@ -34,7 +36,7 @@ class ProfilesController < ApplicationController
     @profile = @user.profile
     if @profile.update_attributes(profile_params)
       flash[:success] = "Profile updated!"
-      redirect_to users_path
+      redirect_to authenticated_root_path, :notice => "// Profile has been updated!"
     else
       render action: :edit
     end
@@ -43,7 +45,7 @@ class ProfilesController < ApplicationController
   def destroy
     @profile.destroy
     respond_to do |format|
-      format.html { redirect_to profiles_url, notice: 'Profile was successfully destroyed.' }
+      format.html { redirect_to profiles_url, notice: '// Profile has been deleted!' }
       format.json { head :no_content }
     end
   end
@@ -57,4 +59,10 @@ class ProfilesController < ApplicationController
     def profile_params
       params.require(:profile).permit!
     end
+    
+    def only_current_user
+      @user = User.find( params[:user_id] )
+      redirect_to(root_url, :notice => "// You can't do that!") unless @user == current_user
+    end
+    
 end

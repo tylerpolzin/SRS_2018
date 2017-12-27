@@ -4,6 +4,6 @@
 //-----------------------------------------------------------------------------------
 
 
-$(document).ready(function () {
+$(document).on("turbolinks:load", function() {
   $("#editProfileDiv").animate({left: 0, opacity: 100}, 500);
 });

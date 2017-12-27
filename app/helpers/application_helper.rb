@@ -1,4 +1,5 @@
 module ApplicationHelper
+  
   def us_states
     [
       ['',''],
@@ -56,4 +57,19 @@ module ApplicationHelper
       ['Wyoming', 'WY']
     ]
   end
+  
+  def vendor
+    [
+      ['Tuscany', 'Tuscany'],
+      ['All Stone', 'All Stone'],
+      ['Ray Padula', 'Ray Padula'],
+      ['Colonial Elegance', 'Colonial Elegance'],
+      ['Dr Sharp', 'Dr Sharp'],
+      ['Firplak', 'Firplak'],
+      ['Lift Bridge', 'Lift Bridge'],
+      ['Turn of the Century', 'Turn of the Century'],
+      ['Other...', 'Other']
+    ]
+  end
+  
 end

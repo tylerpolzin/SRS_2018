@@ -50,6 +50,9 @@ GEM
       actionpack (>= 3.2)
       railties (>= 3.2)
     bindex (0.5.0)
+    bootstrap-form (3.0.0)
+      actionpack (> 3.2)
+      railties (> 3.2)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -132,7 +135,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_json (1.12.2)
-    nio4r (2.1.0)
+    nio4r (2.2.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
@@ -178,7 +181,7 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
-    rolify (5.1.0)
+    rolify (5.2.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
     sass (3.5.4)
@@ -241,6 +244,7 @@ PLATFORMS
 DEPENDENCIES
   ajax-datatables-rails
   best_in_place
+  bootstrap-form
   bootstrap-sass
   byebug
   cancancan
@@ -276,4 +280,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.15.4
+   1.16.1
