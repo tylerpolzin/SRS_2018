@@ -24,7 +24,7 @@
 
 .editProfileForm {
   padding: 20px;
-  background-image: url(light_gray_texture.jpg);
+  background-color: #d1dbe4;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
   border-bottom-right-radius: 30px;
   div.form-group.form-group-sm {
@@ -35,3 +35,70 @@
     font-size: 1.1em;
   }
 }
+
+#editProfileTable {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  margin-bottom: 15px;
+  border-collapse: inherit;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td {
+    border-top: 1px solid #ddd;
+    border-bottom: 0;
+    border-right: 1px solid #ddd;
+    border-left: 0;
+  }
+  tbody tr td:nth-child(1) { // Left Column "Description"
+    text-align: right;
+    background-color: #e6e6e5;
+    width: 30%;
+  }
+  tbody tr td:nth-child(2) { // Right Column "Inputs"
+    padding: 0;
+    .form-group {
+      margin: 0;
+      input {
+        border: none;
+        border-radius: 0;
+        &:focus {
+          box-shadow: inset 0px 0px 5px #ff9800;
+        }
+      }
+      select {
+        border: none;
+        border-radius: 0;
+        padding-left: 8px;
+        &:focus {
+          box-shadow: inset 0px 0px 5px #ff9800;
+        }
+      }
+    }
+  }
+  tbody tr {
+    background-color: #eee;
+  }
+}
+
+.phone_css {
+  display: inline-flex;
+  width: 100%;
+  .form-group {
+    width: 50%;
+    .input-group .input-group-addon {
+      border-radius: 0;
+      font-weight: bold;
+      border-top: 0;
+      border-bottom: 0;
+      background-color: #e6e6e5;
+    }
+  }
+  .form-group:last-child {
+    .input-group .input-group-addon {
+      border-right: 0;
+      border-left: 1px solid #ccc;
+    }
+  }
+}
+

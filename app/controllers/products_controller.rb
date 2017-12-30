@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @vendor = Product.order(vendor_name: :asc).uniq.pluck(:vendor_name)
+    @brand = Product.order(brand_name: :asc).uniq.pluck(:brand_name)
   end
 
   def edit

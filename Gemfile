@@ -17,7 +17,7 @@ gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.
 
 # Custom Installs
 gem 'bootstrap-sass'
-gem 'bootstrap-form'
+gem 'bootstrap_form', github: 'bootstrap-ruby/rails-bootstrap-forms'
 gem 'font-awesome-sass'
 gem 'hirb'
 gem 'devise'
@@ -34,6 +34,7 @@ gem 'jquery-ui-rails'
 gem 'jquery-fileupload-rails'
 gem 'jquery_context_menu-rails'
 gem 'select2-rails'
+# gem 'approval' # Use to require approval on database changes
 
 # gem 'active_shipping'
 

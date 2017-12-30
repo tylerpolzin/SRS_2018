@@ -21,7 +21,7 @@
             <%= link_to "//www.strategicretailsolutions.com", class: "navbar-brand" do %>
               Strategic Retail Solutions
             <% end %>
-            <span class="navbar-brand" style="padding-left:10px">//&nbsp;&nbsp;<%= current_user.profile.name || current_user.profile.company || current_user.email %></span>
+            <span class="navbar-brand" style="padding-left:10px">//&nbsp;&nbsp;<%= @current_user.header_name %></span>
             <span class="navbar-brand navbar-animated navbar-fade" style="margin-left:-30px;"><%= notice %></span>
           </div>
           <div class="collapse navbar-collapse" id="main-nav-collapse">

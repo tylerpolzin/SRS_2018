@@ -15,4 +15,16 @@ class User < ApplicationRecord
     self.add_role(:newuser) if self.roles.blank?
   end
   
+  def header_name # Places the currently logged in users name in the application header (used in conjunction with 'set_current_user' in AppController)
+    if self.profile.name.present?
+      self.profile.name
+    else
+      if self.profile.company.present?
+        self.profile.company
+      else
+        self.email
+      end
+    end
+  end
+  
 end

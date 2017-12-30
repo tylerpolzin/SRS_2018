@@ -63,3 +63,6 @@ $(document).on("turbolinks:load", function() {
     "pageLength": 100
   });
 });
+
+// Accept only numbers in number field inputs
+$('input[type="number"]').regexMask(/^\d+$/);
