@@ -1,4 +1,33 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<% @title = "SRS Portal | #{@product.sku_if_sku}" %>
+<div style="width: 850px;" id="showProductDiv">
+  <p class="showProductHeader">View Product</p>
+  <div class="form-horizontal showProductForm">
+    <ul class="nav nav-tabs">
+      <li class="active"><a id="showProductForm" href="#show-product-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Product Information</a></li>
+      <li><a id="showPartForm" href="#show-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Associated Parts</a></li>
+      <li><a id="showProductUploads" href="#show-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Associated Files</a></li>
+      <li><a id="showProductMovementHistory" href="#show-product-movement-history" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Inventory History</a></li>
+      <li><a id="showProductRecentOrders" href="#show-product-recent-orders" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Recent Orders</a></li>
+    </ul>
+    
+    <div id="showProductTabs">
+      <div class="tab-content">
+        <div id="show-product-form" class="tab-pane fade in active container">
+          <%= render "show_product_form" %>
+        </div>
+        <div id="show-part-form" class="tab-pane fade container">
+          <%= render "show_part_form" %>
+        </div>
+        <div id="show-product-uploads" class="tab-pane fade container">
+          <%= render "show_product_uploads" %>
+        </div>
+        <div id="show-product-movement-history" class="tab-pane fade container">
+          <%= render "show_movement_history" %>
+        </div>
+        <div id="show-product-recent-orders" class="tab-pane fade container">
+          <%= render "show_recent_orders" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

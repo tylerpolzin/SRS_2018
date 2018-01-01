@@ -1,25 +1,140 @@
-<p id="notice"><%= notice %></p>
+<% @title = "SRS Portal | Product List" %>
+<div style="width:1600px;" id="productListDiv">
+  <p class="productHeader">Product List</p>
+  <div class="productsTable">
+    <table id="productsDataTable" class="display" style="width: 100%;">
+      <thead>
+        <tr>
+          <th><div></div></th>
+          <th><div>Manufacturer</div></th>
+          <th><div>MFR Model #</div></th>
+          <th><div>Brand Name</div></th>
+          <th><div>SRS SKU</div></th>
+          <th><div>Description</div></th>
+          <th><div>Qty On Hand</div></th>
+          <th><div>Weight</div></th>
+          <th><div>Product Dimensions</div></th>
+          <th><div>Packaged Dimensions</div></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody class="product-table">
+        <% @products.each do |product| %>
+          <tr
+            data-child-parts="Parts"
+            data-child-upc="UPC"
+            data-child-uploads="Uploads"
+            data-child-notes="&lt;span 
+                          data-bip-type=&quot;textarea&quot; 
+                          data-bip-attribute=&quot;notes&quot; 
+                          data-bip-inner-class=&quot;form-control&quot; 
+                          data-bip-object=&quot;product&quot; 
+                          data-bip-original-content=&quot;<%= product.notes %>&quot; 
+                          data-bip-skip-blur=&quot;false&quot; 
+                          data-bip-placeholder=&quot;Click here to add notes...&quot; 
+                          data-bip-url=&quot;/products/<%= product.id %>&quot; 
+                          data-bip-value=&quot;<%= product.notes %>&quot; 
+                          class=&quot;best_in_place textarea&quot; 
+                          id=&quot;best_in_place_product_<%= product.id %>_notes&quot;&gt;<%= product.notes %>&lt;/span&gt;"
+            data-child-details="<% if product.active? %>
+                                  <p>This SKU is active</p>
+                                <% else %>
+                                  <p>This SKU is <span style='color:red'>NOT</span> active</p>
+                                <% end %>
+                                <% if product.store_orderable? %>
+                                  <p>This SKU is Store Orderable</p>
+                                <% else %>
+                                  <p>This SKU is <span style='color:red'>NOT</span> Store Orderable</p>
+                                <% end %>
+                                <% if product.warranty_orderable? %>
+                                  <p>This SKU is Warranty Orderable</p>
+                                <% else %>
+                                  <p>This SKU is <span style='color:red'>NOT</span> Warranty Orderable</p>
+                                <% end %>
+                                <% if product.ecomm_sku? %>
+                                  <p>This SKU is an E-Commerce SKU</p>
+                                <% else %>
+                                  <p>This SKU is <span style='color:red'>NOT</span> an E-Commerce SKU</p>
+                                <% end %>
+                                <% if product.location.present? %>
+                                  <p>Location: <%= product.location %></p>
+                                <% else %>
+                                  <p>Location: N/A</p>
+                                <% end %>
+                                <p>Entry created on <%= product.created_at.strftime('%B %d, %Y') %></p>
+                                <p>Entry last updated on <%= product.updated_at.strftime('%B %d, %Y') %></p>"
+            data-child-photo="Photo"
+            data-child-pricing="<% if product.vendor_cost >= 0.01 %>
+                                  <p>Vendor Cost: $<%= number_with_precision(product.vendor_cost, precision: 2) %></p>
+                                <% else %>
+                                  <p>Vendor Cost: N/A</p>
+                                <% end %>
+                                <% if product.retail_cost >= 0.01 %>
+                                  <p>Retail Cost: $<%= number_with_precision(product.retail_cost, precision: 2) %></p>
+                                <% else %>
+                                  <p>Retail Cost: N/A</p>
+                                <% end %>
+                                <% if product.shipping_cost >= 0.01 %>
+                                  <p>Shipping Cost: $<%= number_with_precision(product.shipping_cost, precision: 2) %></p>
+                                <% else %>
+                                  <p>Shipping Cost: N/A</p>
+                                <% end %>">
+            <td class="details-control"></td>
+            <td>
+              <% if product.vendor_name.present? %>
+                <%= product.vendor_name %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+            <td>
+              <% if product.manufacturer_model_number.present? %>
+                <%= link_to product.manufacturer_model_number, product_path(id: product.id), method: :get, target: '_blank', title: "View Product Details" %>
+              <% else %>
+                <%= link_to "N/A", product_path(id: product.id), method: :get, target: '_blank', title: "View Product Details" %>
+              <% end %>
+            </td>
+            <td>
+              <% if product.brand_name.present? %>
+                <%= product.brand_name %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+            <td>
+              <% if product.srs_sku.present? %>
+                <%= product.srs_sku %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+            <td>
+              <% if product.description.present? %>
+                <%= product.description %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+            <td>
+              <% if product.count_on_hand.present? %>
+                <%= product.count_on_hand %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+            <td><%= product.product_weight %></td>
+            <td>
+              <%= product.product_dims_l %>"x<%= product.product_dims_w %>"x<%= product.product_dims_h %>"
+            </td>
+            <td>
+              <%= product.packaged_dims_l %>"x<%= product.packaged_dims_w %>"x<%= product.packaged_dims_h %>"
+            </td>
+            <td>  <!-- Hidden field to add table search ability to Child Rows -->
 
-<h1>Products</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Product', new_product_path %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

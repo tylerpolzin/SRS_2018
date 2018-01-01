@@ -1,0 +1,240 @@
+<div class="show-product-top">
+  <p class="show-product-brand-name"><%= @product.brand_name %></p>
+  <p class="show-product-description"><%= @product.description %></p>
+</div>
+<div id="show-product-wrapper">
+  <div class="show-image">
+    <%# if @product.avatar.present? %>
+      <%#= image_tag @product.avatar.url(:medium) %>
+    <%# else %>
+      <p style="margin: 10px;">No Image Attached</p>
+    <%# end %>
+  </div>
+  <table class="table table-bordered" id="showProductNotes">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td class="show-product-details">Notes</td>
+      </tr>
+      <tr>
+        <td>
+          <%= best_in_place @product, :notes, :as => :textarea, inner_class: "input-small" %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered" id="showProductExtras">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td class="show-product-details">Additional Details</td>
+      </tr>
+      <tr>
+        <td>
+      <p style="margin: 10px;">Additional Product Details will be found here</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<table class="table table-bordered" id="showProductTable">
+  <thead></thead>
+  <tbody>
+    <tr>
+      <td colspan="2" class="show-product-details">Product Details</td>
+    </tr>
+    <tr>
+      <td>Manufacturer</td>
+      <td>
+        <% if @product.vendor_name.present? %>
+          <%= @product.vendor_name %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>MFR Model #</td>
+      <td>
+        <% if @product.manufacturer_model_number.present? %>
+          <%= @product.manufacturer_model_number %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>UPC #</td>
+      <td>
+        <% if @product.upc.present? %>
+          <%= @product.upc %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Brand Name</td>
+      <td>
+        <% if @product.brand_name.present? %>
+          <%= @product.brand_name %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>SRS SKU</td>
+      <td>
+        <% if @product.srs_sku.present? %>
+          <%= @product.srs_sku %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Location</td>
+      <td>
+        <% if @product.location.present? %>
+          <%= @product.location %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td>
+        <% if @product.description.present? %>
+          <%= @product.description %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Qty On Hand</td>
+      <td>
+        <%= @product.count_on_hand %>
+        <%# if @product.stockmovements.exists? %>
+          <%# @product.stockmovements.last(1).each do |s| %>
+            <%#= s.quantity %>
+          <%# end %>
+        <%# end %>
+      </td>
+    </tr>    
+    <!--<tr>-->
+    <!--  <td>Qty Last Updated</td>-->
+    <!--  <td>-->
+    <!--    <%# if @product.stockmovements.exists? %>-->
+    <!--      <%# @product.stockmovements.last(1).each do |s| %>-->
+    <!--        <%#= s.created_at.strftime('%B %d, %Y') %>-->
+    <!--      <%# end %>-->
+    <!--    <%# else %>-->
+    <!--      N/A-->
+    <!--    <%# end %>-->
+    <!--  </td>-->
+    <!--</tr>-->
+    <!-- Add "view history" link to stockmovement history for individual item once complete -->
+    <tr>
+      <td>Weight</td>
+      <td>
+        <%= @product.weight_pounds %> lbs. <%= @product.weight_ounces %> oz.
+      </td>
+    </tr>
+    <tr>
+      <td>Product Dimensions</td>
+      <td>
+        <%= @product.product_dims_l %>"x<%= @product.product_dims_w %>"x<%= @product.product_dims_h %>"
+      </td>
+    </tr>
+    <tr>
+      <td>Packaged Dimensions</td>
+      <td>
+        <%= @product.packaged_dims_l %>"x<%= @product.packaged_dims_w %>"x<%= @product.packaged_dims_h.to_f %>"
+      </td>
+    </tr>
+    <tr>
+      <td>Vendor Cost</td>
+      <td>
+        <% if @product.vendor_cost >= 0.01 %>
+          $<%= @product.vendor_cost %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Retail Cost</td>
+      <td>
+        <% if @product.retail_cost >= 0.01 %>
+          $<%= @product.retail_cost %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Shipping Cost</td>
+      <td>
+        <% if @product.shipping_cost >= 0.01 %>
+          $<%= @product.shipping_cost %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Store Orderable?</td>
+      <td>
+        <% if @product.store_orderable? %>
+          Yes
+        <% else %>
+          No
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Warranty Orderable?</td>
+      <td>
+        <% if @product.warranty_orderable? %>
+          Yes
+        <% else %>
+          No
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>E-Commerce SKU?</td>
+      <td>
+        <% if @product.ecomm_sku? %>
+          Yes
+        <% else %>
+          No
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Active?</td>
+      <td>
+        <% if @product.active? %>
+          Yes
+        <% else %>
+          No
+        <% end %>
+        </td>
+    </tr>
+    <tr>
+      <td>Product Creation Date</td>
+      <td><%= @product.created_at.strftime('%B %d, %Y') %></td>
+    </tr>
+    <tr>
+      <td>Product Last Updated</td>
+      <td><%= @product.updated_at.strftime('%B %d, %Y') %></td>
+    </tr>
+    <tr>
+      <td colspan="2" class="show-product-edit-button"><%= button_to "Edit This Product", edit_product_path(id: params[:id]), method: :get, class: 'btn btn-sm btn-primary' %></td>
+    </tr>
+  </tbody>
+</table>

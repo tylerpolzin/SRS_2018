@@ -6,6 +6,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @product = Product.find(params[:id])
   end
 
   def new
@@ -15,6 +16,9 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @product = Product.find(params[:id])
+    @vendor = Product.order(vendor_name: :asc).uniq.pluck(:vendor_name)
+    @brand = Product.order(brand_name: :asc).uniq.pluck(:brand_name)
   end
 
   def create
@@ -57,6 +61,6 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      params.require(:products).permit!
+      params.require(:product).permit!
     end
 end

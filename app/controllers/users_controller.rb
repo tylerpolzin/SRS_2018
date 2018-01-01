@@ -3,10 +3,13 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   #before_action :only_current_user
   
+  def new
+    @user = User.new
+  end
 
   def show
     @user = User.find(params[:id])
-    # @roles = Role.includes(:users_role).where(:users_roles => {:user_id => params[:id]})
+    @roles = Role.includes(:users_role).where(:users_roles => {:user_id => params[:id]})
   end
   
   def index

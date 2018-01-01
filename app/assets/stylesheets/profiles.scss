@@ -52,7 +52,7 @@
   }
   tbody tr td:nth-child(1) { // Left Column "Description"
     text-align: right;
-    background-color: #e6e6e5;
+    background-color: #fafafa;
     width: 30%;
   }
   tbody tr td:nth-child(2) { // Right Column "Inputs"
@@ -91,7 +91,7 @@
       font-weight: bold;
       border-top: 0;
       border-bottom: 0;
-      background-color: #e6e6e5;
+      background-color: #fafafa;
     }
   }
   .form-group:last-child {

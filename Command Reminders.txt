@@ -42,3 +42,7 @@ Roles:
     :firplak
     :guest
     :newuser
+    
+Idea: Create a way to add custom table rows to individual products depending on their specifications
+
+Number_to_human_size used for byte conversion display

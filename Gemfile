@@ -23,7 +23,7 @@ gem 'hirb'
 gem 'devise'
 gem 'rolify'
 gem 'cancancan'
-gem "paperclip" # Install along with Upskill tutorial------------------------------------------------------<<<
+gem "paperclip"
 gem 'twitter-bootstrap-rails-confirm'
 gem 'best_in_place' # Now has best_in_place_if options, use with CanCan
 gem 'underscore-rails'

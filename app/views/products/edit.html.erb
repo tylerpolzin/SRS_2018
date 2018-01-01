@@ -1,6 +1,39 @@
-<h1>Editing Product</h1>
-
-<%= render 'form', product: @product %>
-
-<%= link_to 'Show', @product %> |
-<%= link_to 'Back', products_path %>
+<% @title = "SRS Portal | Edit Product" %>
+<div style="width:1060px;" id="editProductDiv">
+  <p class="editProductHeader">Edit Product</p>
+  <div class="container editProductForm" style="width:100%;">
+    <%= bootstrap_form_for @product, url: product_path, method: :patch, :html => { :multipart => true } do |f| %>
+      <% if @product.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+          <ul>
+          <% @product.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %> <!-- if @item.errors.any? -->
+      <ul class="nav nav-tabs">
+        <li class="active"><a id="editProductForm" href="#edit-product-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Product Details</a></li>
+        <!--<li><a id="editProductUploads" href="#edit-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Edit Associated Files</a></li>-->
+        <!--<li><a id="editPartsForm" href="#edit-parts-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Associated Parts</a></li>-->
+      </ul>
+      <div id="editProductTabs">
+        <div class="tab-content">
+          <div id="edit-product-form" class="tab-pane fade in active container">
+            <br/><%= render "form", :f => f %>
+          </div>
+          <!--<div id="edit-product-uploads" class="tab-pane fade"><br/>-->
+          <!--  <p><%#= add_child_link " Add File", :uploads %></p>-->
+          <!--  <%#= new_child_fields_template f, :uploads %>-->
+          <!--</div>-->
+          <!--<div id="edit-part-form" class="tab-pane fade">-->
+          <!--  <p><%#= add_child_link " Add Part", :parts %></p>-->
+          <!--  <%#= new_child_fields_template f, :parts %>-->
+          <!--</div>-->
+        </div>
+      </div>
+      <%= f.primary "Edit Product", :style => "float:right;" %>
+    <% end %>
+  </div>
+</div>

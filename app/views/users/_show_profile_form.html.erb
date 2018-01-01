@@ -68,7 +68,7 @@
       <td>Phone #1</td>
       <td>
         <% if @user.profile.phone1.present? %>
-          <%= @user.profile.phone1 %> (<%= @user.profile.phone1_type %>)
+          <%= number_to_phone(@user.profile.phone1, area_code: true) %> (<%= @user.profile.phone1_type %>)
         <% else %>
           N/A
         <% end %>
@@ -78,7 +78,7 @@
       <td>Phone #2</td>
       <td>
         <% if @user.profile.phone2.present? %>
-          <%= @user.profile.phone2 %> (<%= @user.profile.phone2_type %>)
+          <%= number_to_phone(@user.profile.phone2, area_code: true) %> (<%= @user.profile.phone2_type %>)
         <% else %>
           N/A
         <% end %>
@@ -124,7 +124,7 @@
         <td style="height: 68px;">
           <% if @user.profile.notes.present? %>
             <%#= best_in_place @user.profile, :notes, :as => :textarea, inner_class: "input-small" %>
-            <%= @user.profile.notes %>
+            <%= simple_format @user.profile.notes %>
           <% else %>
             N/A
           <% end %>

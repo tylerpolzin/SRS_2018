@@ -1,6 +1,6 @@
 
 <% @title = "SRS Portal | User List" %>
-<div class="col-md-8" id="usersTableDiv">
+<div style="width:1200px" id="usersTableDiv">
   <p class="usersTableHeader">User List</p>
   <div class="usersTable">
       <table id="usersListDataTable" class="display" style="width: 100%;">
@@ -15,6 +15,7 @@
             <th></th>
             <% if current_user.admin? %>
               <th><div>Admin?</div></th>
+              <th><div>Role</div></th>
             <% else %><% end %>
           </tr>
         </thead>
@@ -43,9 +44,9 @@
                                   <p>N/A</p>
                                 <% end %>"
             data-child-phone="<% if u.profile.phone1.present? %>
-                                <p><%= u.profile.phone1 %> (<%= u.profile.phone1_type %>)</p>
+                                <p><%= number_to_phone(u.profile.phone1, area_code: true) %> (<%= u.profile.phone1_type %>)</p>
                                 <% if u.profile.phone2.present? %>
-                                  <p><%= u.profile.phone2 %> (<%= u.profile.phone2_type %>)</p>
+                                  <p><%= number_to_phone(u.profile.phone2, area_code: true) %> (<%= u.profile.phone2_type %>)</p>
                                 <% else %><% end %>
                               <% else %>
                                 <p>N/A</p>
@@ -57,7 +58,7 @@
                                   <%= u.profile.lat %>/<%= u.profile.long %>
                                 <% else %>N/A<% end %>"
             data-child-notes="<% if u.profile.notes.present? %>
-                                <%= u.profile.notes %>
+                                <%= simple_format u.profile.notes %>
                               <% else %>N/A<% end %>">
               <td class="details-control"></td>
               <td><%= link_to u.id, user_path(id: u.id), method: :get %></td>
@@ -65,13 +66,17 @@
               <td><%= best_in_place_if current_user.admin?, u, :user_color, class: 'form-control' %></td>
               <td><div style='width: 170px'><%= u.created_at %></div></td>
               <td><div style='width: 170px'><%= u.updated_at %></div></td>
-              <!-- Hidden field to add table search ability to Child Rows in next 18 lines -->
-              <td>
+              <td>  <!-- Hidden field to add table search ability to Child Rows in next 18 lines -->
                 All hidden data goes here
               </td>
               <% if current_user.admin? %>
                 <td>
                   <%= best_in_place u, :admin, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %>
+                </td>
+                <td>
+                  <% u.roles.each do |r| %>
+                    <p><%= r.name %></p>
+                  <% end %>
                 </td>
               <% else %><% end %>
             </tr>

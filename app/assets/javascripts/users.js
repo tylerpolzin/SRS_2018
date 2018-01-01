@@ -8,7 +8,7 @@
     return ''+
    '<div class="glider">'+
    '  <table class="users-list-expando">'+
-   '    <tr class="users-list-head-tr">'+
+   '    <tr>'+
    '      <td>Full Name</td>'+
    '      <td>Company & Position</td>'+
    '      <td>Address</td>'+
@@ -18,7 +18,7 @@
    '      <td>Notes</td>'+
    '      <td></td>'+
    '    </tr>'+
-   '    <tr class="users-list-body-tr name="'+fakeout+'">'+
+   '    <tr name="'+fakeout+'">'+
    '      <td>'+name+'</td>'+
    '      <td class="address-margin">'+company+'</td>'+
    '      <td class="address-margin">'+address+'</td>'+

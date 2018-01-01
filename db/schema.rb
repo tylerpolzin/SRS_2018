@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171226044736) do
+ActiveRecord::Schema.define(version: 20171231201628) do
 
   create_table "pages", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -29,12 +29,12 @@ ActiveRecord::Schema.define(version: 20171226044736) do
     t.text "description"
     t.integer "weight_pounds", default: 0
     t.integer "weight_ounces", default: 0
-    t.integer "product_dims_l", default: 0
-    t.integer "product_dims_w", default: 0
-    t.integer "product_dims_h", default: 0
-    t.integer "packaged_dims_l", default: 0
-    t.integer "packaged_dims_w", default: 0
-    t.integer "packaged_dims_h", default: 0
+    t.decimal "product_dims_l", default: "0.0"
+    t.decimal "product_dims_w", default: "0.0"
+    t.decimal "product_dims_h", default: "0.0"
+    t.decimal "packaged_dims_l", default: "0.0"
+    t.decimal "packaged_dims_w", default: "0.0"
+    t.decimal "packaged_dims_h", default: "0.0"
     t.string "location"
     t.integer "count_on_hand", default: 0
     t.decimal "vendor_cost", default: "0.0"
