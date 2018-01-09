@@ -15,7 +15,7 @@ git push origin current_branch
 
 Hirb.enable
 
-rails g scaffold branch_name
+rails g scaffold branch_name (WITHOUT the 's' at the end)
 rails g scaffold CreateTable / EditTable
 
 rails db:migrate

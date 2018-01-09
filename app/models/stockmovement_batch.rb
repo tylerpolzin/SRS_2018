@@ -1,0 +1,2 @@
+class StockmovementBatch < ApplicationRecord
+end

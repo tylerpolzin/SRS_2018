@@ -1,0 +1,29 @@
+<% @title = "SRS Portal | Edit Part" %>
+<div style="width:1060px;" id="editPartDiv">
+  <p class="editPartHeader">Edit Part Information</p>
+  <div class="container editPartForm" style="width:100%;">
+    <%= bootstrap_form_for @part, url: part_path, method: :patch, :html => { :multipart => true } do |f| %>
+      <% if @part.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@part.errors.count, "error") %> prohibited this part from being saved:</h2>
+          <ul>
+          <% @part.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %> <!-- if @part.errors.any? -->
+      <ul class="nav nav-tabs">
+        <li class="active"><a id="editPartNavTab" href="#edit-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Part Details</a></li>
+      </ul>
+      <div id="editPartTabs">
+        <div class="tab-content">
+          <div id="edit-part-form" class="tab-pane fade in active container">
+            <br/><%= render "form", :f => f %>
+          </div>
+        </div>
+      </div>
+      <%= f.primary "Update Part", :style => "float:right;" %>
+    <% end %>
+  </div>
+</div>

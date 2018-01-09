@@ -6,104 +6,101 @@
       <thead>
         <tr>
           <th><div></div></th>
-          <th><div>Manufacturer</div></th>
-          <th><div>MFR Model #</div></th>
+          <th><div>Image</div></th>
           <th><div>Brand Name</div></th>
-          <th><div>SRS SKU</div></th>
           <th><div>Description</div></th>
+          <th><div>MFR Model #</div></th>
           <th><div>Qty On Hand</div></th>
           <th><div>Weight</div></th>
-          <th><div>Product Dimensions</div></th>
-          <th><div>Packaged Dimensions</div></th>
+          <th><div>Dimensions</div></th>
+          <th><div>Pricing</div></th>
+          <th><div>Additional Notes</div></th>
           <th></th>
+          <% if current_user.admin? %>
+            <th><div>Has Parts?</div></th>
+          <% end %>
         </tr>
       </thead>
       <tbody class="product-table">
         <% @products.each do |product| %>
           <tr
-            data-child-parts="Parts"
-            data-child-upc="UPC"
+            data-child-parts="<table class='childPartsTable'>
+                                <thead>
+                                  <tr>
+                                    <th>Model #</th>
+                                    <th>Description</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <% if product.has_parts? %>
+                                    <% product.parts.each do |part| %>
+                                      <tr>
+                                        <% if part.manufacturer_model_number.present? %>
+                                          <td><a target='blank' href='/parts/<%= part.id %>'><%= part.manufacturer_model_number %></a></td>
+                                        <% else %>
+                                          <td><a target='blank' href='/parts/<%= part.id %>'>N/A</a></td>
+                                        <% end %>
+                                        <% if part.description.present? %>
+                                          <td><%= part.description %></td>
+                                        <% else %>
+                                          <td>N/A</td>
+                                        <% end %>
+                                      </tr>
+                                    <% end %>
+                                  <% else %>
+                                    <td colspan='2'>No Associated Parts</td>
+                                  <% end %>
+                                </tbody>
+                              </table>"
+            data-child-manufacturer="<% if product.vendor_name.present? %>
+                                       <%= product.vendor_name %>
+                                     <% else %>
+                                       N/A
+                                     <% end %>"
+            data-child-upc="<% if product.upc.present? %>
+                              <%= product.upc %>
+                            <% else %>
+                              N/A
+                            <% end %>"
+            data-child-srs_sku="<% if product.srs_sku.present? %>
+                                  <%= product.srs_sku %>
+                                <% else %>
+                                  N/A
+                                <% end %>"
             data-child-uploads="Uploads"
-            data-child-notes="&lt;span 
-                          data-bip-type=&quot;textarea&quot; 
-                          data-bip-attribute=&quot;notes&quot; 
-                          data-bip-inner-class=&quot;form-control&quot; 
-                          data-bip-object=&quot;product&quot; 
-                          data-bip-original-content=&quot;<%= product.notes %>&quot; 
-                          data-bip-skip-blur=&quot;false&quot; 
-                          data-bip-placeholder=&quot;Click here to add notes...&quot; 
-                          data-bip-url=&quot;/products/<%= product.id %>&quot; 
-                          data-bip-value=&quot;<%= product.notes %>&quot; 
-                          class=&quot;best_in_place textarea&quot; 
-                          id=&quot;best_in_place_product_<%= product.id %>_notes&quot;&gt;<%= product.notes %>&lt;/span&gt;"
-            data-child-details="<% if product.active? %>
-                                  <p>This SKU is active</p>
-                                <% else %>
-                                  <p>This SKU is <span style='color:red'>NOT</span> active</p>
-                                <% end %>
-                                <% if product.store_orderable? %>
-                                  <p>This SKU is Store Orderable</p>
-                                <% else %>
-                                  <p>This SKU is <span style='color:red'>NOT</span> Store Orderable</p>
-                                <% end %>
-                                <% if product.warranty_orderable? %>
-                                  <p>This SKU is Warranty Orderable</p>
-                                <% else %>
-                                  <p>This SKU is <span style='color:red'>NOT</span> Warranty Orderable</p>
-                                <% end %>
-                                <% if product.ecomm_sku? %>
-                                  <p>This SKU is an E-Commerce SKU</p>
-                                <% else %>
-                                  <p>This SKU is <span style='color:red'>NOT</span> an E-Commerce SKU</p>
-                                <% end %>
-                                <% if product.location.present? %>
-                                  <p>Location: <%= product.location %></p>
-                                <% else %>
-                                  <p>Location: N/A</p>
-                                <% end %>
-                                <p>Entry created on <%= product.created_at.strftime('%B %d, %Y') %></p>
-                                <p>Entry last updated on <%= product.updated_at.strftime('%B %d, %Y') %></p>"
-            data-child-photo="Photo"
-            data-child-pricing="<% if product.vendor_cost >= 0.01 %>
-                                  <p>Vendor Cost: $<%= number_with_precision(product.vendor_cost, precision: 2) %></p>
-                                <% else %>
-                                  <p>Vendor Cost: N/A</p>
-                                <% end %>
-                                <% if product.retail_cost >= 0.01 %>
-                                  <p>Retail Cost: $<%= number_with_precision(product.retail_cost, precision: 2) %></p>
-                                <% else %>
-                                  <p>Retail Cost: N/A</p>
-                                <% end %>
-                                <% if product.shipping_cost >= 0.01 %>
-                                  <p>Shipping Cost: $<%= number_with_precision(product.shipping_cost, precision: 2) %></p>
-                                <% else %>
-                                  <p>Shipping Cost: N/A</p>
-                                <% end %>">
+            data-child-notes="<% if product.active? %>
+                               <p><i class='fa fa-check-square-o' style='color:green'></i> Active&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             <% else %>
+                               <p><i class='fa fa-close' style='color:red'></i> Active&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             <% end %>
+                             <% if product.store_orderable? %>
+                               <i class='fa fa-check-square-o' style='color:green'></i> Store Orderable</p>
+                             <% else %>
+                               <i class='fa fa-close' style='color:red'></i> Store Orderable</p>
+                             <% end %>
+                             <% if product.ecomm_sku? %>
+                               <p><i class='fa fa-check-square-o' style='color:green'></i> E-Commerce SKU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             <% else %>
+                               <p><i class='fa fa-close' style='color:red'></i> E-Commerce SKU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             <% end %>
+                             <% if product.warranty_orderable? %>
+                               <i class='fa fa-check-square-o' style='color:green'></i> Warranty Orderable</p>
+                             <% else %>
+                               <i class='fa fa-close' style='color:red'></i> Warranty Orderable</p>
+                             <% end %>"
+            data-child-dates="<p>Added on <%= product.created_at.strftime('%B %d, %Y') %></p>
+                             <p>Last Updated on <%= product.updated_at.strftime('%B %d, %Y') %></p>">
             <td class="details-control"></td>
             <td>
-              <% if product.vendor_name.present? %>
-                <%= product.vendor_name %>
+              <% if product.image.present? %>
+                <%= image_tag product.image.url(:thumb) %>
               <% else %>
-                N/A
-              <% end %>
-            </td>
-            <td>
-              <% if product.manufacturer_model_number.present? %>
-                <%= link_to product.manufacturer_model_number, product_path(id: product.id), method: :get, target: '_blank', title: "View Product Details" %>
-              <% else %>
-                <%= link_to "N/A", product_path(id: product.id), method: :get, target: '_blank', title: "View Product Details" %>
+                No Image Available
               <% end %>
             </td>
             <td>
               <% if product.brand_name.present? %>
                 <%= product.brand_name %>
-              <% else %>
-                N/A
-              <% end %>
-            </td>
-            <td>
-              <% if product.srs_sku.present? %>
-                <%= product.srs_sku %>
               <% else %>
                 N/A
               <% end %>
@@ -116,6 +113,13 @@
               <% end %>
             </td>
             <td>
+              <% if product.manufacturer_model_number.present? %>
+                <%= link_to product.manufacturer_model_number, product_path(id: product.id), method: :get, target: '_blank', title: "View Product Details" %>
+              <% else %>
+                <%= link_to "N/A", product_path(id: product.id), method: :get, target: '_blank', title: "View Product Details" %>
+              <% end %>
+            </td>
+            <td>
               <% if product.count_on_hand.present? %>
                 <%= product.count_on_hand %>
               <% else %>
@@ -124,14 +128,43 @@
             </td>
             <td><%= product.product_weight %></td>
             <td>
-              <%= product.product_dims_l %>"x<%= product.product_dims_w %>"x<%= product.product_dims_h %>"
+              <p>Product: <%= product.product_dims_l %>"x<%= product.product_dims_w %>"x<%= product.product_dims_h %>"</p>
+              <p>Packaged: <%= product.packaged_dims_l %>"x<%= product.packaged_dims_w %>"x<%= product.packaged_dims_h %>"</p>
             </td>
             <td>
-              <%= product.packaged_dims_l %>"x<%= product.packaged_dims_w %>"x<%= product.packaged_dims_h %>"
+              <% if product.vendor_cost >= 0.01 %>
+                <p>Vendor Cost: $<%= number_with_precision(product.vendor_cost, precision: 2) %></p>
+              <% else %>
+                <p>Vendor Cost: N/A</p>
+              <% end %>
+              <% if product.retail_cost >= 0.01 %>
+                <p>Retail Cost: $<%= number_with_precision(product.retail_cost, precision: 2) %></p>
+              <% else %>
+                <p>Retail Cost: N/A</p>
+              <% end %>
+              <% if product.shipping_cost >= 0.01 %>
+                <p>Shipping Cost: $<%= number_with_precision(product.shipping_cost, precision: 2) %></p>
+              <% else %>
+                <p>Shipping Cost: N/A</p>
+              <% end %>
+            </td>
+            <td>
+              <% if product.notes.present? %>
+                <%= simple_format product.notes %>
+                <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-outline-warning btn-sm' %>
+              <% else %>
+                N/A
+                <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-outline-warning btn-sm' %>
+              <% end %>
             </td>
             <td>  <!-- Hidden field to add table search ability to Child Rows -->
 
             </td>
+            <% if current_user.admin? %>
+              <td>
+                <%= best_in_place product, :has_parts, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

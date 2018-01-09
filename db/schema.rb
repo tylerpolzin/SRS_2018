@@ -10,11 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171231201628) do
+ActiveRecord::Schema.define(version: 20180107041848) do
 
   create_table "pages", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "parts", force: :cascade do |t|
+    t.integer "product_id"
+    t.string "manufacturer_model_number"
+    t.string "srs_sku"
+    t.boolean "store_orderable", default: true
+    t.boolean "warranty_orderable", default: true
+    t.boolean "ecomm_sku", default: false
+    t.string "upc"
+    t.text "description"
+    t.integer "weight_pounds", default: 0
+    t.integer "weight_ounces", default: 0
+    t.integer "product_dims_l", default: 0
+    t.integer "product_dims_w", default: 0
+    t.integer "product_dims_h", default: 0
+    t.integer "packaged_dims_l", default: 0
+    t.integer "packaged_dims_w", default: 0
+    t.integer "packaged_dims_h", default: 0
+    t.string "location"
+    t.integer "count_on_hand", default: 0
+    t.decimal "vendor_cost", default: "0.0"
+    t.decimal "retail_cost", default: "0.0"
+    t.decimal "shipping_cost", default: "0.0"
+    t.boolean "active", default: true
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.boolean "remove_image", default: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -44,6 +77,12 @@ ActiveRecord::Schema.define(version: 20171231201628) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.boolean "remove_image", default: false
+    t.boolean "has_parts", default: false
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -76,6 +115,25 @@ ActiveRecord::Schema.define(version: 20171231201628) do
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["name"], name: "index_roles_on_name"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  end
+
+  create_table "stockmovement_batches", force: :cascade do |t|
+    t.integer "stockmovement_id"
+    t.integer "user_id"
+    t.string "stockmovement_type"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "stockmovements", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "part_id"
+    t.integer "quantity"
+    t.integer "adjust_quantity"
+    t.integer "stockmovement_batch_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

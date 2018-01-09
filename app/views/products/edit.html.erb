@@ -1,6 +1,6 @@
 <% @title = "SRS Portal | Edit Product" %>
 <div style="width:1060px;" id="editProductDiv">
-  <p class="editProductHeader">Edit Product</p>
+  <p class="editProductHeader">Edit Product Information</p>
   <div class="container editProductForm" style="width:100%;">
     <%= bootstrap_form_for @product, url: product_path, method: :patch, :html => { :multipart => true } do |f| %>
       <% if @product.errors.any? %>
@@ -12,7 +12,7 @@
           <% end %>
           </ul>
         </div>
-      <% end %> <!-- if @item.errors.any? -->
+      <% end %> <!-- if @product.errors.any? -->
       <ul class="nav nav-tabs">
         <li class="active"><a id="editProductForm" href="#edit-product-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Product Details</a></li>
         <!--<li><a id="editProductUploads" href="#edit-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Edit Associated Files</a></li>-->
@@ -33,7 +33,7 @@
           <!--</div>-->
         </div>
       </div>
-      <%= f.primary "Edit Product", :style => "float:right;" %>
+      <%= f.primary "Update Product", :style => "float:right;" %>
     <% end %>
   </div>
 </div>

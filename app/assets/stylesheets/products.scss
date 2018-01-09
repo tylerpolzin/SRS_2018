@@ -23,7 +23,14 @@
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
-#newProductForm {
+.newProductForm {
+  padding: 20px 20px 20px 0;
+  background-color: #d1dbe4;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+  border-bottom-right-radius: 30px;
+}
+
+#newProductNavTab {
   margin-left: 40px;
 }
 
@@ -44,13 +51,6 @@
     margin: 0;
     width: 100%;
   }
-}
-
-.newProductForm {
-  padding: 20px 20px 20px 0;
-  background-color: #d1dbe4;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-  border-bottom-right-radius: 30px;
 }
 
 //                            New Product 'Form' related CSS                                           |
@@ -125,8 +125,12 @@
       }
     }
   }
-  tbody tr:nth-child(10) td { // Bottom Blank Row
-    padding: 18px 0 17px 0;
+  tbody tr:nth-child(10) td:last-child { // Image Row
+    background-color: white;
+    div input {
+      padding: 6px;
+      background-color: white;
+    }
   }
 }
 
@@ -303,7 +307,29 @@
   }
 }
 
+#editImageOptions {
+  border: 0 0 1px 0 solid #ccc;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px solid #ccc;
+  border-left: 0;
+  border-radius: 0;
+  &:focus {
+    box-shadow: inset 0px 0px 5px #ff9800;
+  }
+}
 
+.image-border {
+  background-color: white;
+  margin: 5px;
+  padding: 2px;
+  border: 2px solid orange;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.image-border-red {
+  border: 2px solid red;
+}
 
 //------------------------------------------------------------------------------------------------------
 //                               Product 'SHOW' related CSS                                            |
@@ -512,11 +538,13 @@
   font-size: .9em;
   text-align: center;
   vertical-align: middle;
-}
+  tr td {
+    border-right: 1px solid #ccc;
+  }}
 
 .products-toolbar {
   float: left;
-  padding-left: 62px;
+  padding-left: 30px;
   display: inline;
   .nav-tabs {
     border-bottom: 0;
@@ -526,22 +554,29 @@
 .glider-table {
   padding: 0;
 }
-.products-toolbar > .nav > li > a {
-  padding: 8px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3)
+.products-toolbar > .nav > li {
+  a {
+    padding: 8px;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+  }
+  form > input {
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+  }
 }
 
 #productTableSearch {
+  font-family: 'Abel', sans-serif;
   color: black;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
   margin-left: 9px;
 }
 #productTableLength {
+  font-family: 'Abel', sans-serif;
   width: 55px;
-  margin-left: 20px;
+  margin-left: 10px;
   margin-right: 10px;
   padding-right: 0;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3)
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15)
 }
 
 .product-listing-expando {
@@ -554,16 +589,37 @@
   border-bottom: 2px solid orange !important;
   margin-bottom: 5px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-  tr:first-child td {
+  thead tr th {
     font-size: 1em;
     font-weight: 200;
+    text-align: center;
     background-color: #646e78;
     color: #e1ffff;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
   }
-  tr:last-child td {
+  tbody tr td {
     text-align: center;
+    vertical-align: top;
     border-right: 1px solid #ddd;
   }
 }
 
+.childPartsTable {
+  width: 100%;
+  // thead tr th:first-child {
+  //   border-right: 1px solid #ccc;
+  // }
+  thead tr th {
+    border-bottom: 1px solid black;
+    background-color: white;
+    color: black;
+    font-weight: 600;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3)
+  }
+  tbody tr {
+    border-bottom: 1px solid #ccc;
+  }
+  tbody tr:last-child {
+    border-bottom: 0;
+  }
+}

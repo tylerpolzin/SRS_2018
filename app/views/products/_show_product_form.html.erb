@@ -4,11 +4,11 @@
 </div>
 <div id="show-product-wrapper">
   <div class="show-image">
-    <%# if @product.avatar.present? %>
-      <%#= image_tag @product.avatar.url(:medium) %>
-    <%# else %>
+    <% if @product.image.present? %>
+      <%= image_tag @product.image.url(:medium) %>
+    <% else %>
       <p style="margin: 10px;">No Image Attached</p>
-    <%# end %>
+    <% end %>
   </div>
   <table class="table table-bordered" id="showProductNotes">
     <thead></thead>

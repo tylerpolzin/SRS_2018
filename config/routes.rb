@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :stockmovement_batches
+  resources :parts
   resources :products
   resources :pages
 

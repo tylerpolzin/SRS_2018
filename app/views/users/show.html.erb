@@ -5,7 +5,14 @@
     <ul class="nav nav-tabs">
       <li class="active"><a id="showProfileForm" href="#show-profile-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> My Profile</a></li>
       <li><a id="showTaskForm" href="#show-task-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> My Tasks</a></li>
-      <li><a id="showProductsForm" href="#show-products-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> My Products</a></li>
+      <% if current_user.admin? %>
+        <li><a id="employeeProductsForm" href="#dashboard-employee-products" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Employee Products</a></li>
+        <li><a id="drsharpProductsForm" href="#dashboard-drsharp-products" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Dr Sharp Products</a></li>
+      <% elsif current_user.has_role? (:employee) %>
+        <li><a id="employeeProductsForm" href="#dashboard-employee-products" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> My Products</a></li>
+      <% elsif current_user.has_role? (:drsharp) %>
+        <li><a id="drsharpProductsForm" href="#dashboard-drsharp-products" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> My Products</a></li>
+      <% end %>
       <li><a id="showFilesForm" href="#show-files-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> My Files</a></li>
     </ul>
     
@@ -17,9 +24,22 @@
         <div id="show-task-form" class="tab-pane fade container">
           <%= render "show_task_form" %>
         </div>
-        <div id="show-products-form" class="tab-pane fade container">
-          <%= render "show_products_form" %>
-        </div>
+        <% if current_user.admin? %>
+          <div id="dashboard-employee-products" class="tab-pane fade container">
+            <%= render "dashboard_employee_products" %>
+          </div>
+          <div id="dashboard-drsharp-products" class="tab-pane fade container">
+            <%= render "dashboard_drsharp_products" %>
+          </div>
+        <% elsif current_user.has_role? (:employee) %>
+          <div id="dashboard-employee-products" class="tab-pane fade container">
+            <%= render "dashboard_employee_products" %>
+          </div>
+        <% elsif current_user.has_role? (:drsharp) %>
+          <div id="dashboard-drsharp-products" class="tab-pane fade container">
+            <%= render "dashboard_drsharp_products" %>
+          </div>
+        <% end %>
         <div id="show-files-form" class="tab-pane fade container">
           <%= render "show_files_form" %>
         </div>

@@ -35,12 +35,26 @@ body {
   background-image: url("main-content-bg-3.jpg");
 }
 
+::selection {
+  background: #f7cb00; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #f7cb00; /* Gecko Browsers */
+}
+
 // Bootstrap form orange glow color
 .form-control:focus {
   border-color: #ffc55f;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 188, 0, 0.4);
 }
 
+.btn {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  color: #255aad;
+  border: 1px solid orange;
+  background: linear-gradient(to bottom, white, #d5dfe7);
+}
 
 // Fixes bottom margin for search box on tables in conjunction with clear "X"
 .add-clear-span {
@@ -55,6 +69,34 @@ body {
    border: 0;
    min-height: 35px;
   }
+}
+
+// Default Select2 related CSS
+
+.select2-results__option,
+.select2-selection__placeholder,
+.select2-selection__rendered,
+.select2-search__field {
+  font-family: 'Abel', sans-serif !important;
+  font-size: 1em;
+}
+.select2-selection {
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.select2-dropdown--above {
+  border: 1px solid orange !important;;
+  border-bottom: none !important;	 
+}
+
+.select2-dropdown--below{
+  border: 1px solid orange !important;;
+  border-top: none !important;	 
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple{
+  border: 1px solid orange !important;;
 }
 
 //------------------------------------------------

@@ -79,8 +79,8 @@
                 <li><%= link_to "My Products", products_path %></li>
               <% end %>
               <li><%= link_to "Create New Product", new_product_path, method: :get %></li>
-              <li>All Parts</li>
-              <li>Create New Part</li>
+              <li><%= link_to "All Parts", parts_path %></li>
+              <li><%= link_to "Create New Part", new_part_path, method: :get %></li>
               <li>Inventory Adjustments</li>
             </ul>
             <li data-toggle="collapse" data-target="#uploads" class="collapsed">

@@ -1,0 +1,117 @@
+<div class="container" style="width:100%;">
+  <table class="table table-bordered" id="newPartTableLeft">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td>Associated Product</td>
+        <td>
+          <%= f.collection_select(:product_id, Product.all, :id, :product_select_with_model, {:include_blank => "Select Product...", hide_label: true}, {:class => 'newPartProductSearch', :style => "width:100%;"}) %>
+          </td>
+      </tr>
+      <tr>
+        <td>MFR Model Number</td>
+        <td><%= f.text_field :manufacturer_model_number, hide_label: true, placeholder: "ex: BPT14-24AL-BN" %></td>
+      </tr>
+      <tr>
+        <td>UPC</td>
+        <td><%= f.text_field :upc, hide_label: true, placeholder: "ex: 639385319416" %></td>
+      </tr>
+      <tr>
+        <td>SRS SKU</td>
+        <td><%= f.text_field :srs_sku, hide_label: true, placeholder: "ex: DRND110CRM" %></td>
+      </tr>
+      <tr>
+        <td>Location</td>
+        <td><%= f.text_field :location, hide_label: true, placeholder: "ex: s01-r07-TOP" %></td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td><%= f.text_field :description, hide_label: true, placeholder: "ex: Decorative 3-Light Brushed Nickel Bath Fan" %></td>
+      </tr>
+      <tr>
+        <td>Qty On Hand</td>
+        <td><%= f.number_field :count_on_hand, hide_label: true, placeholder: "ex: 25" %></td>
+      </tr>
+      <tr>
+        <td>Weight</td>
+        <td>
+          <%= f.number_field :weight_pounds, min: 0, hide_label: true, append: "lbs", placeholder: "ex: 7" %>
+          <%= f.number_field :weight_ounces, min: 0, hide_label: true, append: "oz", placeholder: "ex: 3" %>
+        </td>
+      </tr>
+      <tr>
+        <td>Image</td>
+        <td>
+        <% if @part.image? %>
+          <select class="form-control" id="editImageOptions">
+            <option>Keep Current Image</option>
+            <option>Delete Current Image</option>
+            <option>Replace Current Image</option>
+          </select>
+          <%= f.check_box_without_bootstrap :remove_image, :checked => false, class: 'hidden', :id => "editRemoveImage" %>
+          <%= image_tag @part.image.url(:thumb), class: "image-border", :id => "editImageTag" %>
+          <div class="form-group" id="editNewImage">
+            <%= f.file_field_without_bootstrap :image %>
+          </div>
+        <% else %>
+          <%= f.file_field :image, hide_label: true %>
+          <%= f.check_box_without_bootstrap :remove_image, :checked => false, class: 'hidden' %>
+        <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered" id="newPartTableRight">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td>Part Dimensions</td>
+        <td>
+          <%= f.number_field :product_dims_l, min: 0, hide_label: true, prepend: "L", placeholder: "ength", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
+          <%= f.number_field :product_dims_w, min: 0, hide_label: true, prepend: "W", placeholder: "idth", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
+          <%= f.number_field :product_dims_h, min: 0, hide_label: true, prepend: "H", placeholder: "eight", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding-bottom:9px;">Packaged Dimensions</td>
+        <td>
+          <%= f.number_field :packaged_dims_l, min: 0, hide_label: true, prepend: "L", placeholder: "ength", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
+          <%= f.number_field :packaged_dims_w, min: 0, hide_label: true, prepend: "W", placeholder: "idth", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
+          <%= f.number_field :packaged_dims_h, min: 0, hide_label: true, prepend: "H", placeholder: "eight", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
+        </td>
+      </tr>
+      <tr>
+        <td>Vendor Cost</td>
+        <td><%= f.number_field :vendor_cost, min: 0, hide_label: true, prepend: "$", placeholder: "ex: 30.00", value: number_to_currency(f.object.vendor_cost.to_f, delimiter: '', unit: ''), :step => 0.01 %></td>
+      </tr>
+      <tr>
+        <td>Retail Cost</td>
+        <td><%= f.number_field :retail_cost, min: 0, hide_label: true, prepend: "$", placeholder: "ex: 49.99", value: number_to_currency(f.object.retail_cost.to_f, delimiter: '', unit: ''), :step => 0.01 %></td>
+      </tr>
+      <tr>
+        <td>Shipping Cost</td>
+        <td><%= f.number_field :shipping_cost, min: 0, hide_label: true, prepend: "$", placeholder: "ex: 10.00", value: number_to_currency(f.object.shipping_cost.to_f, delimiter: '', unit: ''), :step => 0.01 %></td>
+      </tr>
+      <tr>
+        <td>Store Orderable?</td>
+        <td><%= f.select :store_orderable, [['Yes', 'true'],['No', 'false']], hide_label: true %></td>
+      </tr>
+      <tr>
+        <td>Warranty Orderable?</td>
+        <td><%= f.select :warranty_orderable, [['Yes', 'true'],['No', 'false']], hide_label: true %></td>
+      </tr>
+      <tr>
+        <td>E-Commerce SKU?</td>
+        <td><%= f.select :ecomm_sku, [['Yes', 'true'],['No', 'false']], hide_label: true %></td>
+      </tr>
+      <tr>
+        <td>Currently Active?</td>
+        <td><%= f.select :active, [['Yes', 'true'],['No', 'false']], hide_label: true %></td>
+      </tr>
+      <tr>
+        <td>Additional Notes</td>
+        <td><%= f.text_area :notes, hide_label: true, rows: 1, wrapper: {class: 'textarea-vertical'} %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

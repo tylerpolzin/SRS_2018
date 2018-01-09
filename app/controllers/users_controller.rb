@@ -10,6 +10,11 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @roles = Role.includes(:users_role).where(:users_roles => {:user_id => params[:id]})
+    if current_user.admin? or current_user.has_role? (:employee)
+      @products = Product.all
+    elsif current_user.has_role? (:drsharp)
+      @products = Product.where(:brand_name => "Dr Sharp")
+    end
   end
   
   def index

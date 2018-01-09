@@ -1,0 +1,156 @@
+<% @title = "SRS Portal | Part List" %>
+<div style="width:1600px;" id="partListDiv">
+  <p class="partHeader">Part List</p>
+  <div class="partsTable">
+    <table id="partsDataTable" class="display" style="width: 100%;">
+      <thead>
+        <tr>
+          <th><div></div></th>
+          <th><div>Image</div></th>
+          <th><div>Brand Name</div></th>
+          <th><div>Description</div></th>
+          <th><div>MFR Product Model #</div></th>
+          <th><div>MFR Part #</div></th>
+          <th><div>SRS SKU</div></th>
+          <th><div>Qty On Hand</div></th>
+          <th><div>Weight</div></th>
+          <th><div>Dimensions</div></th>
+          <th><div>Pricing</div></th>
+          <th><div>Additional Notes</div></th>
+          <th></th>
+        </tr>
+      </thead>
+      
+        <div class="partTableChildren" data-child-filter="<% @products.each do |pr| %><option name='<%= pr.manufacturer_model_number %>' value='<%= pr.id %>'><%= pr.product_select_with_model %></option><% end %>"></div>
+      
+      <tbody class="part-table">
+        <% @parts.each do |part| %>
+          <tr
+            data-child-manufacturer="<% if part.product.vendor_name.present? %>
+                                       <%= part.product.vendor_name %>
+                                     <% else %>
+                                       N/A
+                                     <% end %>"
+                data-child-location="<% if part.location.present? %>
+                                       <%= part.location %>
+                                     <% else %>
+                                       N/A
+                                     <% end %>"
+                     data-child-upc="<% if part.upc.present? %>
+                                       <%= part.upc %>
+                                     <% else %>
+                                       N/A
+                                     <% end %>"
+                  data-child-orders="Recent Orders Here"
+                   data-child-notes="<% if part.active? %>
+                                       <p><i class='fa fa-check-square-o' style='color:green'></i> Active&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                     <% else %>
+                                       <p><i class='fa fa-close' style='color:red'></i> Active&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                     <% end %>
+                                     <% if part.store_orderable? %>
+                                       <i class='fa fa-check-square-o' style='color:green'></i> Store Orderable</p>
+                                     <% else %>
+                                       <i class='fa fa-close' style='color:red'></i> Store Orderable</p>
+                                     <% end %>
+                                     <% if part.ecomm_sku? %>
+                                       <p><i class='fa fa-check-square-o' style='color:green'></i> E-Commerce SKU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                     <% else %>
+                                       <p><i class='fa fa-close' style='color:red'></i> E-Commerce SKU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                     <% end %>
+                                     <% if part.warranty_orderable? %>
+                                       <i class='fa fa-check-square-o' style='color:green'></i> Warranty Orderable</p>
+                                     <% else %>
+                                       <i class='fa fa-close' style='color:red'></i> Warranty Orderable</p>
+                                     <% end %>"
+                   data-child-dates="<p>Added on <%= part.created_at.strftime('%B %d, %Y') %></p>
+                                     <p>Last Updated on <%= part.updated_at.strftime('%B %d, %Y') %></p>">
+            <td class="details-control"><div class="hidden partProductId" name="<%= part.product_id %>"><%= part.product_id %></div></td>
+            <td>
+              <% if part.image.present? %>
+                <%= image_tag part.image.url(:thumb) %>
+              <% else %>
+                No Image Available
+              <% end %>
+            </td>
+            <td>
+              <% if part.product.brand_name.present? %>
+                <%= part.product.brand_name %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+            <td>
+              <% if part.description.present? %>
+                <%= part.description %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+            <td>
+              <% if part.product.manufacturer_model_number.present? %>
+                <%= part.product.manufacturer_model_number %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+            <td>
+              <% if part.manufacturer_model_number.present? %>
+                <%= link_to part.manufacturer_model_number, part_path(id: part.id), method: :get, target: '_blank', title: "View Part Details" %>
+              <% else %>
+                <%= link_to "N/A", part_path(id: part.id), method: :get, target: '_blank', title: "View Part Details" %>
+              <% end %>
+            </td>
+            <td>
+              <% if part.srs_sku.present? %>
+                <%= part.srs_sku %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+            <td>
+              <% if part.count_on_hand.present? %>
+                <%= part.count_on_hand %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+            <td><%= part.part_weight %></td>
+            <td>
+              <p>Product: <%= part.product_dims_l %>"x<%= part.product_dims_w %>"x<%= part.product_dims_h %>"</p>
+              <p>Packaged: <%= part.packaged_dims_l %>"x<%= part.packaged_dims_w %>"x<%= part.packaged_dims_h %>"</p>
+            </td>
+            <td>
+              <% if part.vendor_cost >= 0.01 %>
+                <p>Vendor Cost: $<%= number_with_precision(part.vendor_cost, precision: 2) %></p>
+              <% else %>
+                <p>Vendor Cost: N/A</p>
+              <% end %>
+              <% if part.retail_cost >= 0.01 %>
+                <p>Retail Cost: $<%= number_with_precision(part.retail_cost, precision: 2) %></p>
+              <% else %>
+                <p>Retail Cost: N/A</p>
+              <% end %>
+              <% if part.shipping_cost >= 0.01 %>
+                <p>Shipping Cost: $<%= number_with_precision(part.shipping_cost, precision: 2) %></p>
+              <% else %>
+                <p>Shipping Cost: N/A</p>
+              <% end %>
+            </td>
+            <td>
+              <% if part.notes.present? %>
+                <%= simple_format part.notes %>
+                <%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm btn-secondary' %>
+              <% else %>
+                N/A
+                <%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm btn-secondary' %>
+              <% end %>
+            </td>
+            <td>  <!-- Hidden field to add table search ability to Child Rows -->
+
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -36,14 +36,15 @@ class ProductsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @product.update(product_params)
-        format.html { redirect_to @product, notice: '// Product has been updated.' }
-        format.json { render :show, status: :ok, location: @product }
-      else
-        format.html { render :edit }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+    @product = Product.find(params[:id])
+    if @product.update_attributes(product_params)
+      if @product.remove_image == true
+        @product.image = nil
+        @product.save
       end
+      redirect_to product_path(params[:id]), notice: '// Product has been updated.'
+    else
+      render action: :edit
     end
   end
 
