@@ -1,7 +1,3 @@
-<div class="show-product-top">
-  <p class="show-product-brand-name"><%= @product.brand_name %></p>
-  <p class="show-product-description"><%= @product.description %></p>
-</div>
 <div id="show-product-wrapper">
   <div class="show-image">
     <% if @product.image.present? %>
@@ -115,33 +111,15 @@
     </tr>
     <tr>
       <td>Qty On Hand</td>
-      <td>
-        <%= @product.count_on_hand %>
-        <%# if @product.stockmovements.exists? %>
-          <%# @product.stockmovements.last(1).each do |s| %>
-            <%#= s.quantity %>
-          <%# end %>
-        <%# end %>
-      </td>
+      <td><%= @product.quantity_on_hand %></td>
     </tr>    
-    <!--<tr>-->
-    <!--  <td>Qty Last Updated</td>-->
-    <!--  <td>-->
-    <!--    <%# if @product.stockmovements.exists? %>-->
-    <!--      <%# @product.stockmovements.last(1).each do |s| %>-->
-    <!--        <%#= s.created_at.strftime('%B %d, %Y') %>-->
-    <!--      <%# end %>-->
-    <!--    <%# else %>-->
-    <!--      N/A-->
-    <!--    <%# end %>-->
-    <!--  </td>-->
-    <!--</tr>-->
-    <!-- Add "view history" link to stockmovement history for individual item once complete -->
+    <tr>
+      <td>Qty Last Updated</td>
+      <td><%= @product.qty_last_updated %></td>
+    </tr>
     <tr>
       <td>Weight</td>
-      <td>
-        <%= @product.weight_pounds %> lbs. <%= @product.weight_ounces %> oz.
-      </td>
+      <td><%= @product.product_weight %></td>
     </tr>
     <tr>
       <td>Product Dimensions</td>
@@ -233,8 +211,12 @@
       <td>Product Last Updated</td>
       <td><%= @product.updated_at.strftime('%B %d, %Y') %></td>
     </tr>
-    <tr>
-      <td colspan="2" class="show-product-edit-button"><%= button_to "Edit This Product", edit_product_path(id: params[:id]), method: :get, class: 'btn btn-sm btn-primary' %></td>
-    </tr>
+    <% if current_user.admin? or current_user.has_role? (:employee) %>
+      <tr>
+        <td colspan="2" class="show-product-edit-button">
+          <%= button_to "Edit This Product", edit_product_path(id: @product.id), method: :get, class: 'btn btn-sm btn-primary' %>
+        </td>
+      </tr>
+    <% else %><% end %>
   </tbody>
 </table>

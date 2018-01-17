@@ -20,9 +20,7 @@
           <th></th>
         </tr>
       </thead>
-      
-        <div class="partTableChildren" data-child-filter="<% @products.each do |pr| %><option name='<%= pr.manufacturer_model_number %>' value='<%= pr.id %>'><%= pr.product_select_with_model %></option><% end %>"></div>
-      
+      <div class="partTableChildren" data-child-filter="<% @products.each do |pr| %><option name='<%= pr.manufacturer_model_number %>' value='<%= pr.id %>'><%= pr.product_select_with_model %></option><% end %>"></div>
       <tbody class="part-table">
         <% @parts.each do |part| %>
           <tr
@@ -108,11 +106,8 @@
               <% end %>
             </td>
             <td>
-              <% if part.count_on_hand.present? %>
-                <%= part.count_on_hand %>
-              <% else %>
-                N/A
-              <% end %>
+              <p><%= part.quantity_on_hand %></p>
+              <p>Last Updated: <%= part.qty_last_updated %></p>
             </td>
             <td><%= part.part_weight %></td>
             <td>

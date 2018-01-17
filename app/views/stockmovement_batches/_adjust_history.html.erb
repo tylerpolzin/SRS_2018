@@ -1,0 +1,60 @@
+<div class="adjustHistoryTable">
+  <div class="info"></div>
+  <table id="adjustHistoryDataTable" class="display" style="width: 100%;">
+    <thead>
+      <tr>
+        <th id="detailsDblClick"><div style="width: 10px"></div></th>
+        <th><div style="width: 200px">Date</div></th>
+        <th><div style="width: 150px">Type</div></th>
+        <th><div style="width: 100px">Created By</div></th>
+        <th></th> <!-- Blank column for nested dropdown data to add search ability -->
+      </tr>
+    </thead>
+    <tbody class="adjust-history-table">
+      <% @stockmovement_batches.each do |i| %>
+        <tr
+          data-child-type="<% i.stockmovements.each do |s| %>
+                             <% if s.is_product %>
+                               <p>Product</p>
+                             <% elsif s.is_part %>
+                               <p>Part</p>
+                              <% end %>
+                           <% end %>"
+          data-child-items=" <% i.stockmovements.each do |s| %>
+                                  <% if s.is_product %>
+                                    &lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;/items/<%= s.product_id %>&quot;&gt;<%= s.product.model_select %>&lt;/a&gt;&lt;/p&gt;
+                                  <% elsif s.is_part %>
+                                    &lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;/parts/<%= s.part_id %>&quot;&gt;<%= s.part.part_select %>&lt;/a&gt;&lt;/p&gt;
+                                  <% else %>
+                                    <p>No Sku's Present</p>
+                                  <% end %>
+                                <% end %>"
+          data-child-adjust_quantity="<% i.stockmovements.each do |aq| %>
+                                        <% if aq.adjust_quantity.present? %>
+                                          <p><%= aq.adjust_quantity_plus %></p>
+                                        <% else %>
+                                          <p>None Indicated</p>
+                                        <% end %>
+                                      <% end %>"
+          data-child-new_quantity="<% i.stockmovements.each do |q| %>
+                                      <% if q.quantity.present? %>
+                                        <p><%= q.quantity %></p>
+                                      <% else %>
+                                        <p>None Indicated</p>
+                                      <% end %>
+                                    <% end %>"
+          data-child-notes="<% if i.notes.present? %>
+                              <%= i.notes %>
+                            <% else %>
+                              <p>No Notes</p>
+                            <% end %>">
+          <td class="details-control"></td>
+          <td><%= i.created_at.strftime('%Y-%m-%d (%R)') %></td>
+          <td><%= i.stockmovement_type %></td>
+          <td><%= i.user.header_name %></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

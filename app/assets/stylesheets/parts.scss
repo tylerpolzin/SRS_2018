@@ -17,7 +17,7 @@
   border-top-right-radius: 30px;
   border-bottom: 4px solid #d19b3d;
   background-image: url("gray-texture-1.jpg");
-  color: #e1ffff;
+  color: #d8d8d8;
   padding: 15px;
   margin-bottom: 0;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
@@ -270,7 +270,7 @@
   border-top-right-radius: 30px;
   border-bottom: 4px solid #d19b3d;
   background-image: url("gray-texture-1.jpg");
-  color: #e1ffff;
+  color: #d8d8d8;
   padding: 15px;
   margin-bottom: 0;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
@@ -346,7 +346,7 @@
   border-top-right-radius: 30px;
   border-bottom: 4px solid #d19b3d;
   background-image: url("gray-texture-1.jpg");
-  color: #e1ffff;
+  color: #d8d8d8;
   padding: 15px;
   margin-bottom: 0;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
@@ -371,7 +371,6 @@
 #showPartTabs {
   background-color: white;
   margin-bottom: 10px;
-  padding-left: 5px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -381,7 +380,7 @@
   }
 }
 
-//                               'SHOW_PRODUCT_FORM' related CSS                                       |
+//                               'SHOW_PART_FORM' related CSS                                       |
 
 
 #show-part-form {
@@ -483,6 +482,8 @@
 
 //                               'SHOW_MOVEMENT_HISTORY' related CSS                                   |
 
+// CSS for this tab is duplicate of the same tab from the 'Products' CSS
+
 //                               'SHOW_RECENT_ORDERS' related CSS                                      |
 
 //------------------------------------------------------------------------------------------------------
@@ -504,7 +505,7 @@
   border-top-right-radius: 30px;
   border-bottom: 4px solid #d19b3d;
   background-image: url("gray-texture-1.jpg");
-  color: #e1ffff;
+  color: #d8d8d8;
   padding: 15px;
   margin-bottom: 0;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
@@ -587,13 +588,14 @@
     font-size: 1em;
     font-weight: 200;
     background-color: #646e78;
-    color: #e1ffff;
+    color: #d8d8d8;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
   }
   tr:last-child td {
     text-align: center;
     vertical-align: top;
     border-right: 1px solid #ddd;
+    padding-bottom: 0;
   }
 }
 

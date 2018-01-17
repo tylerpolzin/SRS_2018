@@ -14,7 +14,7 @@ class Part < ApplicationRecord
   end
 
   def id_w_leading_zero # Displays ID's that are less than 100 as "001"-"099", used when manually linking attached image URL's where the helper doesn't work
-    if self.id < 100
+    if self.id < 100 # Keep an eye on this in case the DB is close to passing 1,000
       if self.id < 10
         "00#{self.id}"
       else
@@ -32,9 +32,21 @@ class Part < ApplicationRecord
         quantity = s.quantity
       end
     else
-      quantity = 0
+      quantity = self.count_on_hand
     end
     quantity
+  end
+  
+  def qty_last_updated
+    last_update = []
+    if self.stockmovements.exists?
+      self.stockmovements.last(1).each do |s|
+        last_update = s.created_at.strftime('%Y-%m-%d (%R)')
+      end
+    else
+      last_update = "N/A"
+    end
+    last_update
   end
   
   def part_ounces

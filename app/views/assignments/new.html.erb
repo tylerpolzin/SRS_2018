@@ -1,0 +1,8 @@
+<% @title = "SRS Portal | New Assignment Entry" %>
+<div style="width: 800px;" id="newAssignmentDiv">
+  <% if current_user.admin? %>
+    <%= render "form" %>
+  <% else %>
+    <%= render "bug_report" %>
+  <% end %>
+</div>

@@ -1,19 +1,24 @@
 class UsersController < ApplicationController
-
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  #before_action :only_current_user
-  
+
   def new
     @user = User.new
   end
 
   def show
     @user = User.find(params[:id])
+    if current_user != @user
+      if !current_user.admin?
+        redirect_to authenticated_root_path, notice: "// You can't do that!"
+      end
+    end
+    @profile = @user.profile
     @roles = Role.includes(:users_role).where(:users_roles => {:user_id => params[:id]})
-    if current_user.admin? or current_user.has_role? (:employee)
-      @products = Product.all
-    elsif current_user.has_role? (:drsharp)
-      @products = Product.where(:brand_name => "Dr Sharp")
+    if current_user.admin? and current_user == @user
+      @activeassignments = Assignment.where(:active => true).where(:user_id => 1)
+      @completeassignments = Assignment.where(:active => false)
+      @bugreportassignments = Assignment.where(:active => true).where.not(:user_id => 1)
     end
   end
   
@@ -41,14 +46,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    @users = User.find(params[:id])
+    @user = User.find(params[:id])
     respond_to do |format|
-      if @users.update(user_params)
-        format.html { redirect_to @users, notice: '// User has been updated!' }
-        format.json { respond_with_bip(@users) }
+      if @user.update(user_params)
+        format.html { redirect_to authenticated_root_path, notice: '// User has been updated!' }
+        format.json { respond_with_bip(@user) }
       else
         format.html { render :edit }
-        format.json { respond_with_bip(@users) }
+        format.json { respond_with_bip(@user) }
       end
     end
   end
@@ -70,7 +75,11 @@ class UsersController < ApplicationController
 
 
   private
-      
+    
+    def set_user
+      @user = User.find(params[:id])
+    end
+    
     def user_params
       params.require(:user).permit!
     end
@@ -85,10 +94,6 @@ class UsersController < ApplicationController
     
     def profile_params
       params.require(:profile).permit!
-    end
-
-    def only_current_user
-      redirect_to(root_url, :notice => "// You can't do that!") unless current_user.id.to_s == params[:id]
     end
 
 end

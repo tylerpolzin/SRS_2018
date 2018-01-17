@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   
+  resources :stockmovements
+  resources :assignments
   resources :stockmovement_batches
   resources :parts
   resources :products
   resources :pages
-
+  get 'inventory_adjustments', to: 'stockmovement_batches#new'
   resources :users do
     resource :profile
   end

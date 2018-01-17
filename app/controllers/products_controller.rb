@@ -2,23 +2,35 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def index
-    @products = Product.all
+    if current_user.admin? or current_user.has_role? (:employee)
+      @products = Product.all
+    elsif current_user.has_role? (:drsharp)
+      @products = Product.where(:brand_name => "Dr Sharp")
+    elsif current_user.has_role? (:colonial)
+      @products = Product.where(:brand_name => "Colonial Elegance")
+    elsif current_user.has_role? (:padula)
+      @products = Product.where(:brand_name => "Ray Padula")
+    elsif current_user.has_role? (:firplak)
+      @products = Product.where(:brand_name => "Firplak")
+    end
   end
 
   def show
     @product = Product.find(params[:id])
+    @parts = Part.where(:product_id => params[:id])
+    @stockmovements = Stockmovement.where(:product_id => params[:id])
   end
 
   def new
     @product = Product.new
-    @vendor = Product.order(vendor_name: :asc).uniq.pluck(:vendor_name)
-    @brand = Product.order(brand_name: :asc).uniq.pluck(:brand_name)
+    @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
+    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
   end
 
   def edit
     @product = Product.find(params[:id])
-    @vendor = Product.order(vendor_name: :asc).uniq.pluck(:vendor_name)
-    @brand = Product.order(brand_name: :asc).uniq.pluck(:brand_name)
+    @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
+    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
   end
 
   def create
@@ -64,4 +76,9 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit!
     end
+    
+    def part_params
+      params.require(:part).permit!
+    end
+    
 end

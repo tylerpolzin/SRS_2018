@@ -1,6 +1,6 @@
 /* global $ */
 //------------------------------------------------------------------------------------------------------
-//                               Product 'NEW' related CSS                                             |
+//                               Product 'NEW' related JS                                             |
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
@@ -35,7 +35,7 @@ $(function(){
 });
 
 //------------------------------------------------------------------------------------------------------
-//                               Product 'EDIT' related CSS                                            |
+//                               Product 'EDIT' related JS                                            |
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
@@ -65,22 +65,45 @@ $(function() {
 });
 
 //------------------------------------------------------------------------------------------------------
-//                               Product 'SHOW' related CSS                                            |
+//                               Product 'SHOW' related JS                                             |
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-$("#showProductDiv").animate({left: 0, opacity: 100}, 500);
+  $("#showProductDiv").animate({left: 0, opacity: 100}, 500);
+  $(".showProductPartTable[id^='part-number-']").hide();
+  $(".show-product-part-wrapper[id^='wrapper-number-']").hide();
+  $("#part-number-0").show();
+  $("#wrapper-number-0").show();
+  $("#productShowPartSelect").on("change", function() {
+    var selected = $("option:selected", this).val();
+    $(".showProductPartTable[id^='part-number-']").hide();
+    $(".show-product-part-wrapper[id^='wrapper-number-']").hide();
+    $("#wrapper-number-"+selected).show();
+    $("#part-number-"+selected).show();
+  });
 });
 
+//                               'INVENTORY HISTORY' related JS                                        |
+
+
+
 //------------------------------------------------------------------------------------------------------
-//                               Product 'INDEX' related CSS                                           |
+//                               Product 'INDEX' related JS                                            |
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
   var table = $('#productsDataTable').DataTable({
                 "scrollX": true,
                 "scrollY": true,
-                "dom": '<"products-toolbar"><"col-md-12 glider-table"t><"col-md-12"ip>',
+                "dom": 'B<"products-toolbar"><"col-md-12 glider-table"t><"col-md-12"ip>',
+                "buttons": [
+                            {extend: 'copyHtml5', className: 'btn dtButtonMargin'},
+                            {extend: 'excelHtml5', className: 'btn dtButtonMargin'},
+                            {extend: 'csvHtml5', className: 'btn dtButtonMargin'},
+                            {extend: 'pdfHtml5', className: 'btn dtButtonMargin'},
+                            {extend: 'print', className: 'btn dtButtonMargin'},
+                            {extend: 'colvis', className: 'btn dtButtonMargin'}
+                            ],
                 "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
                 "pageLength": 10,
                 "bJQueryUI": true,
@@ -99,7 +122,8 @@ $(document).on("turbolinks:load", function() {
               });
   table.page.len(50).draw();
 
-  $("div.products-toolbar").html(''+
+  function top_toolbar (user_check) {
+    return ''+
     '<ul class="nav nav-tabs">'+
     ' <li class="active"><a data-toggle="tab" class="allproductsButton tab-background">All Products</a></li>'+
     ' <li><div class="dataTables_filter"><input class="form-control" id="productTableSearch" placeholder="Search Table..."></div>'+
@@ -117,19 +141,12 @@ $(document).on("turbolinks:load", function() {
     '       <option value="-1">All</option>'+
     '     </select>'+
     '   </div>'+
-    ' </li>'+
-    ' <li>'+
-    '   <form class="button_to" method="get" action="/products/new">'+
-    '     <input class="btn btn-secondary" type="submit" value="Create New Product">'+
-    '   </form>'+
-    ' </li>'+
-    ' <li style="margin-left:10px;">'+
-    '   <form class="button_to" method="get" action="/parts/new">'+
-    '     <input class="btn btn-secondary" type="submit" value="Create New Part">'+
-    '   </form>'+
-    ' </li>'+
+    ' </li>'+user_check+ // Pulls html from div in Index specifically to check for user permissions on "Create" buttons
     '</ul>'+
-    '');
+    '';
+  }
+  $("div.products-toolbar").html(top_toolbar($(".productTableChildren").data('child-user_check')));
+
   $('#productTableSearch').keyup(function(){
     table.search($(this).val()).draw() ;
   });

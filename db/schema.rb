@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180107041848) do
+ActiveRecord::Schema.define(version: 20180113210648) do
+
+  create_table "assignments", force: :cascade do |t|
+    t.string "scaffold_association"
+    t.text "description"
+    t.text "wordy_details"
+    t.integer "priority"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+  end
 
   create_table "pages", force: :cascade do |t|
     t.datetime "created_at", null: false

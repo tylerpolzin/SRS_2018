@@ -1,3 +1,40 @@
-<div class="show-profile-top">
-  <p class="show-profile-vendor-name">Stock Movement History Goes Here</p>
-</div>
+<% if @product.stockmovements.exists? %>
+  <table class="table table-bordered" id="showProductInventoryHistory">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>User</th>
+        <th>Adjustment Quantity</th>
+        <th>New Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stockmovements.each do |i| %>
+        <tr>
+          <td><%= i.created_at.strftime('%Y-%m-%d (%R)') %></td>
+          <td><%= i.stockmovement_batch.user.header_name %></td>
+          <td>
+            <% if i.adjust_quantity.present? %>
+              <%= i.adjust_quantity_plus %>
+            <% else %>
+              None Indicated
+            <% end %>
+          </td>
+          <td>
+            <% if i.quantity.present? %>
+              <%= i.quantity %>
+            <% else %>
+              None Indicated
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="show-product-no-part-wrapper">
+    <div class="show-product-part-image">
+      <p style="margin: 10px;">No Inventory History</p>
+    </div>
+  </div>
+<% end %>

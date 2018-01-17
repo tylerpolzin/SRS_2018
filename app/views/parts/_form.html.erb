@@ -30,7 +30,13 @@
       </tr>
       <tr>
         <td>Qty On Hand</td>
-        <td><%= f.number_field :count_on_hand, hide_label: true, placeholder: "ex: 25" %></td>
+        <% if @part.stockmovements.exists? %>
+          <div class="form-group">
+            <td><input placeholder="Can only be updated through Inventory Adjustments page" disabled class="form-control" style="border:0;border-radius:0;"></td>
+          </div>
+        <% else %>
+          <td><%= f.number_field :count_on_hand, hide_label: true, placeholder: "ex: 25" %></td>
+        <% end %>
       </tr>
       <tr>
         <td>Weight</td>

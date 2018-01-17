@@ -17,7 +17,7 @@
   border-top-right-radius: 30px;
   border-bottom: 4px solid #d19b3d;
   background-image: url("gray-texture-1.jpg");
-  color: #e1ffff;
+  color: #d8d8d8;
   padding: 15px;
   margin-bottom: 0;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
@@ -31,10 +31,10 @@
 }
 
 #newProductNavTab {
-  margin-left: 40px;
+  margin-left: 30px;
 }
 
-#newProductForm, #newProductUploads, #newPartForm {
+#newProductNavTab, #newProductUploads, #newPartForm {
   border: 1px #181c20;
   padding: 7px;
 }
@@ -272,7 +272,7 @@
   border-top-right-radius: 30px;
   border-bottom: 4px solid #d19b3d;
   background-image: url("gray-texture-1.jpg");
-  color: #e1ffff;
+  color: #d8d8d8;
   padding: 15px;
   margin-bottom: 0;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
@@ -350,7 +350,7 @@
   border-top-right-radius: 30px;
   border-bottom: 4px solid #d19b3d;
   background-image: url("gray-texture-1.jpg");
-  color: #e1ffff;
+  color: #d8d8d8;
   padding: 15px;
   margin-bottom: 0;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
@@ -375,7 +375,6 @@
 #showProductTabs {
   background-color: white;
   margin-bottom: 10px;
-  padding-left: 5px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -389,9 +388,7 @@
 
 
 #show-product-form {
-  padding-top: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 15px;
 }
 
 .show-product-top {
@@ -422,7 +419,7 @@
 #showProductTable {
   width: 49%;
   float: left;
-  margin-top: 0;
+  margin: 0;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
@@ -487,7 +484,98 @@
 
 //                               'SHOW_PART_FORM' related CSS                                          |
 
+#show-part-form {
+  padding: 15px;
+}
 
+.show-product-part-top {
+  width: 100%;
+  margin-bottom: 0;
+  margin-top: 5px;
+  display: inline-flex;
+}
+
+.show-product-new-part-button {
+  margin-top: 1px;
+  margin-left: 15px;
+  padding: 5px;
+}
+
+.show-product-part-wrapper {
+  float: right;
+  width: 49%;
+  padding: 15px 0 15px 0;
+}
+
+.show-product-no-part-wrapper {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  padding: 15px;
+}
+
+.showProductPartTable {
+  width: 49%;
+  float: left;
+  margin: 15px 0 5px 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    text-align: right;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+.show-part-edit-button {
+  text-align: center !important;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.show-product-part-image {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  text-align: center;
+  vertical-align: middle;
+  margin-top: 0;
+  border: 2px solid orange;
+  background: white;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  img {
+    display: block;
+    margin: auto;
+  }
+}
+
+#showProductPartNotes, #showProductPartExtras {
+  margin-top: 15px;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    text-align: center;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
 
 //                               'SHOW_PRODUCT_UPLOADS' related CSS                                    |
 
@@ -495,7 +583,25 @@
 
 //                               'SHOW_MOVEMENT_HISTORY' related CSS                                   |
 
-
+#showProductInventoryHistory {
+  width: 60%;
+  margin-left: 20%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-family: 'Abel', sans-serif;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  thead tr th {
+    font-weight: bold;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
 
 //                               'SHOW_RECENT_ORDERS' related CSS                                      |
 
@@ -519,7 +625,7 @@
   border-top-right-radius: 30px;
   border-bottom: 4px solid #d19b3d;
   background-image: url("gray-texture-1.jpg");
-  color: #e1ffff;
+  color: #d8d8d8;
   padding: 15px;
   margin-bottom: 0;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
@@ -594,13 +700,14 @@
     font-weight: 200;
     text-align: center;
     background-color: #646e78;
-    color: #e1ffff;
+    color: #d8d8d8;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
   }
   tbody tr td {
     text-align: center;
     vertical-align: top;
     border-right: 1px solid #ddd;
+    padding-bottom: 0;
   }
 }
 

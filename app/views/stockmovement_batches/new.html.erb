@@ -1,5 +1,73 @@
-<h1>New Stockmovement Batch</h1>
-
-<%= render 'form', stockmovement_batch: @stockmovement_batch %>
-
-<%= link_to 'Back', stockmovement_batches_path %>
+<% @title = "SRS Portal | Inventory Adjustments" %>
+<div style="width: 900px;" id="newIADiv">
+  <p class="newIAHeader">Inventory Adjustments</p>
+  <div class="container newIAForm">
+    <%= bootstrap_form_for @stockmovement_batch, url: stockmovement_batches_path, method: :post do |f| %>
+      <% if @stockmovement_batch.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@stockmovement_batch.errors.count, "error") %> prohibited this product from being saved:</h2>
+          <ul>
+          <% @stockmovement_batch.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <ul class="nav nav-tabs">
+        <li class="active"><a id="newInventoryAdjust" href="#new-inventory-adjust" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> New Adjustment</a></li>
+        <li><a id="adjustHistory" href="#adjust-history" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Batch History</a></li>
+        <li><a id="adjustHistoryIndividual" href="#adjust-history-individual" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Individual History</a></li>
+        <li><a id="addItemButton"class="btn"><i class="fa fa-plus-circle"></i> Add Item</a></li> <!-- This button acts as a proxy to click the hidden 'add_child_ia' button below -->
+      </ul>
+      <div id="inventoryAdjustTabs">
+        <div class="tab-content">
+          <div id="new-inventory-adjust" class="tab-pane fade in active">
+            
+            
+            
+            <div class="container">
+              <table class="table table-bordered" id="newIASelectTable">
+                <thead></thead>
+                <tbody>
+                  <tr>
+                    <td>Adjustment Type</td>
+                    <td><%= f.select_without_bootstrap :stockmovement_type, options_for_select(["Ecomm Order", "Warranty Order", "Physical Inventory"]), {:prompt => "Select Type..."}, class: "form-control", :id => "typeSelect" %></td>
+                    <td><%= f.text_field :notes, hide_label: true, :placeholder => "Notes..." %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="container">
+              <table class="table table-bordered IAItemSelectHeader hidden">
+                <thead>
+                  <tr>
+                    <th>Item Type</th>
+                    <th>Information</th>
+                    <th>Current Qty</th>
+                    <th>New Qty</th>
+                    <th>Adjust Qty</th>
+                    <th></th>
+                  </tr>
+                </thead>
+              </table>
+              <%= new_child_fields_template_ia f, :stockmovements %>
+              <p hidden><%= add_child_link_ia " Add Item", :stockmovements %></p> <!-- Renders '_stockmovement.html.erb' -->
+              <div class="IAItemSelectBottomBorder hidden"></div>
+            </div>
+          </div>
+          <div id="adjust-history" class="tab-pane fade">
+            <%= render "adjust_history", :f => f %>
+          </div>
+          <div id="adjust-history-individual" class="tab-pane fade">
+            <%= render "adjust_history_individual", :f => f %>
+          </div>
+        </div>
+      </div>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.submit "Adjust Inventory", :id => "adjustSubmitButton" %>
+    <% end %>
+  </div>
+</div>
+<div id="jstemplates">
+  <%= yield :jstemplates %>
+</div>

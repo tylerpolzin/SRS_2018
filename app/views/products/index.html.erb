@@ -21,6 +21,19 @@
           <% end %>
         </tr>
       </thead>
+      <div class="productTableChildren"
+        data-child-user_check="<% if current_user.admin? or current_user.has_role? (:employee) %>
+                                 <li>
+                                   <form class='button_to' method='get' action='/products/new'>
+                                     <input class='btn btn-secondary' type='submit' value='Create New Product'>
+                                   </form>
+                                 </li>
+                                 <li style='margin-left:10px;'>
+                                   <form class='button_to' method='get' action='/parts/new'>
+                                     <input class='btn btn-secondary' type='submit' value='Create New Part'>
+                                   </form>
+                                 </li>
+                               <% else %><% end %>"></div>
       <tbody class="product-table">
         <% @products.each do |product| %>
           <tr
@@ -120,11 +133,8 @@
               <% end %>
             </td>
             <td>
-              <% if product.count_on_hand.present? %>
-                <%= product.count_on_hand %>
-              <% else %>
-                N/A
-              <% end %>
+              <p><%= product.quantity_on_hand %></p>
+              <p>Last Updated: <%= product.qty_last_updated %></p>
             </td>
             <td><%= product.product_weight %></td>
             <td>
@@ -151,10 +161,14 @@
             <td>
               <% if product.notes.present? %>
                 <%= simple_format product.notes %>
-                <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-outline-warning btn-sm' %>
+                <% if current_user.admin? or current_user.has_role? (:employee) %>
+                  <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-outline-warning btn-sm' %>
+                <% else %><% end %>
               <% else %>
                 N/A
-                <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-outline-warning btn-sm' %>
+                <% if current_user.admin? or current_user.has_role? (:employee) %>
+                  <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-outline-warning btn-sm' %>
+                <% else %><% end %>
               <% end %>
             </td>
             <td>  <!-- Hidden field to add table search ability to Child Rows -->

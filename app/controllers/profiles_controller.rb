@@ -34,11 +34,14 @@ class ProfilesController < ApplicationController
   def update
     @user = User.find( params[:user_id] )
     @profile = @user.profile
-    if @profile.update_attributes(profile_params)
-      flash[:success] = "Profile updated!"
-      redirect_to authenticated_root_path, :notice => "// Profile has been updated!"
-    else
-      render action: :edit
+    respond_to do |format|
+      if @profile.update(profile_params)
+        format.html { redirect_to authenticated_root_path, notice: '// Profile has been updated!' }
+        format.json { respond_with_bip (@profile) }
+      else
+        format.html { render :edit }
+        format.json { respond_with_bip (@profile) }
+      end
     end
   end
 
@@ -62,7 +65,7 @@ class ProfilesController < ApplicationController
     
     def only_current_user
       @user = User.find( params[:user_id] )
-      redirect_to(root_url, :notice => "// You can't do that!") unless @user == current_user
+      redirect_back(fallback_location: root_url, :notice => "// You can't do that!") unless @user == current_user or current_user.admin?
     end
     
 end

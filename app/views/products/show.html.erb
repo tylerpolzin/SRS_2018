@@ -1,6 +1,9 @@
 <% @title = "SRS Portal | #{@product.sku_if_sku}" %>
 <div style="width: 850px;" id="showProductDiv">
-  <p class="showProductHeader">View Product</p>
+  <p class="showProductHeader">
+    <span class="show-product-brand-name"><%= @product.brand_name %></span></br>
+    <span class="show-product-description"><%= @product.description %></span>
+  </p>
   <div class="form-horizontal showProductForm">
     <ul class="nav nav-tabs">
       <li class="active"><a id="showProductForm" href="#show-product-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Product Information</a></li>

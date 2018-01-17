@@ -7,6 +7,8 @@ class PartsController < ApplicationController
   end
 
   def show
+    @part = Part.find(params[:id])
+    @stockmovements = Stockmovement.where(:part_id => params[:id])
   end
 
   def new
@@ -14,6 +16,7 @@ class PartsController < ApplicationController
   end
 
   def edit
+    @part = Part.find(params[:id])
   end
 
   def create

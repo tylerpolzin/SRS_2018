@@ -1,3 +1,272 @@
-<div class="show-profile-top">
-  <p class="show-profile-vendor-name">Associated Parts Goes Here</p>
-</div>
+<% if @parts.present? %>
+  <div class="show-product-part-top">
+    <select id="productShowPartSelect" class="form-control">
+      <option value="0" selected disabled>Select Part...</option>
+      <% @parts.each do |part| %>
+        <option value="<%= part.id %>"><%= part.part_select %></option>
+      <% end %>
+    </select>
+    <% if current_user.admin? or current_user.has_role? (:employee) %>
+      <%= button_to "Create New Part", new_part_path(product_id: @product.id), method: :get, class: 'btn btn-primary show-product-new-part-button' %>
+    <% end %>
+  </div>
+  <div class="show-product-part-wrapper" id="wrapper-number-0">
+    <div class="show-product-part-image"><p style="margin: 10px;">No Image Available</p></div>
+    <table class="table table-bordered" id="showProductPartNotes">
+      <thead></thead><tbody><tr><td class="show-product-details">Notes</td></tr>
+      <tr><td style="height: 68px;">No Notes Available</td></tr></tbody>
+    </table>
+  </div>
+  <% @parts.each do |part| %>
+    <div class="show-product-part-wrapper" id="wrapper-number-<%= part.id %>">
+      <div class="show-product-part-image">
+          <% if part.image.present? %>
+            <%= image_tag part.image.url(:medium) %>
+          <% else %>
+            <p style="margin: 10px;">No Image Available</p>
+          <% end %>
+      </div>
+      <table class="table table-bordered" id="showProductPartNotes">
+        <thead></thead>
+        <tbody>
+          <tr>
+            <td class="show-product-details">Notes</td>
+          </tr>
+          <tr>
+            <td style="height: 68px;">
+              <%= best_in_place part, :notes, :as => :textarea, inner_class: "input-small" %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% else %>
+  <div class="show-product-no-part-wrapper">
+    <div class="show-product-part-image">
+      <p style="margin: 10px;">No Parts Associated With This SKU</p>
+    </div>
+  </div>
+<% end %>
+<% if @parts.present? %>
+<table class="table table-bordered showProductPartTable" id="part-number-0"><thead></thead><tbody>
+  <tr><td colspan="2" class="show-product-details">Select Part From List</td></tr>
+  <tr><td>Model #</td><td style="width: 186px;">N/A</td></tr><tr><td>UPC #</td><td>N/A</td></tr>
+  <tr><td>Weight</td><td>N/A</td></tr><tr><td>Location</td><td>N/A</td></tr>
+  <tr><td>Qty On Hand</td><td>N/A</td></tr><tr><td>Qty Last Updated</td><td>N/A</td></tr>
+  <tr><td>Active?</td><td>N/A</td></tr><tr><td>Store Orderable?</td><td>N/A</td></tr>
+  <tr><td>Item Creation Date</td><td>N/A</td></tr><tr><td>Item Last Updated</td><td>N/A</td></tr>
+  <tr><td colspan="2" class="show-product-details" style="height: 48px;"></td></tr></tbody>
+</table>
+  <% @parts.each do |part| %>
+    <table class="table table-bordered showProductPartTable" id="part-number-<%= part.id %>">
+      <thead></thead>
+      <tbody>
+        <tr>
+          <td colspan="2" class="show-product-details"><%= button_to "Go To Part Page", part_path(part.id), method: :get, class: "btn btn-sm" %></td>
+        </tr>
+        <tr>
+          <td>Manufacturer</td>
+          <td>
+            <% if part.product.vendor_name.present? %>
+              <%= part.product.vendor_name %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Model #</td>
+          <td>
+            <% if part.manufacturer_model_number.present? %>
+              <%= part.manufacturer_model_number %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>UPC #</td>
+          <td>
+            <% if part.upc.present? %>
+              <%= part.upc %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Brand Name</td>
+          <td>
+            <% if part.product.brand_name.present? %>
+              <%= part.product.brand_name %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>SRS SKU</td>
+          <td>
+            <% if part.srs_sku.present? %>
+              <%= part.srs_sku %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Location</td>
+          <td>
+            <% if part.location.present? %>
+              <%= part.location %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td>
+            <% if part.description.present? %>
+              <%= part.description %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Qty On Hand</td>
+          <td>
+            <% part.count_on_hand %>
+            <%# if part.stockmovements.exists? %>
+              <%# part.stockmovements.last(1).each do |s| %>
+                <%#= s.quantity %>
+              <%# end %>
+            <%# else %>
+              <!--No Stock Listed-->
+            <%# end %>
+          </td>
+        </tr>
+        <!--<tr>-->
+        <!--  <td>Qty Last Updated</td>-->
+        <!--  <td>-->
+        <!--    <%# if part.stockmovements.exists? %>-->
+        <!--      <%# part.stockmovements.last(1).each do |s| %>-->
+        <!--        <%#= s.created_at.strftime('%B %d, %Y') %>-->
+        <!--      <%# end %>-->
+        <!--    <%# else %>-->
+        <!--      N/A-->
+        <!--    <%# end %>-->
+        <!--  </td>-->
+        <!--</tr>-->
+        <!-- Add "view history" link to stockmovement history for individual item once complete -->
+        <tr>
+          <td>Weight</td>
+          <td><%= part.part_weight %></td>
+        </tr>
+        <tr>
+          <td>Part Dimensions</td>
+          <td>
+            <%= part.product_dims_l %>"x<%= part.product_dims_w %>"x<%= part.product_dims_h %>"
+          </td>
+        </tr>
+        <tr>
+          <td>Packaged Dimensions</td>
+          <td>
+            <%= part.packaged_dims_l %>"x<%= part.packaged_dims_w %>"x<%= part.packaged_dims_h.to_f %>"
+          </td>
+        </tr>
+        <tr>
+          <td>Vendor Cost</td>
+          <td>
+            <% if part.vendor_cost >= 0.01 %>
+              $<%= part.vendor_cost %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Retail Cost</td>
+          <td>
+            <% if part.retail_cost >= 0.01 %>
+              $<%= part.retail_cost %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Shipping Cost</td>
+          <td>
+            <% if part.shipping_cost >= 0.01 %>
+              $<%= part.shipping_cost %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Store Orderable?</td>
+          <td>
+            <% if part.store_orderable? %>
+              Yes
+            <% else %>
+              No
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Warranty Orderable?</td>
+          <td>
+            <% if part.warranty_orderable? %>
+              Yes
+            <% else %>
+              No
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>E-Commerce SKU?</td>
+          <td>
+            <% if part.ecomm_sku? %>
+              Yes
+            <% else %>
+              No
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Active?</td>
+          <td>
+            <% if part.active? %>
+              Yes
+            <% else %>
+              No
+            <% end %>
+            </td>
+        </tr>
+        <tr>
+          <td>Part Creation Date</td>
+          <td><%= part.created_at.strftime('%B %d, %Y') %></td>
+        </tr>
+        <tr>
+          <td>Part Last Updated</td>
+          <td><%= part.updated_at.strftime('%B %d, %Y') %></td>
+        </tr>
+        <% if current_user.admin? or current_user.has_role? (:employee) %>
+          <tr>
+            <td colspan="2" class="show-product-details"><%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm btn-primary show-product-edit-button' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% else %>
+  <% if current_user.admin? or current_user.has_role? (:employee) %>
+    <div style="float:right;">
+      <%= button_to "Create New Part", new_part_path(product_id: @product.id), method: :get, class: 'btn btn-primary show-product-new-part-button', :style => "margin-right:16px;" %>
+    </div>
+  <% end %>
+<% end %>

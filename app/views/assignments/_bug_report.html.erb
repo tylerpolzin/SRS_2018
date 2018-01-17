@@ -1,0 +1,49 @@
+<p class="newAssignmentHeader">Create New Bug Report</p>
+<div class="container newAssignmentForm" style="width:100%;">
+<%= bootstrap_form_for @assignment, url: assignments_path, method: :post do |f| %>
+  <% if @assignment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
+
+      <ul>
+      <% @assignment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <ul class="nav nav-tabs">
+    <li class="active"><a id="newAssignmentNavTab" href="#new-assignment-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Bug Report Details</a></li>
+  </ul>
+  <div id="newAssignmentTabs">
+    <div class="tab-content">
+      <div id="new-assignment-form" class="tab-pane fade in active container">
+        <br/>
+          <table class="table table-bordered" id="newAssignmentTable">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <td>Association</td>
+                <td>
+                  <%= f.select :scaffold_association, options_for_select(scaffolds), hide_label: true %>
+                </td>
+              </tr>
+              <tr>
+                <td>Basic Description</td>
+                <td><%= f.text_field :description, hide_label: true %></td>
+              </tr>
+              <tr>
+                <td>Additional Details</td>
+                <td><%= f.text_area :wordy_details, rows: 6, hide_label: true, wrapper: {class: 'textarea-vertical'} %></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  <%= f.hidden_field :priority, :value => 1 %>
+  <%= f.hidden_field :active, :value => "true" %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.primary "Create Assignment", :style => "float:right;" %>
+<% end %>
+</div>

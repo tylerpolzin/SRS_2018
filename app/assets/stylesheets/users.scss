@@ -16,7 +16,7 @@
   border-top-right-radius: 30px;
   border-bottom: 4px solid #d19b3d;
   background-image: url("gray-texture-1.jpg");
-  color: #e1ffff;
+  color: #d8d8d8;
   padding: 15px;
   margin-bottom: 0;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
@@ -90,7 +90,7 @@
     font-size: 1em;
     font-weight: 200;
     background-color: #646e78;
-    color: #e1ffff;
+    color: #d8d8d8;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
   }
   tr:last-child td {
@@ -121,7 +121,7 @@
   border-top-right-radius: 30px;
   border-bottom: 4px solid #d19b3d;
   background-image: url("gray-texture-1.jpg");
-  color: #e1ffff;
+  color: #d8d8d8;
   padding: 15px;
   margin-bottom: 0;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
@@ -140,7 +140,7 @@
   }
 }
 
-#showProfileForm, #showTaskForm, #employeeProductsForm, #drsharpProductsForm, #showFilesForm {
+#showProfileForm, #showTaskForm, #assignmentForm, #employeeProductsForm, #drsharpProductsForm, #showFilesForm {
   border: 1px #181c20;
   padding: 7px;
 }
@@ -248,11 +248,71 @@
   }
 }
 
-.show-product-edit-button {
+.show-profile-password-button {
+  padding: 1px 6px 1px 6px;
+  margin: -4px 0 -4px -2px;
+}
+
+.show-profile-edit-button {
   text-align: center !important;
-  font-size: 1.1em;
   font-weight: bold;
 }
+
+//          'DASHBOARD_ASSIGNMENT_FORM' RENDER                                      |
+
+.assignments-tabs {
+  li > a {
+    padding: 3px;
+  }
+}
+
+.dashboardAssignmentsTable {
+  margin: 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  thead {
+    vertical-align: middle;
+    th:first-child {
+      width: 10%;
+    }
+    th:nth-child(2) {
+      width: 30%;
+    }
+    th:nth-child(4) {
+      width: 6%;
+    }
+    th:nth-child(5) {
+      width: 9%;
+    }
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tbody tr td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  tbody tr td:nth-child(5) {
+    padding: 0;
+    background: white;
+  }
+}
+
+#activeButton, #completeButton, #bug_reportButton {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: white !important;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.15);
+}
+
+
 
 //          'SHOW_MY_PRODUCTS' RENDER                                               |
 
@@ -319,7 +379,7 @@
     font-size: 1em;
     font-weight: 200;
     background-color: #646e78;
-    color: #e1ffff;
+    color: #d8d8d8;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
   }
   tr:last-child td {

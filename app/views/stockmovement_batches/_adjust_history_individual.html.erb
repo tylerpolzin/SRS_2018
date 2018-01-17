@@ -1,0 +1,54 @@
+<div class="adjustHistoryIndividualTable">
+  <table id="adjustHistoryIndividualDataTable" class="display" style="width: 100%;">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Item</th>
+        <th>Adjustment Quantity</th>
+        <th>New Quantity</th>
+        <th>Created By</th>
+      </tr>
+    </thead>
+    <tbody class="adjust-history-individual-table">
+      <% @stockmovements.each do |i| %>
+        <tr>
+          <td><%= i.created_at.strftime('%Y-%m-%d (%R)') %></td>
+          <td>
+            <% if i.is_product %>
+              Product
+            <% elsif i.is_part %>
+              Part
+            <% else %>
+              Error, No Sku Present
+            <% end %>
+          </td>
+          <td>
+            <% if i.is_product %>
+              <%= link_to i.product.model_select, product_path(id: i.product_id), method: :get, target: "_blank" %>
+            <% elsif i.is_part %>
+              <%= link_to i.part.part_select, part_path(id: i.part_id), method: :get, target: "_blank" %>
+            <% else %>
+              Error, No Sku Present
+            <% end %>
+          </td>
+          <td>
+            <% if i.adjust_quantity.present? %>
+              <%= i.adjust_quantity_plus %>
+            <% else %>
+              None Indicated
+            <% end %>
+          </td>
+          <td>
+            <% if i.quantity.present? %>
+              <%= i.quantity %>
+            <% else %>
+              None Indicated
+            <% end %>
+          </td>
+          <td><%= i.stockmovement_batch.user.header_name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

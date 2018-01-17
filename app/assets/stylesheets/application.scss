@@ -54,9 +54,13 @@ body {
   color: #255aad;
   border: 1px solid orange;
   background: linear-gradient(to bottom, white, #d5dfe7);
+  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.15);
+  &:focus, &:hover {
+    color: black;
+  }
 }
 
-// Fixes bottom margin for search box on tables in conjunction with clear "X"
+// Fixes bottom margin for search box on tables in conjunction with button on box -- 'clear' "X"
 .add-clear-span {
   margin-bottom: 0;
 }
@@ -69,6 +73,15 @@ body {
    border: 0;
    min-height: 35px;
   }
+}
+
+// Default "Delete" button
+
+.delete-button {
+  float: left;
+  margin-left: 15px;
+  border: 2px solid red;
+  border-radius: 20px;
 }
 
 // Default Select2 related CSS
@@ -129,7 +142,7 @@ body {
 }
   .navbar-animated {
     color: green;
-    -webkit-animation-duration: 5s;animation-duration: 5s;
+    -webkit-animation-duration: 10s;animation-duration: 10s;
     -webkit-animation-fill-mode: both;animation-fill-mode: both;
   }
   
@@ -192,7 +205,7 @@ body {
   top: 60px;
   width: 15%;
   height: 100%;
-  color: #e1ffff;
+  color: #d8d8d8;
   box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.5);
   z-index: 9998;
 }
@@ -276,7 +289,7 @@ body {
 }
 .nav-side-menu li a {
   text-decoration: none;
-  color: #e1ffff;
+  color: #d8d8d8;
 }
 .nav-side-menu li a i {
   padding-left: 10px;
@@ -367,6 +380,19 @@ table.dataTable tbody td {
   vertical-align: middle;
 }
 
+.dataTables_scrollHeadInner { // Fixes Header column width to be in line with body column width
+  width: inherit !important;
+  .display {
+    width: inherit !important;
+  }
+}
+
+// Export buttons styling
+
+.dtButtonMargin {
+  margin-left: 10px;
+  border: 1px solid blue;
+}
 
 // Dropdown for Datatable rows
 .details-control {
@@ -407,14 +433,14 @@ table.dataTable tbody td.no-padding {
   .tab-background {
     cursor: context-menu;
     background-color: #181c20;
-    color: #e1ffff;
+    color: #d8d8d8;
     // box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3)
   }
   .active > .tab-background, 
   .dropdown .active {
     cursor: context-menu;
     background-color: #2e353d;
-    color: #e1ffff;
+    color: #d8d8d8;
   }
   .nav-tabs > li {
     margin-bottom: 0;
@@ -467,7 +493,7 @@ html .ui-button.ui-state-disabled:active {
   border: 1px solid #2e353d;
   background: #2e353d;
   font-weight: bold;
-  color: #e1ffff;
+  color: #d8d8d8;
   font-family: 'Quicksand', sans-serif;
   font-size: .9em;
   padding-left: 0;
@@ -489,7 +515,7 @@ html .ui-button.ui-state-disabled:active {
   cursor:context-menu;
   a {
     margin: 0.5px;
-    color: #e1ffff !important;
+    color: #d8d8d8 !important;
     background-color: #4f5b69 !important;
     border-color: #d19b3d !important;
     border-radius: 3px !important;

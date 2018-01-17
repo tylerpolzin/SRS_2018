@@ -1,0 +1,34 @@
+<div class="fields">
+  <table class="table table-bordered IAItemSelectContainer">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <input hidden class="product-previous-qty" value="0">
+        <input hidden class="part-previous-qty" value="0">
+        <td> <!-- Item Type Field -->
+          <select class="item-type form-control">
+            <option disabled selected>Select Item Type...</option>
+            <option>Product</option>
+            <option>Part</option>
+          </select>
+        </td>
+        <td> <!-- Information Field -->
+          <%= f.select_without_bootstrap :product_id, options_for_select(@products.map {|product| [product.model_select, product.id, {'data-quantity' => product.quantity_on_hand}]}), {:include_blank => ""}, {:class => 'productMovementSearchBox'} %>
+          <%= f.select_without_bootstrap :part_id, options_for_select(@parts.map {|part| [part.part_select, part.id, {'data-quantity' => part.quantity_on_hand}]}), {:include_blank => ""}, {:class => 'partMovementSearchBox'} %>
+        </td>
+        <td> <!-- Current Qty Field -->
+          <input class="current-quantity form-control" readonly="true" placeholder="Current Qty" type="number">
+        </td>
+        <td> <!-- New Qty Field -->
+          <%= f.number_field :quantity, class: 'new-quantity', hide_label: true, :placeholder => "New Qty" %>
+        </td>
+        <td> <!-- Adjust Qty Field -->
+          <%= f.number_field :adjust_quantity, class: 'negative-quantity', hide_label: true, :placeholder => "Difference", :value => "-1" %>
+        </td>
+        <td> <!-- Remove Entry Field -->
+          <%= remove_child_link_ia "Χ", f %>
+        </td>
+      </tr>
+    </tbody>
+  </div>
+</div>

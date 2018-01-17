@@ -12,7 +12,7 @@
           <% end %>
           </ul>
         </div>
-      <% end %> <!-- if @product.errors.any? -->
+      <% end %>
       <ul class="nav nav-tabs">
         <li class="active"><a id="newProductNavTab" href="#new-product-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Product Details</a></li>
         <!--<li><a id="newProductUploads" href="#new-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Associated Files</a></li>-->
@@ -33,7 +33,7 @@
           <!--</div>-->
         </div>
       </div>
-      <%= f.primary "Create Product", :style => "float:right;" %>
+      <%= f.submit "Create Product", :style => "float:right;" %>
     <% end %>
   </div>
 </div>

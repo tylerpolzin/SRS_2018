@@ -41,7 +41,7 @@
   <thead></thead>
   <tbody>
     <tr>
-      <td colspan="2" class="show-part-details">Product Details</td>
+      <td colspan="2" class="show-part-details">Part Details</td>
     </tr>
     <tr>
       <td>Manufacturer</td>
@@ -115,33 +115,15 @@
     </tr>
     <tr>
       <td>Qty On Hand</td>
-      <td>
-        <%= @part.count_on_hand %>
-        <%# if @part.stockmovements.exists? %>
-          <%# @part.stockmovements.last(1).each do |s| %>
-            <%#= s.quantity %>
-          <%# end %>
-        <%# end %>
-      </td>
+      <td><%= @part.quantity_on_hand %></td>
     </tr>    
-    <!--<tr>-->
-    <!--  <td>Qty Last Updated</td>-->
-    <!--  <td>-->
-    <!--    <%# if @part.stockmovements.exists? %>-->
-    <!--      <%# @part.stockmovements.last(1).each do |s| %>-->
-    <!--        <%#= s.created_at.strftime('%B %d, %Y') %>-->
-    <!--      <%# end %>-->
-    <!--    <%# else %>-->
-    <!--      N/A-->
-    <!--    <%# end %>-->
-    <!--  </td>-->
-    <!--</tr>-->
-    <!-- Add "view history" link to stockmovement history for individual item once complete -->
+    <tr>
+      <td>Qty Last Updated</td>
+      <td><%= @part.qty_last_updated %></td>
+    </tr>
     <tr>
       <td>Weight</td>
-      <td>
-        <%= @part.weight_pounds %> lbs. <%= @part.weight_ounces %> oz.
-      </td>
+      <td><%= @part.part_weight %></td>
     </tr>
     <tr>
       <td>Part Dimensions</td>
@@ -233,8 +215,10 @@
       <td>Part Last Updated</td>
       <td><%= @part.updated_at.strftime('%B %d, %Y') %></td>
     </tr>
-    <tr>
-      <td colspan="2" class="show-part-edit-button"><%= button_to "Edit This Part", edit_part_path(id: params[:id]), method: :get, class: 'btn btn-sm btn-primary' %></td>
-    </tr>
+    <% if current_user.admin? or current_user.has_role? (:employee) %>
+      <tr>
+        <td colspan="2" class="show-part-edit-button"><%= button_to "Edit This Part", edit_part_path(id: params[:id]), method: :get, class: 'btn btn-sm btn-primary' %></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>

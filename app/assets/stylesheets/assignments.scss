@@ -1,0 +1,195 @@
+
+//          'NEW ASSIGNMENT' RENDER                                     |
+
+#newAssignmentDiv {
+  margin: 0 20px 20px 0;
+  padding-left: 0;
+  position: absolute;
+  left: -1000px;
+  opacity: 0;
+}
+
+.newAssignmentHeader {
+  text-align: center;
+  font-family: 'Abel', sans-serif;
+  font-size: 20px;
+  border-top-right-radius: 30px;
+  border-bottom: 4px solid #d19b3d;
+  background-image: url("gray-texture-1.jpg");
+  color: #d8d8d8;
+  padding: 15px;
+  margin-bottom: 0;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.newAssignmentForm {
+  padding: 20px 20px 20px 0;
+  background-color: #d1dbe4;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+  border-bottom-right-radius: 30px;
+}
+
+#newAssignmentNavTab {
+  margin-left: 30px;
+  border: 1px #181c20;
+  padding: 7px;
+}
+
+#newAssignmentTabs {
+  background-color: white;
+  padding: 0 0 10px 25px;
+  margin: 0 0 10px 0;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  div div.container {
+    padding: 0;
+    margin: 0;
+    width: 98%;
+  }
+}
+
+#newAssignmentTable {
+  width: 100%;
+  margin: 0 0 15px -7.5px;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+
+  tbody tr td:nth-child(1) { // Left Column "Description"
+    text-align: right;
+    background-color: #fafafa;
+    width: 30%;
+  }
+  tbody tr td:nth-child(2) { // Right Column "Inputs"
+    padding: 0;
+    .form-group {
+      margin: 0;
+      input {
+        border: none;
+        border-radius: 0;
+        &:focus {
+          box-shadow: inset 0px 0px 5px #ff9800;
+        }
+      }
+      select {
+        border: none;
+        border-radius: 0;
+        padding-left: 8px;
+        &:focus {
+          box-shadow: inset 0px 0px 5px #ff9800;
+        }
+      }
+    }
+  }
+  tbody tr {
+    background-color: #eee;
+  }
+}
+
+// Index CSS
+
+#assignmentsIndexDiv {
+  padding-left: 0;
+  left: 0;
+  position: absolute;
+  margin-bottom: 30px;
+}
+
+.assignmentsIndexHeader {
+  text-align: center;
+  font-family: 'Abel', sans-serif;
+  font-size: 20px;
+  border-top-right-radius: 30px;
+  border-bottom: 4px solid #d19b3d;
+  background-image: url("gray-texture-1.jpg");
+  color: #d8d8d8;
+  padding: 15px;
+  margin-bottom: 0;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.glider-table {
+  padding-left: 0;
+}
+
+.assignmentsIndexTable {
+  padding: 20px;
+  padding-left: 0;
+  background-image: url("light_gray_texture.jpg");
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+  border-bottom-right-radius: 30px;
+}
+
+
+.assignments-index-table {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.assignments-index-table > tr > td {
+  padding: 0 !important;
+  span {
+    border-radius: 0;
+    border-bottom: 0;
+    padding: 6px;
+  }
+}
+
+.assignments-index-expando {
+  width: 90%;
+  padding-top: 0;
+  padding-bottom: 5px;
+  border-top: 0;
+  border-right: 2px solid orange;
+  border-left: 2px solid orange;
+  border-bottom: 2px solid orange !important;
+  margin-bottom: 5px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.assignments-index-head-tr td {
+  text-align: left;
+  background-color: #646e78;
+  color: #d8d8d8;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3)
+}
+.assignments-index-body-tr td {
+  vertical-align: top;
+  text-align: left;
+  padding-top: 1px;
+  background-color: #d1dbe4;
+}
+
+.assignments-index-toolbar {
+  float: left;
+  margin-right: 4px;
+  padding-left: 62px;
+  display: inline;
+  .nav-tabs {
+    border-bottom: 0;
+  }
+}
+.assignments-index-toolbar > .nav > li > a {
+  padding: 8px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3)
+}
+
+#assignmentsDataTableSearch {
+  color: black;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  margin-left: 9px;
+}
+#assignmentsDataTableLength {
+  width: 55px;
+  margin-left: 20px;
+  margin-right: 10px;
+  padding-right: 0;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3)
+}
+
