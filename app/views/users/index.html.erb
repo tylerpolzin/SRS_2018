@@ -1,17 +1,17 @@
 
 <% @title = "SRS Portal | User List" %>
-<div style="width:1200px" id="usersTableDiv">
-  <p class="usersTableHeader">User List</p>
+<div class="defaultDiv" id="usersTableDiv">
+  <p class="defaultDivHeader">User List</p>
   <div class="usersTable">
-      <table id="usersListDataTable" class="display" style="width: 100%;">
+      <table id="usersListDataTable" class="display" style="width: 100%">
         <thead>
           <tr>
-            <th><div></div></th>
-            <th><div>UID</div></th>
-            <th><div>Email (Login)</div></th>
-            <th><div>Custom Datasets</div></th>
-            <th><div>User Created At</div></th>
-            <th><div>Entry Last Updated</div></th>
+            <th></th>
+            <th>UID</th>
+            <th>Email (Login)</th>
+            <th>Custom Datasets</th>
+            <th>User Created At</th>
+            <th>Entry Last Updated</th>
             <th></th>
             <% if current_user.admin? %>
               <th><div>Admin?</div></th>
@@ -19,12 +19,12 @@
             <% else %><% end %>
           </tr>
         </thead>
-        <tbody class="users-table">
+        <tbody>
           <% @users.each do |u| %>
             <tr 
             data-child-fakeout="fakeout"
             data-child-edit="&lt;form class=&quot;button_to&quot; method=&quot;get&quot; action=&quot;/users/<%= u.id %>/profile/edit&quot;&gt;
-                               &lt;input class=&quot;btn btn-primary&quot; type=&quot;submit&quot; value=&quot;Edit Profile&quot;&gt;
+                               &lt;input class=&quot;btn&quot; type=&quot;submit&quot; value=&quot;Edit Profile&quot;&gt;
                              &lt;/form&gt;"
             data-child-name="<% if u.profile.name.present? %>
                                <%= u.profile.name %>
@@ -62,8 +62,8 @@
                               <% else %>N/A<% end %>">
               <td class="details-control"></td>
               <td><%= link_to u.id, user_path(id: u.id), method: :get %></td>
-              <td><%= best_in_place u, :email, class: 'form-control' %></td>
-              <td><%= best_in_place_if current_user.admin?, u, :user_color, class: 'form-control' %></td>
+              <td><%= best_in_place u, :email, class: 'form-control', inner_class: 'input-small input-width' %></td>
+              <td><%= best_in_place_if current_user.admin?, u, :user_color, class: 'form-control', inner_class: 'input-small input-width' %></td>
               <td><div style='width: 170px'><%= u.created_at %></div></td>
               <td><div style='width: 170px'><%= u.updated_at %></div></td>
               <td>  <!-- Hidden field to add table search ability to Child Rows in next 18 lines -->
@@ -83,5 +83,5 @@
           <% end %>
         </tbody>
       </table>
-  </div>
+    </div>
 </div>

@@ -4,33 +4,17 @@
 #newSessionDiv {
   width: 400px;
   padding-top: 60px;
-  padding-left: 0px;
   margin: auto;
-//  left: -1000px;
-//  opacity: 0;
-}
-
-.newSessionHeader {
-  text-align: center;
-  font-family: 'Abel', sans-serif;
-  font-size: 20px;
-  border-bottom: 4px solid #d19b3d;
-  background-image: url("gray-texture-1.jpg");
-  color: #252525;
-  padding: 15px;
-  margin-bottom: 0;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .newSessionForm {
+  width: 100%;
   padding: 20px;
-  background-image: url(light_gray_texture.jpg);
+  background-color: #d1dbe4;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
-  div.form-group.form-group-sm {
-    padding-left: 20px;
-    padding-right: 20px;
+  form .form-group {
     color: #252525;
     font-family: 'Abel', sans-serif;
     font-size: 1.1em;

@@ -1,14 +1,14 @@
 <% @title = "SRS Portal | View Part" %>
-<div style="width: 850px;" id="showPartDiv">
-  <p class="showPartHeader">View Part</p>
-  <div class="form-horizontal showPartForm">
+<div class="defaultDiv" id="showPartDiv">
+  <p class="defaultDivHeader">View Part</p>
+  <div class="container defaultForm">
     <ul class="nav nav-tabs">
       <li class="active"><a id="showPartForm" href="#show-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Part Information</a></li>
       <li><a id="showPartMovementHistory" href="#show-part-movement-history" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Inventory History</a></li>
-      <li><a id="showPartRecentOrders" href="#show-part-recent-orders" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Recent Orders</a></li>
+      <!--<li><a id="showPartRecentOrders" href="#show-part-recent-orders" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Recent Orders</a></li>-->
     </ul>
     
-    <div id="showPartTabs">
+    <div class="defaultTabs">
       <div class="tab-content">
         <div id="show-part-form" class="tab-pane fade in active container">
           <%= render "show_part_form" %>
@@ -16,9 +16,9 @@
         <div id="show-part-movement-history" class="tab-pane fade container">
           <%= render "show_movement_history" %>
         </div>
-        <div id="show-part-recent-orders" class="tab-pane fade container">
-          <%= render "show_recent_orders" %>
-        </div>
+        <!--<div id="show-part-recent-orders" class="tab-pane fade container">-->
+        <!--  <%#= render "show_recent_orders" %>-->
+        <!--</div>-->
       </div>
     </div>
   </div>

@@ -5,7 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_one :profile
-  belongs_to :assignment
+  belongs_to :assignment, required: false
   
   after_create :build_profile
   

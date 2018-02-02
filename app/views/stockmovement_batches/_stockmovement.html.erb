@@ -13,8 +13,8 @@
           </select>
         </td>
         <td> <!-- Information Field -->
-          <%= f.select_without_bootstrap :product_id, options_for_select(@products.map {|product| [product.model_select, product.id, {'data-quantity' => product.quantity_on_hand}]}), {:include_blank => ""}, {:class => 'productMovementSearchBox'} %>
-          <%= f.select_without_bootstrap :part_id, options_for_select(@parts.map {|part| [part.part_select, part.id, {'data-quantity' => part.quantity_on_hand}]}), {:include_blank => ""}, {:class => 'partMovementSearchBox'} %>
+          <%= f.select_without_bootstrap :product_id, options_for_select(@products.order(manufacturer_model_number: :asc).map {|product| [product.model_select, product.id, {'data-quantity' => product.quantity_on_hand}]}), {:include_blank => ""}, {:class => 'productMovementSearchBox'} %>
+          <%= f.select_without_bootstrap :part_id, options_for_select(@parts.order(manufacturer_model_number: :asc).map {|part| [part.part_select, part.id, {'data-quantity' => part.quantity_on_hand}]}), {:include_blank => ""}, {:class => 'partMovementSearchBox'} %>
         </td>
         <td> <!-- Current Qty Field -->
           <input class="current-quantity form-control" readonly="true" placeholder="Current Qty" type="number">

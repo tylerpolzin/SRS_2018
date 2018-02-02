@@ -15,7 +15,7 @@ module StockmovementBatchesHelper
   end
   
   def add_child_link_ia(name, association) # Inventory Adjustments
-    link_to(name, "javascript:void(0)", :class => "add_child_ia btn btn-sm btn-success btn-sm fa fa-plus-circle", :style => "margin-left: 10px;", :"data-association" => association)
+    link_to(name, "javascript:void(0)", :class => "add_child_ia btn btn-sm fa fa-plus-circle", :style => "margin-left: 10px;", :"data-association" => association)
   end
   
   def remove_child_link_ia(name, f)

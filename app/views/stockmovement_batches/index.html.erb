@@ -1,25 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Stockmovement Batches</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @stockmovement_batches.each do |stockmovement_batch| %>
-      <tr>
-        <td><%= link_to 'Show', stockmovement_batch %></td>
-        <td><%= link_to 'Edit', edit_stockmovement_batch_path(stockmovement_batch) %></td>
-        <td><%= link_to 'Destroy', stockmovement_batch, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Stockmovement Batch', new_stockmovement_batch_path %>
+<% @title = "SRS Portal | Inventory Adjustments" %>
+<div class="defaultDiv" id="newIADiv">
+  <p class="defaultDivHeader">Inventory History</p>
+  <div class="container defaultForm">
+      <ul class="nav nav-tabs">
+        <li class="active"><a id="adjustHistory" href="#adjust-history" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Batch History</a></li>
+        <li><a id="adjustHistoryIndividual" href="#adjust-history-individual" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Individual History</a></li>
+      </ul>
+      <div class="defaultTabs">
+        <div class="tab-content">
+          <div id="adjust-history" class="tab-pane fade in active">
+            <%= render "adjust_history" %>
+          </div>
+          <div id="adjust-history-individual" class="tab-pane fade">
+            <%= render "adjust_history_individual" %>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

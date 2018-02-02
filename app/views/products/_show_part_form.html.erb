@@ -6,8 +6,8 @@
         <option value="<%= part.id %>"><%= part.part_select %></option>
       <% end %>
     </select>
-    <% if current_user.admin? or current_user.has_role? (:employee) %>
-      <%= button_to "Create New Part", new_part_path(product_id: @product.id), method: :get, class: 'btn btn-primary show-product-new-part-button' %>
+    <% if current_user.admin? or current_user.has_role? :employee %>
+      <%= button_to "Create New Part", new_part_path(product_id: @product.id), method: :get, class: 'btn show-product-new-part-button' %>
     <% end %>
   </div>
   <div class="show-product-part-wrapper" id="wrapper-number-0">
@@ -34,7 +34,7 @@
           </tr>
           <tr>
             <td style="height: 68px;">
-              <%= best_in_place part, :notes, :as => :textarea, inner_class: "input-small" %>
+              <%= best_in_place part, :notes, :as => :textarea, inner_class: "form-control input-resize", place_holder: "No notes present, click here to edit" %>
             </td>
           </tr>
         </tbody>
@@ -49,21 +49,111 @@
   </div>
 <% end %>
 <% if @parts.present? %>
-<table class="table table-bordered showProductPartTable" id="part-number-0"><thead></thead><tbody>
-  <tr><td colspan="2" class="show-product-details">Select Part From List</td></tr>
-  <tr><td>Model #</td><td style="width: 186px;">N/A</td></tr><tr><td>UPC #</td><td>N/A</td></tr>
-  <tr><td>Weight</td><td>N/A</td></tr><tr><td>Location</td><td>N/A</td></tr>
-  <tr><td>Qty On Hand</td><td>N/A</td></tr><tr><td>Qty Last Updated</td><td>N/A</td></tr>
-  <tr><td>Active?</td><td>N/A</td></tr><tr><td>Store Orderable?</td><td>N/A</td></tr>
-  <tr><td>Item Creation Date</td><td>N/A</td></tr><tr><td>Item Last Updated</td><td>N/A</td></tr>
-  <tr><td colspan="2" class="show-product-details" style="height: 48px;"></td></tr></tbody>
+<table class="table table-bordered showProductPartTable" id="part-number-0">
+  <thead></thead>
+  <tbody>
+    <tr>
+      <td colspan="2">Select Part From List</td>
+    </tr>
+    <tr>
+      <td>Manufacturer</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Model #</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>UPC #</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Brand Name</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>SRS SKU</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Location</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Qty On Hand</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Qty Last Updated</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Weight</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Part Dimensions</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Packaged Dimensions</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Vendor Cost</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Retail Cost</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Shipping Cost</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Store Orderable?</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Warranty Orderable?</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>E-Commerce SKU?</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Active?</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Part Creation Date</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Part Last Updated</td>
+      <td></td>
+    </tr>
+  </tbody>
 </table>
   <% @parts.each do |part| %>
     <table class="table table-bordered showProductPartTable" id="part-number-<%= part.id %>">
       <thead></thead>
       <tbody>
         <tr>
-          <td colspan="2" class="show-product-details"><%= button_to "Go To Part Page", part_path(part.id), method: :get, class: "btn btn-sm" %></td>
+          <td colspan="2">
+            <div>
+              <%= button_to "Go To Part Page", part_path(part.id), method: :get, class: "btn btn-sm" %>
+              <% if current_user.admin? or current_user.has_role? :employee %>
+                <%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %>
+              <% end %>
+            </div>
+          </td>
         </tr>
         <tr>
           <td>Manufacturer</td>
@@ -137,30 +227,12 @@
         </tr>
         <tr>
           <td>Qty On Hand</td>
-          <td>
-            <% part.count_on_hand %>
-            <%# if part.stockmovements.exists? %>
-              <%# part.stockmovements.last(1).each do |s| %>
-                <%#= s.quantity %>
-              <%# end %>
-            <%# else %>
-              <!--No Stock Listed-->
-            <%# end %>
-          </td>
+          <td><%= part.quantity_on_hand %></td>
         </tr>
-        <!--<tr>-->
-        <!--  <td>Qty Last Updated</td>-->
-        <!--  <td>-->
-        <!--    <%# if part.stockmovements.exists? %>-->
-        <!--      <%# part.stockmovements.last(1).each do |s| %>-->
-        <!--        <%#= s.created_at.strftime('%B %d, %Y') %>-->
-        <!--      <%# end %>-->
-        <!--    <%# else %>-->
-        <!--      N/A-->
-        <!--    <%# end %>-->
-        <!--  </td>-->
-        <!--</tr>-->
-        <!-- Add "view history" link to stockmovement history for individual item once complete -->
+        <tr>
+          <td>Qty Last Updated</td>
+          <td><%= part.qty_last_updated %></td>
+        </tr>
         <tr>
           <td>Weight</td>
           <td><%= part.part_weight %></td>
@@ -255,18 +327,13 @@
           <td>Part Last Updated</td>
           <td><%= part.updated_at.strftime('%B %d, %Y') %></td>
         </tr>
-        <% if current_user.admin? or current_user.has_role? (:employee) %>
-          <tr>
-            <td colspan="2" class="show-product-details"><%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm btn-primary show-product-edit-button' %></td>
-          </tr>
-        <% end %>
       </tbody>
     </table>
   <% end %>
 <% else %>
-  <% if current_user.admin? or current_user.has_role? (:employee) %>
+  <% if current_user.admin? or current_user.has_role? :employee %>
     <div style="float:right;">
-      <%= button_to "Create New Part", new_part_path(product_id: @product.id), method: :get, class: 'btn btn-primary show-product-new-part-button', :style => "margin-right:16px;" %>
+      <%= button_to "Create New Part", new_part_path(product_id: @product.id), method: :get, class: 'btn show-product-new-part-button', :style => "margin-right:16px;" %>
     </div>
   <% end %>
 <% end %>

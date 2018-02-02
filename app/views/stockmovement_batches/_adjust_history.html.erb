@@ -5,7 +5,7 @@
       <tr>
         <th id="detailsDblClick"><div style="width: 10px"></div></th>
         <th><div style="width: 200px">Date</div></th>
-        <th><div style="width: 150px">Type</div></th>
+        <th><div style="width: 150px">Adjustment Type</div></th>
         <th><div style="width: 100px">Created By</div></th>
         <th></th> <!-- Blank column for nested dropdown data to add search ability -->
       </tr>
@@ -20,15 +20,40 @@
                                <p>Part</p>
                               <% end %>
                            <% end %>"
-          data-child-items=" <% i.stockmovements.each do |s| %>
-                                  <% if s.is_product %>
-                                    &lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;/items/<%= s.product_id %>&quot;&gt;<%= s.product.model_select %>&lt;/a&gt;&lt;/p&gt;
-                                  <% elsif s.is_part %>
-                                    &lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;/parts/<%= s.part_id %>&quot;&gt;<%= s.part.part_select %>&lt;/a&gt;&lt;/p&gt;
-                                  <% else %>
-                                    <p>No Sku's Present</p>
-                                  <% end %>
-                                <% end %>"
+          data-child-model="<% i.stockmovements.each do |s| %>
+                              <% if s.is_product %>
+                                <% if s.product.present? %>
+                                  &lt;p&gt;&lt;a href=&quot;/items/<%= s.product_id %>&quot;&gt;<%= s.product.manufacturer_model_number %>&lt;/a&gt;&lt;/p&gt;
+                                <% else %>
+                                  <p></p>
+                                <% end %>
+                              <% elsif s.is_part %>
+                                <% if s.part.present? %>
+                                  &lt;p&gt;&lt;a href=&quot;/parts/<%= s.part_id %>&quot;&gt;<%= s.part.manufacturer_model_number %>&lt;/a&gt;&lt;/p&gt;
+                                <% else %>
+                                  <p></p>
+                                <% end %>
+                              <% else %>
+                                <p>No Sku's Present</p>
+                              <% end %>
+                            <% end %>"
+          data-child-description="<% i.stockmovements.each do |s| %>
+                                    <% if s.is_product %>
+                                      <% if s.product.present? %>
+                                        <p><%= s.product.description %></p>
+                                      <% else %>
+                                        <p>Product no longer exists</p>
+                                      <% end %>
+                                    <% elsif s.is_part %>
+                                      <% if s.part.present? %>
+                                        <p><%= s.part.description %></p>
+                                      <% else %>
+                                        <p>Part no longer exists</p>
+                                      <% end %>
+                                    <% else %>
+                                      <p>No Sku's Present</p>
+                                    <% end %>
+                                  <% end %>"
           data-child-adjust_quantity="<% i.stockmovements.each do |aq| %>
                                         <% if aq.adjust_quantity.present? %>
                                           <p><%= aq.adjust_quantity_plus %></p>
@@ -52,7 +77,48 @@
           <td><%= i.created_at.strftime('%Y-%m-%d (%R)') %></td>
           <td><%= i.stockmovement_type %></td>
           <td><%= i.user.header_name %></td>
-          <td></td>
+          <td> <!-- Hidden field to give table search ability to Expando columns -->
+            <% i.stockmovements.each do |s| %>
+              <% if s.is_product %>
+                Product
+              <% elsif s.is_part %>
+                Part
+              <% end %>
+            <% end %> | 
+            <% i.stockmovements.each do |s| %>
+              <% if s.is_product %>
+                <% if s.product.present? %>
+                  <%= s.product.manufacturer_model_number %>
+                <% end %>
+              <% elsif s.is_part %>
+                <% if s.part.present? %>
+                  <%= s.part.manufacturer_model_number %>
+                <% end %>
+              <% end %>
+            <% end %> | 
+            <% i.stockmovements.each do |s| %>
+              <% if s.is_product %>
+                <% if s.product.present? %>
+                  <%= s.product.description %>
+                <% end %>
+              <% elsif s.is_part %>
+                <% if s.part.present? %>
+                  <%= s.part.description %>
+                <% end %>
+              <% end %>
+            <% end %> | 
+            <% i.stockmovements.each do |aq| %>
+              <% if aq.adjust_quantity.present? %>
+                <%= aq.adjust_quantity_plus %>
+              <% end %>
+            <% end %> | 
+            <% i.stockmovements.each do |q| %>
+              <% if q.quantity.present? %>
+                <%= q.quantity %>
+              <% end %>
+            <% end %> | 
+            <% if i.notes.present? %><%= i.notes %><% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

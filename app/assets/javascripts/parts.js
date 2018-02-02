@@ -52,7 +52,7 @@ $(function() {
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-$("#showPartDiv").animate({left: 0, opacity: 100}, 500);
+  $("#showPartDiv").animate({left: 0, opacity: 100}, 500);
 });
 
 
@@ -61,16 +61,70 @@ $("#showPartDiv").animate({left: 0, opacity: 100}, 500);
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
+  $("#partListDiv").animate({left: 0, opacity: 100}, 500);
+  // Function to add a leading zero to dates between 1-9
+  var MyDate = new Date();
+  var date;
+  MyDate.setDate(MyDate.getDate());
+  date = MyDate.getFullYear() + "-" + ('0' + (MyDate.getMonth()+1)).slice(-2) + "-" + ('0' + MyDate.getDate()).slice(-2);
   var table = $('#partsDataTable').DataTable({
                 "scrollX": true,
                 "scrollY": true,
-                "dom": '<"parts-toolbar"><"col-md-12 glider-table"t><"col-md-12"ip>',
+                "dom": '<"parts-toolbar">B<"col-md-12 glider-table"t><"col-md-12"ip>',
+                "buttons": [
+                  {extend: 'collection', text: '<i class="fa fa-download" aria-hidden="true"></i> Export <span class="caret"></span>', className: 'btn dtExportOptions',
+                    buttons: [
+
+                      {extend: 'excelHtml5',
+                        text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel',
+                        title: 'SRS Inventory Report, '+date+'.xlsx', 
+                        customize:
+                          // Custom function to set the header row green and outlined.
+                          function( xlsx ) {
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                            $('row c[r*="2"]', sheet).attr( 's', '42' );
+                          },
+                        // Only exports columns that are currently visible.  Adjusted by the "Visibility" dropdown and Filtered text.
+                        exportOptions: { columns: ':visible' }, 
+                        className: 'btn'
+                      },
+                      
+                      {extend: 'pdfHtml5',
+                        text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF',
+                        title: 'SRS Inventory Report, '+date+'.pdf',
+                        exportOptions: {columns: ':visible'},
+                        className: 'btn'},
+                      
+                      {extend: 'print',
+                        text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
+                        exportOptions: {columns: ':visible'},
+                        className: 'btn'},
+                        
+                      {extend: 'copyHtml5',
+                        text: '<i class="fa fa-copy" aria-hidden="true"></i> Copy',
+                        exportOptions: {columns: ':visible'},
+                        className: 'btn'},
+
+                    ]
+                  },
+                  
+                  // Button Collection for toggling visibility of columns
+                  {extend: 'collection', text: '<i class="fa fa-wrench" aria-hidden="true"></i> Export Options <span class="caret"></span>', className: 'btn dtColumnVisibility',
+                    buttons: [
+                      // Function to quickly collapse columns to be inventory specific.  Columns 3,4,5,6 -- MFR Model #, Description, Qty On Hand, Qty Last Updated
+                      {extend: 'columnToggle', text: 'Inventory Preset', columns: [0,1,2,5,9,10,11,12], className: 'btn'},
+                      // Standard Column Visibility Button that lists all columns.  ".noVis" is disabled via CSS in Application.scss because the ":not" method doesn't work here
+                      {extend: 'colvis', text: 'Customize Columns', className: 'btn'}
+                    ]
+                  }
+
+                ],
                 "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
                 "pageLength": 10,
                 "bJQueryUI": true,
                 "columnDefs": [
                   {
-                  "targets": [12],
+                  "targets": [13],
                   "visible": false,
                   },
                   {
@@ -113,11 +167,12 @@ $(document).on("turbolinks:load", function() {
   }
   $("div.parts-toolbar").html(top_toolbar($(".partTableChildren").data('child-filter')));
   
+  // "Filter By Product" dropdown executes a search of a given product by searching Column 3, "MFR Product #"
   $('#partTableProductSearch').on('change', function() {
     $('div.glider-table').slideUp(300);
     setTimeout(function() {
-      table.column(4).search("").draw();
-      table.column(4).search($("#partTableProductSearch").find("option:selected").attr("name")).draw();
+      table.column(3).search("").draw();
+      table.column(3).search($("#partTableProductSearch").find("option:selected").attr("name")).draw();
     }, 280);
     $('div.glider-table').slideDown(300);
   });

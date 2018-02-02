@@ -18,7 +18,7 @@
       </tr>
       <tr>
         <td>
-          <%= best_in_place @part, :notes, :as => :textarea, inner_class: "input-small" %>
+          <%= best_in_place @part, :notes, :as => :textarea, inner_class: "form-control input-resize", place_holder: "No notes present, click here to edit" %>
         </td>
       </tr>
     </tbody>
@@ -40,8 +40,14 @@
 <table class="table table-bordered" id="showPartTable">
   <thead></thead>
   <tbody>
+    <% if current_user.admin? or current_user.has_role? :employee %>
+      <tr>
+        <td colspan="2"><%= button_to "Edit This Part", edit_part_path(id: params[:id]), method: :get, class: 'btn btn-sm' %></td>
+      </tr>
+    <% end %>
     <tr>
-      <td colspan="2" class="show-part-details">Part Details</td>
+      <td>Belongs To</td>
+      <td><%= link_to @part.product.model_select, product_path(id: @part.product.id), method: :get %></td>
     </tr>
     <tr>
       <td>Manufacturer</td>
@@ -215,10 +221,5 @@
       <td>Part Last Updated</td>
       <td><%= @part.updated_at.strftime('%B %d, %Y') %></td>
     </tr>
-    <% if current_user.admin? or current_user.has_role? (:employee) %>
-      <tr>
-        <td colspan="2" class="show-part-edit-button"><%= button_to "Edit This Part", edit_part_path(id: params[:id]), method: :get, class: 'btn btn-sm btn-primary' %></td>
-      </tr>
-    <% end %>
   </tbody>
 </table>

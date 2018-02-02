@@ -14,7 +14,7 @@
       </tr>
       <tr>
         <td>
-          <%= best_in_place @product, :notes, :as => :textarea, inner_class: "input-small" %>
+          <%= best_in_place @product, :notes, :as => :textarea, inner_class: "form-control input-resize", place_holder: "No notes present, click here to edit" %>
         </td>
       </tr>
     </tbody>
@@ -36,9 +36,13 @@
 <table class="table table-bordered" id="showProductTable">
   <thead></thead>
   <tbody>
-    <tr>
-      <td colspan="2" class="show-product-details">Product Details</td>
-    </tr>
+    <% if current_user.admin? or current_user.has_role? :employee %>
+      <tr>
+        <td colspan="2">
+          <%= button_to "Edit This Product", edit_product_path(id: @product.id), method: :get, class: 'btn btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
     <tr>
       <td>Manufacturer</td>
       <td>
@@ -211,12 +215,5 @@
       <td>Product Last Updated</td>
       <td><%= @product.updated_at.strftime('%B %d, %Y') %></td>
     </tr>
-    <% if current_user.admin? or current_user.has_role? (:employee) %>
-      <tr>
-        <td colspan="2" class="show-product-edit-button">
-          <%= button_to "Edit This Product", edit_product_path(id: @product.id), method: :get, class: 'btn btn-sm btn-primary' %>
-        </td>
-      </tr>
-    <% else %><% end %>
   </tbody>
 </table>

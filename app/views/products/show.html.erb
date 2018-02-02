@@ -1,35 +1,35 @@
 <% @title = "SRS Portal | #{@product.sku_if_sku}" %>
-<div style="width: 850px;" id="showProductDiv">
-  <p class="showProductHeader">
+<div class="defaultDiv" id="showProductDiv">
+  <p class="defaultDivHeader">
     <span class="show-product-brand-name"><%= @product.brand_name %></span></br>
     <span class="show-product-description"><%= @product.description %></span>
   </p>
-  <div class="form-horizontal showProductForm">
+  <div class="container defaultForm">
     <ul class="nav nav-tabs">
       <li class="active"><a id="showProductForm" href="#show-product-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Product Information</a></li>
-      <li><a id="showPartForm" href="#show-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Associated Parts</a></li>
-      <li><a id="showProductUploads" href="#show-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Associated Files</a></li>
+      <li><a id="showPartForm" href="#show-product-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Associated Parts</a></li>
+      <!--<li><a id="showProductUploads" href="#show-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Associated Files</a></li>-->
       <li><a id="showProductMovementHistory" href="#show-product-movement-history" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Inventory History</a></li>
-      <li><a id="showProductRecentOrders" href="#show-product-recent-orders" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Recent Orders</a></li>
+      <!--<li><a id="showProductRecentOrders" href="#show-product-recent-orders" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Recent Orders</a></li>-->
     </ul>
     
-    <div id="showProductTabs">
+    <div class="defaultTabs">
       <div class="tab-content">
         <div id="show-product-form" class="tab-pane fade in active container">
           <%= render "show_product_form" %>
         </div>
-        <div id="show-part-form" class="tab-pane fade container">
+        <div id="show-product-part-form" class="tab-pane fade container">
           <%= render "show_part_form" %>
         </div>
-        <div id="show-product-uploads" class="tab-pane fade container">
-          <%= render "show_product_uploads" %>
-        </div>
+        <!--<div id="show-product-uploads" class="tab-pane fade container">-->
+        <!--  <%#= render "show_product_uploads" %>-->
+        <!--</div>-->
         <div id="show-product-movement-history" class="tab-pane fade container">
           <%= render "show_movement_history" %>
         </div>
-        <div id="show-product-recent-orders" class="tab-pane fade container">
-          <%= render "show_recent_orders" %>
-        </div>
+        <!--<div id="show-product-recent-orders" class="tab-pane fade container">-->
+        <!--  <%#= render "show_recent_orders" %>-->
+        <!--</div>-->
       </div>
     </div>
   </div>

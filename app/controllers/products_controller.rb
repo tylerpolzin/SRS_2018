@@ -2,16 +2,17 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def index
-    if current_user.admin? or current_user.has_role? (:employee)
-      @products = Product.all
+    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
+    if current_user.admin? or current_user.has_role? :employee
+      @products = Product.order(manufacturer_model_number: :asc)
     elsif current_user.has_role? (:drsharp)
-      @products = Product.where(:brand_name => "Dr Sharp")
+      @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Dr Sharp")
     elsif current_user.has_role? (:colonial)
-      @products = Product.where(:brand_name => "Colonial Elegance")
+      @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Colonial Elegance")
     elsif current_user.has_role? (:padula)
-      @products = Product.where(:brand_name => "Ray Padula")
+      @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Ray Padula")
     elsif current_user.has_role? (:firplak)
-      @products = Product.where(:brand_name => "Firplak")
+      @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Firplak")
     end
   end
 
@@ -49,14 +50,18 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-    if @product.update_attributes(product_params)
-      if @product.remove_image == true
-        @product.image = nil
-        @product.save
+    respond_to do |format|
+      if @product.update_attributes(product_params)
+        if @product.remove_image == true
+          @product.image = nil
+          @product.save
+        end
+        format.html { redirect_to product_path(params[:id]), notice: '// Product has been updated.' }
+        format.json { respond_with_bip(@product) }
+      else
+        format.html { render action: :edit }
+        format.json { respond_with_bip(@product) }
       end
-      redirect_to product_path(params[:id]), notice: '// Product has been updated.'
-    else
-      render action: :edit
     end
   end
 

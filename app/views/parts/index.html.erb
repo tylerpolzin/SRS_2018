@@ -1,22 +1,23 @@
 <% @title = "SRS Portal | Part List" %>
-<div style="width:1600px;" id="partListDiv">
-  <p class="partHeader">Part List</p>
+<div class="defaultDiv" id="partListDiv">
+  <p class="defaultDivHeader">Part List</p>
   <div class="partsTable">
-    <table id="partsDataTable" class="display" style="width: 100%;">
+    <table id="partsDataTable" class="display" style="width:100%;">
       <thead>
         <tr>
-          <th><div></div></th>
-          <th><div>Image</div></th>
-          <th><div>Brand Name</div></th>
-          <th><div>Description</div></th>
-          <th><div>MFR Product Model #</div></th>
-          <th><div>MFR Part #</div></th>
-          <th><div>SRS SKU</div></th>
-          <th><div>Qty On Hand</div></th>
-          <th><div>Weight</div></th>
-          <th><div>Dimensions</div></th>
-          <th><div>Pricing</div></th>
-          <th><div>Additional Notes</div></th>
+          <th><p style="display:none;">Details</p></th> <!-- hacky way to get the word "Details" to show up in the Colvis buttons dropdown -->
+          <th>Image</th>
+          <th>Brand Name</th>
+          <th>Belongs To</th>
+          <th>MFR Part #</th>
+          <th>SRS SKU</th>
+          <th>Description</th>
+          <th>Qty On Hand</th>
+          <th>Qty Last Updated</th>
+          <th>Weight</th>
+          <th>Dimensions</th>
+          <th>Pricing</th>
+          <th>Additional Notes</th>
           <th></th>
         </tr>
       </thead>
@@ -77,25 +78,12 @@
                 N/A
               <% end %>
             </td>
-            <td>
-              <% if part.description.present? %>
-                <%= part.description %>
-              <% else %>
-                N/A
-              <% end %>
-            </td>
-            <td>
-              <% if part.product.manufacturer_model_number.present? %>
-                <%= part.product.manufacturer_model_number %>
-              <% else %>
-                N/A
-              <% end %>
-            </td>
+            <td><%= link_to part.product.model_select, product_path(id: part.product.id), method: :get %></td>
             <td>
               <% if part.manufacturer_model_number.present? %>
-                <%= link_to part.manufacturer_model_number, part_path(id: part.id), method: :get, target: '_blank', title: "View Part Details" %>
+                <%= link_to part.manufacturer_model_number, part_path(id: part.id), method: :get, title: "View Part Details" %>
               <% else %>
-                <%= link_to "N/A", part_path(id: part.id), method: :get, target: '_blank', title: "View Part Details" %>
+                <%= link_to "N/A", part_path(id: part.id), method: :get, title: "View Part Details" %>
               <% end %>
             </td>
             <td>
@@ -106,9 +94,14 @@
               <% end %>
             </td>
             <td>
-              <p><%= part.quantity_on_hand %></p>
-              <p>Last Updated: <%= part.qty_last_updated %></p>
+              <% if part.description.present? %>
+                <%= part.description %>
+              <% else %>
+                N/A
+              <% end %>
             </td>
+            <td><%= part.quantity_on_hand %></td>
+            <td><%= part.qty_last_updated %></td>
             <td><%= part.part_weight %></td>
             <td>
               <p>Product: <%= part.product_dims_l %>"x<%= part.product_dims_w %>"x<%= part.product_dims_h %>"</p>
@@ -134,14 +127,20 @@
             <td>
               <% if part.notes.present? %>
                 <%= simple_format part.notes %>
-                <%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm btn-secondary' %>
+                <%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %>
               <% else %>
                 N/A
-                <%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm btn-secondary' %>
+                <%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %>
               <% end %>
             </td>
-            <td>  <!-- Hidden field to add table search ability to Child Rows -->
-
+            <td>  <!-- Hidden field to add table search ability to Expando -->
+              <% if part.product.vendor_name.present? %><%= part.product.vendor_name %><% end %> | 
+              <% if part.location.present? %><%= part.location %><% end %> | 
+              <% if part.upc.present? %><%= part.upc %><% end %> | 
+              <% if part.active? %>Active | <% else %>Not Active<% end %> | 
+              <% if part.store_orderable? %>Store Orderable | <% else %>Not Store Orderable<% end %> | 
+              <% if part.ecomm_sku? %>E-Commerce SKU | <% else %>Not E-Commerce SKU<% end %> | 
+              <% if part.warranty_orderable? %>Warranty Orderable | <% else %>Not Warranty Orderable<% end %>
             </td>
           </tr>
         <% end %>

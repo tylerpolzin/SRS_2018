@@ -1,8 +1,0 @@
-             data-child-filter="
-             &lt;select class=&quot;partTableProductSearch&quot; name=&quot;product[product_id]&quot; id=&quot;product_product_id&quot; data-cip-id=&quot;cIPJQ342845639&quot;&gt;
-               <% part.product.each do |product| %>
-                 &lt;option value=&quot;<%= product.id %>&quot;&quot;<%= product.product_select_with_model %>&lt;/option&gt;
-               <% end %>
-             &lt;/select&gt;"
-             
-             

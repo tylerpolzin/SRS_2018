@@ -2,7 +2,37 @@ class StockmovementBatchesController < ApplicationController
   before_action :set_stockmovement_batch, only: [:show, :edit, :update, :destroy]
 
   def index
-    @stockmovement_batches = StockmovementBatch.all
+    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
+    if current_user.admin? or current_user.has_role? :employee
+      @stockmovements = Stockmovement.all
+      @stockmovement_batches = StockmovementBatch.all
+    elsif current_user.has_role? (:drsharp)
+      @stockmovements = Stockmovement.includes(:product).where(:products => {:brand_name => "Dr Sharp"})
+      @stockmovement_batches = StockmovementBatch.includes(:stockmovements)
+                                                 .where(:stockmovements => {:id => Stockmovement.select(:id)
+                                                 .where(:product_id => Product.select(:id)
+                                                 .where(:brand_name => "Dr Sharp"))})
+    elsif current_user.has_role? (:colonial)
+      @stockmovements = Stockmovement.includes(:product).where(:products => {:brand_name => "Colonial Elegance"})
+      @stockmovement_batches = StockmovementBatch.includes(:stockmovements)
+                                                 .where(:stockmovements => {:id => Stockmovement.select(:id)
+                                                 .where(:product_id => Product.select(:id)
+                                                 .where(:brand_name => "Dr Sharp"))})
+    elsif current_user.has_role? (:padula)
+      @stockmovements = Stockmovement.includes(:product).where(:products => {:brand_name => "Ray Padula"})
+      @stockmovement_batches = StockmovementBatch.includes(:stockmovements)
+                                                 .where(:stockmovements => {:id => Stockmovement.select(:id)
+                                                 .where(:product_id => Product.select(:id)
+                                                 .where(:brand_name => "Dr Sharp"))})
+    elsif current_user.has_role? (:firplak)
+      @stockmovements = Stockmovement.includes(:product).where(:products => {:brand_name => "Firplak"})
+      @stockmovement_batches = StockmovementBatch.includes(:stockmovements)
+                                                 .where(:stockmovements => {:id => Stockmovement.select(:id)
+                                                 .where(:product_id => Product.select(:id)
+                                                 .where(:brand_name => "Dr Sharp"))})
+    end
+    @products = Product.all
+    @parts = Part.all
   end
 
   def show
@@ -11,9 +41,10 @@ class StockmovementBatchesController < ApplicationController
   def new
     @stockmovement_batches = StockmovementBatch.all
     @stockmovements = Stockmovement.all
-    @stockmovement_batch = StockmovementBatch.new
+    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
     @products = Product.all
     @parts = Part.all
+    @stockmovement_batch = StockmovementBatch.new
     @stockmovement = Stockmovement.new
   end
 

@@ -22,6 +22,7 @@
               Strategic Retail Solutions
             <% end %>
             <span class="navbar-brand" style="padding-left:10px">//&nbsp;&nbsp;<%= @current_user.header_name %></span>
+            <span class="turbolinks-progress-bar"></span>
             <span class="navbar-brand navbar-animated navbar-fade" style="margin-left:-30px;color:orange;"><%= notice %></span>
           </div>
           <div class="collapse navbar-collapse" id="main-nav-collapse">
@@ -44,7 +45,7 @@
               <!--  </ul>-->
               <!--</li>-->
               <li>
-                <%= link_to "<i class='fa fa-sign-out'></i> Sign Out".html_safe, destroy_user_session_path, method: :delete, class: 'navbar-btn' %>
+                <%= link_to "<i class='fa fa-sign-out'></i> Sign Out".html_safe, destroy_user_session_path, method: :delete, class: 'navbar-btn signOutButton' %>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -52,15 +53,27 @@
       </nav>
   <!--Sidebar Navigation-->
       <nav class="nav-side-menu">
-        <div class="brand">Rep Portal</div>
+        <% if current_user.admin? %>
+          <div class="brand">Admin Portal</div>
+        <% elsif current_user.has_role? :employee %>
+          <div class="brand">Employee Portal</div>
+        <% else %>
+          <div class="brand">Rep Portal</div>
+        <% end %>
         <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
         <div class="menu-list">
           <ul id="menu-content" class="menu-content collapse out">
-            <li><a><i class="fa fa-user-circle-o fa-lg"></i> <%= link_to "My Dashboard", user_path(id: current_user.id), method: :get %></a></li>
+            <%= link_to user_path(id: current_user.id), method: :get do %>
+              <li><i class="fa fa-user-circle-o fa-lg"></i> My Dashboard</li>
+            <% end %>
             <% if current_user.admin? %>
-              <li><a><i class="fa fa-thumb-tack fa-lg"></i> <%= link_to "New Assignment", new_assignment_path, method: :get %></a></li>
+              <%= link_to new_assignment_path, method: :get do %>
+                <li><i class="fa fa-thumb-tack fa-lg"></i> New Assignment</li>
+              <% end %>
             <% else %>
-              <li><a><i class="fa fa-thumb-tack fa-lg"></i> <%= link_to "Bug Report", new_assignment_path, method: :get %></a></li>
+              <%= link_to new_assignment_path, method: :get do %>
+                <li><i class="fa fa-thumb-tack fa-lg"></i> Bug Report</li>
+              <% end %>
             <% end %>
             <!--<li data-toggle="collapse" data-target="#tasks" class="collapsed">-->
             <!--  <a data-target="#"><i class="fa fa-tasks fa-lg"></i> Tasks<span class="arrow"></span></a>-->
@@ -70,21 +83,42 @@
             <!--  <li>Customer & Store Orders</li>-->
             <!--  <li>Vendor Uploads</li>-->
             <!--</ul>-->
-            <% if current_user.admin? or current_user.has_role? (:employee) %>
+            <% if current_user.admin? or current_user.has_role? :employee %>
               <li data-toggle="collapse" data-target="#products" class="collapsed">
                 <a data-target="#"><i class="fa fa-shopping-bag fa-lg"></i> Products<span class="arrow"></span></a>
               </li>
               <ul class="sub-menu collapse" id="products">
-                <li><%= link_to "All Products", products_path %></li>
-                <li><%= link_to "Create New Product", new_product_path, method: :get %></li>
-                <li><%= link_to "All Parts", parts_path %></li>
-                <li><%= link_to "Create New Part", new_part_path, method: :get %></li>
+                <%= link_to products_path do %>
+                  <li>All Products</li>
+                <% end %>
+                <%= link_to new_product_path, method: :get do %>
+                  <li>Create New Product</li>
+                <% end %>
+                <%= link_to parts_path do %>
+                  <li>All Parts</li>
+                <% end %>
+                <%= link_to new_part_path, method: :get do %>
+                  <li>Create New Part</li>
+                <% end %>
               </ul>
             <% else %>
-              <li><a><i class="fa fa-shopping-bag fa-lg"></i><%= link_to " My Products", products_path %></a></li>
+              <%= link_to products_path do %>
+                <li><i class="fa fa-shopping-bag fa-lg"></i> My Products</li>
+              <% end %>
             <% end %>
-            <% if current_user.admin? or current_user.has_role? (:employee) %>
-              <li><a><i class="fa fa-exchange fa-lg"></i><%= link_to " Inventory Adjustments", inventory_adjustments_path, method: :get %></a></li>
+            <% if current_user.admin? or current_user.has_role? :employee %>
+              <%= link_to inventory_adjustments_path, method: :get do %>
+                <li><i class="fa fa-exchange fa-lg"></i> Inventory Adjustments</li>
+              <% end %>
+              <% if current_user.admin? %>
+                <%= link_to inventory_history_path, method: :get do %>
+                  <li><i class="fa fa-exchange fa-lg"></i> Inventory History</li>
+                <% end %>
+              <% end %>
+            <% else %>
+              <%= link_to inventory_history_path, method: :get do %>
+                <li><i class="fa fa-exchange fa-lg"></i> Inventory History</li>
+              <% end %>
             <% end %>
             <!--<li data-toggle="collapse" data-target="#uploads" class="collapsed">-->
             <!--  <a data-target="#"><i class="fa fa-upload fa-lg"></i> Uploads<span class="arrow"></span></a>-->
@@ -96,7 +130,11 @@
             <!--<li><a><i class="fa fa-building-o fa-lg"></i> Store List</a></li>-->
             <!--<li><a><i class="fa fa-map-pin fa-lg"></i> Territory Map</a></li>-->
             <!--<li><a><i class="fa fa-calculator fa-lg"></i> Shipment Calculator</a></li>-->
-            <li><a><i class="fa fa-users fa-lg"></i><%= link_to " User List", users_path %></a></li>
+            <% if current_user.admin? or current_user.has_role? :employee %>
+              <%= link_to users_path do %>
+                <li><i class="fa fa-users fa-lg"></i> User List</li>
+              <% end %>
+            <% end %>
             <!--<li><a><i class="fa fa-sitemap fa-lg"></i> Site Map</a></li>-->
           </ul>
         </div>
@@ -105,7 +143,7 @@
         <%= yield %>
       </div>
     <% else %>
-      <nav class="navbar navbar-default navbar-static-top navbar-bg" role="navigation">
+      <nav class="navbar navbar-default navbar-static-top navbar-bg" role="navigation" style="padding-bottom:10px;">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -117,19 +155,8 @@
             Strategic Retail Solutions
           <% end %>
         </div>
-        <div class="collapse navbar-collapse" id="main-nav-collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <%= link_to "<i class='fa fa-sign-in'></i> Sign In".html_safe, login_path, class: "btn btn-default navbar-btn" %>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
       </nav>
-  
-      
-      
-      
-        <%= yield %>
+      <%= yield %>
     <% end %>
   </body>
 </html>

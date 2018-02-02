@@ -1,7 +1,7 @@
 <% @title = "SRS Portal | Edit Product" %>
-<div style="width:1060px;" id="editProductDiv">
-  <p class="editProductHeader">Edit Product Information</p>
-  <div class="container editProductForm" style="width:100%;">
+<div class="defaultDiv" id="editProductDiv">
+  <p class="defaultDivHeader">Edit Product Information</p>
+  <div class="container defaultForm">
     <%= bootstrap_form_for @product, url: product_path, method: :patch, :html => { :multipart => true } do |f| %>
       <% if @product.errors.any? %>
         <div id="error_explanation">
@@ -18,7 +18,7 @@
         <!--<li><a id="editProductUploads" href="#edit-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Edit Associated Files</a></li>-->
         <!--<li><a id="editPartsForm" href="#edit-parts-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Associated Parts</a></li>-->
       </ul>
-      <div id="editProductTabs">
+      <div class="defaultTabs">
         <div class="tab-content">
           <div id="edit-product-form" class="tab-pane fade in active container">
             <br/><%= render "form", :f => f %>
@@ -33,8 +33,8 @@
           <!--</div>-->
         </div>
       </div>
-      <%= button_to "Delete This Product", product_path(:id => params[:id]), :method => :delete, data: {:confirm => 'Are you sure you want to delete this product?'}, class: 'btn btn-sm btn-danger delete-button' %>
-      <%= f.primary "Update Product", :style => "float:right;" %>
+      <%= f.submit "Update Product", :style => "float:right;" %>
     <% end %>
+    <%= button_to "Delete This Product", product_path(:id => params[:id]), :method => :delete, data: {:confirm => 'Are you sure you want to delete this product?'}, class: 'btn btn-sm btn-danger delete-button' %>
   </div>
 </div>

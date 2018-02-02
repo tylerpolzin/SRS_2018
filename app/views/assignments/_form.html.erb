@@ -1,5 +1,5 @@
-<p class="newAssignmentHeader">Create New Assignment</p>
-<div class="container newAssignmentForm" style="width:100%;">
+<p class="defaultDivHeader">Create New Assignment</p>
+<div class="container defaultForm">
 <%= bootstrap_form_for @assignment, url: assignments_path, method: :post do |f| %>
   <% if @assignment.errors.any? %>
     <div id="error_explanation">
@@ -15,7 +15,7 @@
   <ul class="nav nav-tabs">
     <li class="active"><a id="newAssignmentNavTab" href="#new-assignment-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Assignment Details</a></li>
   </ul>
-  <div id="newAssignmentTabs">
+  <div class="defaultTabs">
     <div class="tab-content">
       <div id="new-assignment-form" class="tab-pane fade in active container">
         <br/>
@@ -47,6 +47,6 @@
   </div>
   <%= f.hidden_field :active, :value => "true" %>
   <%= f.hidden_field :user_id, :value => current_user.id %>
-  <%= f.primary "Create Assignment", :style => "float:right;" %>
+  <%= f.submit "Create Assignment", :style => "float:right;" %>
 <% end %>
 </div>

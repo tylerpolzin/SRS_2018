@@ -17,15 +17,15 @@ gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.
 
 # Custom Installs
 gem 'bootstrap-sass'
-gem 'bootstrap_form', github: 'bootstrap-ruby/rails-bootstrap-forms'
-gem 'font-awesome-sass'
+gem "bootstrap_form", "~> 2.7"
+gem 'font-awesome-rails'
 gem 'hirb'
 gem 'devise'
 gem 'rolify'
 gem 'cancancan'
 gem "paperclip"
 gem 'twitter-bootstrap-rails-confirm'
-gem 'best_in_place' # Now has best_in_place_if options, use with CanCan
+gem 'best_in_place'
 gem 'underscore-rails'
 gem 'gmaps4rails'
 gem 'ajax-datatables-rails' # Didn't use before, https://github.com/jbox-web/ajax-datatables-rails
@@ -34,7 +34,13 @@ gem 'jquery-ui-rails'
 gem 'jquery-fileupload-rails'
 gem 'jquery_context_menu-rails'
 gem 'select2-rails'
+gem 'bootstrap-datepicker-rails'
+gem 'seed_dump' # Generates seed file from existing database, use for dumping database and re-upping
+
+# gem 'nprogress-rails' # Use to add Loading Progress bar, https://github.com/caarlos0-graveyard/nprogress-rails
 # gem 'approval' # Use to require approval on database changes
+# gem 'chartkick' # Use for adding good looking graphs and pie charts to pages
+# gem 'smarter_csv' # If CSV importing ever becomes a thing, this will be essential
 
 # gem 'active_shipping'
 

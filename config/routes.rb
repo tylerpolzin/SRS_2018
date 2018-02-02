@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :products
   resources :pages
   get 'inventory_adjustments', to: 'stockmovement_batches#new'
+  get 'inventory_history', to: 'stockmovement_batches#index'
   resources :users do
     resource :profile
   end

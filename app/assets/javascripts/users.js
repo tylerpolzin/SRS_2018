@@ -34,6 +34,7 @@
    
 
   $(document).on("turbolinks:load", function() {
+    $("#usersTableDiv").animate({left: 0, opacity: 100}, 500);
     var table = $('#usersListDataTable').DataTable({
       renderer: "bootstrap",
       "aaSorting": [],

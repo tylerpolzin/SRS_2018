@@ -1,11 +1,11 @@
-<div class="container" style="width:100%;">
+<div class="container partTableContainer">
   <table class="table table-bordered" id="newPartTableLeft">
     <thead></thead>
     <tbody>
       <tr>
         <td>Associated Product</td>
         <td>
-          <%= f.collection_select(:product_id, Product.all, :id, :product_select_with_model, {:include_blank => "Select Product...", hide_label: true}, {:class => 'newPartProductSearch', :style => "width:100%;"}) %>
+          <%= f.collection_select(:product_id, Product.order(brand_name: :asc).order(manufacturer_model_number: :asc), :id, :product_select_with_model, {:include_blank => "Select Product...", hide_label: true}, {:class => 'newPartProductSearch', :style => "width:100%;"}) %>
           </td>
       </tr>
       <tr>

@@ -1,7 +1,7 @@
 <% @title = "SRS Portal | Create New Part" %>
-<div style="width:1060px;" id="newPartDiv">
-  <p class="newPartHeader">Create New Part</p>
-  <div class="container newPartForm" style="width:100%;">
+<div class="defaultDiv" id="newPartDiv">
+  <p class="defaultDivHeader">Create New Part</p>
+  <div class="container defaultForm">
     <%= bootstrap_form_for @part, url: parts_path, method: :post, :html => { :multipart => true } do |f| %>
       <% if @part.errors.any? %>
         <div id="error_explanation">
@@ -12,18 +12,18 @@
           <% end %>
           </ul>
         </div>
-      <% end %> <!-- if @part.errors.any? -->
+      <% end %>
       <ul class="nav nav-tabs">
         <li class="active"><a id="newPartNavTab" href="#new-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Part Details</a></li>
       </ul>
-      <div id="newPartTabs">
+      <div class="defaultTabs">
         <div class="tab-content">
           <div id="new-part-form" class="tab-pane fade in active container">
             <br/><%= render "form", :f => f %>
           </div>
         </div>
       </div>
-      <%= f.primary "Create Part", :style => "float:right;" %>
+      <%= f.submit "Create Part", :style => "float:right;" %>
     <% end %>
   </div>
 </div>

@@ -1,39 +1,76 @@
 <% @title = "SRS Portal | Product List" %>
-<div style="width:1600px;" id="productListDiv">
-  <p class="productHeader">Product List</p>
+<div class="defaultDiv" id="productListDiv">
+  <p class="defaultDivHeader">Product List</p>
   <div class="productsTable">
-    <table id="productsDataTable" class="display" style="width: 100%;">
+    <table id="productsDataTable" class="display" style="width:100%">
       <thead>
         <tr>
-          <th><div></div></th>
-          <th><div>Image</div></th>
-          <th><div>Brand Name</div></th>
-          <th><div>Description</div></th>
-          <th><div>MFR Model #</div></th>
-          <th><div>Qty On Hand</div></th>
-          <th><div>Weight</div></th>
-          <th><div>Dimensions</div></th>
-          <th><div>Pricing</div></th>
-          <th><div>Additional Notes</div></th>
+          <th><p style="display:none;">Details</p></th> <!-- hacky way to get "Details" to show up in the Colvis buttons dropdown -->
+          <th>Image</th>
+          <th>Brand Name</th>
+          <th>MFR Model #</th>
+          <th>Description</th>
+          <th>Qty On Hand</th>
+          <th>Qty Last Updated</th>
+          <th>Weight</th>
+          <th>Dimensions</th>
+          <th>Pricing</th>
+          <th>Additional Notes</th>
           <th></th>
           <% if current_user.admin? %>
-            <th><div>Has Parts?</div></th>
+            <th>Has Parts?</th>
+            <th>Active?</th>
+            <th>Store Orderable?</th>
+            <th>Warranty Orderable?</th>
+            <th>E-Commerce SKU?</th>
+            <th>In Stock?</th>
           <% end %>
         </tr>
       </thead>
-      <div class="productTableChildren"
-        data-child-user_check="<% if current_user.admin? or current_user.has_role? (:employee) %>
-                                 <li>
-                                   <form class='button_to' method='get' action='/products/new'>
-                                     <input class='btn btn-secondary' type='submit' value='Create New Product'>
-                                   </form>
-                                 </li>
-                                 <li style='margin-left:10px;'>
-                                   <form class='button_to' method='get' action='/parts/new'>
-                                     <input class='btn btn-secondary' type='submit' value='Create New Part'>
-                                   </form>
-                                 </li>
-                               <% else %><% end %>"></div>
+      <div class="productTableChildren" data-child-user_check=''
+                                        data-child-brand_names='<% if current_user.admin? or current_user.has_role? :employee %>
+                                                                  <li>
+                                                                    <div class="button-group brandFilter">
+                                                                      <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Brand Name <span class="caret"></span></button>
+                                                                      <ul class="dropdown-menu productsBrandFilterMenu">
+                                                                        <% @brand.each do |brand| %>
+                                                                          <li class="selected"><label><input type="checkbox" checked name="brand" value="<%= brand %>"/>&nbsp;<%= brand %></label></li>
+                                                                        <% end %>
+                                                                      </ul>
+                                                                    </div>
+                                                                  </li>
+                                                                <% end %>'
+                                        data-child-filters='<% if current_user.admin? or current_user.has_role? :employee %>
+                                                              <li>
+                                                                <div class="button-group booleanFilter">
+                                                                  <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Filter <span class="caret"></span></button>
+                                                                  <ul class="dropdown-menu booleanFilterMenu">
+                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="active" bool="" value="Active"/>&nbsp;Active</label><button id="activeClear" class="btn" disabled>Clear Filter</button></li>
+                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="storeOrderable" bool="" value="Store Orderable"/>&nbsp;Store Orderable</label><button id="storeOrderableClear" class="btn" disabled>Clear Filter</button></li>
+                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="warrantyOrderable" bool="" value="Warranty Orderable"/>&nbsp;Warranty Orderable</label><button id="warrantyOrderableClear" class="btn" disabled>Clear Filter</button></li>
+                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="ecommSku" bool="" value="E-Commerce SKU"/>&nbsp;E-Commerce SKU</label><button id="ecommSkuClear" class="btn" disabled>Clear Filter</button></li>
+                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="inStock" bool="" value="In Stock"/>&nbsp;In Stock</label><button id="inStockClear" class="btn" disabled>Clear Filter</button></li>
+                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="hasParts" bool="" value="Has Parts"/>&nbsp;Has Parts</label><button id="hasPartsClear" class="btn" disabled>Clear Filter</button></li>
+                                                                  </ul>
+                                                                </div>
+                                                              </li>
+                                                            <% end %>'
+                                        data-child-columns='<% if current_user.admin? or current_user.has_role? :employee %>[11,12,13,14,15,16,17]<% else %>11<% end %>'> <!-- Used in the dataTable "columnDefs" for visible targets -->
+        
+      </div>
+      <!--<div class="productTableChildren"--><!-- Temporarily Disabled -->
+      <!--  data-child-user_check="<%# if current_user.admin? or current_user.has_role? :employee %>-->
+      <!--                           <li>-->
+      <!--                             <form class='button_to' method='get' action='/products/new'>-->
+      <!--                               <input class='btn' type='submit' value='Create New Product'>-->
+      <!--                             </form>-->
+      <!--                           </li>-->
+      <!--                           <li style='margin-left:10px;'>-->
+      <!--                             <form class='button_to' method='get' action='/parts/new'>-->
+      <!--                               <input class='btn' type='submit' value='Create New Part'>-->
+      <!--                             </form>-->
+      <!--                           </li>-->
+      <!--                         <%# end %>"></div>-->
       <tbody class="product-table">
         <% @products.each do |product| %>
           <tr
@@ -119,23 +156,21 @@
               <% end %>
             </td>
             <td>
+              <% if product.manufacturer_model_number.present? %>
+                <%= link_to product.manufacturer_model_number, product_path(id: product.id), method: :get, title: "View Product Details" %>
+              <% else %>
+                <%= link_to "N/A", product_path(id: product.id), method: :get, title: "View Product Details" %>
+              <% end %>
+            </td>
+            <td>
               <% if product.description.present? %>
                 <%= product.description %>
               <% else %>
                 N/A
               <% end %>
             </td>
-            <td>
-              <% if product.manufacturer_model_number.present? %>
-                <%= link_to product.manufacturer_model_number, product_path(id: product.id), method: :get, target: '_blank', title: "View Product Details" %>
-              <% else %>
-                <%= link_to "N/A", product_path(id: product.id), method: :get, target: '_blank', title: "View Product Details" %>
-              <% end %>
-            </td>
-            <td>
-              <p><%= product.quantity_on_hand %></p>
-              <p>Last Updated: <%= product.qty_last_updated %></p>
-            </td>
+            <td><%= product.quantity_on_hand %></td>
+            <td><%= product.qty_last_updated %></td>
             <td><%= product.product_weight %></td>
             <td>
               <p>Product: <%= product.product_dims_l %>"x<%= product.product_dims_w %>"x<%= product.product_dims_h %>"</p>
@@ -161,23 +196,32 @@
             <td>
               <% if product.notes.present? %>
                 <%= simple_format product.notes %>
-                <% if current_user.admin? or current_user.has_role? (:employee) %>
-                  <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-outline-warning btn-sm' %>
+                <% if current_user.admin? or current_user.has_role? :employee %>
+                  <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-sm' %>
                 <% else %><% end %>
               <% else %>
                 N/A
-                <% if current_user.admin? or current_user.has_role? (:employee) %>
-                  <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-outline-warning btn-sm' %>
+                <% if current_user.admin? or current_user.has_role? :employee %>
+                  <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-sm' %>
                 <% else %><% end %>
               <% end %>
             </td>
-            <td>  <!-- Hidden field to add table search ability to Child Rows -->
-
+            <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
+              <% if product.has_parts? %><% product.parts.each do |part| %>
+              <% if part.manufacturer_model_number.present? %><%= part.manufacturer_model_number %><% end %> | 
+              <% if part.description.present? %><%= part.description %><% end %> | 
+              <% end %><% end %>
+              <% if product.vendor_name.present? %><%= product.vendor_name %><% end %> | 
+              <% if product.upc.present? %><%= product.upc %><% end %> | 
+              <% if product.srs_sku.present? %><%= product.srs_sku %><% end %>
             </td>
             <% if current_user.admin? %>
-              <td>
-                <%= best_in_place product, :has_parts, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %>
-              </td>
+              <td><%= best_in_place product, :has_parts, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
+              <td><%= best_in_place product, :active, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
+              <td><%= best_in_place product, :store_orderable, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
+              <td><%= best_in_place product, :warranty_orderable, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
+              <td><%= best_in_place product, :ecomm_sku, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
+              <td><% if product.quantity_on_hand > 0 %>true<% else %>false<% end %></td>
             <% end %>
           </tr>
         <% end %>

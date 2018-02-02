@@ -12,6 +12,9 @@
 //
 //= require rails-ujs
 //= require turbolinks
+//= require pdfmake/build/pdfmake.js 
+//= require pdfmake/build/vfs_fonts.js
+//= require moment.min.js
 //= require jquery3
 //= require jquery_ujs
 //= require jquery-ui
@@ -20,6 +23,8 @@
 //= require jquery.contextMenu.js
 //= require bootstrap-sprockets
 //= require jquery-bootstrap-purr.min.js
+//= require bootstrap-datepicker/core
+//= require bootstrap-datetimepicker.min.js
 //= require twitter/bootstrap/rails/confirm
 //= require bootstrap-add-clear.js
 //= require best_in_place
@@ -29,17 +34,18 @@
 //= require dataTables.min.js
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
-//X require autoFill.bootstrap4.min.js
-//X require autoFill.jqueryui.min.js
-//X require buttons.bootstrap4.min.js
-//X require dataTables.colReorder.min.js
 //= require dataTables.buttons.min.js
 //= require buttons.colVis.min.js
 //= require buttons.html5.min.js
 //= require buttons.print.min.js
+//= require buttons.bootstrap4.min.js
 //= require dataTables.autoFill.min.js
+//= require dataTables.colReorder.min.js
 //= require dataTables.fixedColumns.min.js
 //= require dataTables.fixedHeader.min.js
+//= require jquery.dataTables.yadcf.js
+//= require autoFill.jqueryui.min.js
+//= require autoFill.bootstrap4.min.js
 //= require dataTables.keyTable.min.js
 //= require dataTables.responsive.min.js
 //= require responsive.bootstrap4.min.js
@@ -49,7 +55,6 @@
 //= require gmaps/google
 //= require_tree .
 /*global $*/
-
 
 // Activating Best In Place
 $(document).on("turbolinks:load", function() {

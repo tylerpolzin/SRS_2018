@@ -1,7 +1,11 @@
 <% @title = "SRS Portal | My Dashboard" %>
-<div style="width: 850px;" id="showProfileDiv">
-  <p class="showProfileHeader">My Dashboard</p>
-  <div class="form-horizontal showProfileForm">
+<div class="defaultDiv" id="showProfileDiv">
+  <% if current_user == @user %>
+    <p class="defaultDivHeader">My Dashboard</p>
+  <% else %>
+    <p class="defaultDivHeader">User Profile</p>
+  <% end %>
+  <div class="container defaultForm">
     <ul class="nav nav-tabs">
       <% if current_user.admin? %>
         <li>
@@ -17,7 +21,7 @@
       <li><a id="showFilesForm" href="#show-files-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> My Files</a></li>
     </ul>
     
-    <div id="showProfileTabs">
+    <div class="defaultTabs">
       <div class="tab-content">
         <% if current_user.admin? and current_user == @user %>
           <div id="show-profile-form" class="tab-pane fade container">

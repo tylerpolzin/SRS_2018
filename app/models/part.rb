@@ -9,8 +9,22 @@ class Part < ApplicationRecord
                     :default_url => "No_Image_Found"
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\z/
   
-  def part_select
-    "#{manufacturer_model_number} (#{description})"
+  def part_select # "MFR Model Number | Description"
+    def a
+      if manufacturer_model_number.present?
+        "#{manufacturer_model_number}"
+      else
+        "No Model Number Present"
+      end
+    end
+    def b
+      if description.present?
+        " | #{description}"
+      else
+        " | No Description Present"
+      end
+    end
+    a+b
   end
 
   def id_w_leading_zero # Displays ID's that are less than 100 as "001"-"099", used when manually linking attached image URL's where the helper doesn't work

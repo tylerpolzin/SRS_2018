@@ -21,16 +21,65 @@ class Product < ApplicationRecord
     end
   end
   
-  def product_select
-    "#{brand_name} (#{description})"
+  def product_select # "Brand Name (Description)"
+    def a
+      if brand_name.present?
+        "#{brand_name}"
+      else
+        "No Brand Name Present"
+      end
+    end
+    def b
+      if description.present?
+        " (#{description})"
+      else
+        "No Description Present"
+      end
+    end
+    a+b
+  end
+
+  def model_select # "MFR Model Number | Description"
+    def a
+      if manufacturer_model_number.present?
+        "#{manufacturer_model_number}"
+      else
+        "No Model Number Present"
+      end
+    end
+    def b
+      if description.present?
+        " | #{description}"
+      else
+        " | No Description Present"
+      end
+    end
+    a+b
   end
   
-  def model_select
-    "#{manufacturer_model_number} | #{description}"
-  end
-  
-  def product_select_with_model
-    "#{brand_name} (#{manufacturer_model_number} | #{description})"
+  def product_select_with_model # "Brand Name (MFR Model Number | Description)"
+    def a
+      if brand_name.present?
+        "#{brand_name}"
+      else
+        "No Brand Name Present"
+      end
+    end
+    def b
+      if manufacturer_model_number.present?
+        " (#{manufacturer_model_number}"
+      else
+        " (No Model Number Present"
+      end
+    end
+    def c
+      if description.present?
+        " | #{description})"
+      else
+        " | No Description Present)"
+      end
+    end
+    a+b+c
   end
   
   def id_w_leading_zero # Displays ID's that are less than 100 as "001"-"099", used when manually linking attached image URL's where the helper doesn't work

@@ -187,7 +187,6 @@ $(document).on("turbolinks:load", function() {
                 "scrollX": true,
                 "scrollY": true,
                 "dom": '<"adjust-history-toolbar"><"col-md-12 glider-table"t><"col-md-12"ip>',
-                "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
                 "pageLength": 10,
                 "bJQueryUI": true,
                 "columnDefs": [
@@ -232,20 +231,22 @@ $(document).on("turbolinks:load", function() {
     table.page.len($(this).find("option:selected").attr("value")).draw() ;
   });
 
-  function format (type, items, adjust_quantity, new_quantity, notes) {
+  function format (type, model, description, adjust_quantity, new_quantity, notes) {
     return ''+
    '<div class="glider">'+
    '  <table class="adjust-history-expando">'+
    '    <tr>'+
-   '      <td>Type</td>'+
-   '      <td>Items</td>'+
+   '      <td>Item Type</td>'+
+   '      <td>Model #</td>'+
+   '      <td>Description</td>'+
    '      <td>Difference</td>'+
    '      <td>New Quantity</td>'+
    '      <td>Notes</td>'+
    '    </tr>'+
    '    <tr>'+
    '      <td>'+type+'</td>'+
-   '      <td>'+items+'</td>'+
+   '      <td>'+model+'</td>'+
+   '      <td>'+description+'</td>'+
    '      <td>'+adjust_quantity+'</td>'+
    '      <td>'+new_quantity+'</td>'+
    '      <td>'+notes+'</td>'+
@@ -266,7 +267,7 @@ $(document).on("turbolinks:load", function() {
       });
     }
     else {
-      row.child(format(tr.data('child-type'), tr.data('child-items'), tr.data('child-adjust_quantity'), tr.data('child-new_quantity'), tr.data('child-notes')), 'no-padding').show();
+      row.child(format(tr.data('child-type'), tr.data('child-model'), tr.data('child-description'), tr.data('child-adjust_quantity'), tr.data('child-new_quantity'), tr.data('child-notes')), 'no-padding').show();
       tr.addClass('shown');
       td.tooltip('disable');
       $('div.glider', row.child()).slideDown();
@@ -279,41 +280,152 @@ $(document).on("turbolinks:load", function() {
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
+  // Function to add a leading zero to dates between 1-9
+  var MyDate = new Date();
+  var date;
+  MyDate.setDate(MyDate.getDate());
+  date = MyDate.getFullYear() + "-" + ('0' + (MyDate.getMonth()+1)).slice(-2) + "-" + ('0' + MyDate.getDate()).slice(-2);
+
   var table = $('#adjustHistoryIndividualDataTable').DataTable({
                 "scrollX": true,
                 "scrollY": true,
-                "dom": '<"adjust-history-individual-toolbar"><"col-md-12 glider-table"t><"col-md-12"ip>',
-                "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
-                "pageLength": 10,
+                "dom": '<"adjust-history-individual-toolbar">B<"col-md-12 glider-table"t><"col-md-12"ip>',
+                "buttons": [
+                  // Button for toggling visibility of columns
+                  {extend: 'colvis', text: '<i class="fa fa-wrench" aria-hidden="true"></i> Column Visibility <span class="caret"></span>', className: 'btn btn-header'},
+                  
+                  {extend: 'collection', text: '<i class="fa fa-download" aria-hidden="true"></i> Export <span class="caret"></span>', className: 'btn btn-header dtExportOptions',
+                    buttons: [
+
+                      {extend: 'excelHtml5',
+                        text: '<i class="fa fa-download" aria-hidden="true"></i> Excel <i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+                        title: 'SRS Inventory Report, '+date+'.xlsx', 
+                        customize:
+                          // Custom function to set the header row green and outlined.
+                          function( xlsx ) {
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                            $('row c[r*="2"]', sheet).attr( 's', '42' );
+                          },
+                        // Only exports columns that are currently visible.  Adjusted by the "Visibility" dropdown and Filtered text.
+                        exportOptions: { columns: ':visible' }, 
+                        className: 'btn'
+                      },
+                      
+                      {extend: 'pdfHtml5',
+                        text: '<i class="fa fa-download" aria-hidden="true"></i> PDF <i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
+                        title: 'SRS Inventory Report, '+date+'.pdf',
+                        exportOptions: {columns: ':visible'},
+                        className: 'btn'},
+                      
+                      {extend: 'print',
+                        text: '<i class="fa fa-download" aria-hidden="true"></i> Print <i class="fa fa-print" aria-hidden="true"></i>',
+                        exportOptions: {columns: ':visible'},
+                        className: 'btn'},
+                        
+                      {extend: 'copyHtml5',
+                        text: '<i class="fa fa-copy" aria-hidden="true"></i> Copy <i class="fa fa-file-text-o" aria-hidden="true"></i>',
+                        exportOptions: {columns: ':visible'},
+                        className: 'btn'},
+
+                    ]
+                  }
+                  
+                ],
+                "pageLength": 5,
+                "columnDefs": [
+                  {
+                  "targets": [1,2],
+                  "visible": false,
+                  },
+                ],
                 "bJQueryUI": true,
                 "order": [[0, 'desc']],
                 "oLanguage": {"sZeroRecords": "No records to display for this view"},
                 "fnDrawCallback": function() {
                   $(table).tooltip('enable');
                 }
+                
               });
 
-  $("div.adjust-history-individual-toolbar").html(''+
+
+  function top_toolbar (brand_names) {
+    return ''+
     '<ul class="nav nav-tabs">'+
-    ' <li><a class="btn hidden" id="hackFixButton">Click Me</a></li>'+
-    ' <li><div class="dataTables_filter"><input class="form-control" id="adjustHistoryIndividualTableSearch" placeholder="Search Table..."></div>'+
-    ' <li>'+
+    '  <li><a class="btn hidden" id="hackFixButton">Click Me</a></li>'+
+    '  <li><div class="dataTables_filter"><input class="form-control" id="adjustHistoryIndividualTableSearch" placeholder="Search Table..."></div>'+
+    '  <li>'+
     '    <div class="dataTables_length">'+
-    '     <select '+
-    '       class="form-control"'+
-    '       title="Number of records to show"'+
-    '       id="adjustHistoryIndividualTableLength">'+
-    '       <option value="5">5</option>'+
-    '       <option value="10">10</option>'+
-    '       <option value="25">25</option>'+
-    '       <option selected="selected" value="50">50</option>'+
-    '       <option value="100">100</option>'+
-    '       <option value="-1">All</option>'+
-    '     </select>'+
-    '   </div>'+
-    ' </li>'+
+    '      <select class="form-control" title="Number of records to show" id="adjustHistoryIndividualTableLength">'+
+    '        <option value="5">5</option>'+
+    '        <option value="10">10</option>'+
+    '        <option value="25">25</option>'+
+    '        <option selected="selected" value="50">50</option>'+
+    '        <option value="100">100</option>'+
+    '        <option value="-1">All</option>'+
+    '      </select>'+
+    '    </div>'+
+    '  </li>'+
+    '  <li>'+
+    '    <div class="inventoryFilterBy"><i class="fa fa-random" aria-hidden="true"></i> Filter By:</div>'+
+    '  </li>'+
+    '  <li>'+
+    '    <div class="inventoryDateRangeFilter">'+
+    '      <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-calendar" aria-hidden="true"></i> Date Range <span class="caret"></span></button>'+
+    '      <ul class="dropdown-menu">'+
+    '        <li>'+
+    '          <div class="input-daterange input-group" id="datepicker">'+
+    '            <input type="text" class="form-control filterStartDate" id="filterStartDate" name="start" placeholder="Start Date" />'+
+    '            <span class="input-group-addon">to</span>'+
+    '            <input type="text" class="form-control filterEndDate" id="filterEndDate" name="end" placeholder="End Date" />'+
+    '          </div>'+
+    '        </li>'+
+    '      </ul>'+
+    '    </div>'+
+    '  </li>'+brand_names+
+    '  <li>'+
+    '    <div class="button-group inventoryTypeFilter">'+
+    '      <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Adjustment Type <span class="caret"></span></button>'+
+    '      <ul class="dropdown-menu inventoryTypeFilterMenu">'+
+    '        <li class="selected"><label><input type="checkbox" checked name="type" value="Ecomm Order"/>&nbsp;Ecomm Order</label></li>'+
+    '        <li class="selected"><label><input type="checkbox" checked name="type" value="Warranty Order"/>&nbsp;Warranty Order</label></li>'+
+    '        <li class="selected"><label><input type="checkbox" checked name="type" value="Physical Inventory"/>&nbsp;Physical Inventory</label></li>'+
+    '        <li class="selected"><label><input type="checkbox" checked name="type" value="Product Return"/>&nbsp;Product Return</label></li>'+
+    '        <li class="selected"><label><input type="checkbox" checked name="type" value="Defective Destroy"/>&nbsp;Defective Destroy</label></li>'+
+    '      </ul>'+
+    '    </div>'+
+    '  </li>'+
     '</ul>'+
-    '');
+    '';
+  }
+  $("div.adjust-history-individual-toolbar").html(top_toolbar($(".adjustHistoryIndividualChildren").data('child-brand_names')));
+
+  $(document).on('click', '.inventoryTypeFilterMenu', function (e) {
+    e.stopPropagation(); // Stops the Inventory Type Filter Menu from closing when an interior option is clicked
+  });
+  $(document).on('click', '.brandFilterMenu', function (e) {
+    e.stopPropagation(); // Stops the Inventory Type Filter Menu from closing when an interior option is clicked
+  });
+  $('.inventoryTypeFilterMenu').on("change", function() {
+    var types = $('input:checkbox[name="type"]:checked').map(function() {
+      return '^' + this.value + '\$'; // Searches the table for any of the values from the 'inventoryTypeFilter' dropdown above
+      }).get().join('|'); // example of generated text that is filtered: "^Ecomm Order$|^Warranty Order$|^Physical Inventory$"
+    console.log(types);
+    if (types === "") {
+      table.column(7).search("xxxxxxxxxx").draw(); // if all checkboxes are unchecked, returns a true "Nil" instead of clearing the entire search parameter
+    }
+    else
+      table.column(7).search(types, true, false, false).draw(); // RegEx?: True, Smart Filter?: False, Case Insensitive?: False
+  });
+  $('.brandFilterMenu').on("change", function() { // Same concept as Inventory Type Filter above
+    var brands = $('input:checkbox[name="brand"]:checked').map(function() {
+      return '^' + this.value + '\$';
+      }).get().join('|');
+    if (brands === "") {
+      table.column(2).search("xxxxxxxxxx").draw();
+    }
+    else
+      table.column(2).search(brands, true, false, false).draw();
+  });
   $('#adjustHistoryIndividualTableSearch').keyup(function(){
     table.search($(this).val()).draw();
   });
@@ -321,11 +433,47 @@ $(document).on("turbolinks:load", function() {
     table.page.len($(this).find("option:selected").attr("value")).draw();
   });
   $('#hackFixButton').on("click", function(){
-    table.page.len(25).draw();
+    table.page.len(25).draw(); // Fixes header column width issues
   });
-  table.page.len(50).draw();
+  $('.input-daterange').datepicker({
+      format: "yyyy-mm-dd",
+      clearBtn: true,
+      startView: 1,
+      maxViewMode: 2,
+      todayBtn: true,
+      todayHighlight: true
+  });
+
+  $('input:checkbox').change(function(){ // Takes care of the non-dataTables specific menu styling
+    if($(this).is(':checked')) 
+      $(this).parent().parent().addClass('selected'); 
+    else 
+      $(this).parent().parent().removeClass('selected');
+  });
+
+  $.fn.dataTableExt.afnFiltering.push(
+    function( oSettings, aData, iDataIndex ) {
+      if(oSettings.nTable.id == 'adjustHistoryIndividualDataTable'){
+        var startDate = document.getElementById('filterStartDate').value;
+        var endDate = document.getElementById('filterEndDate').value;
+        var iStartDateCol = 0;
+        var iEndDateCol = 0;
+        startDate=startDate.substring(0,4) + startDate.substring(5,7)+ startDate.substring(8,10); // 0,4 = yyyyy 5,7 = dd 8,10 = dd == yyyy-mm-dd
+        endDate=endDate.substring(0,4) + endDate.substring(5,7)+ endDate.substring(8,10);
+        var datofini=aData[iStartDateCol].substring(0,4) + aData[iStartDateCol].substring(5,7)+ aData[iStartDateCol].substring(8,10);
+        var datoffin=aData[iEndDateCol].substring(0,4) + aData[iEndDateCol].substring(5,7)+ aData[iEndDateCol].substring(8,10);
+        if ( startDate == "" && endDate == "" ) { return true }
+        else if ( startDate <= datofini && endDate == "") { return true }
+        else if ( endDate >= datoffin && startDate == "") { return true }
+        else if (startDate <= datofini && endDate >= datoffin) { return true }
+        
+        return false;
+      }
+      return true;
+    }
+  );
+  $('#filterStartDate').on("change", function() {table.draw(); });
+  $('#filterEndDate').on("change", function() {table.draw(); });
 });
-$(document).on("turbolinks:load", function() {
-  $('#adjustHistoryIndividualTableSearch').val("f");
-  $('#adjustHistoryIndividualTableSearch').val("");
-});
+
+

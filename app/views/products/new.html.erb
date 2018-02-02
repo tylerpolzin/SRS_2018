@@ -1,7 +1,7 @@
 <% @title = "SRS Portal | Create New Product" %>
-<div style="width:1060px;" id="newProductDiv">
-  <p class="newProductHeader">Create New Product</p>
-  <div class="container newProductForm" style="width:100%;">
+<div class="defaultDiv" id="newProductDiv">
+  <p class="defaultDivHeader">Create New Product</p>
+  <div class="container defaultForm">
     <%= bootstrap_form_for @product, url: products_path, method: :post, :html => { :multipart => true } do |f| %>
       <% if @product.errors.any? %>
         <div id="error_explanation">
@@ -18,7 +18,7 @@
         <!--<li><a id="newProductUploads" href="#new-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Associated Files</a></li>-->
         <!--<li><a id="newPartForm" href="#new-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Associated Parts</a></li>-->
       </ul>
-      <div id="newProductTabs">
+      <div class="defaultTabs">
         <div class="tab-content">
           <div id="new-product-form" class="tab-pane fade in active container">
             <br/><%= render "form", :f => f %>

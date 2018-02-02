@@ -1,40 +1,6 @@
 
 #newIADiv {
-  margin: 0 20px 20px 0;
-  padding-left: 0;
-  position: absolute;
-  left: -1000px;
-  opacity: 0;
-}
-
-.newIAHeader {
-  text-align: center;
-  font-family: 'Abel', sans-serif;
-  font-size: 20px;
-  border-top-right-radius: 30px;
-  border-bottom: 4px solid #d19b3d;
-  background-image: url("gray-texture-1.jpg");
-  color: #e1ffff;
-  padding: 15px;
-  margin-bottom: 0;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-}
-
-.newIAForm {
-  width: 100%;
-  padding: 20px 20px 20px 0;
-  background-color: #d1dbe4;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-  border-bottom-right-radius: 30px;
-}
-
-#newInventoryAdjust {
-  margin-left: 30px;
-}
-
-#newInventoryAdjust, #adjustHistory, #adjustHistoryIndividual {
-  border: 1px #181c20;
-  padding: 7px;
+  width: 1200px;
 }
 
 #inventoryAdjustTabs {
@@ -50,8 +16,13 @@
   }
 }
 
+.newIAContainer {
+  width: 100%;
+  padding-left: 0;
+}
+
 #newIASelectTable {
-  margin: 15px 0 15px 15px;
+  margin: 15px 0 5px 0;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
@@ -93,7 +64,7 @@
 }
 
 .IAItemSelectHeader {
-  margin: 15px 0 0 15px;
+  margin: 15px 0 0 0;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
@@ -126,7 +97,7 @@
 
 .IAItemSelectContainer {
   table-layout: fixed !important;
-  margin: 0 0 0 15px;
+  margin: 0;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
@@ -205,8 +176,8 @@
 }
 
 .IAItemSelectBottomBorder {
-  padding-bottom: 15px;
-  margin: 0 -15px 0 15px;
+  padding-bottom: 5px;
+  margin: 0;
   border-top: 2px solid orange;
 }
 
@@ -232,6 +203,7 @@
 //------------------------------------------------------------------------------------------------------
 
 .adjustHistoryTable {
+  margin-left: -15px;
   padding: 10px 0 5px 0;
 }
 
@@ -313,6 +285,7 @@
 //------------------------------------------------------------------------------------------------------
 
 .adjustHistoryIndividualTable {
+  margin-left: -15px;
   padding: 10px 0 5px 0;
 }
 
@@ -328,24 +301,217 @@
 }
 
 .adjust-history-individual-toolbar {
+  font-family: 'Abel', sans-serif;
   float: left;
-  padding-left: 30px;
   display: inline;
   .nav {
     border-bottom: 0 !important;
+    li .inventoryFilterBy {
+      margin: 0 0 0 10px;
+      padding: 6px 12px 6px 12px;
+      cursor: context-menu;
+      font-weight: bold;
+      color: black;
+      border-top: 1px solid #ccc;
+      border-right: 0;
+      border-bottom: 1px solid #ccc;
+      border-left: 1px solid #ccc;
+      background: linear-gradient(to bottom, white, #d5dfe7);
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+    li .inventoryTypeFilter {
+      button {
+      margin: 0;
+      border-right: 0;
+      border-radius: 0;
+      }
+      .inventoryTypeFilterMenu {
+        padding: 5px;
+        border-top: 0;
+        border-right: 2px solid #2e353d;
+        border-bottom: 2px solid #2e353d;
+        border-left: 2px solid #2e353d;
+        li {
+          padding: 0;
+          border-right: 2px solid #2e353d;
+          border-bottom: 2px solid #2e353d;
+          border-left: 2px solid #2e353d;
+          text-align: center;
+          background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
+          color: #a92b04;
+          &:hover {
+            background: linear-gradient(to top, #d6d6d6, #e4e4e4);
+          }
+          &.selected {
+            background: linear-gradient(to bottom, white, #f3f3f3);
+            color: #165407;
+            &:hover {
+              background: linear-gradient(to top, white, #f3f3f3);
+            }
+          }
+
+          &:first-child {
+            border-top: 2px solid #2e353d;
+          }
+          label {
+            padding: 5px;
+            margin: 0;
+            width: 140px;
+            user-select: none;
+            input {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+    li .brandFilter {
+      button {
+      margin: 0;
+      border-right: 0;
+      border-radius: 0;
+      }
+      .brandFilterMenu {
+        padding: 5px;
+        border-top: 0;
+        border-right: 2px solid #2e353d;
+        border-bottom: 2px solid #2e353d;
+        border-left: 2px solid #2e353d;
+        li {
+          padding: 0;
+          border-right: 2px solid #2e353d;
+          border-bottom: 2px solid #2e353d;
+          border-left: 2px solid #2e353d;
+          text-align: center;
+          background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
+          color: #a92b04;
+          &:hover {
+            background: linear-gradient(to top, #d6d6d6, #e4e4e4);
+          }
+          &.selected {
+            background: linear-gradient(to bottom, white, #f3f3f3);
+            color: #165407;
+            &:hover {
+              background: linear-gradient(to top, white, #f3f3f3);
+            }
+          }
+
+          &:first-child {
+            border-top: 2px solid #2e353d;
+          }
+          label {
+            padding: 5px;
+            margin: 0;
+            width: 140px;
+            user-select: none;
+            input {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+    li .inventoryDateRangeFilter {
+      button {
+        margin: 0;
+        border-right: 0;
+        border-radius: 0;
+      }
+      ul {
+        border: 2px solid #2e353d;
+        li {
+        width: 300px;
+        margin: 0 5px 0 5px;
+        border: 2px solid #2e353d;
+        .input-daterange input {
+          border-radius: 0;
+          border: 0;
+        }
+        }
+      }
+    }
   }
 }
 
 #adjustHistoryIndividualTableSearch {
-  font-family: 'Abel', sans-serif;
   color: black;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
   margin-bottom: 5px;
 }
 #adjustHistoryIndividualTableLength {
-  font-family: 'Abel', sans-serif;
   width: 55px;
   margin-left: 10px;
   padding-right: 0;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+}
+
+#adjustHistoryIndividualDataTable_wrapper .dt-buttons {
+  .buttons-colvis {
+    margin: 0;
+    border-radius: 0;
+    border: 1px solid #ccc;
+    background: linear-gradient(to bottom, white, #f3f3f3);
+  }
+  .dtExportOptions {
+    margin-left: 10px;
+    padding: 6px 12px 6px 12px;
+    border: 1px solid #ccc;
+    background: linear-gradient(to bottom, white, #f3f3f3);
+  }
+  .dt-button-collection {
+    margin-top: 0;
+    padding: 5px;
+    border-right: 2px solid #2e353d;
+    border-bottom: 2px solid #2e353d;
+    border-left: 2px solid #2e353d;
+    border-radius: 4px;
+    display: inline-grid;
+    .dt-button {
+      padding: 5px;
+      margin: 0;
+      font-family: 'Abel', sans-serif;
+      font-weight: bold;
+      text-align: center;
+      color: #a92b04;
+      border-top: 1px solid #2e353d;
+      border-right: 2px solid #2e353d;
+      border-bottom: 1px solid #2e353d;
+      border-left: 2px solid #2e353d;
+      border-radius: 0;
+      background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
+      &:first-child {
+        border-top: 2px solid #2e353d;
+      }
+      &:last-child {
+        border-bottom: 2px solid #2e353d;
+      }
+      &.active {
+        background: linear-gradient(to bottom, white, #f3f3f3);
+        color: #165407;
+        &:hover {
+          background: linear-gradient(to top, white, #f3f3f3);
+        }
+      }
+      &:hover {
+        background: linear-gradient(to top, #d6d6d6, #e4e4e4);
+        text-decoration: none;
+      }
+
+    }
+    .buttons-excel, .buttons-pdf, .buttons-print, .buttons-copy {
+      background: linear-gradient(to bottom, white, #f3f3f3);
+      color: #165407;
+      &:hover {
+        background: linear-gradient(to top, white, #f3f3f3);
+      }
+    }
+  }
+  .dtColumnVisibility {
+    border-left: 0;
+    margin-left: 0;
+    padding: 6px 12px 6px 12px;
+  }
 }

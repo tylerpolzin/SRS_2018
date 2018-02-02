@@ -1,7 +1,7 @@
 <% @title = "SRS Portal | Inventory Adjustments" %>
-<div style="width: 900px;" id="newIADiv">
-  <p class="newIAHeader">Inventory Adjustments</p>
-  <div class="container newIAForm">
+<div class="defaultDiv" id="newIADiv">
+  <p class="defaultDivHeader">Inventory Adjustments</p>
+  <div class="container defaultForm">
     <%= bootstrap_form_for @stockmovement_batch, url: stockmovement_batches_path, method: :post do |f| %>
       <% if @stockmovement_batch.errors.any? %>
         <div id="error_explanation">
@@ -19,25 +19,22 @@
         <li><a id="adjustHistoryIndividual" href="#adjust-history-individual" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Individual History</a></li>
         <li><a id="addItemButton"class="btn"><i class="fa fa-plus-circle"></i> Add Item</a></li> <!-- This button acts as a proxy to click the hidden 'add_child_ia' button below -->
       </ul>
-      <div id="inventoryAdjustTabs">
+      <div class="defaultTabs">
         <div class="tab-content">
           <div id="new-inventory-adjust" class="tab-pane fade in active">
-            
-            
-            
-            <div class="container">
+            <div class="container newIAContainer">
               <table class="table table-bordered" id="newIASelectTable">
                 <thead></thead>
                 <tbody>
                   <tr>
                     <td>Adjustment Type</td>
-                    <td><%= f.select_without_bootstrap :stockmovement_type, options_for_select(["Ecomm Order", "Warranty Order", "Physical Inventory"]), {:prompt => "Select Type..."}, class: "form-control", :id => "typeSelect" %></td>
+                    <td><%= f.select_without_bootstrap :stockmovement_type, options_for_select(["Ecomm Order", "Warranty Order", "Physical Inventory", "Product Return", "Defective Destroy"]), {:prompt => "Select Type..."}, class: "form-control", :id => "typeSelect" %></td>
                     <td><%= f.text_field :notes, hide_label: true, :placeholder => "Notes..." %></td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div class="container">
+            <div class="container newIAContainer">
               <table class="table table-bordered IAItemSelectHeader hidden">
                 <thead>
                   <tr>
@@ -56,10 +53,10 @@
             </div>
           </div>
           <div id="adjust-history" class="tab-pane fade">
-            <%= render "adjust_history", :f => f %>
+            <%= render "adjust_history" %>
           </div>
           <div id="adjust-history-individual" class="tab-pane fade">
-            <%= render "adjust_history_individual", :f => f %>
+            <%= render "adjust_history_individual" %>
           </div>
         </div>
       </div>

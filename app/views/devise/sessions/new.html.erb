@@ -1,28 +1,14 @@
 <% @title = "SRS Portal | Please Sign In" %>
 <div id="newSessionDiv">
-  <p class="newSessionHeader">Please Sign In</p>
-  <div class="form-horizontal newSessionForm">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="form-group form-group-sm">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, class: 'form-control' %>
-      </div>
-    
-      <div class="form-group form-group-sm">
-        <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
-      </div>
-    
+  <p class="defaultDivHeader signInHeader">Please Sign In</p>
+  <div class="container newSessionForm">
+    <%= bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= f.email_field :email, autofocus: true %>
+        <%= f.password_field :password, autocomplete: "off" %>
       <% if devise_mapping.rememberable? -%>
-        <div class="form-group form-group-sm">
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
-        </div>
+        <%= f.check_box :remember_me %>
       <% end -%>
-    
-      <div class="form-group form-group-sm actions">
-        <%= f.submit "Sign in", class: 'btn btn-primary', :style => "float:right;" %>
-      </div>
+      <%= f.submit "Sign in", class: 'btn', :style => "float:right;" %>
     <% end %>
   </div>
 </div>
