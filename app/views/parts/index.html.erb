@@ -25,6 +25,26 @@
       <tbody class="part-table">
         <% @parts.each do |part| %>
           <tr
+            data-child-attributes=" <table class='customPartAttributesTable'>
+                                      <thead>
+                                        <tr>
+                                          <th>Attribute</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <% if part.details.present? %>
+                                          <% part.details.try(:each) do |key, value| %>
+                                            <tr>
+                                                <td><%= key %></td>
+                                                <td><%= value %></td>
+                                            </tr>
+                                          <% end %>
+                                        <% else %>
+                                          <td colspan='2'>No Attributes Found</td>
+                                        <% end %>
+                                      </tbody>
+                                    </table>"
             data-child-manufacturer="<% if part.product.vendor_name.present? %>
                                        <%= part.product.vendor_name %>
                                      <% else %>
@@ -66,7 +86,7 @@
             <td class="details-control"><div class="hidden partProductId" name="<%= part.product_id %>"><%= part.product_id %></div></td>
             <td>
               <% if part.image.present? %>
-                <%= image_tag part.image.url(:thumb) %>
+                <%= link_to (image_tag (part.image.url (:thumb))), part.image.url, target: "_blank", title: "View Full Size Image" %>
               <% else %>
                 No Image Available
               <% end %>
@@ -141,6 +161,7 @@
               <% if part.store_orderable? %>Store Orderable | <% else %>Not Store Orderable<% end %> | 
               <% if part.ecomm_sku? %>E-Commerce SKU | <% else %>Not E-Commerce SKU<% end %> | 
               <% if part.warranty_orderable? %>Warranty Orderable | <% else %>Not Warranty Orderable<% end %>
+              <% if part.details.present? %><% part.details.try(:each) do |key, value| %><%= key %> : <%= value %><% end %><% end %>
             </td>
           </tr>
         <% end %>

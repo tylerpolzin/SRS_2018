@@ -93,17 +93,17 @@
       <tr>
         <td>Product Dimensions</td>
         <td>
-          <%= f.number_field :product_dims_l, min: 0, hide_label: true, prepend: "L", placeholder: "ength", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
-          <%= f.number_field :product_dims_w, min: 0, hide_label: true, prepend: "W", placeholder: "idth", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
-          <%= f.number_field :product_dims_h, min: 0, hide_label: true, prepend: "H", placeholder: "eight", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
+          <%= f.number_field :product_dims_l, min: 0, hide_label: true, required: true, prepend: "L", placeholder: "ength", value: number_with_precision(f.object.product_dims_l.to_f, precision: 2, delimiter: '', unit: ''), step: 0.10 %>
+          <%= f.number_field :product_dims_w, min: 0, hide_label: true, required: true, prepend: "W", placeholder: "idth", value: number_with_precision(f.object.product_dims_w.to_f, precision: 2, delimiter: '', unit: ''), step: 0.10 %>
+          <%= f.number_field :product_dims_h, min: 0, hide_label: true, required: true, prepend: "H", placeholder: "eight", value: number_with_precision(f.object.product_dims_h.to_f, precision: 2, delimiter: '', unit: ''), step: 0.10 %>
         </td>
       </tr>
       <tr>
         <td style="padding-bottom:9px;">Packaged Dimensions</td>
         <td>
-          <%= f.number_field :packaged_dims_l, min: 0, hide_label: true, prepend: "L", placeholder: "ength", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
-          <%= f.number_field :packaged_dims_w, min: 0, hide_label: true, prepend: "W", placeholder: "idth", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
-          <%= f.number_field :packaged_dims_h, min: 0, hide_label: true, prepend: "H", placeholder: "eight", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 1, delimiter: '', unit: ''), step: 0.1 %>
+          <%= f.number_field :packaged_dims_l, min: 0, hide_label: true, required: true, prepend: "L", placeholder: "ength", value: number_with_precision(f.object.packaged_dims_l.to_f, precision: 2, delimiter: '', unit: ''), step: 0.10 %>
+          <%= f.number_field :packaged_dims_w, min: 0, hide_label: true, required: true, prepend: "W", placeholder: "idth", value: number_with_precision(f.object.packaged_dims_w.to_f, precision: 2, delimiter: '', unit: ''), step: 0.10 %>
+          <%= f.number_field :packaged_dims_h, min: 0, hide_label: true, required: true, prepend: "H", placeholder: "eight", value: number_with_precision(f.object.packaged_dims_h.to_f, precision: 2, delimiter: '', unit: ''), step: 0.10 %>
         </td>
       </tr>
       <tr>

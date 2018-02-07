@@ -212,6 +212,67 @@
   }
 }
 
+#productAttributeContainer {
+  width: 60%;
+  margin: 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border-left: 2px solid orange;
+  border-right: 2px solid orange;
+  tbody tr td {
+    border-top: 0;
+    border-bottom: 0;
+  }
+  tbody tr td:first-child { // Left Column "Attribute Name"
+    padding: 0;
+    input {
+      padding: 6px 2px 6px 6px;
+      border: none;
+      border-radius: 0;
+      &:focus {
+        box-shadow: inset 0px 0px 5px #ff9800;
+      }
+    }
+  }
+  tbody tr td:nth-child(2) { // Second Column "Description"
+    padding: 0;
+    span {
+      width: 100% !important;
+    }
+    input {
+      padding: 6px 2px 6px 6px;
+      border: none;
+      border-radius: 0;
+      &:focus {
+        box-shadow: inset 0px 0px 5px #ff9800;
+      }
+    }
+  }
+  tbody tr td:last-child { // Right Column "Delete Entry"
+    a {
+      cursor: pointer;
+      padding: 6px;
+      color: red;
+      margin: 0;
+    }
+  }
+}
+
+.productAttributeTopBorder {
+  width: 60%;
+  padding-top: 10px;
+  margin: 0;
+  border-bottom: 2px solid orange;
+}
+
+.productAttributeBottomBorder {
+  width: 60%;
+  padding-bottom: 5px;
+  margin: 0;
+  border-top: 2px solid orange;
+}
+
 //------------------------------------------------------------------------------------------------------
 //                               Product 'EDIT' related CSS                                            |
 //------------------------------------------------------------------------------------------------------
@@ -334,7 +395,7 @@
   }
 }
 
-#showProductNotes, #showProductExtras {
+#showProductNotes {
   margin-top: 15px;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
@@ -349,6 +410,29 @@
   }
   tbody tr:nth-child(even) {
     background-color: #f9f9f9;
+  }
+}
+
+#showProductExtras {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    width: 35%;
+    text-align: right;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tbody tr:nth-child(1) {
+    td {
+      text-align: center;
+    }
   }
 }
 
@@ -439,7 +523,7 @@
   }
 }
 
-#showProductPartNotes, #showProductPartExtras {
+#showProductPartNotes {
   margin-top: 15px;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
@@ -454,6 +538,29 @@
   }
   tbody tr:nth-child(even) {
     background-color: #f9f9f9;
+  }
+}
+
+#showProductPartExtras {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    width: 35%;
+    text-align: right;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tbody tr:nth-child(1) {
+    td {
+      text-align: center;
+    }
   }
 }
 
@@ -778,7 +885,7 @@
   }
 }
 
-.childPartsTable {
+.customProductAttributesTable, .childPartsTable {
   width: 100%;
   thead tr th {
     border-bottom: 1px solid black;

@@ -6,6 +6,7 @@ class CreateAssignments < ActiveRecord::Migration[5.1]
       t.text :wordy_details
       t.integer :priority
       t.boolean :active
+      t.integer :user_id
       t.timestamps
       t.timestamps
     end

@@ -44,7 +44,7 @@ class StockmovementsController < ApplicationController
   def destroy
     @stockmovement.destroy
     respond_to do |format|
-      format.html { redirect_to stockmovements_url, notice: 'Stockmovement was successfully destroyed.' }
+      format.html { redirect_to new_stockmovement_batch_path, notice: 'Inventory Adjustment successfully reverted.' }
       format.json { head :no_content }
     end
   end

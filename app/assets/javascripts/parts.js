@@ -1,13 +1,14 @@
 /* global $ */
+/* global bootbox */
+/* global basicConfirm */
+
 //------------------------------------------------------------------------------------------------------
 //                               Part 'NEW' related CSS                                                |
 //------------------------------------------------------------------------------------------------------
 
-$(document).on("turbolinks:load", function() {
-  $("#newPartDiv").animate({left: 0, opacity: 100}, 500);
-});
 
 $(document).on("turbolinks:load", function(){
+  $("#newPartDiv").animate({left: 0, opacity: 100}, 500);
   $(".newPartProductSearch").select2({
     theme:"bootstrap",
     placeholder: "Select Product...",
@@ -15,6 +16,27 @@ $(document).on("turbolinks:load", function(){
     selectOnClose: true,
     dropdownAutoWidth: false
   });
+  
+  $('#builder').closest('.row').html('');
+  $('#namespace').closest('.row').html('');
+  $('#parent_builder').closest('.row').html('');
+  $('#child_index').closest('.row').html('');
+  $('.partAttributeContainer').on('keyup', '.dynamicAttributeName', function(){
+    var nameElem = $(this);
+    var valueElem = nameElem.closest('.row').children('td').children('.text_field');
+    var value = nameElem.val();
+    valueElem.attr('id', 'part_details_'+value);
+    valueElem.attr('name', 'part[details]['+value+']');
+  });
+  $('.partAttributeContainer').on('click', '.removeRow', function(){
+    $(this).closest('.row').html('');
+  });
+  $('.partAddAttribute').on('click', function(e){
+    e.preventDefault();
+    var contents = "<tr class='row'>" + $('.attributeTemplate').html() + '</tr>';
+    $('.body').append(contents);
+  });
+  
 })
 
 //------------------------------------------------------------------------------------------------------
@@ -25,9 +47,6 @@ $(document).on("turbolinks:load", function() {
   $("#editPartDiv").animate({left: 0, opacity: 100}, 500);
   $("#editNewImage").hide();
   $("#imageClose").hide();
-});
-
-$(function() {
   $("#editImageOptions").on("change", function() {
     if ($("#editImageOptions").find("option:selected").text() == "Keep Current Image") {
       $("#editRemoveImage").prop("checked", false);
@@ -45,7 +64,15 @@ $(function() {
       $("#editImageTag").hide();
     }
   });
+  
+  $(".deletePart").on("click", function(e) {
+    e.preventDefault();
+    basicConfirm("part");
+  });
+  
 });
+
+
 
 //------------------------------------------------------------------------------------------------------
 //                               Product 'SHOW' related CSS                                            |
@@ -78,12 +105,12 @@ $(document).on("turbolinks:load", function() {
                       {extend: 'excelHtml5',
                         text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel',
                         title: 'SRS Inventory Report, '+date+'.xlsx', 
-                        customize:
-                          // Custom function to set the header row green and outlined.
-                          function( xlsx ) {
-                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                            $('row c[r*="2"]', sheet).attr( 's', '42' );
-                          },
+                        // customize:
+                        //   // Custom function to set the header row green and outlined.
+                        //   function( xlsx ) {
+                        //     var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        //     $('row c[r*="2"]', sheet).attr( 's', '42' );
+                        //   },
                         // Only exports columns that are currently visible.  Adjusted by the "Visibility" dropdown and Filtered text.
                         exportOptions: { columns: ':visible' }, 
                         className: 'btn'
@@ -184,26 +211,32 @@ $(document).on("turbolinks:load", function() {
     table.page.len($(this).find("option:selected").attr("value")).draw() ;
   });
 
-  function format (manufacturer, location, upc, orders, notes, dates) {
+  function format (attributes, manufacturer, location, upc, orders, notes, dates) {
     return ''+
    '<div class="glider">'+
    '  <table class="part-listing-expando">'+
-   '    <tr>'+
-   '      <td>Manufacturer</td>'+
-   '      <td>Location</td>'+
-   '      <td>UPC</td>'+
-   '      <td>Recent Orders</td>'+
-   '      <td>Meta Notes</td>'+
-   '      <td>Meta Dates</td>'+
-   '    </tr>'+
-   '    <tr>'+
-   '      <td>'+manufacturer+'</td>'+
-   '      <td>'+location+'</td>'+
-   '      <td>'+upc+'</td>'+
-   '      <td>'+orders+'</td>'+
-   '      <td>'+notes+'</td>'+
-   '      <td>'+dates+'</td>'+
-   '    </tr>'+
+   '    <thead>'+
+   '      <tr>'+
+   '        <th>Custom Attributes</th>'+
+   '        <th>Manufacturer</th>'+
+   '        <th>Location</th>'+
+   '        <th>UPC</th>'+
+   '        <th>Recent Orders</th>'+
+   '        <th>Meta Notes</th>'+
+   '        <th>Meta Dates</th>'+
+   '      </tr>'+
+   '    </thead>'+
+   '    <tbody>'+
+   '      <tr>'+
+   '        <td style="padding:0;">'+attributes+'</td>'+
+   '        <td>'+manufacturer+'</td>'+
+   '        <td>'+location+'</td>'+
+   '        <td>'+upc+'</td>'+
+   '        <td>'+orders+'</td>'+
+   '        <td>'+notes+'</td>'+
+   '        <td>'+dates+'</td>'+
+   '      </tr>'+
+   '    </tbody>'+
    '  </table>'+
    '</div>';
   }
@@ -220,7 +253,7 @@ $(document).on("turbolinks:load", function() {
       });
     }
     else {
-      row.child(format(tr.data('child-manufacturer'), tr.data('child-location'), tr.data('child-upc'), tr.data('child-orders'), tr.data('child-notes'), tr.data('child-dates')), 'no-padding').show();
+      row.child(format(tr.data('child-attributes'), tr.data('child-manufacturer'), tr.data('child-location'), tr.data('child-upc'), tr.data('child-orders'), tr.data('child-notes'), tr.data('child-dates')), 'no-padding').show();
       tr.addClass('shown');
       td.tooltip('disable');
       $('div.glider', row.child()).slideDown();

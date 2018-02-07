@@ -2,7 +2,7 @@
 <div class="defaultDiv" id="newProductDiv">
   <p class="defaultDivHeader">Create New Product</p>
   <div class="container defaultForm">
-    <%= bootstrap_form_for @product, url: products_path, method: :post, :html => { :multipart => true } do |f| %>
+    <%= bootstrap_form_for @product, url: products_path, method: :post, :html => { :class => :form, :multipart => true } do |f| %>
       <% if @product.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
@@ -15,6 +15,7 @@
       <% end %>
       <ul class="nav nav-tabs">
         <li class="active"><a id="newProductNavTab" href="#new-product-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Product Details</a></li>
+        <li><a id="newProductAdditions" href="#new-product-additions" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Custom Attributes</a></li>
         <!--<li><a id="newProductUploads" href="#new-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Associated Files</a></li>-->
         <!--<li><a id="newPartForm" href="#new-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Associated Parts</a></li>-->
       </ul>
@@ -22,6 +23,9 @@
         <div class="tab-content">
           <div id="new-product-form" class="tab-pane fade in active container">
             <br/><%= render "form", :f => f %>
+          </div>
+          <div id="new-product-additions" class="tab-pane fade container">
+            <br/><%= render "additions", :f => f %>
           </div>
           <!--<div id="new-product-uploads" class="tab-pane fade"><br/>-->
           <!--  <p><%#= add_child_link " Add File", :uploads %></p>-->

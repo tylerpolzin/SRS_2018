@@ -23,6 +23,8 @@ class Parts < ActiveRecord::Migration[5.1]
       t.decimal :retail_cost, default: "0.0"
       t.decimal :shipping_cost, default: "0.0"
       t.boolean :active, default: true
+      t.attachment :image
+      t.boolean :remove_image, default: false
       t.text :notes
       t.timestamps
     end

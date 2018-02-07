@@ -16,12 +16,19 @@
       <thead></thead><tbody><tr><td class="show-product-details">Notes</td></tr>
       <tr><td style="height: 68px;">No Notes Available</td></tr></tbody>
     </table>
+    <table class="table table-bordered" id="showProductPartExtras">
+      <thead></thead>
+      <tbody>
+        <tr><td class="show-part-details" colspan="2">Custom Attributes</td></tr>
+        <tr><td colspan="2" style="text-align:center;">No Attributes Present</td></tr>
+      </tbody>
+    </table>
   </div>
   <% @parts.each do |part| %>
     <div class="show-product-part-wrapper" id="wrapper-number-<%= part.id %>">
       <div class="show-product-part-image">
           <% if part.image.present? %>
-            <%= image_tag part.image.url(:medium) %>
+            <%= link_to (image_tag (part.image.url (:medium))), part.image.url, target: "_blank", title: "View Full Size Image" %>
           <% else %>
             <p style="margin: 10px;">No Image Available</p>
           <% end %>
@@ -37,6 +44,24 @@
               <%= best_in_place part, :notes, :as => :textarea, inner_class: "form-control input-resize", place_holder: "No notes present, click here to edit" %>
             </td>
           </tr>
+        </tbody>
+      </table>
+      <table class="table table-bordered" id="showProductPartExtras">
+        <thead></thead>
+        <tbody>
+          <tr>
+            <td class="show-part-details" colspan="2">Custom Attributes</td>
+          </tr>
+          <% if part.details.present? %>
+            <% part.details.try(:each) do |key, value| %>
+              <tr>
+                <td><%= key %></td>
+                <td><%= value %></td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr><td colspan="2" style="text-align:center;">No Attributes Present</td></tr>
+          <% end %>
         </tbody>
       </table>
     </div>

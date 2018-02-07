@@ -68,6 +68,16 @@
                                         <p>None Indicated</p>
                                       <% end %>
                                     <% end %>"
+          data-child-undo_header="<% if current_user.admin? %>
+                                    <td>Undo Entry</td>
+                                  <% end %>"
+          data-child-undo="<% if current_user.admin? %>
+                             <td>
+                               <% i.stockmovements.each do |u| %>
+                                 <p class='deleteStockmovement bootbox-confirm' id='<%= u.id %>'>Undo</p>
+                               <% end %>
+                             </td>
+                           <% end %>"
           data-child-notes="<% if i.notes.present? %>
                               <%= i.notes %>
                             <% else %>
@@ -76,7 +86,12 @@
           <td class="details-control"></td>
           <td><%= i.created_at.strftime('%Y-%m-%d (%R)') %></td>
           <td><%= i.stockmovement_type %></td>
-          <td><%= i.user.header_name %></td>
+          <td>
+            <%= i.user.header_name %>
+            <% i.stockmovements.each do |u| %>
+              <%= link_to u.id, u, :method => :delete, class: 'hidden stockmovementDelete', :id => u.id %>
+            <% end %>
+          </td>
           <td> <!-- Hidden field to give table search ability to Expando columns -->
             <% i.stockmovements.each do |s| %>
               <% if s.is_product %>
@@ -124,3 +139,4 @@
     </tbody>
   </table>
 </div>
+

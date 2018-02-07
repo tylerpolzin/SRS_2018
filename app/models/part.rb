@@ -46,7 +46,11 @@ class Part < ApplicationRecord
         quantity = s.quantity
       end
     else
-      quantity = self.count_on_hand
+      if self.count_on_hand == nil
+        "0"
+      else
+        quantity = self.count_on_hand
+      end
     end
     quantity
   end

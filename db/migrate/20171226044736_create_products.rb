@@ -1,5 +1,6 @@
 class CreateProducts < ActiveRecord::Migration[5.1]
   def change
+    enable_extension "hstore"
     create_table :products do |t|
       t.string :vendor_name
       t.string :brand_name
@@ -12,19 +13,23 @@ class CreateProducts < ActiveRecord::Migration[5.1]
       t.text :description
       t.integer :weight_pounds, default: 0
       t.integer :weight_ounces, default: 0
-      t.integer :product_dims_l, default: 0
-      t.integer :product_dims_w, default: 0
-      t.integer :product_dims_h, default: 0
-      t.integer :packaged_dims_l, default: 0
-      t.integer :packaged_dims_w, default: 0
-      t.integer :packaged_dims_h, default: 0
+      t.decimal :product_dims_l, default: 0
+      t.decimal :product_dims_w, default: 0
+      t.decimal :product_dims_h, default: 0
+      t.decimal :packaged_dims_l, default: 0
+      t.decimal :packaged_dims_w, default: 0
+      t.decimal :packaged_dims_h, default: 0
       t.string :location
       t.integer :count_on_hand, default: 0
       t.decimal :vendor_cost, default: "0.0"
       t.decimal :retail_cost, default: "0.0"
       t.decimal :shipping_cost, default: "0.0"
       t.boolean :active, default: true
+      t.boolean :has_parts, default: false
+      t.attachment :image
+      t.boolean :remove_image, default: false
       t.text :notes
+      
       t.timestamps
     end
   end

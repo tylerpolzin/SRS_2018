@@ -1,4 +1,7 @@
 /* global $ */
+/* global bootbox */
+/* global basicConfirm */
+
 //------------------------------------------------------------------------------------------------------
 //                               Product 'NEW' related JS                                             |
 //------------------------------------------------------------------------------------------------------
@@ -10,26 +13,46 @@ $(document).on("turbolinks:load", function() {
   $('#brandSelect').val($('#product_brand_name').val());
   $('#product_vendor_name').hide();
   $('#product_brand_name').hide();
-});
-
-$(function(){
-  $('#vendorSelect').on("change", function() {
-    if ($('#vendorSelect').find('option:selected').text() == "Other...") {
-      $('#vendorSelect').hide();
-      $('#product_vendor_name').show();
-    }
-    else {
-      $('#product_vendor_name').val($('#vendorSelect').val());
-    }
+  
+  $(function(){
+    $('#vendorSelect').on("change", function() {
+      if ($('#vendorSelect').find('option:selected').text() == "Other...") {
+        $('#vendorSelect').hide();
+        $('#product_vendor_name').show();
+      }
+      else {
+        $('#product_vendor_name').val($('#vendorSelect').val());
+      }
+    });
+    $('#brandSelect').on("change", function() {
+      if ($('#brandSelect').find('option:selected').text() == "Other...") {
+        $('#brandSelect').hide();
+        $('#product_brand_name').show();
+      }
+      else {
+        $('#product_brand_name').val($('#brandSelect').val());
+      }
+    });
   });
-  $('#brandSelect').on("change", function() {
-    if ($('#brandSelect').find('option:selected').text() == "Other...") {
-      $('#brandSelect').hide();
-      $('#product_brand_name').show();
-    }
-    else {
-      $('#product_brand_name').val($('#brandSelect').val());
-    }
+  
+  $('#builder').closest('.row').html('');
+  $('#namespace').closest('.row').html('');
+  $('#parent_builder').closest('.row').html('');
+  $('#child_index').closest('.row').html('');
+  $('.productAttributeContainer').on('keyup', '.dynamicAttributeName', function(){
+    var nameElem = $(this);
+    var valueElem = nameElem.closest('.row').children('td').children('.text_field');
+    var value = nameElem.val();
+    valueElem.attr('id', 'product_details_'+value);
+    valueElem.attr('name', 'product[details]['+value+']');
+  });
+  $('.productAttributeContainer').on('click', '.removeRow', function(){
+    $(this).closest('.row').html('');
+  });
+  $('.productAddAttribute').on('click', function(e){
+    e.preventDefault();
+    var contents = "<tr class='row'>" + $('.attributeTemplate').html() + '</tr>';
+    $('.body').append(contents);
   });
   
 });
@@ -42,9 +65,7 @@ $(document).on("turbolinks:load", function() {
   $("#editProductDiv").animate({left: 0, opacity: 100}, 500);
   $("#editNewImage").hide();
   $("#imageClose").hide();
-});
-
-$(function() {
+  
   $("#editImageOptions").on("change", function() {
     if ($("#editImageOptions").find("option:selected").text() == "Keep Current Image") {
       $("#editRemoveImage").prop("checked", false);
@@ -62,7 +83,14 @@ $(function() {
       $("#editImageTag").hide();
     }
   });
+  
+  $(".deleteProduct").on("click", function(e) {
+    e.preventDefault();
+    basicConfirm("product");
+  });
+  
 });
+
 
 //------------------------------------------------------------------------------------------------------
 //                               Product 'SHOW' related JS                                             |
@@ -213,129 +241,42 @@ $(document).on("turbolinks:load", function() {
     e.stopPropagation();
   });
   
-  $('.booleanFilterMenu').on("change", function() { 
-    if ($('input:checkbox[def="active"]').attr('bool') == "true" ) {
-      table.column(13).search("true").draw();
-      $('#activeClear').prop("disabled", false);
+  function toggle_boolean (def, col) { // "Filter" toggle menu which toggles whether the filters below are "On", "Off" or "Nil"
+    if ($('input:checkbox[def='+def+']').attr('bool') == "true" ) {
+      table.column(col).search("true").draw();
+      $('#'+def+'Clear').prop("disabled", false);
     }
-    if ($('input:checkbox[def="active"]').attr('bool') == "false" ) {
-      table.column(13).search("false").draw();
-      $('#activeClear').prop("disabled", false);
-      $('input:checkbox[def="active"]').parent().removeClass("nil");
+    if ($('input:checkbox[def='+def+']').attr('bool') == "false" ) {
+      table.column(col).search("false").draw();
+      $('#'+def+'Clear').prop("disabled", false);
+      $('input:checkbox[def="'+def+'"]').parent().removeClass("nil");
     }
-    if ($('input:checkbox[def="storeOrderable"]').attr('bool') == "true" ) {
-      table.column(14).search("true").draw();
-      $('#storeOrderableClear').prop("disabled", false);
-    }
-    if ($('input:checkbox[def="storeOrderable"]').attr('bool') == "false" ) {
-      table.column(14).search("false").draw();
-      $('#storeOrderableClear').prop("disabled", false);
-      $('input:checkbox[def="storeOrderable"]').parent().removeClass("nil");
-    }
-    if ($('input:checkbox[def="warrantyOrderable"]').attr('bool') == "true" ) {
-      table.column(15).search("true").draw();
-      $('#warrantyOrderableClear').prop("disabled", false);
-    }
-    if ($('input:checkbox[def="warrantyOrderable"]').attr('bool') == "false" ) {
-      table.column(15).search("false").draw();
-      $('#warrantyOrderableClear').prop("disabled", false);
-      $('input:checkbox[def="warrantyOrderable"]').parent().removeClass("nil");
-    }
-    if ($('input:checkbox[def="ecommSku"]').attr('bool') == "true" ) {
-      table.column(16).search("true").draw();
-      $('#ecommSkuClear').prop("disabled", false);
-    }
-    if ($('input:checkbox[def="ecommSku"]').attr('bool') == "false" ) {
-      table.column(16).search("false").draw();
-      $('#ecommSkuClear').prop("disabled", false);
-      $('input:checkbox[def="ecommSku"]').parent().removeClass("nil");
-    }
-    if ($('input:checkbox[def="inStock"]').attr('bool') == "true" ) {
-      table.column(17).search("true").draw();
-      $('#inStockClear').prop("disabled", false);
-    }
-    if ($('input:checkbox[def="inStock"]').attr('bool') == "false" ) {
-      table.column(17).search("false").draw();
-      $('#inStockClear').prop("disabled", false);
-      $('input:checkbox[def="inStock"]').parent().removeClass("nil");
-    }
-    if ($('input:checkbox[def="hasParts"]').attr('bool') == "true" ) {
-      table.column(12).search("true").draw();
-      $('#hasPartsClear').prop("disabled", false);
-    }
-    if ($('input:checkbox[def="hasParts"]').attr('bool') == "false" ) {
-      table.column(12).search("false").draw();
-      $('#hasPartsClear').prop("disabled", false);
-      $('input:checkbox[def="hasParts"]').parent().removeClass("nil");
-    }
-    
-  });
+    $('#'+def+'Clear').on("click", function() { // Clears the search and puts the specified column back to "Nil" state
+      if ($('input:checkbox[def='+def+']').attr('bool') == "false") {
+        $('input:checkbox[def='+def+']').click();
+      }
+      $('input:checkbox[def='+def+']').attr('bool', "");
+      table.column(col).search("").draw();
+      $(this).prop('disabled', true);
+      $(this).prev().addClass("nil");
+    });
+  }
   
-  $('#activeClear').on("click", function() {
-    if ($('input:checkbox[def="active"]').attr('bool') == "false") {
-      $('input:checkbox[def="active"]').click();
-    }
-    $('input:checkbox[def="active"]').attr('bool', "");
-    table.column(13).search("").draw();
-    $(this).prop('disabled', true);
-    $(this).prev().addClass("nil");
+  $('.booleanFilterMenu').on("change", function() {
+    $('input:checkbox[name="boolean"]').on("change", function(){ // Activates the above 'toggle_boolean' function
+      if($(this).is(':checked')) 
+        $(this).attr("bool", "true"); 
+      else 
+        $(this).attr("bool", "false");
+    });
+    toggle_boolean ("active", 13);
+    toggle_boolean ("storeOrderable", 14);
+    toggle_boolean ("warrantyOrderable", 15);
+    toggle_boolean ("ecommSku", 16);
+    toggle_boolean ("inStock", 17);
+    toggle_boolean ("hasParts", 12);
   });
-  $('#storeOrderableClear').on("click", function() {
-    if ($('input:checkbox[def="storeOrderable"]').attr('bool') == "false") {
-      $('input:checkbox[def="storeOrderable"]').click();
-    }
-    $('input:checkbox[def="storeOrderable"]').attr('bool', "");
-    table.column(14).search("").draw();
-    $(this).prop('disabled', true);
-    $(this).prev().addClass("nil");
-  });
-  $('#warrantyOrderableClear').on("click", function() {
-    if ($('input:checkbox[def="warrantyOrderable"]').attr('bool') == "false") {
-      $('input:checkbox[def="warrantyOrderable"]').click();
-    }
-    $('input:checkbox[def="warrantyOrderable"]').attr('bool', "");
-    table.column(15).search("").draw();
-    $(this).prop('disabled', true);
-    $(this).prev().addClass("nil");
-  });
-  $('#ecommSkuClear').on("click", function() {
-    if ($('input:checkbox[def="ecommSku"]').attr('bool') == "false") {
-      $('input:checkbox[def="ecommSku"]').click();
-    }
-    $('input:checkbox[def="ecommSku"]').attr('bool', "");
-    table.column(16).search("").draw();
-    $(this).prop('disabled', true);
-    $(this).prev().addClass("nil");
-  });
-  $('#inStockClear').on("click", function() {
-    if ($('input:checkbox[def="inStock"]').attr('bool') == "false") {
-      $('input:checkbox[def="inStock"]').click();
-    }
-    $('input:checkbox[def="inStock"]').attr('bool', "");
-    table.column(17).search("").draw();
-    $(this).prop('disabled', true);
-    $(this).prev().addClass("nil");
-  });
-  $('#hasPartsClear').on("click", function() {
-    if ($('input:checkbox[def="hasParts"]').attr('bool') == "false") {
-      $('input:checkbox[def="hasParts"]').click();
-    }
-    $('input:checkbox[def="hasParts"]').attr('bool', "");
-    table.column(12).search("").draw();
-    $(this).prop('disabled', true);
-    $(this).prev().addClass("nil");
-  });
-  
-  
-  $('input:checkbox[name="boolean"]').change(function(){
-    if($(this).is(':checked')) 
-      $(this).attr("bool", "true"); 
-    else 
-      $(this).attr("bool", "false");
-  });
-  
-  
-  
+
   $('input:checkbox').change(function(){ // Takes care of the non-dataTables specific menu styling
     if($(this).is(':checked')) 
       $(this).parent().parent().addClass('selected'); 
@@ -350,12 +291,13 @@ $(document).on("turbolinks:load", function() {
     table.page.len($(this).find("option:selected").attr("value")).draw() ;
   });
 
-  function format (parts, manufacturer, upc, srs_sku, uploads, notes, dates) {
+  function format (attributes, parts, manufacturer, upc, srs_sku, uploads, notes, dates) {
     return ''+
    '<div class="glider">'+
    '  <table class="product-listing-expando">'+
    '    <thead>'+
    '      <tr>'+
+   '        <th>Custom Attributes</th>'+
    '        <th>Associated Parts</th>'+
    '        <th>Manufacturer</th>'+
    '        <th>UPC</th>'+
@@ -367,6 +309,7 @@ $(document).on("turbolinks:load", function() {
    '    </thead>'+
    '    <tbody>'+
    '      <tr>'+
+   '        <td style="padding:0;">'+attributes+'</td>'+
    '        <td style="padding:0;">'+parts+'</td>'+
    '        <td>'+manufacturer+'</td>'+
    '        <td>'+upc+'</td>'+
@@ -392,7 +335,7 @@ $(document).on("turbolinks:load", function() {
       });
     }
     else {
-      row.child(format(tr.data('child-parts'), tr.data('child-manufacturer'), tr.data('child-upc'), tr.data('child-srs_sku'), tr.data('child-uploads'), tr.data('child-notes'), tr.data('child-dates')), 'no-padding').show();
+      row.child(format(tr.data('child-attributes'), tr.data('child-parts'), tr.data('child-manufacturer'), tr.data('child-upc'), tr.data('child-srs_sku'), tr.data('child-uploads'), tr.data('child-notes'), tr.data('child-dates')), 'no-padding').show();
       tr.addClass('shown');
       td.tooltip('disable');
       $('div.glider', row.child()).slideDown();

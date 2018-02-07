@@ -15,6 +15,7 @@
       <% end %> <!-- if @product.errors.any? -->
       <ul class="nav nav-tabs">
         <li class="active"><a id="editProductForm" href="#edit-product-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Product Details</a></li>
+        <li><a id="editProductAdditions" href="#edit-product-additions" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Custom Attributes</a></li>
         <!--<li><a id="editProductUploads" href="#edit-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Edit Associated Files</a></li>-->
         <!--<li><a id="editPartsForm" href="#edit-parts-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Associated Parts</a></li>-->
       </ul>
@@ -22,6 +23,9 @@
         <div class="tab-content">
           <div id="edit-product-form" class="tab-pane fade in active container">
             <br/><%= render "form", :f => f %>
+          </div>
+          <div id="edit-product-additions" class="tab-pane fade container">
+            <br/><%= render "additions", :f => f %>
           </div>
           <!--<div id="edit-product-uploads" class="tab-pane fade"><br/>-->
           <!--  <p><%#= add_child_link " Add File", :uploads %></p>-->
@@ -35,6 +39,7 @@
       </div>
       <%= f.submit "Update Product", :style => "float:right;" %>
     <% end %>
-    <%= button_to "Delete This Product", product_path(:id => params[:id]), :method => :delete, data: {:confirm => 'Are you sure you want to delete this product?'}, class: 'btn btn-sm btn-danger delete-button' %>
+    <%= button_to "Delete", product_path(:id => params[:id]), :method => :delete, class: 'hidden productDelete' %>
+    <button class="btn btn-sm btn-danger delete-button deleteProduct bootbox-confirm">Delete This Product</button>
   </div>
 </div>

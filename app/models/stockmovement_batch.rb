@@ -1,5 +1,5 @@
 class StockmovementBatch < ApplicationRecord
-  has_many :stockmovements
+  has_many :stockmovements, dependent: :destroy
   #has_many :products, :through => :stockmovements
   #has_and_belongs_to_many :stockmovements, optional: true
   belongs_to :user, foreign_key: :user_id # Test this to see if I can delete the 'foreign_key' parameter

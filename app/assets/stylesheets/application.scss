@@ -615,3 +615,8 @@ html .ui-button.ui-state-disabled:active {
 .no-footer {
   margin-bottom: 0;
 }
+
+.bootbox.modal > .modal-dialog {
+  z-index: 1050 !important;
+  margin-top: 85px;
+}

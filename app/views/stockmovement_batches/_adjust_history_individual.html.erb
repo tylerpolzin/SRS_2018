@@ -87,14 +87,14 @@
               Error, No Sku Present
             <% end %>
           </td>
-          <td>
+          <td class="quantities">
             <% if i.adjust_quantity.present? %>
               <%= i.adjust_quantity_plus %>
             <% else %>
               None Indicated
             <% end %>
           </td>
-          <td>
+          <td class="quantities">
             <% if i.quantity.present? %>
               <%= i.quantity %>
             <% else %>

@@ -1,7 +1,7 @@
 <div id="show-product-wrapper">
   <div class="show-image">
     <% if @product.image.present? %>
-      <%= image_tag @product.image.url(:medium) %>
+      <%= link_to (image_tag (@product.image.url (:medium))), @product.image.url, target: "_blank", title: "View Full Size Image" %>
     <% else %>
       <p style="margin: 10px;">No Image Attached</p>
     <% end %>
@@ -23,13 +23,18 @@
     <thead></thead>
     <tbody>
       <tr>
-        <td class="show-product-details">Additional Details</td>
+        <td class="show-product-details" colspan="2">Custom Attributes</td>
       </tr>
-      <tr>
-        <td>
-      <p style="margin: 10px;">Additional Product Details will be found here</p>
-        </td>
-      </tr>
+      <% if @product.details.present? %>
+        <% @product.details.try(:each) do |key, value| %>
+          <tr>
+            <td><%= key %></td>
+            <td><%= value %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr><td colspan="2" style="text-align:center;">No Attributes Present</td></tr>
+      <% end %>
     </tbody>
   </table>
 </div>

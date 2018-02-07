@@ -17,7 +17,7 @@ gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.
 
 # Custom Installs
 gem 'bootstrap-sass'
-gem "bootstrap_form", "~> 2.7"
+gem "bootstrap_form", "~> 2.7" # Use 2.7 so forms don't break with Bootstrap 3, Check for updates periodically
 gem 'font-awesome-rails'
 gem 'hirb'
 gem 'devise'
@@ -29,13 +29,14 @@ gem 'best_in_place'
 gem 'underscore-rails'
 gem 'gmaps4rails'
 gem 'ajax-datatables-rails' # Didn't use before, https://github.com/jbox-web/ajax-datatables-rails
-gem 'jquery-datatables-rails' # Using Bootstrap 3, hopefully no conflicts with Bootstrap 4
+gem 'jquery-datatables-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-fileupload-rails'
 gem 'jquery_context_menu-rails'
 gem 'select2-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'seed_dump' # Generates seed file from existing database, use for dumping database and re-upping
+gem 'bootbox-rails', '~>0.4' # Wrappers for Javascript Alerts
 
 # gem 'nprogress-rails' # Use to add Loading Progress bar, https://github.com/caarlos0-graveyard/nprogress-rails
 # gem 'approval' # Use to require approval on database changes
@@ -64,7 +65,7 @@ gem 'seed_dump' # Generates seed file from existing database, use for dumping da
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
+  gem 'pg', '~> 0.18'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
@@ -83,7 +84,7 @@ end
 
 group :production do
   # Use the PostgreSQL gem for Heroku production servers
-  gem 'pg', '0.18.4'
+  gem 'pg', '~> 0.18'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -15,16 +15,21 @@
       <% end %>
       <ul class="nav nav-tabs">
         <li class="active"><a id="editPartNavTab" href="#edit-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Part Details</a></li>
+        <li><a id="editPartAdditions" href="#edit-part-additions" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Custom Attributes</a></li>
       </ul>
       <div class="defaultTabs">
         <div class="tab-content">
           <div id="edit-part-form" class="tab-pane fade in active container">
             <br/><%= render "form", :f => f %>
           </div>
+          <div id="edit-part-additions" class="tab-pane fade container">
+            <br/><%= render "additions", :f => f %>
+          </div>
         </div>
       </div>
       <%= f.submit "Update Part", :style => "float:right;" %>
     <% end %>
-    <%= button_to "Delete This Part", part_path(:id => params[:id]), :method => :delete, data: {:confirm => 'Are you sure you want to delete this product?'}, class: 'btn btn-sm btn-danger delete-button' %>
+    <%= button_to "Delete", part_path(:id => params[:id]), :method => :delete, class: 'hidden partDelete' %>
+    <button class="btn btn-sm btn-danger delete-button deletePart bootbox-confirm">Delete This Part</button>
   </div>
 </div>

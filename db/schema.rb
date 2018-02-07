@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202133435) do
+ActiveRecord::Schema.define(version: 20180204230614) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "assignments", force: :cascade do |t|
     t.string "scaffold_association"
@@ -18,12 +22,7 @@ ActiveRecord::Schema.define(version: 20180202133435) do
     t.text "wordy_details"
     t.integer "priority"
     t.boolean "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.integer "user_id"
-  end
-
-  create_table "pages", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,18 +50,54 @@ ActiveRecord::Schema.define(version: 20180202133435) do
     t.decimal "retail_cost", default: "0.0"
     t.decimal "shipping_cost", default: "0.0"
     t.boolean "active", default: true
-    t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
     t.integer "image_file_size"
     t.datetime "image_updated_at"
     t.boolean "remove_image", default: false
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.hstore "details"
+    t.index ["details"], name: "index_parts_on_details", using: :gin
   end
 
-# Could not dump table "products" because of following StandardError
-#   Unknown type 'hstore' for column 'details'
+  create_table "products", force: :cascade do |t|
+    t.string "vendor_name"
+    t.string "brand_name"
+    t.string "manufacturer_model_number"
+    t.string "srs_sku"
+    t.boolean "store_orderable", default: false
+    t.boolean "warranty_orderable", default: false
+    t.boolean "ecomm_sku", default: false
+    t.string "upc"
+    t.text "description"
+    t.integer "weight_pounds", default: 0
+    t.integer "weight_ounces", default: 0
+    t.decimal "product_dims_l", default: "0.0"
+    t.decimal "product_dims_w", default: "0.0"
+    t.decimal "product_dims_h", default: "0.0"
+    t.decimal "packaged_dims_l", default: "0.0"
+    t.decimal "packaged_dims_w", default: "0.0"
+    t.decimal "packaged_dims_h", default: "0.0"
+    t.string "location"
+    t.integer "count_on_hand", default: 0
+    t.decimal "vendor_cost", default: "0.0"
+    t.decimal "retail_cost", default: "0.0"
+    t.decimal "shipping_cost", default: "0.0"
+    t.boolean "active", default: true
+    t.boolean "has_parts", default: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.boolean "remove_image", default: false
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.hstore "details"
+    t.index ["details"], name: "index_products_on_details", using: :gin
+  end
 
   create_table "profiles", force: :cascade do |t|
     t.integer "user_id"
@@ -83,12 +118,14 @@ ActiveRecord::Schema.define(version: 20180202133435) do
     t.float "long"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.hstore "details"
+    t.index ["details"], name: "index_profiles_on_details", using: :gin
   end
 
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
-    t.integer "resource_id"
+    t.bigint "resource_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
@@ -127,16 +164,16 @@ ActiveRecord::Schema.define(version: 20180202133435) do
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.string "user_color"
+    t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "admin", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "role_id"
+    t.bigint "user_id"
+    t.bigint "role_id"
     t.index ["role_id"], name: "index_users_roles_on_role_id"
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
     t.index ["user_id"], name: "index_users_roles_on_user_id"

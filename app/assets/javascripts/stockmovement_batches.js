@@ -11,7 +11,7 @@ $(document).on("turbolinks:load", function() {
   $("#jstemplates").find(".partMovementSearchBox").next(".select2-container").addClass('hidden');
   $("#jstemplates").find(".current-quantity").hide();
   $("#jstemplates").find(".new-quantity").hide();
-  $("#jstemplates").find(".negative-quantity").hide();
+  $("#jstemplates").find(".adjust-quantity").hide();
   $("#addItemButton").hide();
   $("#adjustSubmitButton").hide();
   if ($("#typeSelect option:selected").text() == "Select Type...") {
@@ -62,51 +62,56 @@ $(function() { // Ensures that the "Add Item" and "Submit" buttons aren't visibl
 });
 
 $(document).on("change", '.item-type', function() { // Changes the 'Item Select' box between 'Product' and 'Part' depending on what 'Item Type' is selected
+  var tr = $(this).closest("tr");
   if ($(this).find('option:selected').text() == "Product") {
-    $(this).closest("tr").find(".partMovementSearchBox").val([]).trigger("change").next(".select2-container").addClass('hidden');
-    $(this).closest("tr").find(".productMovementSearchBox").next(".select2-container").removeClass('hidden');
-    $(this).closest("tr").find(".current-quantity").show();
-    $(this).closest("tr").find(".new-quantity").show();
-    $(this).closest("tr").find(".negative-quantity").show();
+    tr.find(".partMovementSearchBox").val([]).trigger("change").next(".select2-container").addClass('hidden');
+    tr.find(".productMovementSearchBox").next(".select2-container").removeClass('hidden');
+    tr.find(".current-quantity").show();
+    tr.find(".new-quantity").show();
+    tr.find(".adjust-quantity").show();
   }
   if ($(this).find('option:selected').text() == "Part") {
-    $(this).closest("tr").find(".productMovementSearchBox").val([]).trigger("change").next(".select2-container").addClass('hidden');
-    $(this).closest("tr").find(".partMovementSearchBox").next(".select2-container").removeClass('hidden');
-    $(this).closest("tr").find(".current-quantity").show();
-    $(this).closest("tr").find(".new-quantity").show();
-    $(this).closest("tr").find(".negative-quantity").show();
+    tr.find(".productMovementSearchBox").val([]).trigger("change").next(".select2-container").addClass('hidden');
+    tr.find(".partMovementSearchBox").next(".select2-container").removeClass('hidden');
+    tr.find(".current-quantity").show();
+    tr.find(".new-quantity").show();
+    tr.find(".adjust-quantity").show();
   }
   if ($(this).find('option:selected').text() == "Select Item Type...") {
-    $(this).closest("tr").find(".productMovementSearchBox").val([]).trigger("change").next(".select2-container").addClass('hidden');
-    $(this).closest("tr").find(".partMovementSearchBox").val([]).trigger("change").next(".select2-container").addClass('hidden');
-    $(this).closest("tr").find(".current-quantity").hide();
-    $(this).closest("tr").find(".new-quantity").hide();
-    $(this).closest("tr").find(".negative-quantity").hide();
+    tr.find(".productMovementSearchBox").val([]).trigger("change").next(".select2-container").addClass('hidden');
+    tr.find(".partMovementSearchBox").val([]).trigger("change").next(".select2-container").addClass('hidden');
+    tr.find(".current-quantity").hide();
+    tr.find(".new-quantity").hide();
+    tr.find(".adjust-quantity").hide();
   }
 });
 
 $(document).on("change", '.productMovementSearchBox', function() {
-  var previous_qty = $(this).closest("tr").find(".product-previous-qty").attr("value");
+  var tr = $(this).closest("tr");
+  var previous_qty = tr.find(".product-previous-qty").attr("value");
   $(".productMovementSearchBox option[value="+previous_qty+"]").prop("disabled", false);
-  $(this).closest("tr").find(".current-quantity").val($(this).find("option:selected").data("quantity"));
-  var current_quantity = $(this).closest("tr").find(".current-quantity").val();
-  var new_quantity = $(this).closest("tr").find(".new-quantity").val();
-  $(this).closest("tr").find(".new-quantity").val(new_quantity = current_quantity - 1);
+  tr.find(".new-quantity").attr("readonly", false);
+  tr.find(".adjust-quantity").attr("readonly", false);
+  tr.find(".current-quantity").val($(this).find("option:selected").data("quantity"));
+  var current_quantity = tr.find(".current-quantity").val();
+  var new_quantity = tr.find(".new-quantity").val();
+  tr.find(".new-quantity").val(new_quantity = current_quantity - 1);
   var disable_value = $(this).find("option:selected").attr("value"); // To ensure an item doesn't get selected in a batch more than once, the option is disabled the first time it is selected
   $(".productMovementSearchBox option[value="+disable_value+"]").prop("disabled", true);
-  $(this).closest("tr").find(".product-previous-qty").attr("value", disable_value);
+  tr.find(".product-previous-qty").attr("value", disable_value);
 });
 
 $(document).on("change", '.partMovementSearchBox', function() { // Same notes apply here as are found above in '.productMovementSearchBox'
-  var previous_qty = $(this).closest("tr").find(".part-previous-qty").attr("value");
+  var tr = $(this).closest("tr");
+  var previous_qty = tr.find(".part-previous-qty").attr("value");
   $("#stockmovement_batch_stockmovements_attributes_new_stockmovements_part_id option[value="+previous_qty+"]").prop("disabled", false);
-  $(this).closest("tr").find(".current-quantity").val($(this).find("option:selected").data("quantity"));
-  var current_quantity = $(this).closest("tr").find(".current-quantity").val();
-  var new_quantity = $(this).closest("tr").find(".new-quantity").val();
-  $(this).closest("tr").find(".new-quantity").val(new_quantity = current_quantity - 1);
+  tr.find(".current-quantity").val($(this).find("option:selected").data("quantity"));
+  var current_quantity = tr.find(".current-quantity").val();
+  var new_quantity = tr.find(".new-quantity").val();
+  tr.find(".new-quantity").val(new_quantity = current_quantity - 1);
   var disable_value = $(this).find("option:selected").attr("value");
   $("#stockmovement_batch_stockmovements_attributes_new_stockmovements_part_id option[value="+disable_value+"]").prop("disabled", true);
-  $(this).closest("tr").find(".part-previous-qty").attr("value", disable_value);
+  tr.find(".part-previous-qty").attr("value", disable_value);
 });
 
 $(function() { // Secondary button that clicks the hidden "Add Item" button.  Required due to Helper parameters.
@@ -123,9 +128,10 @@ $(function() { // To avoid sending duplicate items in a batch, each item's 'opti
 });
 
 $(document).on("click", 'a.remove_child_ia', function() { // Triggers the removal of the relevant 'Item Select' table row when clicked
+  var tr = $(this).closest("tr");
   var hidden_field = $(this).prev('input[type=hidden]')[0];
-  $(this).closest("tr").find(".productMovementSearchBox").val([]).trigger("change")
-  $(this).closest("tr").find(".partMovementSearchBox").val([]).trigger("change")
+  tr.find(".productMovementSearchBox").val([]).trigger("change")
+  tr.find(".partMovementSearchBox").val([]).trigger("change")
   if(hidden_field) {
     hidden_field.value = '1';
   }
@@ -133,18 +139,20 @@ $(document).on("click", 'a.remove_child_ia', function() { // Triggers the remova
   return false;
 });
 
-$(document).on("change keyup", '.negative-quantity', function() {
-  var current_quantity = $(this).closest("tr").find(".current-quantity").val();
+$(document).on("change keyup", '.adjust-quantity', function() {
+  var tr = $(this).closest("tr");
+  var current_quantity = tr.find(".current-quantity").val();
   var adjusted_quantity = $(this).val();
   var new_quantity = parseInt(current_quantity) + parseInt(adjusted_quantity)
-  $(this).closest("tr").find(".new-quantity").val(new_quantity);
+  tr.find(".new-quantity").val(new_quantity);
 });
 
 $(document).on("change keyup", '.new-quantity', function() {
-  var current_quantity = $(this).closest("tr").find(".current-quantity").val();
-  var negative_quantity = $(this).closest("tr").find(".negative-quantity").val();
+  var tr = $(this).closest("tr");
+  var current_quantity = tr.find(".current-quantity").val();
+  var negative_quantity = tr.find(".adjust-quantity").val();
   var new_quantity = parseInt($(this).val()) - parseInt(current_quantity)
-  $(this).closest("tr").find(".negative-quantity").val(new_quantity);
+  tr.find(".adjust-quantity").val(new_quantity);
 });
 
 $(document).on('click', 'a.add_child_ia', function() {
@@ -166,13 +174,14 @@ $(document).on('click', 'a.add_child_ia', function() {
     containerCssClass: "vslpSearchCss",
     selectOnClose: true,
   });
-  $(this).parent().prev().find('.select2-container').next('.select2-container').addClass('hidden'); // Cycles through the jstemplate to prepare all relevant box visibility on click
-  $(this).parent().prev().find('.select2-container').addClass('hidden');
-  $(this).parent().prev().find('.item-type').val("Product");
-  $(this).parent().prev().find(".productMovementSearchBox").next(".select2-container").removeClass('hidden');
-  $(this).parent().prev().find(".current-quantity").show();
-  $(this).parent().prev().find(".new-quantity").show();
-  $(this).parent().prev().find(".negative-quantity").show();
+  var prev = $(this).parent().prev();
+  prev.find('.select2-container').next('.select2-container').addClass('hidden'); // Cycles through the jstemplate to prepare all relevant box visibility on click
+  prev.find('.select2-container').addClass('hidden');
+  prev.find('.item-type').val("Product");
+  prev.find(".productMovementSearchBox").next(".select2-container").removeClass('hidden');
+  prev.find(".current-quantity").show();
+  prev.find(".new-quantity").show();
+  prev.find(".adjust-quantity").show();
   $(".IAItemSelectHeader").removeClass("hidden");
   $(".IAItemSelectBottomBorder").removeClass("hidden");
   return false;
@@ -231,7 +240,7 @@ $(document).on("turbolinks:load", function() {
     table.page.len($(this).find("option:selected").attr("value")).draw() ;
   });
 
-  function format (type, model, description, adjust_quantity, new_quantity, notes) {
+  function format (type, model, description, adjust_quantity, new_quantity, undo_header, undo, notes) {
     return ''+
    '<div class="glider">'+
    '  <table class="adjust-history-expando">'+
@@ -240,15 +249,16 @@ $(document).on("turbolinks:load", function() {
    '      <td>Model #</td>'+
    '      <td>Description</td>'+
    '      <td>Difference</td>'+
-   '      <td>New Quantity</td>'+
+   '      <td>New Quantity</td>'+undo_header+
+   
    '      <td>Notes</td>'+
    '    </tr>'+
    '    <tr>'+
    '      <td>'+type+'</td>'+
    '      <td>'+model+'</td>'+
    '      <td>'+description+'</td>'+
-   '      <td>'+adjust_quantity+'</td>'+
-   '      <td>'+new_quantity+'</td>'+
+   '      <td class="batch_quantities">'+adjust_quantity+'</td>'+
+   '      <td class="batch_quantities">'+new_quantity+'</td>'+undo+
    '      <td>'+notes+'</td>'+
    '    </tr>'+
    '  </table>'+
@@ -267,13 +277,30 @@ $(document).on("turbolinks:load", function() {
       });
     }
     else {
-      row.child(format(tr.data('child-type'), tr.data('child-model'), tr.data('child-description'), tr.data('child-adjust_quantity'), tr.data('child-new_quantity'), tr.data('child-notes')), 'no-padding').show();
+      row.child(format(tr.data('child-type'), tr.data('child-model'), tr.data('child-description'), tr.data('child-adjust_quantity'), tr.data('child-new_quantity'), tr.data('child-undo_header'), tr.data('child-undo'), tr.data('child-notes')), 'no-padding').show();
       tr.addClass('shown');
       td.tooltip('disable');
       $('div.glider', row.child()).slideDown();
     }
+    $(".deleteStockmovement").on("click", function() {
+      var id = $(this).attr('id');
+      bootbox.confirm("Are you sure you want to undo this adjustment?", function(result){
+        if (result === true) {
+          $(".stockmovementDelete[id='"+id+"'").click();
+        }
+      });
+    });
   });
+  $("td.quantities:contains('-')").addClass("negativeQuantity");
+  $("td.quantities:contains('+')").addClass("positiveQuantity");
+  if ($("td.quantities").text === "0") {
+    $(this).addClass("zeroQuantity");
+  }
+
+  
 });
+
+
 
 //------------------------------------------------------------------------------------------------------
 //                          'INDIVIDUAL HISTORY' related JS                                            |
@@ -451,7 +478,7 @@ $(document).on("turbolinks:load", function() {
       $(this).parent().parent().removeClass('selected');
   });
 
-  $.fn.dataTableExt.afnFiltering.push(
+  $.fn.dataTableExt.afnFiltering.push( // Used for the "Filter By Date" Function
     function( oSettings, aData, iDataIndex ) {
       if(oSettings.nTable.id == 'adjustHistoryIndividualDataTable'){
         var startDate = document.getElementById('filterStartDate').value;

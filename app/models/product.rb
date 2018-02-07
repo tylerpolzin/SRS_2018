@@ -9,7 +9,7 @@ class Product < ApplicationRecord
   
   accepts_nested_attributes_for :parts, :allow_destroy => true
 
-  def sku_if_sku
+  def sku_if_sku  # Takes preference to showing the SRS SKU over the MFR Model Number if it exists
     if self.srs_sku.present?
       self.srs_sku
     else
@@ -101,7 +101,11 @@ class Product < ApplicationRecord
         quantity = s.quantity
       end
     else
-      quantity = self.count_on_hand
+      if self.count_on_hand == nil
+        "0"
+      else
+        quantity = self.count_on_hand
+      end
     end
     quantity
   end

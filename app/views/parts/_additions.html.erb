@@ -1,0 +1,36 @@
+<div class="container partAttributeContainer" style="width:100%;">
+  <%= link_to 'Add Attribute', '#', :class => 'btn partAddAttribute' %>
+  <div class="partAttributeTopBorder"></div>
+  <table class="table table-bordered" id="partAttributeContainer">
+    <thead></thead>
+    <tbody class="body">
+      <%= f.fields_for_without_bootstrap :details, @part.details do |d| %>
+        <% @part.details.try(:each) do |key, value| %>
+            <tr class="row">
+              <td>
+                <%= text_field_tag key, key, :class => 'text_field dynamicAttributeName form-control' %>
+              </td>
+              <td>
+                <%= d.text_field_without_bootstrap key, :class => 'text_field form-control', :value => value %>
+              </td>
+              <td>
+                <a herf='#' class='removeRow'>X</a>
+              </td>
+            </tr>
+        <% end %>
+      <%- end -%>
+      <tr class='row attributeTemplate <%= 'hide' if @part.details.present? %>'>
+        <td>
+          <input class='text_field dynamicAttributeName form-control' id='' name='' placeholder='New Attribute Name' type='text'/>
+        </td>
+        <td>
+          <input class='text_field form-control' id='' name='' placeholder='Description' type='text'/>
+        </td>
+        <td>
+          <a herf='#' class='removeRow'>X</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="partAttributeBottomBorder"></div>
+</div>

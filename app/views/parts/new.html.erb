@@ -15,11 +15,15 @@
       <% end %>
       <ul class="nav nav-tabs">
         <li class="active"><a id="newPartNavTab" href="#new-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Part Details</a></li>
+        <li><a id="newPartAdditions" href="#new-part-additions" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Custom Attributes</a></li>
       </ul>
       <div class="defaultTabs">
         <div class="tab-content">
           <div id="new-part-form" class="tab-pane fade in active container">
             <br/><%= render "form", :f => f %>
+          </div>
+          <div id="new-part-additions" class="tab-pane fade container">
+            <br/><%= render "additions", :f => f %>
           </div>
         </div>
       </div>

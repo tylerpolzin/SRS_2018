@@ -79,7 +79,6 @@
     border-top: 0;
     border-bottom: 0;
   }
-  // box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   thead tr th:first-child {
     width: 106px;
   }
@@ -88,9 +87,6 @@
   }
   thead tr th:nth-child(3), thead tr th:nth-child(4), thead tr th:nth-child(5) {
     width: 77px;
-  }
-  thead tr th:last-child {
-    // width: 10%;
   }
 }
 
@@ -103,9 +99,6 @@
   font-size: .9em;
   border-left: 2px solid orange;
   border-right: 2px solid orange;
-  tbody tr {
-
-  }
   tbody tr td {
     border-top: 0;
     border-bottom: 0;
@@ -189,6 +182,10 @@
 }
 
 .current-quantity {
+  background-color: white !important;
+  cursor: not-allowed !important;
+}
+.new-quantity:read-only, .adjust-quantity:read-only {
   background-color: white !important;
   cursor: not-allowed !important;
 }
@@ -278,6 +275,34 @@
   tr:last-child td:last-child {
     padding: 5px 0 5px 0;
   }
+}
+
+.deleteStockmovement {
+  cursor: pointer;
+  border: 2px solid red;
+  color: #da2323;
+  background-color: #ffd9d9;
+  &:hover {
+    color: #710808;
+  }
+}
+tr.odd td.negativeQuantity {
+  background-color: #fdeeee !important;
+}
+tr.even td.negativeQuantity {
+  background-color: #fff4f4 !important;
+}
+tr.odd td.positiveQuantity {
+  background-color: #e5f9e5 !important;
+}
+tr.even td.positiveQuantity {
+  background-color: #ebffeb !important;
+}
+tr.odd td.zeroQuantity {
+  background-color: #ff7698 !important;
+}
+tr.odd td.zeroQuantity {
+  background-color: #ff7698 !important;
 }
 
 //------------------------------------------------------------------------------------------------------

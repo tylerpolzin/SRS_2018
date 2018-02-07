@@ -31,6 +31,7 @@
 //= require best_in_place.jquery-ui
 //= require best_in_place.purr
 //= require select2-full
+//= require bootbox
 //= require dataTables.min.js
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
@@ -55,6 +56,7 @@
 //= require gmaps/google
 //= require_tree .
 /*global $*/
+/*global bootbox */
 
 // Activating Best In Place
 $(document).on("turbolinks:load", function() {
@@ -102,4 +104,17 @@ $.fn.forceNumeric = function () {
           return false;
        });
    });
+}
+
+function basicConfirm (element) { // Basic dialog box to confirm any delete call
+  bootbox.confirm("Are you sure you want to delete this "+element+"?", function(result){
+    if (result === true) {
+      $("."+element+"Delete").click();
+    }
+  });
+  // Example code:
+  // $(".deleteProduct").on("click", function(e) {
+  //   e.preventDefault();
+  //   basicConfirm("product");
+  // });
 }

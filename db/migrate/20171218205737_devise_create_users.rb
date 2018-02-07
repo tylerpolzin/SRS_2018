@@ -32,6 +32,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
 
       # Non-Devise additions
       t.string :user_color
+      t.boolean :admin, default: false
       
       
 

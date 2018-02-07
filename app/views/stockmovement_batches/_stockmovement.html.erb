@@ -20,10 +20,10 @@
           <input class="current-quantity form-control" readonly="true" placeholder="Current Qty" type="number">
         </td>
         <td> <!-- New Qty Field -->
-          <%= f.number_field :quantity, class: 'new-quantity', hide_label: true, :placeholder => "New Qty" %>
+          <%= f.number_field :quantity, class: 'new-quantity', hide_label: true, :placeholder => "New Qty", :readonly => true %>
         </td>
         <td> <!-- Adjust Qty Field -->
-          <%= f.number_field :adjust_quantity, class: 'negative-quantity', hide_label: true, :placeholder => "Difference", :value => "-1" %>
+          <%= f.number_field :adjust_quantity, class: 'adjust-quantity', hide_label: true, :placeholder => "Difference", :value => "-1", :readonly => true %>
         </td>
         <td> <!-- Remove Entry Field -->
           <%= remove_child_link_ia "Χ", f %>
