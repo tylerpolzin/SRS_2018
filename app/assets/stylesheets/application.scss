@@ -5,7 +5,6 @@
  *
  */
  
-
 @import "bootstrap-sprockets"; // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 @import "bootstrap";
 @import "bootstrap-datepicker";
@@ -34,7 +33,7 @@
 
 // Default blue textured background
 body {
-  background-image: url("main-content-bg-3.jpg");
+  background: url("main-content-bg-3.jpg") #2a4776;
 }
 
 ::selection {
@@ -141,7 +140,7 @@ body {
   font-size: 20px;
   border-top-right-radius: 30px;
   border-bottom: 4px solid #d19b3d;
-  background-image: url("gray-texture-1.jpg");
+  background: url("gray-texture-1.jpg") #353535;
   color: #d8d8d8;
   padding: 15px;
   margin-bottom: 0;
