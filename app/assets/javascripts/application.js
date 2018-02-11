@@ -12,8 +12,8 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require pdfmake/build/pdfmake.js 
-//= require pdfmake/build/vfs_fonts.js
+//X require pdfmake/build/pdfmake.js 
+//X require pdfmake/build/vfs_fonts.js
 //= require moment.min.js
 //= require jquery3
 //= require jquery_ujs
