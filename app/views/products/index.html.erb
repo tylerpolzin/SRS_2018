@@ -221,12 +221,12 @@
               <% if product.notes.present? %>
                 <%= simple_format product.notes %>
                 <% if current_user.admin? or current_user.has_role? :employee %>
-                  <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-sm' %>
+                  <p><%= link_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-sm' %></p>
                 <% else %><% end %>
               <% else %>
-                N/A
+                <p>N/A</p>
                 <% if current_user.admin? or current_user.has_role? :employee %>
-                  <%= button_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-sm' %>
+                  <p><%= link_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-sm' %></p>
                 <% else %><% end %>
               <% end %>
             </td>
