@@ -25,6 +25,7 @@ gem 'devise'
 gem 'rolify'
 gem 'cancancan'
 gem "paperclip"
+gem 'aws-sdk', '~> 2.3' # Use for Paperclip uploads
 gem 'twitter-bootstrap-rails-confirm'
 gem 'best_in_place'
 gem 'underscore-rails'

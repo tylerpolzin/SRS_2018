@@ -27,9 +27,6 @@ Rails.application.configure do
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
-
-
-
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
   
@@ -38,10 +35,17 @@ Rails.application.configure do
   
   # Generate digests for assets URLs
   config.assets.digest = true
-
-
-
-
+  
+  # Allows Paperclip to talk with Amazon AWS S3
+  config.paperclip_defaults = {
+    storage: :s3,
+    s3_credentials: {
+      bucket: ENV.fetch('S3_BUCKET_NAME'),
+      access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
+      secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
+      s3_region: ENV.fetch('AWS_REGION'),
+    }
+  }
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.

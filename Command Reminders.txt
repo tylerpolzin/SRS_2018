@@ -60,3 +60,11 @@ Profile.create!({user_id: 10, name: nil, company: "Firplak", position: nil, addr
 
 
 
+Digital Ocean Stuff:
+
+Console:
+
+cd home/deploy/SRS-2018
+
+Restart server with this:
+sudo shutdown -r now
