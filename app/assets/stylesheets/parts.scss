@@ -511,7 +511,7 @@
 
 // Hacky fix to remove the "searchable" column because removing the column in the DataTables JS isn't working
 #partsDataTable_wrapper {
-  .dt-buttons .dt-button-collection .dt-button:nth-child(14) {
+  .dt-buttons .dt-button-collection .dt-button:nth-child(16) {
     display: none;
   }
 }

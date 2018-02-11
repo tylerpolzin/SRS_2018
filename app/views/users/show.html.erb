@@ -7,40 +7,40 @@
   <% end %>
   <div class="container defaultForm">
     <ul class="nav nav-tabs">
-      <% if current_user.admin? %>
-        <li>
-      <% else %>
-        <li class="active">
-      <% end %>
-        <a id="showProfileForm" href="#show-profile-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> My Profile</a>
+      <li class="<%= "active" if !current_user.admin? %>">
+        <a id="showProfileForm" href="#show-profile-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Profile</a>
       </li>
-      <li><a id="showTaskForm" href="#show-task-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> My Tasks</a></li>
+      <!--<li><a id="showTaskForm" href="#show-task-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Tasks</a></li>-->
       <% if current_user.admin? and current_user == @user %>
         <li class="active"><a id="assignmentForm" href="#dashboard-assignment-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Website Assignments</a></li>
       <% end %>
-      <li><a id="showFilesForm" href="#show-files-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> My Files</a></li>
+      <!--<li><a id="showFilesForm" href="#show-files-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Files</a></li>-->
+      <% if !current_user.admin? %>
+        <li><a id="showBugReportsForm" href="#show-bug-reports-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Bug Reports</a></li>
+      <% end %>
     </ul>
     
     <div class="defaultTabs">
       <div class="tab-content">
-        <% if current_user.admin? and current_user == @user %>
-          <div id="show-profile-form" class="tab-pane fade container">
-        <% else %>
-          <div id="show-profile-form" class="tab-pane fade in active container">
-        <% end %>
+        <div id="show-profile-form" class="tab-pane fade <%= "in active" if !current_user.admin? %> container">
           <%= render "show_profile_form" %>
         </div>
-        <div id="show-task-form" class="tab-pane fade container">
-          <%= render "show_task_form" %>
-        </div>
+        <!--<div id="show-task-form" class="tab-pane fade container">-->
+        <!--  <%#= render "show_task_form" %>-->
+        <!--</div>-->
         <% if current_user.admin? and current_user == @user %>
           <div id="dashboard-assignment-form" class="tab-pane fade in active container">
             <%= render "dashboard_assignment_form" %>
           </div>
         <% end %>
-        <div id="show-files-form" class="tab-pane fade container">
-          <%= render "show_files_form" %>
-        </div>
+        <!--<div id="show-files-form" class="tab-pane fade container">-->
+        <!--  <%#= render "show_files_form" %>-->
+        <!--</div>-->
+        <% if !current_user.admin? %>
+          <div id="show-bug-reports-form" class="tab-pane fade container">
+            <%= render "show_bug_reports" %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

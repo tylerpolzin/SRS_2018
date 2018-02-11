@@ -777,9 +777,9 @@
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15)
 }
 
-// Hacky fix to remove the "searchable" column because removing the column in the DataTables JS isn't working
+// Hacky fix to remove the Searchable column because removing the column in the DataTables JS isnt working
 #productsDataTable_wrapper {
-  .dt-buttons .dt-button-collection .dt-button:nth-child(12) {
+  .dt-buttons .dt-button-collection .dt-button:nth-child(14) {
     display: none;
   }
 }

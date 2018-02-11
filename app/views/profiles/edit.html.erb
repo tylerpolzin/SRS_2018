@@ -2,11 +2,15 @@
 <div class="defaultDiv" id="editProfileDiv">
   <p class="defaultDivHeader">Edit Profile</p>
   <div class="container defaultForm">
-    <% if current_user == @user %>
-      <%= bootstrap_form_for @profile, url: user_profile_path, :html => { :multipart => true } do |f| %>
+    <% if current_user == @user or current_user.admin? %>
+      <%= bootstrap_form_for @profile, url: user_profile_path, method: :patch, :html => { :multipart => true } do |f| %>
         <table class="table table-bordered" id="editProfileTable">
           <thead></thead>
           <tbody>
+            <tr>
+              <td>email</td>
+              <td><div class="form-group"><input class="form-control" readonly type="text" value="<%= @user.email %>" style="cursor:not-allowed;"/></div></td>
+            </tr>
             <tr>
               <td>Name</td>
               <td><%= f.text_field :name, hide_label: true %></td>
@@ -64,7 +68,7 @@
         <%= f.submit "Edit Profile", :style => "float:right;" %>
       <% end %>
     <% else %>
-      <div class="form-group form-group-sm">You cannot edit this users profile</div>
+      <div class="form-group form-group-sm" style="padding:10px;">You cannot edit this users profile</div>
     <% end %>
   </div>
 </div>

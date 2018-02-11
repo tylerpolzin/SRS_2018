@@ -32,10 +32,10 @@ class AssignmentsController < ApplicationController
     respond_to do |format|
       if @assignment.update(assignment_params)
         format.html { redirect_to @assignment, notice: 'Assignment was successfully updated.' }
-        format.json { respond_with_bip (@assignment) }
+        format.json { respond_with_bip(@assignment) }
       else
         format.html { render :edit }
-        format.json { respond_with_bip (@assignment) }
+        format.json { respond_with_bip(@assignment) }
       end
     end
   end

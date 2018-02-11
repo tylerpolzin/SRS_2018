@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180204230614) do
+ActiveRecord::Schema.define(version: 20180210031104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20180204230614) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.hstore "details"
+    t.integer "max_quantity", default: 0
     t.index ["details"], name: "index_parts_on_details", using: :gin
   end
 
@@ -96,6 +97,7 @@ ActiveRecord::Schema.define(version: 20180204230614) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.hstore "details"
+    t.integer "max_quantity", default: 0
     t.index ["details"], name: "index_products_on_details", using: :gin
   end
 

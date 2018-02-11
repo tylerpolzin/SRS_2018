@@ -1,0 +1,33 @@
+<table class="table table-bordered dashboardAssignmentsTable">
+  <thead>
+    <tr>
+      <th>Association</th>
+      <th>Description</th>
+      <th>Additional Information</th>
+      <th>Priority</th>
+      <th>Created By</th>
+      <th>Date Created</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% controller.each do |a| %>
+      <tr>
+        <td><%= a.scaffold_association %></td>
+        <td><%= best_in_place a, :description, as: :textarea %></td>
+        <td><%= best_in_place a, :wordy_details, as: :textarea %></td>
+        <td><%= best_in_place a, :priority, as: :select, collection: ["1","2","3"], class: "input-small", inner_class: "input-small" %></td>
+        <td><%= a.user.header_name %></td>
+        <td><%= a.created_at.strftime('%B %d, %Y') %></td>
+        <td>
+          <%= best_in_place a, :active, 
+                as: :checkbox, 
+                class: 'btn btn-sm activeButton', 
+                inner_class: 'form-control', 
+                :style => "width:100%;background-color:#ffd1d1;",
+                collection: %w[Complete Active] %> <!-- Complete = 'false', Active = 'true' -->
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

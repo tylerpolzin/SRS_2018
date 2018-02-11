@@ -6,30 +6,30 @@ class StockmovementBatchesController < ApplicationController
     if current_user.admin? or current_user.has_role? :employee
       @stockmovements = Stockmovement.all
       @stockmovement_batches = StockmovementBatch.all
-    elsif current_user.has_role? (:drsharp)
+    elsif current_user.has_role?(:drsharp)
       @stockmovements = Stockmovement.includes(:product).where(:products => {:brand_name => "Dr Sharp"})
       @stockmovement_batches = StockmovementBatch.includes(:stockmovements)
                                                  .where(:stockmovements => {:id => Stockmovement.select(:id)
                                                  .where(:product_id => Product.select(:id)
                                                  .where(:brand_name => "Dr Sharp"))})
-    elsif current_user.has_role? (:colonial)
+    elsif current_user.has_role?(:colonial)
       @stockmovements = Stockmovement.includes(:product).where(:products => {:brand_name => "Colonial Elegance"})
       @stockmovement_batches = StockmovementBatch.includes(:stockmovements)
                                                  .where(:stockmovements => {:id => Stockmovement.select(:id)
                                                  .where(:product_id => Product.select(:id)
-                                                 .where(:brand_name => "Dr Sharp"))})
-    elsif current_user.has_role? (:padula)
+                                                 .where(:brand_name => "Colonial Elegance"))})
+    elsif current_user.has_role?(:padula)
       @stockmovements = Stockmovement.includes(:product).where(:products => {:brand_name => "Ray Padula"})
       @stockmovement_batches = StockmovementBatch.includes(:stockmovements)
                                                  .where(:stockmovements => {:id => Stockmovement.select(:id)
                                                  .where(:product_id => Product.select(:id)
-                                                 .where(:brand_name => "Dr Sharp"))})
-    elsif current_user.has_role? (:firplak)
+                                                 .where(:brand_name => "Ray Padula"))})
+    elsif current_user.has_role?(:firplak)
       @stockmovements = Stockmovement.includes(:product).where(:products => {:brand_name => "Firplak"})
       @stockmovement_batches = StockmovementBatch.includes(:stockmovements)
                                                  .where(:stockmovements => {:id => Stockmovement.select(:id)
                                                  .where(:product_id => Product.select(:id)
-                                                 .where(:brand_name => "Dr Sharp"))})
+                                                 .where(:brand_name => "Firplak"))})
     end
     @products = Product.all
     @parts = Part.all
@@ -70,10 +70,10 @@ class StockmovementBatchesController < ApplicationController
     respond_to do |format|
       if @stockmovement_batch.update(stockmovement_batch_params)
         format.html { redirect_to @stockmovement_batch, notice: 'Stockmovement batch was successfully updated.' }
-        format.json { render :show, status: :ok, location: @stockmovement_batch }
+        format.json { respond_with_bip(@stockmovement_batch) }
       else
         format.html { render :edit }
-        format.json { render json: @stockmovement_batch.errors, status: :unprocessable_entity }
+        format.json { respond_with_bip(@stockmovement_batch) }
       end
     end
   end

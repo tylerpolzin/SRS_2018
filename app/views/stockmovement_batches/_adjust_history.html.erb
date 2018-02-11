@@ -55,18 +55,10 @@
                                     <% end %>
                                   <% end %>"
           data-child-adjust_quantity="<% i.stockmovements.each do |aq| %>
-                                        <% if aq.adjust_quantity.present? %>
-                                          <p><%= aq.adjust_quantity_plus %></p>
-                                        <% else %>
-                                          <p>None Indicated</p>
-                                        <% end %>
+                                        <p class='quantities'><%= aq.adjust_quantity_plus %></p>
                                       <% end %>"
           data-child-new_quantity="<% i.stockmovements.each do |q| %>
-                                      <% if q.quantity.present? %>
-                                        <p><%= q.quantity %></p>
-                                      <% else %>
-                                        <p>None Indicated</p>
-                                      <% end %>
+                                      <p class='quantities'><%= q.quantity %></p>
                                     <% end %>"
           data-child-undo_header="<% if current_user.admin? %>
                                     <td>Undo Entry</td>

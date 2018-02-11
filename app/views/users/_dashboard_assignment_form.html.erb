@@ -1,121 +1,25 @@
 <%= button_to "Create New Assignment", new_assignment_path, method: :get, class: "btn btn-sm" %>
 </br>
 <ul class="nav nav-tabs assignments-tabs">
-  <li class="active">
-    <a id="assignmentsActiveTab" href="#assignments-active" class="tab-background" data-toggle="tab">Active</a>
-  </li>
-  <li>
-    <a id="assignmentsCompleteTab" href="#assignments-complete" class="tab-background" data-toggle="tab">Complete</a>
-  </li>
-  <li>
-    <a id="assignmentsBugReportTab" href="#assignments-bug_report" class="tab-background" data-toggle="tab">Bug Reports</a>
-  </li>
-  
+  <li class="active"><a id="assignmentsActiveTab" href="#assignments-active" class="tab-background" data-toggle="tab">Active</a></li>
+  <li><a id="assignmentsCompleteTab" href="#assignments-complete" class="tab-background" data-toggle="tab">Complete</a></li>
+  <li><a id="assignmentsBugReportTab" href="#assignments-bug_report" class="tab-background" data-toggle="tab">Bug Reports</a></li>
+  <li><a id="generalRemindersTab" href="#assignments-general_reminders" class="tab-background" data-toggle="tab">General Reminders</a></li>
 </ul>
 
 <div id="assignmentsTabs">
   <div class="tab-content">
     <div id="assignments-active" class="tab-pane fade in active container">
-      <table class="table table-bordered dashboardAssignmentsTable">
-        <thead>
-          <tr>
-            <th>Association</th>
-            <th>Description</th>
-            <th>Additional Information</th>
-            <th>Priority</th>
-            <th>Created By</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @activeassignments.each do |a| %>
-            <tr>
-              <td><%= a.scaffold_association %></td>
-              <td><%= best_in_place a, :description %></td>
-              <td><%= best_in_place a, :wordy_details %></td>
-              <td><%= best_in_place a, :priority, as: :select, collection: ["1","2"], class: "input-small", inner_class: "input-small" %></td>
-              <td><%= a.user.header_name %></td>
-              <td>
-                <%= best_in_place a, :active, 
-                      as: :checkbox, 
-                      :id => 'activeButton', 
-                      class: 'btn btn-sm', 
-                      inner_class: 'form-control', 
-                      :style => "width:100%;background-color:#ffd1d1;",
-                      collection: %w[Complete Active] %> <!-- Complete = 'false', Active = 'true' -->
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <%= render "assignment_table", controller: @activeassignments %>
     </div>
     <div id="assignments-complete" class="tab-pane fade container">
-      <table class="table table-bordered dashboardAssignmentsTable">
-        <thead>
-          <tr>
-            <th>Association</th>
-            <th>Description</th>
-            <th>Additional Information</th>
-            <th>Priority</th>
-            <th>Created By</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @completeassignments.each do |a| %>
-            <tr>
-              <td><%= a.scaffold_association %></td>
-              <td><%= best_in_place a, :description %></td>
-              <td><%= best_in_place a, :wordy_details %></td>
-              <td><%= best_in_place a, :priority, as: :select, collection: ["1","2"], class: "input-small", inner_class: "input-small" %></td>
-              <td><%= a.user.header_name %></td>
-              <td>
-                <%= best_in_place a, :active, 
-                      as: :checkbox, 
-                      :id => 'completeButton', 
-                      class: 'btn btn-sm', 
-                      inner_class: 'form-control', 
-                      :style => "width:100%;background-color:#ffd1d1;",
-                      collection: %w[Complete Active] %> <!-- Complete = 'false', Active = 'true' -->
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <%= render "assignment_table", controller: @completeassignments %>
     </div>
     <div id="assignments-bug_report" class="tab-pane fade container">
-      <table class="table table-bordered dashboardAssignmentsTable">
-        <thead>
-          <tr>
-            <th>Association</th>
-            <th>Description</th>
-            <th>Additional Information</th>
-            <th>Priority</th>
-            <th>Created By</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @bugreportassignments.each do |a| %>
-            <tr>
-              <td><%= a.scaffold_association %></td>
-              <td><%= best_in_place a, :description %></td>
-              <td><%= best_in_place a, :wordy_details %></td>
-              <td><%= best_in_place a, :priority, as: :select, collection: ["1","2"], class: "input-small", inner_class: "input-small" %></td>
-              <td><%= a.user.header_name %></td>
-              <td>
-                <%= best_in_place a, :active, 
-                      as: :checkbox, 
-                      :id => 'bug_reportButton', 
-                      class: 'btn btn-sm', 
-                      inner_class: 'form-control', 
-                      :style => "width:100%;background-color:#ffd1d1;",
-                      collection: %w[Complete Active] %> <!-- Complete = 'false', Active = 'true' -->
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <%= render "assignment_table", controller: @bugreports %>
+    </div>
+    <div id="assignments-general_reminders" class="tab-pane fade container">
+      <%= render "assignment_table", controller: @generalreminders %>
     </div>
   </div>
 

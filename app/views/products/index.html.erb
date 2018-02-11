@@ -11,7 +11,9 @@
           <th>MFR Model #</th>
           <th>Description</th>
           <th>Qty On Hand</th>
-          <th>Qty Last Updated</th>
+          <th>Qty Last Modified</th>
+          <th>Max Quantity</th>
+          <th>Request Quantity</th>
           <th>Weight</th>
           <th>Dimensions</th>
           <th>Pricing</th>
@@ -55,7 +57,7 @@
                                                                 </div>
                                                               </li>
                                                             <% end %>'
-                                        data-child-columns='<% if current_user.admin? %>[11,12,13,14,15,16,17]<% else %>11<% end %>'> <!-- Used in the dataTable "columnDefs" for visible targets -->
+                                        data-child-columns='<% if current_user.admin? %>[7,8,13,14,15,16,17,18,19]<% else %>[7,8,13]<% end %>'> <!-- Used in the dataTable "columnDefs" for visible targets -->
         
       </div>
       <!--<div class="productTableChildren"--><!-- Temporarily Disabled -->
@@ -159,7 +161,7 @@
                                <i class='fa fa-close' style='color:red'></i> Warranty Orderable</p>
                              <% end %>"
             data-child-dates="<p>Added on <%= product.created_at.strftime('%B %d, %Y') %></p>
-                             <p>Last Updated on <%= product.updated_at.strftime('%B %d, %Y') %></p>">
+                             <p>Last Modified on <%= product.updated_at.strftime('%B %d, %Y') %></p>">
             <td class="details-control"></td>
             <td>
               <% if product.image.present? %>
@@ -189,8 +191,10 @@
                 N/A
               <% end %>
             </td>
-            <td><%= product.quantity_on_hand %></td>
+            <td class="quantities"><%= product.quantity_on_hand %></td>
             <td><%= product.qty_last_updated %></td>
+            <td><%= product.max_quantity %></td>
+            <td><%= product.request_quantity %></td>
             <td><%= product.product_weight %></td>
             <td>
               <p>Product: <%= product.product_dims_l %>"x<%= product.product_dims_w %>"x<%= product.product_dims_h %>"</p>
@@ -234,7 +238,7 @@
               <% if product.vendor_name.present? %><%= product.vendor_name %><% end %> | 
               <% if product.upc.present? %><%= product.upc %><% end %> | 
               <% if product.srs_sku.present? %><%= product.srs_sku %><% end %> | 
-              <% if product.details.present? %><% product.details.try(:each) do |key, value| %><%= key %> : <%= value %><% end %><% end %>
+              <% if product.details.present? %><% product.details.try(:each) do |key, value| %><%= key %> : <%= value %> | <% end %><% end %>
             </td>
             <% if current_user.admin? %>
               <td><%= best_in_place product, :has_parts, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>

@@ -16,10 +16,13 @@ class UsersController < ApplicationController
     @profile = @user.profile
     @roles = Role.includes(:users_role).where(:users_roles => {:user_id => params[:id]})
     if current_user.admin? and current_user == @user
-      @activeassignments = Assignment.where(:active => true).where(:user_id => 1)
-      @completeassignments = Assignment.where(:active => false)
-      @bugreportassignments = Assignment.where(:active => true).where.not(:user_id => 1)
+      @activeassignments = Assignment.order(priority: :asc).order(created_at: :desc).where(:active => true).where(:user_id => 1).where(priority: 1..2)
+      @completeassignments = Assignment.order(priority: :asc).order(created_at: :desc).where(:active => false)
+      @bugreports = Assignment.order(priority: :asc).order(created_at: :desc).where(:active => true).where.not(:user_id => 1)
+      @generalreminders = Assignment.order(priority: :asc).order(created_at: :desc).where(:active => true).where(priority: 3)
     end
+    @activebugreports = Assignment.order(priority: :asc).order(created_at: :desc).where(:user_id => current_user).where(:active => true)
+    @completedbugreports = Assignment.order(priority: :asc).order(created_at: :desc).where(:user_id => current_user).where(:active => false)
   end
   
   def index

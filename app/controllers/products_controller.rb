@@ -15,6 +15,10 @@ class ProductsController < ApplicationController
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Firplak")
     end
   end
+  
+  def batch_process
+    @products = Product.all
+  end
 
   def show
     @product = Product.find(params[:id])

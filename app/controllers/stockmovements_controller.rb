@@ -33,10 +33,10 @@ class StockmovementsController < ApplicationController
     respond_to do |format|
       if @stockmovement.update(stockmovement_params)
         format.html { redirect_to @stockmovement, notice: 'Stockmovement was successfully updated.' }
-        format.json { render :show, status: :ok, location: @stockmovement }
+        format.json { respond_with_bip(@stockmovement) }
       else
         format.html { render :edit }
-        format.json { render json: @stockmovement.errors, status: :unprocessable_entity }
+        format.json { respond_with_bip(@stockmovement) }
       end
     end
   end

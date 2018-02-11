@@ -13,7 +13,9 @@
           <th>SRS SKU</th>
           <th>Description</th>
           <th>Qty On Hand</th>
-          <th>Qty Last Updated</th>
+          <th>Qty Last Modified</th>
+          <th>Max Quantity</th>
+          <th>Request Quantity</th>
           <th>Weight</th>
           <th>Dimensions</th>
           <th>Pricing</th>
@@ -82,7 +84,7 @@
                                        <i class='fa fa-close' style='color:red'></i> Warranty Orderable</p>
                                      <% end %>"
                    data-child-dates="<p>Added on <%= part.created_at.strftime('%B %d, %Y') %></p>
-                                     <p>Last Updated on <%= part.updated_at.strftime('%B %d, %Y') %></p>">
+                                     <p>Last Modified on <%= part.updated_at.strftime('%B %d, %Y') %></p>">
             <td class="details-control"><div class="hidden partProductId" name="<%= part.product_id %>"><%= part.product_id %></div></td>
             <td>
               <% if part.image.present? %>
@@ -120,8 +122,10 @@
                 N/A
               <% end %>
             </td>
-            <td><%= part.quantity_on_hand %></td>
+            <td class="quantities"><%= part.quantity_on_hand %></td>
             <td><%= part.qty_last_updated %></td>
+            <td><%= part.max_quantity %></td>
+            <td><%= part.request_quantity %></td>
             <td><%= part.part_weight %></td>
             <td>
               <p>Product: <%= part.product_dims_l %>"x<%= part.product_dims_w %>"x<%= part.product_dims_h %>"</p>
@@ -153,7 +157,7 @@
                 <%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %>
               <% end %>
             </td>
-            <td>  <!-- Hidden field to add table search ability to Expando -->
+            <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
               <% if part.product.vendor_name.present? %><%= part.product.vendor_name %><% end %> | 
               <% if part.location.present? %><%= part.location %><% end %> | 
               <% if part.upc.present? %><%= part.upc %><% end %> | 
@@ -161,7 +165,7 @@
               <% if part.store_orderable? %>Store Orderable | <% else %>Not Store Orderable<% end %> | 
               <% if part.ecomm_sku? %>E-Commerce SKU | <% else %>Not E-Commerce SKU<% end %> | 
               <% if part.warranty_orderable? %>Warranty Orderable | <% else %>Not Warranty Orderable<% end %>
-              <% if part.details.present? %><% part.details.try(:each) do |key, value| %><%= key %> : <%= value %><% end %><% end %>
+              <% if part.details.present? %><% part.details.try(:each) do |key, value| %><%= key %> : <%= value %> | <% end %><% end %>
             </td>
           </tr>
         <% end %>

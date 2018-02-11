@@ -54,7 +54,7 @@ class Part < ApplicationRecord
     end
     quantity
   end
-  
+
   def qty_last_updated
     last_update = []
     if self.stockmovements.exists?
@@ -66,7 +66,18 @@ class Part < ApplicationRecord
     end
     last_update
   end
-  
+
+  def request_quantity
+    quantity = []
+    quantity = self.max_quantity - self.quantity_on_hand
+    if quantity > 0
+      quantity
+    else
+      quantity = 0
+    end
+    quantity
+  end
+
   def part_ounces
     if self.weight_ounces == 0
       ""

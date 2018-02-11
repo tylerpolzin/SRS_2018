@@ -95,11 +95,11 @@
   width: 850px;
 }
 
-//          'SHOW_PROFILE_FORM' RENDER                                              |
-
-#show-profile-form {
-  padding: 15px 10px 5px 0;
+#show-profile-form, #dashboard-assignment-form, #show-bug-reports-form {
+  padding: 15px 15px 5px 0;
 }
+
+//          'SHOW_PROFILE_FORM' RENDER                                              |
 
 .show-profile-top {
   width: 100%;
@@ -204,9 +204,13 @@
   padding: 15px 10px 5px 0;
 }
 
+#assignmentsTabs .tab-content .tab-pane {
+  padding: 0;
+}
+
 .assignments-tabs {
   li > a {
-    padding: 3px;
+    padding: 3px !important;
   }
 }
 
@@ -219,18 +223,27 @@
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   thead {
     vertical-align: middle;
-    th:first-child {
-      width: 10%;
+    tr {
+      th {
+        border-bottom: 0 !important;
+      }
+      th:first-child {
+        width: 9%;
+      }
+      th:nth-child(2) {
+        width: 25%;
+      }
+      th:nth-child(4) {
+        width: 6%;
+      }
+      th:nth-child(5) {
+        width: 9%;
+      }
+      th:nth-child(6) {
+        width: 15%;
+      }
     }
-    th:nth-child(2) {
-      width: 30%;
-    }
-    th:nth-child(4) {
-      width: 6%;
-    }
-    th:nth-child(5) {
-      width: 9%;
-    }
+
   }
   tbody tr:nth-child(odd) {
     background-color: white;
@@ -248,7 +261,7 @@
   }
 }
 
-#activeButton, #completeButton, #bug_reportButton {
+.activeButton {
   margin: 0;
   border: 0;
   border-radius: 0;

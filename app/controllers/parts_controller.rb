@@ -31,15 +31,19 @@ class PartsController < ApplicationController
 
   def update
     @part = Part.find(params[:id])
-    if @part.update_attributes(part_params)
-      Product.find_by(id: @part.product_id).update(has_parts: true)
-      if @part.remove_image == true
-        @part.image = nil
-        @part.save
+    respond_to do |format|
+      if @part.update_attributes(part_params)
+        Product.find_by(id: @part.product_id).update(has_parts: true)
+        if @part.remove_image == true
+          @part.image = nil
+          @part.save
+        end
+        format.html { redirect_to product_path(@part.product_id), notice: '// Part has been updated.' }
+        format.json { respond_with_bip(@part) }
+      else
+        format.html { render action: :edit }
+        format.json { respond_with_bip(@part) }
       end
-      redirect_to product_path(@part.product_id), notice: '// Part has been updated.'
-    else
-      render action: :edit
     end
   end
 

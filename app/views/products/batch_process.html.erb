@@ -1,0 +1,89 @@
+<% @title = "SRS Portal | Batch Adjustments" %>
+<div class="defaultDiv" id="batchProcessDiv">
+  <p class="defaultDivHeader">Product List</p>
+  <div class="productsTable">
+    <table id="batchProcessDataTable" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Image</th>
+          <th>Manufacturer</th>
+          <th>Brand Name</th>
+          <th>MFR Model #</th>
+          <th>SRS SKU</th>
+          <th>UPC</th>
+          <th>Description</th>
+          <th>Qty On Hand</th>
+          <th>Qty Last Modified</th>
+          <th>Max Quantity</th>
+          <th>Request Quantity</th>
+          <th>Lbs</th>
+          <th>Oz</th>
+          <th>Product L</th>
+          <th>Product W</th>
+          <th>Product H</th>
+          <th>Packaged L</th>
+          <th>Packaged W</th>
+          <th>Packaged H</th>
+          <th>Location</th>
+          <th>Vendor Cost</th>
+          <th>Retail Cost</th>
+          <th>Shipping Cost</th>
+          <th>Additional Notes</th>
+          <th>Has Parts?</th>
+          <th>Active?</th>
+          <th>Store Orderable?</th>
+          <th>Warranty Orderable?</th>
+          <th>E-Commerce SKU?</th>
+          <th>Created At</th>
+          <th>Last Modified</th>
+        </tr>
+      </thead>
+      <tbody class="product-table">
+        <% @products.each do |product| %>
+          <tr>
+<!--ID-->               <td><%= link_to product.id, product_path(id: product.id), method: :get, title: "View Product Details" %></td>
+<!--IMAGE-->            <td>
+                          <% if product.image.present? %>
+                            <%= link_to (image_tag (product.image.url (:thumb))), product.image.url, target: "_blank", title: "View Full Size Image" %>
+                          <% else %>
+                            No Image
+                          <% end %>
+                        </td>
+<!--MANUFACTURER-->     <td><%= best_in_place product, :vendor_name %></td>
+<!--BRAND-->            <td><%= best_in_place product, :brand_name %></td>
+<!--MFR MODEL #-->      <td><%= best_in_place product, :manufacturer_model_number %></td>
+<!--SRS SKU-->          <td><%= best_in_place product, :srs_sku %></td>
+<!--UPC-->              <td><%= best_in_place product, :upc %></td>
+<!--DESCRIPTION-->      <td><%= best_in_place product, :description %></td>
+<!--QTY ON HAND-->      <td><%= product.quantity_on_hand %></td>
+<!--QTY LAST MODIFIED--><td><%= product.qty_last_updated %></td>
+<!--MAX QUANTITY-->     <td><%= best_in_place product, :max_quantity %></td>
+<!--REQUEST QUANTITY--> <td><%= product.request_quantity %></td>
+<!--WEIGHT LBS-->       <td><%= best_in_place product, :weight_pounds %></td>
+<!--WEIGHT OZ-->        <td><%= best_in_place product, :weight_ounces %></td>
+<!--PRODUCT DIMS L-->   <td><%= best_in_place product, :product_dims_l %></td>
+<!--PRODUCT DIMS W-->   <td><%= best_in_place product, :product_dims_w %></td>
+<!--PRODUCT DIMS H-->   <td><%= best_in_place product, :product_dims_h %></td>
+<!--PACKAGED DIMS L-->  <td><%= best_in_place product, :packaged_dims_l %></td>
+<!--PACKAGED DIMS W-->  <td><%= best_in_place product, :packaged_dims_w %></td>
+<!--PACKAGED DIMS H-->  <td><%= best_in_place product, :packaged_dims_h %></td>
+<!--LOCATION-->         <td><%= best_in_place product, :location %></td>
+<!--VENDOR COST-->      <td><%= best_in_place product, :vendor_cost %></td>
+<!--RETAIL COST-->      <td><%= best_in_place product, :retail_cost %></td>
+<!--SHIPPING COST-->    <td><%= best_in_place product, :shipping_cost %></td>
+<!--NOTES-->            <td><%= best_in_place product, :notes, :as => :textarea, class: 'input-small', inner_class: 'input-small' %></td>
+<!--HAS PARTS?-->       <td><%= best_in_place product, :has_parts, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
+<!--ACTIVE?-->          <td><%= best_in_place product, :active, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
+<!--STORE ORDERABLE-->  <td><%= best_in_place product, :store_orderable, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
+<!--WARRANTY ORDERABL--><td><%= best_in_place product, :warranty_orderable, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
+<!--ECOMM-->            <td><%= best_in_place product, :ecomm_sku, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
+<!--CREATED AT-->       <td><%= product.created_at %></td>
+<!--MODIFIED AT-->      <td><%= product.updated_at %></td>
+<!--HAS DETAILS?-->
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

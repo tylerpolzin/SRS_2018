@@ -19,13 +19,13 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery.purr
-//= require jquery-fileupload
-//= require jquery.contextMenu.js
+//X require jquery-fileupload
+//X require jquery.contextMenu.js
 //= require bootstrap-sprockets
 //= require jquery-bootstrap-purr.min.js
 //= require bootstrap-datepicker/core
 //= require bootstrap-datetimepicker.min.js
-//= require twitter/bootstrap/rails/confirm
+//X require twitter/bootstrap/rails/confirm
 //= require bootstrap-add-clear.js
 //= require best_in_place
 //= require best_in_place.jquery-ui
@@ -44,7 +44,7 @@
 //= require dataTables.colReorder.min.js
 //= require dataTables.fixedColumns.min.js
 //= require dataTables.fixedHeader.min.js
-//= require jquery.dataTables.yadcf.js
+//X require jquery.dataTables.yadcf.js
 //= require autoFill.jqueryui.min.js
 //= require autoFill.bootstrap4.min.js
 //= require dataTables.keyTable.min.js
@@ -53,7 +53,7 @@
 //= require jszip.min.js
 //X require pdfmake.min.js.map
 //= require underscore
-//= require gmaps/google
+//X require gmaps/google
 //= require_tree .
 /*global $*/
 /*global bootbox */
@@ -63,18 +63,9 @@ $(document).on("turbolinks:load", function() {
   $(".best_in_place").best_in_place();
 });
 
-// Activating basic datatable
-$(document).on("turbolinks:load", function() {
-  $('#datatable-basic').DataTable( {
-    "scrollX": true,
-    "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
-    "pageLength": 100
-  });
-});
-
 // Accept only numbers in number field inputs
 $(document).on("turbolinks:load", function() {
-  $('input[type="number"]').forceNumeric();
+  $("input[type='number']").forceNumeric();
 });
 
 // forceNumeric() plug-in implementation
@@ -85,7 +76,7 @@ $.fn.forceNumeric = function () {
       var key = e.which || e.keyCode;
 
       if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
-        // numbers   
+        // numbers
         key >= 48 && key <= 57 ||
         // Numeric keypad
         key >= 96 && key <= 105 ||
@@ -104,7 +95,7 @@ $.fn.forceNumeric = function () {
           return false;
        });
    });
-}
+};
 
 function basicConfirm (element) { // Basic dialog box to confirm any delete call
   bootbox.confirm("Are you sure you want to delete this "+element+"?", function(result){

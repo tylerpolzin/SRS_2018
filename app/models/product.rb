@@ -121,7 +121,18 @@ class Product < ApplicationRecord
     end
     last_update
   end
-  
+
+  def request_quantity
+    quantity = []
+    quantity = self.max_quantity - self.quantity_on_hand
+    if quantity > 0
+      quantity
+    else
+      quantity = 0
+    end
+    quantity
+  end
+
   def product_ounces
     if self.weight_ounces == 0
       ""

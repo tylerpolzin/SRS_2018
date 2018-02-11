@@ -4,6 +4,7 @@ User::HABTM_Roles.create!([
   {user_id: 4, role_id: 2},
   {user_id: 5, role_id: 2},
   {user_id: 6, role_id: 2},
+  
   {user_id: 8, role_id: 3},
   {user_id: 9, role_id: 4},
   {user_id: 10, role_id: 5},
@@ -20,17 +21,7 @@ Role::HABTM_Users.create!([
   {user_id: 10, role_id: 5},
   {user_id: 7, role_id: 2}
 ])
-User.create!([
-  {email: "tyler@strategicretailsolutions.com", password: "temppassword", password_confirmation: "temppassword", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 53, current_sign_in_at: "2018-02-02 03:56:29", last_sign_in_at: "2018-02-02 03:56:17", current_sign_in_ip: "66.41.80.121", last_sign_in_ip: "66.41.80.121", user_color: "test", admin: true},
-  {email: "arielle@strategicretailsolutions.com", password: "temppassword", password_confirmation: "temppassword", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 1, current_sign_in_at: "2018-01-21 06:18:35", last_sign_in_at: "2018-01-21 06:18:35", current_sign_in_ip: "173.244.44.38", last_sign_in_ip: "173.244.44.38", user_color: "tester", admin: false},
-  {email: "jill@strategicretailsolutions.com", password: "temppassword", password_confirmation: "temppassword", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, user_color: nil, admin: true},
-  {email: "scott@strategicretailsolutions.com", password: "temppassword", password_confirmation: "temppassword", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, user_color: nil, admin: false},
-  {email: "frank@strategicretailsolutions.com", password: "temppassword", password_confirmation: "temppassword", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 8, current_sign_in_at: "2018-01-12 01:28:40", last_sign_in_at: "2018-01-12 01:28:27", current_sign_in_ip: "66.41.203.73", last_sign_in_ip: "66.41.203.73", user_color: nil, admin: false},
-  {email: "sharp@strategicretailsolutions.com", password: "temppassword", password_confirmation: "temppassword", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 1, current_sign_in_at: "2017-12-24 14:27:53", last_sign_in_at: "2017-12-24 14:27:53", current_sign_in_ip: "66.41.80.121", last_sign_in_ip: "66.41.80.121", user_color: nil, admin: false},
-  {email: "login@drsharp.com", password: "temppassword", password_confirmation: "temppassword", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 24, current_sign_in_at: "2018-01-23 05:43:16", last_sign_in_at: "2018-01-22 23:50:47", current_sign_in_ip: "66.41.80.121", last_sign_in_ip: "66.41.203.73", user_color: nil, admin: false},
-  {email: "login@colonialelegance.com", password: "temppassword", password_confirmation: "temppassword", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 3, current_sign_in_at: "2018-01-13 03:21:07", last_sign_in_at: "2017-12-29 17:19:24", current_sign_in_ip: "173.239.236.41", last_sign_in_ip: "66.41.203.73", user_color: nil, admin: false},
-  {email: "login@raypadula.com", password: "temppassword", password_confirmation: "temppassword", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, user_color: nil, admin: false}
-])
+User.create!({email: "login@firplak.com", password: "temppassword", password_confirmation: "temppassword", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, user_color: nil, admin: false})
 Assignment.create!([
   {scaffold_association: "Users", description: "Ensure table toolbar has Abel fonts", wordy_details: "", priority: 2, active: false, user_id: 1},
   {scaffold_association: "All", description: "Fix \"Sign Out\" button on top toolbar", wordy_details: "", priority: 2, active: false, user_id: 1},
@@ -69,17 +60,7 @@ Assignment.create!([
   {scaffold_association: "All", description: "add \"View Full Size\" button to all image instances", wordy_details: "", priority: 1, active: true, user_id: 1},
   {scaffold_association: "Users", description: "Add \"View More Info\" button to \"Inventory History\" in Products Show tabs", wordy_details: "", priority: 1, active: true, user_id: 1}
 ])
-Profile.create!([
-  {user_id: 1, name: "Tyler Polzin", company: "Strategic Retail Solutions", position: "Warehouse Manager", address: "6274 Jerrel Ave N", city: "Stillwater", state: "MN", zipcode: "55082", phone1: "5554685318", phone1_type: "Cell", phone2: "", phone2_type: "Home", notes: "Notes Take Two", lat: nil, long: nil},
-  {user_id: 2, name: "Arielle Ost", company: "Strategic Retail Solutions", position: "Administrative", address: "201 Main St S", city: "Stillwater", state: "MN", zipcode: "55082", phone1: "5", phone1_type: "Cell", phone2: "", phone2_type: "Home", notes: "hellofffff", lat: nil, long: nil},
-  {user_id: 3, name: "Jill Bernard", company: "", position: "", address: "", city: "", state: "AL", zipcode: "", phone1: "", phone1_type: "Home", phone2: "", phone2_type: "Home", email: "", notes: "", lat: nil, long: nil},
-  {user_id: 4, name: "Scott Feroni", company: "", position: "", address: "", city: "", state: "", zipcode: "", phone1: "", phone1_type: "Home", phone2: "", phone2_type: "Home", email: "", notes: "", lat: nil, long: nil},
-  {user_id: 5, name: "Frank Bernard", company: nil, position: nil, address: nil, city: nil, state: nil, zipcode: nil, phone1: nil, phone1_type: nil, phone2: nil, phone2_type: nil, email: nil, notes: nil, lat: nil, long: nil},
-  {user_id: 6, name: "", company: "Dr Sharp", position: "", address: "", city: "", state: "", zipcode: "", phone1: "", phone1_type: "", phone2: "", phone2_type: "", email: "", notes: "", lat: nil, long: nil},
-  {user_id: 7, name: nil, company: nil, position: nil, address: nil, city: nil, state: nil, zipcode: nil, phone1: nil, phone1_type: nil, phone2: nil, phone2_type: nil, email: nil, notes: nil, lat: nil, long: nil},
-  {user_id: 8, name: nil, company: nil, position: nil, address: nil, city: nil, state: nil, zipcode: nil, phone1: nil, phone1_type: nil, phone2: nil, phone2_type: nil, email: nil, notes: nil, lat: nil, long: nil},
-  {user_id: 9, name: nil, company: nil, position: nil, address: nil, city: nil, state: nil, zipcode: nil, phone1: nil, phone1_type: nil, phone2: nil, phone2_type: nil, email: nil, notes: nil, lat: nil, long: nil}
-])
+Profile.create!({user_id: 10, name: nil, company: "Firplak", position: nil, address: nil, city: nil, state: nil, zipcode: nil, phone1: nil, phone1_type: nil, phone2: nil, phone2_type: nil, email: nil, notes: nil, lat: nil, long: nil})
 
 
 StockmovementBatch.create!([
@@ -115,71 +96,3 @@ Stockmovement.create!([
   {product_id: 3, part_id: nil, quantity: 19, adjust_quantity: -1, stockmovement_batch_id: 10},
   {product_id: 5, part_id: nil, quantity: 23, adjust_quantity: -1, stockmovement_batch_id: 10}
 ])
-
-Hi Schneems, I know this is a pretty old piece of code you've written here, but it is the only thing I could find that fit my use case exactly.  I'm fairly new to coding, and having an existing bit of code to go off of helped me a ton, so thanks for that!  On to my issue...
-
-I was able to add some test hstore data to my Products table (my version of `data` is `details`):
-
-`details: {"color"=>"Black", "origin"=>"Canada", "material"=>"Steel"}`
-
-Now the problem is that when I go to the "Edit" view for the product, this is what I see: https://i.imgur.com/KxlBZ5O.jpg
-
-Any idea what's going on here? 
-
-```
-<div class="container attributeContainer" style="width:100%;">
-  <table class="table table-bordered" id="IAItemSelectContainer">
-    <thead></thead>
-    <tbody class="body">
-      <%= f.fields_for :details, @product.details do |d| %>
-        <% @product.details.try(:each) do |key, value| %>
-            <tr class="row">
-              <td>
-                <%= text_field_tag key, key, :class => 'text_field dynamicAttributeName' %>
-              </td>
-              <td>
-                <%= d.text_field key, :class => 'text_field', :value => value %>
-              </td>
-              <td>
-                <a herf='#' class='btn removeRow'>X</a>
-              </td>
-            </tr>
-        <% end %>
-      <%- end -%>
-      <tr class='row attributeTemplate <%= 'hide' if @product.details.present? %>'>
-        <td>
-          <input class='text_field dynamicAttributeName' id='' name='' placeholder='New Attribute name' type='text' />
-        </td>
-        <td>
-          <input class='text_field' id='bar' name='' placeholder='value' type='text'  />
-        </td>
-        <td>
-          <a herf='#' class='btn removeRow'>X</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <%= link_to 'Add Attribute', '#', :class => 'btn addAttribute' %>
-</div>
-```
-
-
-```
-$(document).on("turbolinks:load", function() {
-  $('.attributeContainer').on('keyup', '.dynamicAttributeName', function(event){
-    var nameElem = $(this);
-    var valueElem = nameElem.closest('.row').children('td').children('.text_field');
-    var value = nameElem.val();
-    valueElem.attr('id', 'product_details_'+value);
-    valueElem.attr('name', 'product[details]['+value+']');
-  });
-  $('.attributeContainer').on('click', '.removeRow', function(){
-    $(this).closest('.row').html('');
-  });
-  $('.addAttribute').on('click', function(e){
-    e.preventDefault();
-    var contents = "<tr class='row'>" + $('.attributeTemplate').html() + '</tr>';
-    $('.body').append(contents);
-  });
-});
-```
