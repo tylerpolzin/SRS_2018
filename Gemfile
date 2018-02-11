@@ -14,6 +14,7 @@ gem 'coffee-rails', '~> 4.2' # Use CoffeeScript for .coffee assets and views
 gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'turbolinks', '~> 5' # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'pg', '~> 0.18'
 
 # Custom Installs
 gem 'bootstrap-sass'
@@ -65,7 +66,7 @@ gem 'bootbox-rails', '~>0.4' # Wrappers for Javascript Alerts
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
-  gem 'pg', '~> 0.18'
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
@@ -84,7 +85,6 @@ end
 
 group :production do
   # Use the PostgreSQL gem for Heroku production servers
-  gem 'pg', '~> 0.18'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
