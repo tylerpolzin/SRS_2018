@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find(params[:id])
     @parts = Part.where(:product_id => params[:id])
-    @stockmovements = Stockmovement.where(:product_id => params[:id])
+    @stockmovements = Stockmovement.order(created_at: :desc).where(:product_id => params[:id]).limit(20)
   end
 
   def new

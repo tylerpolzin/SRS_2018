@@ -23,7 +23,7 @@
           data-child-model="<% i.stockmovements.each do |s| %>
                               <% if s.is_product %>
                                 <% if s.product.present? %>
-                                  &lt;p&gt;&lt;a href=&quot;/items/<%= s.product_id %>&quot;&gt;<%= s.product.manufacturer_model_number %>&lt;/a&gt;&lt;/p&gt;
+                                  &lt;p&gt;&lt;a href=&quot;/products/<%= s.product_id %>&quot;&gt;<%= s.product.manufacturer_model_number %>&lt;/a&gt;&lt;/p&gt;
                                 <% else %>
                                   <p></p>
                                 <% end %>

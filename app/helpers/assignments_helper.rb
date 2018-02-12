@@ -1,13 +1,21 @@
 module AssignmentsHelper
-  def scaffolds
+  def scaffolds_1
     [
-      ["All", "All"],
-      ["Users", "Users"],
-      ["Assignments", "Assignments"],
+      ["General", "All"],
+      ["Login Issues", "Devise"],
+      ["Dashboard", "Dashboard"],
       ["Products", "Products"],
       ["Parts", "Parts"],
-      ["Stock Movements", "Stock Movements"],
-      ["Uploads", "Uploads"],
+      ["Inventory Adjustments", "Stock Movements"],
+      # ["Uploads", "Uploads"],
+    ]
+  end
+  
+  def scaffolds_2
+    [
+      ["Users", "Users"],
+      ["Assignments", "Assignments"],
+      ["Database", "Database"]
     ]
   end
 end
