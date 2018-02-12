@@ -17,7 +17,11 @@ class ProductsController < ApplicationController
   end
   
   def batch_process
-    @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
+    if current_user.admin?
+      @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
+    else
+      redirect_to authenticated_root_path
+    end
   end
 
   def show
