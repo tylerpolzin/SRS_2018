@@ -41,7 +41,7 @@ Rails.application.configure do
     storage: :s3,
     preserve_files: true,
     s3_credentials: {
-      bucket: 'srs-development-uploads',
+      bucket: 'srs-file-uploads',
       access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
       secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
       s3_region: ENV.fetch('AWS_REGION'),
