@@ -44,7 +44,7 @@
     <% if current_user.admin? or current_user.has_role? :employee %>
       <tr>
         <td colspan="2">
-          <%= button_to "Edit This Product", edit_product_path(id: @product.id), method: :get, class: 'btn btn-sm' %>
+          <%= link_to "Edit This Product", edit_product_path(id: @product.id), method: :get, class: 'btn btn-sm' %>
         </td>
       </tr>
     <% end %>

@@ -19,7 +19,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
               <span class="sr-only">Toggle navigation</span>
             </button>
-            <%= link_to "//www.strategicretailsolutions.com", class: "navbar-brand" do %>
+            <%= link_to authenticated_root_path, class: "navbar-brand" do %>
               Strategic Retail Solutions
             <% end %>
             <span class="navbar-brand" style="padding-left:10px">//&nbsp;&nbsp;<%= @current_user.header_name %></span>

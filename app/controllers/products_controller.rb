@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   def index
     @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
     if current_user.admin? or current_user.has_role? :employee
-      @products = Product.order(manufacturer_model_number: :asc)
+      @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
     elsif current_user.has_role? (:drsharp)
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Dr Sharp")
     elsif current_user.has_role? (:colonial)
@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
   end
   
   def batch_process
-    @products = Product.all
+    @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
   end
 
   def show

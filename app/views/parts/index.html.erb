@@ -150,11 +150,11 @@
             </td>
             <td>
               <% if part.notes.present? %>
-                <%= simple_format part.notes %>
-                <%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %>
+                <p><%= simple_format part.notes %></p>
+                <p><%= link_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %></p>
               <% else %>
-                N/A
-                <%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %>
+                <p>N/A</p>
+                <p><%= link_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %></p>
               <% end %>
             </td>
             <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->

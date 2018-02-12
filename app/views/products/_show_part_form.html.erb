@@ -7,7 +7,7 @@
       <% end %>
     </select>
     <% if current_user.admin? or current_user.has_role? :employee %>
-      <%= button_to "Create New Part", new_part_path(product_id: @product.id), method: :get, class: 'btn show-product-new-part-button' %>
+      <%= link_to "Create New Part", new_part_path(product_id: @product.id), method: :get, class: 'btn show-product-new-part-button' %>
     <% end %>
   </div>
   <div class="show-product-part-wrapper" id="wrapper-number-0">
@@ -173,9 +173,9 @@
         <tr>
           <td colspan="2">
             <div>
-              <%= button_to "Go To Part Page", part_path(part.id), method: :get, class: "btn btn-sm" %>
+              <%= link_to "Go To Part Page", part_path(part.id), method: :get, class: "btn btn-sm", :style => "margin-right:5px;" %>
               <% if current_user.admin? or current_user.has_role? :employee %>
-                <%= button_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %>
+                <%= link_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %>
               <% end %>
             </div>
           </td>
@@ -358,7 +358,7 @@
 <% else %>
   <% if current_user.admin? or current_user.has_role? :employee %>
     <div style="float:right;">
-      <%= button_to "Create New Part", new_part_path(product_id: @product.id), method: :get, class: 'btn show-product-new-part-button', :style => "margin-right:16px;" %>
+      <%= link_to "Create New Part", new_part_path(product_id: @product.id), method: :get, class: 'btn show-product-new-part-button', :style => "margin-right:16px;" %>
     </div>
   <% end %>
 <% end %>

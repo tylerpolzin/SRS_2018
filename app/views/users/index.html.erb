@@ -23,9 +23,11 @@
           <% @users.each do |u| %>
             <tr 
             data-child-fakeout="fakeout"
-            data-child-edit="&lt;form class=&quot;button_to&quot; method=&quot;get&quot; action=&quot;/users/<%= u.id %>/profile/edit&quot;&gt;
-                               &lt;input class=&quot;btn&quot; type=&quot;submit&quot; value=&quot;Edit Profile&quot;&gt;
-                             &lt;/form&gt;"
+            data-child-edit="<% if current_user.admin? %>
+                               &lt;form class=&quot;button_to&quot; method=&quot;get&quot; action=&quot;/users/<%= u.id %>/profile/edit&quot;&gt;
+                                 &lt;input class=&quot;btn&quot; type=&quot;submit&quot; value=&quot;Edit Profile&quot;&gt;
+                               &lt;/form&gt;
+                             <% end %>"
             data-child-name="<% if u.profile.name.present? %>
                                <%= u.profile.name %>
                              <% else %>

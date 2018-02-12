@@ -139,12 +139,12 @@ $(document).on("turbolinks:load", function() {
                       {extend: "excelHtml5",
                         text: "<i class='fa fa-file-excel-o' aria-hidden='true'></i> Excel",
                         title: "SRS Inventory Report, "+date+".xlsx",
-                        customize:
-                          // Custom function to set the header row green and outlined.
-                          function( xlsx ) {
-                            var sheet = xlsx.xl.worksheets["sheet1.xml"];
-                            $("row c[r*='2']", sheet).attr( "s", "42" );
-                          },
+                        // customize:
+                        //   // Custom function to set the header row green and outlined.
+                        //   function( xlsx ) {
+                        //     var sheet = xlsx.xl.worksheets["sheet1.xml"];
+                        //     $("row c[r*='2']", sheet).attr( "s", "42" );
+                        //   },
                         // Only exports columns that are currently visible.  Adjusted by the "Visibility" dropdown and Filtered text.
                         exportOptions: { columns: ":visible" },
                         className: "btn"
@@ -192,7 +192,7 @@ $(document).on("turbolinks:load", function() {
       if (cellValue == 0) {
         $(this).addClass("zeroQuantity");
       }
-      if (cellValue > 1) {
+      if (cellValue > 0) {
         $(this).addClass("positiveQuantity");
       }
       if (cellValue < 0) {
@@ -384,7 +384,7 @@ $(document).on("turbolinks:load", function() {
                   // Standard Column Visibility Button that lists all columns.  ".noVis" is disabled via CSS in Application.scss because the ":not" method doesnt work here
                   {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Column Visibility <span class='caret'></span>", className: "btn btn-header"},
                 ],
-                "pageLength": 100,
+                "pageLength": 10000,
                 "bJQueryUI": true,
                 "columnDefs": [
                   // {
@@ -396,10 +396,10 @@ $(document).on("turbolinks:load", function() {
                   // "orderable": false
                   // }
                 ],
-                "order": [[0, "asc"]],
+                "order": [[3, "asc"]],
                 "oLanguage": {"sZeroRecords": "No products to display for this view"}
               });
-  table.page.len(50).draw();
+  table.page.len(-1).draw();
 
   function top_toolbar () {
     return ""+

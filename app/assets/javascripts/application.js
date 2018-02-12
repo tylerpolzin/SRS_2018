@@ -109,3 +109,9 @@ function basicConfirm (element) { // Basic dialog box to confirm any delete call
   //   basicConfirm("product");
   // });
 }
+
+
+// This fixes Select2 boxes so they automatically open when tabbed to
+$(document).on('focus', 'span.select2', function () {
+  $(this).prev('select:not([multiple])').select2('open');
+});

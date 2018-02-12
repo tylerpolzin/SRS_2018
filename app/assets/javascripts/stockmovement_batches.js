@@ -331,12 +331,12 @@ $(document).on("turbolinks:load", function() {
                       {extend: "excelHtml5",
                         text: "<i class='fa fa-download' aria-hidden='true'></i> Excel <i class='fa fa-file-excel-o' aria-hidden='true'></i>",
                         title: "SRS Inventory Report, "+date+".xlsx",
-                        customize:
-                          // Custom function to set the header row green and outlined.
-                          function( xlsx ) {
-                            var sheet = xlsx.xl.worksheets["sheet1.xml"];
-                            $("row c[r*='2']", sheet).attr( "s", "42" );
-                          },
+                        // customize:
+                        //   // Custom function to set the header row green and outlined.
+                        //   function( xlsx ) {
+                        //     var sheet = xlsx.xl.worksheets["sheet1.xml"];
+                        //     $("row c[r*='2']", sheet).attr( "s", "42" );
+                        //   },
                         // Only exports columns that are currently visible.  Adjusted by the "Visibility" dropdown and Filtered text.
                         exportOptions: { columns: ":visible" },
                         className: "btn"
@@ -385,7 +385,7 @@ $(document).on("turbolinks:load", function() {
       if (cellValue == 0) {
         $(this).addClass("zeroQuantity");
       }
-      if (cellValue > 1) {
+      if (cellValue > 0) {
         $(this).addClass("positiveQuantity");
       }
       if (cellValue < 0) {

@@ -168,7 +168,7 @@ $(document).on("turbolinks:load", function() {
       if (cellValue == 0) {
         $(this).addClass("zeroQuantity");
       }
-      if (cellValue > 1) {
+      if (cellValue > 0) {
         $(this).addClass("positiveQuantity");
       }
       if (cellValue < 0) {

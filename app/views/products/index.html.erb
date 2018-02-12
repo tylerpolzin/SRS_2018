@@ -219,7 +219,7 @@
             </td>
             <td>
               <% if product.notes.present? %>
-                <%= simple_format product.notes %>
+                <p><%= simple_format product.notes %></p>
                 <% if current_user.admin? or current_user.has_role? :employee %>
                   <p><%= link_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-sm' %></p>
                 <% else %><% end %>
