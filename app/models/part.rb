@@ -14,7 +14,11 @@ class Part < ApplicationRecord
       if manufacturer_model_number.present?
         "#{manufacturer_model_number}"
       else
-        "No Model Number Present"
+        if srs_sku.present?
+          "#{srs_sku}"
+        else
+          "No Model Number Present"
+        end
       end
     end
     def b

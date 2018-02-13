@@ -24,6 +24,9 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_record_doctor (1.5.0)
+      activerecord (>= 4.2)
+      railties (>= 4.2)
     activejob (5.1.4)
       activesupport (= 5.1.4)
       globalid (>= 0.3.6)
@@ -43,15 +46,15 @@ GEM
     ajax-datatables-rails (0.4.0)
       railties (>= 4.0)
     arel (8.0.0)
-    autoprefixer-rails (7.2.6)
+    autoprefixer-rails (8.0.0)
       execjs
-    aws-sdk (2.10.129)
-      aws-sdk-resources (= 2.10.129)
-    aws-sdk-core (2.10.129)
+    aws-sdk (2.10.130)
+      aws-sdk-resources (= 2.10.130)
+    aws-sdk-core (2.10.130)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.10.129)
-      aws-sdk-core (= 2.10.129)
+    aws-sdk-resources (2.10.130)
+      aws-sdk-core (= 2.10.130)
     aws-sigv4 (1.0.2)
     bcrypt (3.1.11)
     best_in_place (3.1.1)
@@ -65,10 +68,11 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     bootstrap_form (2.7.0)
+    brakeman (4.1.1)
     builder (3.2.3)
     byebug (10.0.0)
     cancancan (2.1.3)
-    capybara (2.17.0)
+    capybara (2.18.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (>= 1.3.3)
@@ -131,7 +135,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.1.1)
+    loofah (2.2.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
@@ -156,7 +160,7 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
     pg (0.21.0)
-    public_suffix (3.0.1)
+    public_suffix (3.0.2)
     puma (3.11.2)
     rack (2.0.4)
     rack-test (0.8.2)
@@ -254,6 +258,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_record_doctor
   ajax-datatables-rails
   aws-sdk (~> 2.3)
   best_in_place
@@ -261,6 +266,7 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap-sass
   bootstrap_form (~> 2.7)
+  brakeman
   byebug
   cancancan
   capybara (~> 2.13)

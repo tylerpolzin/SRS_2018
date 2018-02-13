@@ -44,6 +44,8 @@ gem 'bootbox-rails', '~>0.4' # Wrappers for Javascript Alerts
 # gem 'approval' # Use to require approval on database changes
 # gem 'chartkick' # Use for adding good looking graphs and pie charts to pages
 # gem 'smarter_csv' # If CSV importing ever becomes a thing, this will be essential
+# gem 'letter_opener', :group => :development # Use if email is ever implemented, https://github.com/ryanb/letter_opener
+# gem 'paranoia' # Maybe use this for soft-deleting records, https://github.com/rubysherpas/paranoia
 
 # gem 'active_shipping'
 
@@ -82,6 +84,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'active_record_doctor' # Use to help with Indexes in the database -- https://github.com/gregnavis/active_record_doctor
+  gem 'brakeman', :require => false
 end
 
 group :production do
