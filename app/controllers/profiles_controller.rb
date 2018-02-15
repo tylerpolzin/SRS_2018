@@ -2,19 +2,6 @@ class ProfilesController < ApplicationController
   # before_action :set_profile, only: [:show, :edit, :update, :destroy]
   before_action :only_current_user
 
-  def index
-    @profiles = Profile.all
-  end
-
-  def show
-    @user = User.find( params[:id] )
-  end
-
-  def new
-    @user = User.find( params[:user_id] )
-    @profile = Profile.new
-  end
-
   def edit
     @user = User.find( params[:user_id] )
     @profile = @user.profile
@@ -46,10 +33,14 @@ class ProfilesController < ApplicationController
   end
 
   def destroy
-    @profile.destroy
-    respond_to do |format|
-      format.html { redirect_to profiles_url, notice: '// Profile has been deleted!' }
-      format.json { head :no_content }
+    if current_user.admin?
+      @profile.destroy
+      respond_to do |format|
+        format.html { redirect_to profiles_url, notice: '// Profile has been deleted!' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to authenticated_root_path
     end
   end
 

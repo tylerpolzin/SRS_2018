@@ -3,7 +3,9 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def new
-    @user = User.new
+    if current_user.admin?
+      @user = User.new
+    end
   end
 
   def show

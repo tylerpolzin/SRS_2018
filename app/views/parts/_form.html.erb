@@ -30,12 +30,12 @@
       </tr>
       <tr>
         <td>Qty On Hand</td>
-        <% if @part.stockmovements.exists? %>
+        <% if @part.new_record? %>
+          <td><%= f.number_field :count_on_hand, hide_label: true, placeholder: "0" %></td>
+        <% else %>
           <div class="form-group">
             <td><input placeholder="<%= @part.quantity_on_hand %> — please modify through Inventory Adjustments page" disabled class="form-control" style="border:0;border-radius:0;"></td>
           </div>
-        <% else %>
-            <td><input placeholder="<%= @part.count_on_hand %> — please modify through Inventory Adjustments page" disabled class="form-control" style="border:0;border-radius:0;"></td>
         <% end %>
       </tr>
       <tr>

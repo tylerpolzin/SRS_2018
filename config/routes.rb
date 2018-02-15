@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :stockmovement_batches
   resources :parts
   resources :products
-  resources :pages
+  get 'changelog', to: 'pages#changelog'
   get 'inventory_adjustments', to: 'stockmovement_batches#new'
   get 'inventory_history', to: 'stockmovement_batches#index'
   get 'batch_process', to: 'products#batch_process'
@@ -32,7 +32,6 @@ Rails.application.routes.draw do
     root to: 'users#dashboard', as: :authenticated_root
   end
   root to: redirect('/login')
-  # root to: 'pages#home'
-  
+
 
 end

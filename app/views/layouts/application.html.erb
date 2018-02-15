@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <% if development? %>
+      <style type="text/css"> 
+          html {              
+           background-color: silver;
+          }
+      </style>
+    <% end %> <!-- Sets background color to silver only while in Development.  Production generates usual textured blue background -->
     <%= favicon_link_tag asset_path('favicon.png'), :rel => 'icon', :type =>  'image/png' %>
     <title><%= @title || "SRS Portal 2018" %></title>
     <%= csrf_meta_tags %>

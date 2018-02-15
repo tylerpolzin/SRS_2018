@@ -2,7 +2,6 @@ class StockmovementBatchesController < ApplicationController
   before_action :set_stockmovement_batch, only: [:show, :edit, :update, :destroy]
 
   def index
-    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
     if current_user.admin? or current_user.has_role? :employee
       @stockmovements = Stockmovement.all
       @stockmovement_batches = StockmovementBatch.all
@@ -30,27 +29,26 @@ class StockmovementBatchesController < ApplicationController
                                                  .where(:stockmovements => {:id => Stockmovement.select(:id)
                                                  .where(:product_id => Product.select(:id)
                                                  .where(:brand_name => "Firplak"))})
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
-    @products = Product.all
-    @parts = Part.all
-  end
-
-  def show
+    @products = Product.all # Used in "_stockmovement.html.erb"
+    @parts = Part.all # Used in "_stockmovement.html.erb"
+    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name) # Used in Individual History tab
   end
 
   def new
-    @stockmovement_batches = StockmovementBatch.all
-    @stockmovements = Stockmovement.all
-    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
-    @products = Product.all
-    @parts = Part.all
-    @stockmovement_batch = StockmovementBatch.new
-    @stockmovement = Stockmovement.new
-    @product = Product.friendly.find(params[:id])
-    @part = Part.friendly.find(params[:id])
-  end
-
-  def edit
+    if current_user.admin? or current_user.has_role? :employee
+      @stockmovement_batches = StockmovementBatch.all
+      @stockmovements = Stockmovement.all
+      @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
+      @products = Product.all
+      @parts = Part.all
+      @stockmovement_batch = StockmovementBatch.new
+      @stockmovement = Stockmovement.new
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
+    end
   end
 
   def create
@@ -81,10 +79,14 @@ class StockmovementBatchesController < ApplicationController
   end
 
   def destroy
-    @stockmovement_batch.destroy
-    respond_to do |format|
-      format.html { redirect_to stockmovement_batches_url, notice: 'Stockmovement batch was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.admin?
+      @stockmovement_batch.destroy
+      respond_to do |format|
+        format.html { redirect_to stockmovement_batches_url, notice: 'Stockmovement batch was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
   end
 

@@ -14,6 +14,8 @@ class ProductsController < ApplicationController
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Ray Padula")
     elsif current_user.has_role? (:firplak)
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Firplak")
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
   end
   
@@ -21,26 +23,46 @@ class ProductsController < ApplicationController
     if current_user.admin?
       @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
     else
-      redirect_to authenticated_root_path
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
   end
 
   def show
-    @product = Product.friendly.find(params[:id])
+    if current_user.admin? or current_user.has_role? :employee
+      @product = Product.friendly.find(params[:id])
+    elsif current_user.has_role? (:drsharp)
+      @product = Product.friendly.where(:brand_name => "Dr Sharp").find(params[:id])
+    elsif current_user.has_role? (:colonial)
+      @product = Product.friendly.where(:brand_name => "Colonial Elegance").find(params[:id])
+    elsif current_user.has_role? (:padula)
+      @product = Product.friendly.where(:brand_name => "Padula").find(params[:id])
+    elsif current_user.has_role? (:firplak)
+      @product = Product.friendly.where(:brand_name => "Firplak").find(params[:id])
+    else
+      redirect_to products_url, notice: "// You can't do that!"
+    end
     @parts = Part.where(:product_id => @product)
     @stockmovements = Stockmovement.order(created_at: :desc).where(:product_id => @product).limit(20)
   end
 
   def new
-    @product = Product.new
-    @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
-    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
+    if current_user.admin? or current_user.has_role? :employee
+      @product = Product.new
+      @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
+      @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
+    end
   end
 
   def edit
-    @product = Product.friendly.find(params[:id])
-    @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
-    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
+    if current_user.admin? or current_user.has_role? :employee
+      @product = Product.friendly.find(params[:id])
+      @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
+      @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
+    end
   end
 
   def create
@@ -76,10 +98,14 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product.destroy
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: '// Product has been deleted.' }
-      format.json { head :no_content }
+    if current_user.admin?
+      @product.destroy
+      respond_to do |format|
+        format.html { redirect_to products_url, notice: '// Product has been deleted.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
   end
 

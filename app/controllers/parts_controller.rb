@@ -2,21 +2,37 @@ class PartsController < ApplicationController
   before_action :set_part, only: [:show, :edit, :update, :destroy]
 
   def index
-    @parts = Part.all
-    @products = Product.select(:id, :manufacturer_model_number, :description, :brand_name).distinct.where(:has_parts => true)
+    if current_user.admin? or current_user.has_role? :employee
+      @parts = Part.all
+      @products = Product.select(:id, :manufacturer_model_number, :description, :brand_name).distinct.where(:has_parts => true)
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
+    end
   end
 
   def show
-    @part = Part.friendly.find(params[:id])
+    if current_user.admin? or current_user.has_role? :employee
+      @part = Part.friendly.find(params[:id])
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
+    end
     @stockmovements = Stockmovement.order(created_at: :desc).where(:product_id => params[:id]).limit(20)
   end
 
   def new
+    if current_user.admin? or current_user.has_role? :employee
     @part = Part.new
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
+    end
   end
 
   def edit
-    @part = Part.friendly.find(params[:id])
+    if current_user.admin? or current_user.has_role? :employee
+      @part = Part.friendly.find(params[:id])
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
+    end
   end
 
   def create
@@ -48,10 +64,14 @@ class PartsController < ApplicationController
   end
 
   def destroy
+    if current_user.admin?
     @part.destroy
     respond_to do |format|
       format.html { redirect_to parts_url, notice: 'Part was successfully destroyed.' }
       format.json { head :no_content }
+    end
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
   end
 

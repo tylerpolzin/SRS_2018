@@ -1,5 +1,10 @@
 module ApplicationHelper
-  
+
+  def development?
+    @is_development ||= (ENV['RAILS_ENV'] != 'production')
+  end
+
+
   def us_states
     [
       ['Select State...',''],

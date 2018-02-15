@@ -1,10 +1,6 @@
 class AssignmentsController < ApplicationController
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @assignments = Assignment.all
-  end
-
   def new
     @assignment = Assignment.new
   end
@@ -41,10 +37,14 @@ class AssignmentsController < ApplicationController
   end
 
   def destroy
-    @assignment.destroy
-    respond_to do |format|
-      format.html { redirect_to assignments_url, notice: '// Assignment was successfully deleted.' }
-      format.json { head :no_content }
+    if current_user.admin?
+      @assignment.destroy
+      respond_to do |format|
+        format.html { redirect_to assignments_url, notice: '// Assignment was successfully deleted.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
   end
 
