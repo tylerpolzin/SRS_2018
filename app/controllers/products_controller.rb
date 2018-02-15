@@ -35,7 +35,7 @@ class ProductsController < ApplicationController
     elsif current_user.has_role? (:colonial)
       @product = Product.friendly.where(:brand_name => "Colonial Elegance").find(params[:id])
     elsif current_user.has_role? (:padula)
-      @product = Product.friendly.where(:brand_name => "Padula").find(params[:id])
+      @product = Product.friendly.where(:brand_name => "Ray Padula").find(params[:id])
     elsif current_user.has_role? (:firplak)
       @product = Product.friendly.where(:brand_name => "Firplak").find(params[:id])
     else
