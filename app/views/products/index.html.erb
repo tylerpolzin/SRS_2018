@@ -108,9 +108,9 @@
                                     <% product.parts.each do |part| %>
                                       <tr>
                                         <% if part.manufacturer_model_number.present? %>
-                                          <td><a target='blank' href='/parts/<%= part.id %>'><%= part.manufacturer_model_number %></a></td>
+                                          <td><a target='blank' href='/parts/<%= part.slug %>'><%= part.manufacturer_model_number %></a></td>
                                         <% else %>
-                                          <td><a target='blank' href='/parts/<%= part.id %>'>N/A</a></td>
+                                          <td><a target='blank' href='/parts/<%= part.slug %>'>N/A</a></td>
                                         <% end %>
                                         <% if part.description.present? %>
                                           <td><%= part.description %></td>
@@ -179,9 +179,9 @@
             </td>
             <td>
               <% if product.manufacturer_model_number.present? %>
-                <%= link_to product.manufacturer_model_number, product_path(id: product.id), method: :get, title: "View Product Details" %>
+                <%= link_to product.manufacturer_model_number, product_path(id: product), method: :get, title: "View Product Details" %>
               <% else %>
-                <%= link_to "N/A", product_path(id: product.id), method: :get, title: "View Product Details" %>
+                <%= link_to "N/A", product_path(id: product), method: :get, title: "View Product Details" %>
               <% end %>
             </td>
             <td>
@@ -221,12 +221,12 @@
               <% if product.notes.present? %>
                 <p><%= simple_format product.notes %></p>
                 <% if current_user.admin? or current_user.has_role? :employee %>
-                  <p><%= link_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-sm' %></p>
+                  <p><%= link_to "Edit This Product", edit_product_path(id: product), method: :get, class: 'btn btn-sm' %></p>
                 <% else %><% end %>
               <% else %>
                 <p>N/A</p>
                 <% if current_user.admin? or current_user.has_role? :employee %>
-                  <p><%= link_to "Edit This Product", edit_product_path(id: product.id), method: :get, class: 'btn btn-sm' %></p>
+                  <p><%= link_to "Edit This Product", edit_product_path(id: product), method: :get, class: 'btn btn-sm' %></p>
                 <% else %><% end %>
               <% end %>
             </td>

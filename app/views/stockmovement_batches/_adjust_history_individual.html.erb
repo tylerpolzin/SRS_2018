@@ -58,12 +58,12 @@
           <td>
             <% if i.is_product %>
               <% if i.product.present? %>
-                <%= link_to i.product.manufacturer_model_number, product_path(id: i.product_id), method: :get %>
+                <%= link_to i.product.manufacturer_model_number, product_path(id: i.product.slug), method: :get %>
               <% else %>
               <% end %>
             <% elsif i.is_part %>
               <% if i.part.present? %>
-                <%= link_to i.part.manufacturer_model_number, part_path(id: i.part_id), method: :get %>
+                <%= link_to i.part.manufacturer_model_number, part_path(id: i.part.slug), method: :get %>
               <% else %>
               <% end %>
             <% else %>

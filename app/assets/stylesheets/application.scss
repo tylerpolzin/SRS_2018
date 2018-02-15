@@ -104,6 +104,24 @@ body {
   border-radius: 20px;
 }
 
+// Default Error Message
+
+#error_explanation {
+  border: 2px solid orange;
+  border-radius: 15px;
+  background: white;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  margin: 0 0 15px 15px;
+  padding: 0 15px;
+  h2 {
+    color: red;
+  }
+  ul li {
+    font-size: 1.2em;
+  }
+}
+
 // Default Select2 related CSS
 
 .select2-results__option,

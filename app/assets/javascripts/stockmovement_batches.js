@@ -33,12 +33,14 @@ $(function() { // Removes the "Submit" and "Add Item" buttons if either of the "
   $("#adjustHistory").on("click", function() {
     $("#addItemButton").fadeOut(300);
     $("#adjustSubmitButton").fadeOut(300);
+    setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#bhHackFixButton" below
+    $("#bhHackFixButton").click();},200);
   });
   $("#adjustHistoryIndividual").on("click", function() {
     $("#addItemButton").fadeOut(300);
     $("#adjustSubmitButton").fadeOut(300).delay( 800 );
-    setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#hackFixButton" below
-    $("#hackFixButton").click();},200);
+    setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#ihHackFixButton" below
+    $("#ihHackFixButton").click();},200);
   });
 });
 
@@ -165,12 +167,14 @@ $(document).on("click", "a.add_child_ia", function() {
     placeholder: "Select Product...",
     containerCssClass: "vslpSearchCss",
     selectOnClose: true,
+    allowClear: true
   });
   $(this).parent().prev().find(".partMovementSearchBox").select2({
     theme:"bootstrap",
     placeholder: "Select Part...",
     containerCssClass: "vslpSearchCss",
     selectOnClose: true,
+    allowClear: true
   });
   var prev = $(this).parent().prev();
   prev.find(".select2-container").next(".select2-container").addClass("hidden"); // Cycles through the jstemplate to prepare all relevant box visibility on click
@@ -194,11 +198,11 @@ $(document).on("turbolinks:load", function() {
                 "scrollX": true,
                 "scrollY": true,
                 "dom": "<'adjust-history-toolbar'><'col-md-12 glider-table't><'col-md-12'ip>",
-                "pageLength": 10,
+                "pageLength": 25,
                 "bJQueryUI": true,
                 "columnDefs": [
                   {
-                  "targets": [4],
+                  "targets": [5],
                   "visible": false,
                   },
                   {
@@ -209,26 +213,27 @@ $(document).on("turbolinks:load", function() {
                 "order": [[1, "desc"]],
                 "oLanguage": {"sZeroRecords": "No records to display for this view"}
               });
-  table.page.len(10).draw();
+  table.page.len(50000).draw();
 
   $("div.adjust-history-toolbar").html(""+
     "<ul class='nav nav-tabs'>"+
-    " <li><div class='dataTables_filter'><input class='form-control' id='adjustHistoryTableSearch' placeholder='Search Table...'></div>"+
-    " <li>"+
+    "  <li><a class='btn hidden' id='bhHackFixButton'></a></li>"+
+    "  <li><div class='dataTables_filter'><input class='form-control' id='adjustHistoryTableSearch' placeholder='Search Table...'></div>"+
+    "  <li>"+
     "    <div class='dataTables_length'>"+
-    "     <select "+
-    "       class='form-control'"+
-    "       title='Number of records to show'"+
-    "       id='adjustHistoryTableLength'>"+
-    "       <option value='5'>5</option>"+
-    "       <option value='10'>10</option>"+
-    "       <option value='25'>25</option>"+
-    "       <option selected='selected' value='50'>50</option>"+
-    "       <option value='100'>100</option>"+
-    "       <option value='-1'>All</option>"+
-    "     </select>"+
-    "   </div>"+
-    " </li>"+
+    "      <select "+
+    "        class='form-control'"+
+    "        title='Number of records to show'"+
+    "        id='adjustHistoryTableLength'>"+
+    "        <option value='5'>5</option>"+
+    "        <option value='10'>10</option>"+
+    "        <option selected='selected' value='25'>25</option>"+
+    "        <option value='50'>50</option>"+
+    "        <option value='100'>100</option>"+
+    "        <option value='-1'>All</option>"+
+    "      </select>"+
+    "    </div>"+
+    "  </li>"+
     "</ul>"+
     "");
     $("#adjustHistoryTableSearch").addClear();
@@ -243,26 +248,21 @@ $(document).on("turbolinks:load", function() {
     table.page.len($(this).find("option:selected").attr("value")).draw() ;
   });
 
-  function format (type, model, description, adjust_quantity, new_quantity, undo_header, undo, notes) {
+  function format (undo_header, body) {
     return ""+
    "<div class='glider'>"+
    "  <table class='adjust-history-expando'>"+
-   "    <tr>"+
-   "      <td>Item Type</td>"+
-   "      <td>Model #</td>"+
-   "      <td>Description</td>"+
-   "      <td>Difference</td>"+
-   "      <td>New Quantity</td>"+undo_header+
-   "      <td>Notes</td>"+
-   "    </tr>"+
-   "    <tr>"+
-   "      <td>"+type+"</td>"+
-   "      <td>"+model+"</td>"+
-   "      <td>"+description+"</td>"+
-   "      <td>"+adjust_quantity+"</td>"+
-   "      <td>"+new_quantity+"</td>"+undo+
-   "      <td>"+notes+"</td>"+
-   "    </tr>"+
+   "    <thead>"+
+   "      <tr>"+
+   "        <th>Item Type</th>"+
+   "        <th>Model #</th>"+
+   "        <th>Description</th>"+
+   "        <th>Difference</th>"+
+   "        <th>New Quantity</th>"+undo_header+
+   "      </tr>"+
+   "    </thead>"+
+   "    <tbody>"+body+
+   "    </tbody>"+
    "  </table>"+
    "</div>";
   }
@@ -275,17 +275,11 @@ $(document).on("turbolinks:load", function() {
       $("div.glider", row.child()).slideUp(function() {
         row.child.hide();
         tr.removeClass("shown");
-        td.tooltip("enable");
       });
     }
     else {
-      row.child(format(tr.data("child-type"),
-                       tr.data("child-model"),
-                       tr.data("child-description"),
-                       tr.data("child-adjust_quantity"),
-                       tr.data("child-new_quantity"),
-                       tr.data("child-undo_header"),
-                       tr.data("child-undo"),
+      row.child(format(tr.data("child-undo_header"),
+                       tr.data("child-body"),
                        tr.data("child-notes")), "no-padding").show();
       tr.addClass("shown");
       td.tooltip("disable");
@@ -300,7 +294,9 @@ $(document).on("turbolinks:load", function() {
       });
     });
   });
-
+  $("#bhHackFixButton").on("click", function(){
+    table.page.len(25).draw(); // Fixes header column width issues
+  });
 
 
 
@@ -362,7 +358,7 @@ $(document).on("turbolinks:load", function() {
                   }
 
                 ],
-                "pageLength": 50,
+                "pageLength": 25,
                 "columnDefs": [
                   {
                   "targets": [1,2],
@@ -394,20 +390,19 @@ $(document).on("turbolinks:load", function() {
     }
   });
   
-  table.page.len(50).draw();
 
   function top_toolbar (brand_names) {
     return ""+
     "<ul class='nav nav-tabs'>"+
-    "  <li><a class='btn hidden' id='hackFixButton'>Click Me</a></li>"+
+    "  <li><a class='btn hidden' id='ihHackFixButton'></a></li>"+
     "  <li><div class='dataTables_filter'><input class='form-control' id='adjustHistoryIndividualTableSearch' placeholder='Search Table...'></div>"+
     "  <li>"+
     "    <div class='dataTables_length'>"+
     "      <select class='form-control' title='Number of records to show' id='adjustHistoryIndividualTableLength'>"+
     "        <option value='5'>5</option>"+
     "        <option value='10'>10</option>"+
-    "        <option value='25'>25</option>"+
-    "        <option selected='selected' value='50'>50</option>"+
+    "        <option selected='selected' value='25'>25</option>"+
+    "        <option value='50'>50</option>"+
     "        <option value='100'>100</option>"+
     "        <option value='-1'>All</option>"+
     "      </select>"+
@@ -485,7 +480,7 @@ $(document).on("turbolinks:load", function() {
   $("#adjustHistoryIndividualTableLength").on("change", function(){
     table.page.len($(this).find("option:selected").attr("value")).draw();
   });
-  $("#hackFixButton").on("click", function(){
+  $("#ihHackFixButton").on("click", function(){
     table.page.len(25).draw(); // Fixes header column width issues
   });
   $(".input-daterange").datepicker({

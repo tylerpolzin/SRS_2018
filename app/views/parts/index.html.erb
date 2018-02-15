@@ -100,12 +100,12 @@
                 N/A
               <% end %>
             </td>
-            <td><%= link_to part.product.model_select, product_path(id: part.product.id), method: :get %></td>
+            <td><%= link_to part.product.model_select, product_path(id: part.product), method: :get %></td>
             <td>
               <% if part.manufacturer_model_number.present? %>
-                <%= link_to part.manufacturer_model_number, part_path(id: part.id), method: :get, title: "View Part Details" %>
+                <%= link_to part.manufacturer_model_number, part_path(id: part), method: :get, title: "View Part Details" %>
               <% else %>
-                <%= link_to "N/A", part_path(id: part.id), method: :get, title: "View Part Details" %>
+                <%= link_to "N/A", part_path(id: part), method: :get, title: "View Part Details" %>
               <% end %>
             </td>
             <td>
@@ -151,10 +151,10 @@
             <td>
               <% if part.notes.present? %>
                 <p><%= simple_format part.notes %></p>
-                <p><%= link_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %></p>
+                <p><%= link_to "Edit This Part", edit_part_path(id: part), method: :get, class: 'btn btn-sm' %></p>
               <% else %>
                 <p>N/A</p>
-                <p><%= link_to "Edit This Part", edit_part_path(id: part.id), method: :get, class: 'btn btn-sm' %></p>
+                <p><%= link_to "Edit This Part", edit_part_path(id: part), method: :get, class: 'btn btn-sm' %></p>
               <% end %>
             </td>
             <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->

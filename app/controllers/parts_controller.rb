@@ -7,7 +7,7 @@ class PartsController < ApplicationController
   end
 
   def show
-    @part = Part.find(params[:id])
+    @part = Part.friendly.find(params[:id])
     @stockmovements = Stockmovement.order(created_at: :desc).where(:product_id => params[:id]).limit(20)
   end
 
@@ -16,7 +16,7 @@ class PartsController < ApplicationController
   end
 
   def edit
-    @part = Part.find(params[:id])
+    @part = Part.friendly.find(params[:id])
   end
 
   def create
@@ -30,7 +30,7 @@ class PartsController < ApplicationController
   end
 
   def update
-    @part = Part.find(params[:id])
+    @part = Part.friendly.find(params[:id])
     respond_to do |format|
       if @part.update_attributes(part_params)
         Product.find_by(id: @part.product_id).update(has_parts: true)
@@ -57,7 +57,7 @@ class PartsController < ApplicationController
 
   private
     def set_part
-      @part = Part.find(params[:id])
+      @part = Part.friendly.find(params[:id])
     end
 
     def part_params

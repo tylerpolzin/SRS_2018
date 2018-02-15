@@ -2,6 +2,12 @@ class Product < ApplicationRecord
   has_many :stockmovements
   has_many :parts
   
+  validates :manufacturer_model_number, presence: true
+  validates_uniqueness_of :manufacturer_model_number
+  # validates_format_of :manufacturer_model_number, :with => /\A[a-z0-9]+\z/i
+  extend FriendlyId
+  friendly_id :manufacturer_model_number, use: :slugged
+
   has_attached_file :image,
                     :styles => {:medium => "300x300>", :thumb => "100x100>" },
                     :default_url => "No_Image_Found"

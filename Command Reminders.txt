@@ -58,13 +58,3 @@ New user creation templates:
 User.create!({email: "login@firplak.com", password: "temppassword", password_confirmation: "temppassword", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, user_color: nil, admin: false})
 Profile.create!({user_id: 10, name: nil, company: "Firplak", position: nil, address: nil, city: nil, state: nil, zipcode: nil, phone1: nil, phone1_type: nil, phone2: nil, phone2_type: nil, email: nil, notes: nil, lat: nil, long: nil})
 
-
-
-Digital Ocean Stuff:
-
-Console:
-
-cd home/deploy/SRS-2018
-
-Restart server with this:
-sudo shutdown -r now

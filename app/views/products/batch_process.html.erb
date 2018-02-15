@@ -42,7 +42,7 @@
       <tbody class="product-table">
         <% @products.each do |product| %>
           <tr>
-<!--ID-->               <td><%= link_to product.id, product_path(id: product.id), method: :get, title: "View Product Details" %></td>
+<!--ID-->               <td><%= link_to product.id, product_path(id: product), method: :get, title: "View Product Details" %></td>
 <!--IMAGE-->            <td>
                           <% if product.image.present? %>
                             <%= link_to (image_tag (product.image.url (:thumb))), product.image.url, target: "_blank", title: "View Full Size Image" %>

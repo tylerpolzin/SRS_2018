@@ -52,7 +52,7 @@
     <% end %>
     <tr>
       <td>Belongs To</td>
-      <td><%= link_to @part.product.model_select, product_path(id: @part.product.id), method: :get %></td>
+      <td><%= link_to @part.product.model_select, product_path(id: @part.product), method: :get %></td>
     </tr>
     <tr>
       <td>Manufacturer</td>

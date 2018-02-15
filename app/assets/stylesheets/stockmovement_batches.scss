@@ -248,41 +248,35 @@
   border-bottom: 2px solid orange !important;
   margin-bottom: 5px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-  tr:first-child td {
+  thead tr th {
     font-size: 1em;
     font-weight: 200;
+    text-align: center;
     background-color: #646e78;
     color: #d8d8d8;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
   }
-  tr:last-child td {
+  tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  tbody tr td {
     text-align: center;
     vertical-align: top;
     border-right: 1px solid #ddd;
-    padding: 0;
+    padding: 2px;
     margin: 0;
-    p {
-      border-bottom: 1px solid #ddd;
-      padding: 5px 0 5px 0;
-      margin: 0;
-    }
-    p:last-child {
-      border-bottom: 0;
-      padding: 5px 0 5px 0;
-      margin: 0;
-    }
   }
-  tr:last-child td:last-child {
-    padding: 5px 0 5px 0;
+  tbody tr td:nth-child(5) {
+    border-right: 1px solid red;
   }
 }
 
 .deleteStockmovement {
   cursor: pointer;
-  border: 2px solid red;
+  border: 1px solid red;
   color: #da2323;
-  background-color: #ffd9d9;
   &:hover {
+    background-color: #d2d2d2;
     color: #710808;
   }
 }

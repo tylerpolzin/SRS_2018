@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
+
   def index
     @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
     if current_user.admin? or current_user.has_role? :employee
@@ -25,9 +26,9 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find(params[:id])
-    @parts = Part.where(:product_id => params[:id])
-    @stockmovements = Stockmovement.order(created_at: :desc).where(:product_id => params[:id]).limit(20)
+    @product = Product.friendly.find(params[:id])
+    @parts = Part.where(:product_id => @product)
+    @stockmovements = Stockmovement.order(created_at: :desc).where(:product_id => @product).limit(20)
   end
 
   def new
@@ -37,14 +38,15 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find(params[:id])
+    @product = Product.friendly.find(params[:id])
     @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
     @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
   end
 
   def create
     @product = Product.new(product_params)
-
+    @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
+    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: '// Product has been created.' }
@@ -57,7 +59,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    @product = Product.find(params[:id])
+    @product = Product.friendly.find(params[:id])
     respond_to do |format|
       if @product.update_attributes(product_params)
         if @product.remove_image == true
@@ -83,7 +85,7 @@ class ProductsController < ApplicationController
 
   private
     def set_product
-      @product = Product.find(params[:id])
+      @product = Product.friendly.find(params[:id])
     end
 
     def product_params
