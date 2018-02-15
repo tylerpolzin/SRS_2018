@@ -33,12 +33,12 @@
   }
 
   $(document).on("turbolinks:load", function() {
-    $("#usersTableDiv").animate({left: 0, opacity: 100}, 500);
     var table = $("#usersListDataTable").DataTable({
       renderer: "bootstrap",
       "aaSorting": [],
       "scrollX": true,
       "scrollY": true,
+      "colReorder": true,
       "dom": "<'users-list-toolbar'><'glider-table't><'col-md-12'ip>",
       "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
       "pageLength": 10,
@@ -98,7 +98,6 @@
         $("div.glider", row.child()).slideUp(function() {
           row.child.hide();
           tr.removeClass("shown");
-          td.tooltip("enable");
         });
       }
       else {
@@ -112,16 +111,7 @@
                                     tr.data("child-latlong"),
                                     tr.data("child-notes")), "no-padding").show();
         tr.addClass("shown");
-        td.tooltip("disable");
         $("div.glider", row.child()).slideDown();
       }
     });
-  });
-
-//-----------------------------------------------------------------------------------
-//          START "USERS DASHBOARD" JS                                              |
-//-----------------------------------------------------------------------------------
-
-  $(document).on("turbolinks:load", function() {
-    $("#showProfileDiv").animate({left: 0, opacity: 100}, 500);
   });

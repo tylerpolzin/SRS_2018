@@ -24,7 +24,7 @@
 //= require bootstrap-sprockets
 //= require jquery-bootstrap-purr.min.js
 //= require bootstrap-datepicker/core
-//= require bootstrap-datetimepicker.min.js
+//X require bootstrap-datetimepicker.min.js
 //X require twitter/bootstrap/rails/confirm
 //= require bootstrap-add-clear.js
 //= require best_in_place
@@ -33,23 +33,23 @@
 //= require select2-full
 //= require bootbox
 //= require dataTables.min.js
-//= require dataTables/jquery.dataTables
-//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+//X require dataTables/jquery.dataTables
+//X require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require dataTables.buttons.min.js
 //= require buttons.colVis.min.js
 //= require buttons.html5.min.js
 //= require buttons.print.min.js
 //= require buttons.bootstrap4.min.js
-//= require dataTables.autoFill.min.js
+//X require dataTables.autoFill.min.js
 //= require dataTables.colReorder.min.js
 //= require dataTables.fixedColumns.min.js
 //= require dataTables.fixedHeader.min.js
 //X require jquery.dataTables.yadcf.js
-//= require autoFill.jqueryui.min.js
-//= require autoFill.bootstrap4.min.js
-//= require dataTables.keyTable.min.js
-//= require dataTables.responsive.min.js
-//= require responsive.bootstrap4.min.js
+//X require autoFill.jqueryui.min.js
+//X require autoFill.bootstrap4.min.js
+//X require dataTables.keyTable.min.js
+//X require dataTables.responsive.min.js
+//X require responsive.bootstrap4.min.js
 //= require jszip.min.js
 //X require pdfmake.min.js.map
 //= require underscore
@@ -60,12 +60,9 @@
 
 // Activating Best In Place
 $(document).on("turbolinks:load", function() {
-  $(".best_in_place").best_in_place();
-});
-
-// Accept only numbers in number field inputs
-$(document).on("turbolinks:load", function() {
-  $("input[type='number']").forceNumeric();
+  $(".best_in_place").best_in_place(); // Enables the Best In Place gem for in-line editing
+  $("input[type='number']").forceNumeric(); // Use to accept only numbers in number_fields
+  $(".defaultDiv").animate({left: 0, opacity: 100}, 500); // Slides all main DIV content in from the left
 });
 
 // forceNumeric() plug-in implementation
@@ -76,22 +73,14 @@ $.fn.forceNumeric = function () {
       var key = e.which || e.keyCode;
 
       if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
-        // numbers
-        key >= 48 && key <= 57 ||
-        // Numeric keypad
-        key >= 96 && key <= 105 ||
-        // comma, period and minus, . on keypad
-        key == 190 || key == 188 || key == 109 || key == 110 ||
-        // Backspace and Tab and Enter
-        key == 8 || key == 9 || key == 13 ||
-        // Home and End
-        key == 35 || key == 36 ||
-        // left and right arrows
-        key == 37 || key == 39 ||
-        // Del and Ins
-        key == 46 || key == 45)
+        key >= 48 && key <= 57 || // numbers
+        key >= 96 && key <= 105 || // Numeric keypad
+        key == 190 || key == 188 || key == 109 || key == 110 || // comma, period and minus, . on keypad
+        key == 8 || key == 9 || key == 13 || // Backspace and Tab and Enter
+        key == 35 || key == 36 || // Home and End
+        key == 37 || key == 39 || // left and right arrows
+        key == 46 || key == 45) // Del and Ins
           return true;
-
           return false;
        });
    });

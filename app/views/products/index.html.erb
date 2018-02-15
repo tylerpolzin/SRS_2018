@@ -179,7 +179,7 @@
             </td>
             <td>
               <% if product.manufacturer_model_number.present? %>
-                <%= link_to product.manufacturer_model_number, product_path(id: product), method: :get, title: "View Product Details" %>
+                <%= link_to product.manufacturer_model_number, product_path(id: product), method: :get, title: "View Product Details (#{product.id})" %>
               <% else %>
                 <%= link_to "N/A", product_path(id: product), method: :get, title: "View Product Details" %>
               <% end %>

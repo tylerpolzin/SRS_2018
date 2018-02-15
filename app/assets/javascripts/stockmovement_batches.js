@@ -6,7 +6,6 @@
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  $("#newIADiv").animate({left: 0, opacity: 100}, 500);
   $("#jstemplates").find(".productMovementSearchBox").next(".select2-container").addClass("hidden");
   $("#jstemplates").find(".partMovementSearchBox").next(".select2-container").addClass("hidden");
   $("#jstemplates").find(".current-quantity").hide();
@@ -145,6 +144,9 @@ $(document).on("change keyup", ".adjust-quantity", function() {
   var adjusted_quantity = $(this).val();
   var new_quantity = parseInt(current_quantity, 10) + parseInt(adjusted_quantity, 10);
   tr.find(".new-quantity").val(new_quantity);
+  if (new_quantity == "0") {
+    bootbox.alert("Quantity has reached zero.  Please make a physical inventory before proceeding.");
+  }
 });
 
 $(document).on("change keyup", ".new-quantity", function() {
@@ -153,6 +155,9 @@ $(document).on("change keyup", ".new-quantity", function() {
   var negative_quantity = tr.find(".adjust-quantity");
   var new_quantity = parseInt($(this).val(), 10) - parseInt(current_quantity, 10);
   negative_quantity.val(new_quantity);
+  if (new_quantity == "0") {
+    bootbox.alert("Quantity has reached zero.  Please make a physical inventory before proceeding.");
+  }
 });
 
 $(document).on("click", "a.add_child_ia", function() {
@@ -197,6 +202,7 @@ $(document).on("turbolinks:load", function() {
   var table = $("#adjustHistoryDataTable").DataTable({
                 "scrollX": true,
                 "scrollY": true,
+                "colReorder": true,
                 "dom": "<'adjust-history-toolbar'><'col-md-12 glider-table't><'col-md-12'ip>",
                 "pageLength": 25,
                 "bJQueryUI": true,
@@ -282,7 +288,6 @@ $(document).on("turbolinks:load", function() {
                        tr.data("child-body"),
                        tr.data("child-notes")), "no-padding").show();
       tr.addClass("shown");
-      td.tooltip("disable");
       $("div.glider", row.child()).slideDown();
     }
     $(".deleteStockmovement").on("click", function() {
@@ -316,6 +321,7 @@ $(document).on("turbolinks:load", function() {
   var table = $("#adjustHistoryIndividualDataTable").DataTable({
                 "scrollX": true,
                 "scrollY": true,
+                "colReorder": true,
                 "dom": "<'adjust-history-individual-toolbar'>B<'col-md-12 glider-table't><'col-md-12'ip>",
                 "buttons": [
                   // Button for toggling visibility of columns

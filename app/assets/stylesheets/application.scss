@@ -40,6 +40,10 @@ body {
   background-color: silver;
 }
 
+.details-highlight { // Used for highlighting tabs that have relevant data present
+  background-color: #009e00 !important;
+}
+
 ::selection {
   background: #f7cb00; /* WebKit/Blink Browsers */
 }
@@ -490,8 +494,16 @@ body {
 //------------------------------------------------
 
 // DataTables table fix (do a test on new site)
-table.dataTable tbody td {
-  vertical-align: middle;
+table.dataTable {
+  thead tr {
+    background-color: #2e353d;
+    color: #d8d8d8;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.9em;
+  }
+  tbody td {
+    vertical-align: middle;
+  }
 }
 
 .dataTables_scrollHeadInner { // Fixes Header column width to be in line with body column width

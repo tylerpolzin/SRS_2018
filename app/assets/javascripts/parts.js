@@ -8,7 +8,6 @@
 
 
 $(document).on("turbolinks:load", function(){
-  $("#newPartDiv").animate({left: 0, opacity: 100}, 500);
   $(".newPartProductSearch").select2({
     theme:"bootstrap",
     placeholder: "Select Product...",
@@ -21,6 +20,12 @@ $(document).on("turbolinks:load", function(){
   $("#namespace").closest(".row").html("");
   $("#parent_builder").closest(".row").html("");
   $("#child_index").closest(".row").html("");
+  $(".body").find("tr:empty").remove();
+
+  if ($(".body").find("tr").length > 1) {
+    $("#editPartAdditions").addClass("details-highlight");
+  }
+
   $(".partAttributeContainer").on("keyup", ".dynamicAttributeName", function(){
     var nameElem = $(this);
     var valueElem = nameElem.closest(".row").children("td").children(".text_field");
@@ -29,10 +34,29 @@ $(document).on("turbolinks:load", function(){
     valueElem.attr("name", "part[details]["+value+"]");
   });
   $(".partAttributeContainer").on("click", ".removeRow", function(){
-    $(this).closest(".row").html("");
+    $(this).closest(".row").html("").parent().find("tr:empty").remove();
+    var tr = $(".body").find("tr").length;
+    if (tr == 1) {
+      $(".body").append(
+        "<tr class='row hacky hidden'>"+
+        "  <td>"+
+        "    <input class='text_field dynamicAttributeName form-control' id='' name='' placeholder='New Attribute Name' type='text'/>"+
+        "  </td>"+
+        "  <td>"+
+        "    <input class='text_field form-control' id='product_details' name='product[details]' placeholder='Description' type='text'/>"+
+        "  </td>"+
+        "  <td>"+
+        "    <a href='#' class='removeRow'>X</a>"+
+        "  </td>"+
+        "</tr>"
+      );
+    }
   });
   $(".partAddAttribute").on("click", function(e){
     e.preventDefault();
+    if ($(".row.hacky").length) {
+      $(".row.hacky").remove();
+    }
     var contents = "<tr class='row'>" + $(".attributeTemplate").html() + "</tr>";
     $(".body").append(contents);
   });
@@ -44,7 +68,6 @@ $(document).on("turbolinks:load", function(){
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  $("#editPartDiv").animate({left: 0, opacity: 100}, 500);
   $("#editNewImage").hide();
   $("#imageClose").hide();
   $("#editImageOptions").on("change", function() {
@@ -76,16 +99,11 @@ $(document).on("turbolinks:load", function() {
 //                               Product "SHOW" related CSS                                            |
 //------------------------------------------------------------------------------------------------------
 
-$(document).on("turbolinks:load", function() {
-  $("#showPartDiv").animate({left: 0, opacity: 100}, 500);
-});
-
 //------------------------------------------------------------------------------------------------------
 //                               Part "INDEX" related CSS                                              |
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  $("#partListDiv").animate({left: 0, opacity: 100}, 500);
   // Function to add a leading zero to dates between 1-9
   var MyDate = new Date();
   var date;
@@ -94,6 +112,7 @@ $(document).on("turbolinks:load", function() {
   var table = $("#partsDataTable").DataTable({
                 "scrollX": true,
                 "scrollY": true,
+                "colReorder": true,
                 "dom": "<'parts-toolbar'>B<'col-md-12 glider-table't><'col-md-12'ip>",
                 "buttons": [
                   {extend: "collection", text: "<i class='fa fa-download' aria-hidden='true'></i> Export <span class='caret'></span>", className: "btn dtExportOptions",
@@ -270,7 +289,6 @@ $(document).on("turbolinks:load", function() {
       $("div.glider", row.child()).slideUp(function() {
         row.child.hide();
         tr.removeClass("shown");
-        td.tooltip("enable");
       });
     }
     else {
@@ -281,7 +299,6 @@ $(document).on("turbolinks:load", function() {
                                                     tr.data("child-notes"),
                                                     tr.data("child-dates")), "no-padding").show();
       tr.addClass("shown");
-      td.tooltip("disable");
       $("div.glider", row.child()).slideDown();
     }
   });

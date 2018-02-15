@@ -7,7 +7,6 @@
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  $("#newProductDiv").animate({left: 0, opacity: 100}, 500);
   $("#vendorHidden").val($("#vendorSelect").val()); // Shows "Select Vendor" box if person logged in doesn"t apply to paramaters in "New" Head
   $("#vendorSelect").val($("#product_vendor_name").val());
   $("#brandSelect").val($("#product_brand_name").val());
@@ -35,22 +34,48 @@ $(document).on("turbolinks:load", function() {
     });
   });
 
-  $("#builder").closest(".row").html("");
-  $("#namespace").closest(".row").html("");
-  $("#parent_builder").closest(".row").html("");
-  $("#child_index").closest(".row").html("");
+
+  $("#builder").closest(".row").html("").remove();
+  $("#namespace").closest(".row").html("").remove();
+  $("#parent_builder").closest(".row").html("").remove();
+  $("#child_index").closest(".row").html("").remove();
+  $(".body").find("tr:empty").remove();
+
+  if ($(".body").find("tr").length > 1) {
+    $("#editProductAdditions").addClass("details-highlight");
+  }
+
   $(".productAttributeContainer").on("keyup", ".dynamicAttributeName", function(){
     var nameElem = $(this);
     var valueElem = nameElem.closest(".row").children("td").children(".text_field");
     var value = nameElem.val();
     valueElem.attr("id", "product_details_"+value);
-    valueElem.attr("name", "product[details]['+value+']");
+    valueElem.attr("name", "product[details]["+value+"]");
   });
   $(".productAttributeContainer").on("click", ".removeRow", function(){
-    $(this).closest(".row").html("");
+    $(this).closest(".row").html("").parent().find("tr:empty").remove();
+    var tr = $(".body").find("tr").length;
+    if (tr == 1) {
+      $(".body").append(
+        "<tr class='row hacky hidden'>"+
+        "  <td>"+
+        "    <input class='text_field dynamicAttributeName form-control' id='' name='' placeholder='New Attribute Name' type='text'/>"+
+        "  </td>"+
+        "  <td>"+
+        "    <input class='text_field form-control' id='product_details' name='product[details]' placeholder='Description' type='text'/>"+
+        "  </td>"+
+        "  <td>"+
+        "    <a href='#' class='removeRow'>X</a>"+
+        "  </td>"+
+        "</tr>"
+      );
+    }
   });
   $(".productAddAttribute").on("click", function(e){
     e.preventDefault();
+    if ($(".row.hacky").length) {
+      $(".row.hacky").remove();
+    }
     var contents = "<tr class='row'>" + $(".attributeTemplate").html() + "</tr>";
     $(".body").append(contents);
   });
@@ -62,7 +87,6 @@ $(document).on("turbolinks:load", function() {
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  $("#editProductDiv").animate({left: 0, opacity: 100}, 500);
   $("#editNewImage").hide();
   $("#imageClose").hide();
 
@@ -97,7 +121,6 @@ $(document).on("turbolinks:load", function() {
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  $("#showProductDiv").animate({left: 0, opacity: 100}, 500);
   $(".showProductPartTable[id^='part-number-']").hide();
   $(".show-product-part-wrapper[id^='wrapper-number-']").hide();
   $("#part-number-0").show();
@@ -116,7 +139,6 @@ $(document).on("turbolinks:load", function() {
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  $("#productListDiv").animate({left: 0, opacity: 100}, 500);
   // Function to add a leading zero to dates between 1-9
   var MyDate = new Date();
   var date;
@@ -127,6 +149,7 @@ $(document).on("turbolinks:load", function() {
                 // fixedHeader: { headerOffset: 56 },
                 "scrollX": true,
                 "scrollY": true,
+                "colReorder": true,
                 // "products-toolbar" = "top_toobar" function below. "B" = Buttons. "glider-table" = "format" function below that injects the Expando table into each row. "t" = The Table. "ip" = "Showing x of x" and Pagination controls.
                 "dom": "<'products-toolbar'>B<'col-md-12 glider-table't><'col-md-12'ip>",
                 "buttons": [
@@ -350,7 +373,6 @@ $(document).on("turbolinks:load", function() {
       $("div.glider", row.child()).slideUp(function() {
         row.child.hide();
         tr.removeClass("shown");
-        td.tooltip("enable");
       });
     }
     else {
@@ -362,7 +384,6 @@ $(document).on("turbolinks:load", function() {
                                                     tr.data("child-notes"),
                                                     tr.data("child-dates")), "no-padding").show();
       tr.addClass("shown");
-      td.tooltip("disable");
       $("div.glider", row.child()).slideDown();
     }
   });
@@ -373,7 +394,6 @@ $(document).on("turbolinks:load", function() {
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  $("#batchProcessDiv").animate({left: 0, opacity: 100}, 500);
   var table = $("#batchProcessDataTable").DataTable({
                 "scrollX": true,
                 "scrollY": true,
