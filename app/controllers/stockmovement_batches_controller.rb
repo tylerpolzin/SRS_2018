@@ -46,6 +46,8 @@ class StockmovementBatchesController < ApplicationController
     @parts = Part.all
     @stockmovement_batch = StockmovementBatch.new
     @stockmovement = Stockmovement.new
+    @product = Product.friendly.find(params[:id])
+    @part = Part.friendly.find(params[:id])
   end
 
   def edit
