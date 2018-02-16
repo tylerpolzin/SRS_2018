@@ -50,7 +50,7 @@
         <td colspan="2"><%= link_to "Edit This Part", edit_part_path(id: params[:id]), method: :get, class: 'btn btn-sm' %></td>
       </tr>
     <% end %>
-    <tr>
+    <tr class=<%= "firstRowFix" if !current_user.admin? or !current_user.has_role? :employee %>>
       <td>Belongs To</td>
       <td><%= link_to @part.product.model_select, product_path(id: @part.product), method: :get %></td>
     </tr>

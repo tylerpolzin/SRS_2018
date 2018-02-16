@@ -151,7 +151,7 @@ $(document).on("turbolinks:load", function() {
                 "scrollY": true,
                 "colReorder": true,
                 // "products-toolbar" = "top_toobar" function below. "B" = Buttons. "glider-table" = "format" function below that injects the Expando table into each row. "t" = The Table. "ip" = "Showing x of x" and Pagination controls.
-                "dom": "<'products-toolbar'>B<'col-md-12 glider-table't><'col-md-12'ip>",
+                "dom": "<'products-toolbar'>Bp<'col-md-12 glider-table't><'col-md-12 bottom-row'ip>",
                 "buttons": [
                   // Standard Column Visibility Button that lists all columns.  ".noVis" is disabled via CSS in Application.scss because the ":not" method doesn"t work here
                   {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Column Visibility <span class='caret'></span>", className: "btn btn-header"},

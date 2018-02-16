@@ -45,7 +45,7 @@
       "bJQueryUI": true,
       "columnDefs": [
         {
-          "targets": [6],
+          "targets": [11],
         "visible": false
         },
         {

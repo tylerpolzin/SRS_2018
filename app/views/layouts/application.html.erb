@@ -7,6 +7,7 @@
            background-color: silver;
           }
       </style>
+      <% @devmode = "// DEVELOPMENT // DEVELOPMENT // DEVELOPMENT // DEVELOPMENT // DEVELOPMENT // DEVELOPMENT // DEVELOPMENT" %>
     <% end %> <!-- Sets background color to silver only while in Development.  Production generates usual textured blue background -->
     <%= favicon_link_tag asset_path('favicon.png'), :rel => 'icon', :type =>  'image/png' %>
     <title><%= @title || "SRS Portal 2018" %></title>
@@ -31,6 +32,7 @@
               Strategic Retail Solutions
             <% end %>
             <span class="navbar-brand" style="padding-left:10px">//&nbsp;&nbsp;<%= @current_user.header_name %></span>
+            <span class="navbar-brand" style="padding-left:10px;color:#ff8585;"><%= @devmode %></span>
             <span class="turbolinks-progress-bar"></span>
             <span class="navbar-brand navbar-animated navbar-fade" style="margin-left:-30px;color:orange;"><%= notice %></span>
           </div>

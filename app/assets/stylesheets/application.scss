@@ -495,6 +495,7 @@ body {
 
 // DataTables table fix (do a test on new site)
 table.dataTable {
+  margin-top: 0 !important;
   thead tr {
     background-color: #2e353d;
     color: #d8d8d8;
@@ -504,6 +505,10 @@ table.dataTable {
   tbody td {
     vertical-align: middle;
   }
+}
+
+table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after { // Fix to remove extra sort indicators in header columns
+  display: none;
 }
 
 .dataTables_scrollHeadInner { // Fixes Header column width to be in line with body column width

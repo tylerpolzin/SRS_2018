@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def development?
-    @is_development ||= (ENV['RAILS_ENV'] != 'production')
+    @is_development ||= (Rails.env != 'production')
   end
 
 

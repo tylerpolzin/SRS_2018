@@ -452,7 +452,10 @@ $(document).on("turbolinks:load", function() {
   $("#adjustHistoryIndividualTableSearch").next().on("click", function(){ // Adds "X" button and clears properly when clicked
     table.search("").draw();
   });
-
+  
+  $(document).on("click", ".inventoryDateRangeFilter", function (e) {
+    e.stopPropagation(); // Stops the Inventory Type Filter Menu from closing when an interior option is clicked
+  });
   $(document).on("click", ".inventoryTypeFilterMenu", function (e) {
     e.stopPropagation(); // Stops the Inventory Type Filter Menu from closing when an interior option is clicked
   });

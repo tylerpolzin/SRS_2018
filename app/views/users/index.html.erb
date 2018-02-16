@@ -12,6 +12,11 @@
             <th>Custom Datasets</th>
             <th>User Created At</th>
             <th>Entry Last Modified</th>
+            <th>Current Sign In At</th>
+            <th>Last Sign In At</th>
+            <th>Current Sign In IP</th>
+            <th>Last Sign In IP</th>
+            <th>Sign In Count</th>
             <th></th>
             <% if current_user.admin? %>
               <th><div>Admin?</div></th>
@@ -66,9 +71,15 @@
               <td><%= link_to u.id, user_path(id: u.id), method: :get %></td>
               <td><%= best_in_place_if current_user.admin?, u, :email, class: 'form-control', inner_class: 'input-small input-width' %></td>
               <td><%= best_in_place_if current_user.admin?, u, :user_color, class: 'form-control', inner_class: 'input-small input-width' %></td>
-              <td><div style='width: 170px'><%= u.created_at %></div></td>
-              <td><div style='width: 170px'><%= u.updated_at %></div></td>
-              <td>  <!-- Hidden field to add table search ability to Child Rows in next 18 lines -->
+              <td><%= u.created_at.strftime('%F') %></td>
+              <td><%= u.updated_at.strftime('%F') %></td>
+              <td><%= u.current_sign_in_at.strftime('%F') if u.current_sign_in_at.present? %></td>
+              <td><%= u.last_sign_in_at.strftime('%F') if u.last_sign_in_at.present? %></td>
+              <td><%= u.current_sign_in_ip if u.current_sign_in_ip.present? %></td>
+              <td><%= u.last_sign_in_ip if u.last_sign_in_ip.present? %></td>
+              <td><%= u.sign_in_count if u.sign_in_count.present? %></td>
+
+              <td>  <!-- Hidden field to add table search ability to Child Rows -->
                 All hidden data goes here
               </td>
               <% if current_user.admin? %>

@@ -48,7 +48,7 @@
         </td>
       </tr>
     <% end %>
-    <tr>
+    <tr class=<%= "firstRowFix" if !current_user.admin? or !current_user.has_role? :employee %>>
       <td>Manufacturer</td>
       <td>
         <% if @product.vendor_name.present? %>
