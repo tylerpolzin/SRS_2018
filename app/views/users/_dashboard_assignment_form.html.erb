@@ -2,9 +2,9 @@
 </br>
 <ul class="nav nav-tabs assignments-tabs">
   <% if development? %>
-    <li class="active"><a id="assignmentsActiveTab" href="#assignments-active" class="tab-background" data-toggle="tab">Active</a></li>
+    <li class=<%= "active" if development? %>><a id="assignmentsActiveTab" href="#assignments-active" class="tab-background" data-toggle="tab">Active</a></li>
   <% end %>
-  <li class=<% "active" if !development? %>><a id="assignmentsBugReportTab" href="#assignments-bug_report" class="tab-background" data-toggle="tab">Bug Reports</a></li>
+  <li class=<%= "active" if production? %>><a id="assignmentsBugReportTab" href="#assignments-bug_report" class="tab-background" data-toggle="tab">Bug Reports</a></li>
   <li><a id="assignmentsCompleteTab" href="#assignments-complete" class="tab-background" data-toggle="tab">Complete</a></li>
   <% if development? %>
     <li><a id="generalRemindersTab" href="#assignments-general_reminders" class="tab-background" data-toggle="tab">General Reminders</a></li>

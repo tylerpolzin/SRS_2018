@@ -4,6 +4,9 @@ module ApplicationHelper
     @is_development ||= (Rails.env != 'production')
   end
 
+  def production?
+    @is_production ||= (Rails.env == 'production')
+  end
 
   def us_states
     [
