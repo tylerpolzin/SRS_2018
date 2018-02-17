@@ -18,6 +18,7 @@
       <% if !current_user.admin? %>
         <li><a id="showBugReportsForm" href="#show-bug-reports-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Bug Reports</a></li>
       <% end %>
+      <li><a id="showChangelog" href="#show-changelog" class="tab-background" data-toggle="tab"><i class="fa fa-stack-exchange"></i> Changelog</a></li>
     </ul>
     
     <div class="defaultTabs">
@@ -41,6 +42,9 @@
             <%= render "show_bug_reports" %>
           </div>
         <% end %>
+        <div id="show-changelog" class="tab-pane fade container">
+          <%= render "show_changelog" %>
+        </div>
       </div>
     </div>
   </div>

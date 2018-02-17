@@ -1,6 +1,23 @@
 /* global $*/
 
 //-----------------------------------------------------------------------------------
+//          START "USERS DASHBOARD" JS                                              |
+//-----------------------------------------------------------------------------------
+
+  $(document).on("turbolinks:load", function() {
+    if ($("#assignments-bug_report table tbody").find("tr").length >= 1) {
+      $("#assignmentsBugReportTab").addClass("details-highlight");
+    }
+    $('.changelog_expand').on("click", function(){
+        var target_num = $(this).attr('id').split('-')[1];
+        var content_id = '#changelog_expandable-'.concat(target_num);
+        $(content_id).slideToggle('fast');
+    });
+  });
+
+
+
+//-----------------------------------------------------------------------------------
 //          START "USERS TABLE" JS                                                  |
 //-----------------------------------------------------------------------------------
 
@@ -18,7 +35,7 @@
    "      <td>Notes</td>"+
    "      <td></td>"+
    "    </tr>"+
-   "    <tr name='"+fakeout+"'>"+
+   "    <tr name='"+fakeout+"' class='no-table'>"+ // "no-table" class allows single-row expandos to not highlight on hover
    "      <td>"+name+"</td>"+
    "      <td class='address-margin'>"+company+"</td>"+
    "      <td class='address-margin'>"+address+"</td>"+
@@ -39,7 +56,7 @@
       "scrollX": true,
       "scrollY": true,
       "colReorder": true,
-      "dom": "<'users-list-toolbar'><'glider-table't><'col-md-12'ip>",
+      "dom": "<'users-list-toolbar'><'top-row paginate'p>t<'bottom-row paginate'ip>",
       "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
       "pageLength": 10,
       "bJQueryUI": true,

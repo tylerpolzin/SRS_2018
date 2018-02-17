@@ -100,10 +100,10 @@
                 N/A
               <% end %>
             </td>
-            <td><%= link_to part.product.model_select, product_path(id: part.product), method: :get %></td>
+            <td><%= link_to part.product.model_select, product_path(id: part.product), method: :get, title: "View Product Details (ID: #{part.product.id})" %></td>
             <td>
               <% if part.manufacturer_model_number.present? %>
-                <%= link_to part.manufacturer_model_number, part_path(id: part), method: :get, title: "View Part Details (#{part.id})" %>
+                <%= link_to part.manufacturer_model_number, part_path(id: part), method: :get, title: "View Part Details (ID: #{part.id})" %>
               <% else %>
                 <%= link_to "N/A", part_path(id: part), method: :get, title: "View Part Details" %>
               <% end %>

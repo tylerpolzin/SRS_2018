@@ -95,7 +95,7 @@
   width: 850px;
 }
 
-#show-profile-form, #dashboard-assignment-form, #show-bug-reports-form {
+#show-profile-form, #dashboard-assignment-form, #show-bug-reports-form, #show-changelog {
   padding: 15px 15px 5px 0;
 }
 
@@ -271,78 +271,38 @@
 
 
 
-//          'SHOW_MY_PRODUCTS' RENDER                                               |
+//          'SHOW_CHANGELOG' RENDER                                              |
 
-
-
-.myProductsTable {
-  padding: 0;
-  margin: 0 -20px 0 -20px;
-  background-color: white;
-  table thead tr th {
-    // width: 100% !important;
-  }
+.show-changelog-top {
+  width: 100%;
+  margin-bottom: 0;
+  margin-top: 15px;
 }
 
-.my-product-table {
+.show-changelog-name {
+  text-align: center;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
-  font-size: .9em;
-  text-align: center;
-  vertical-align: middle;
+  font-size: 30px;
 }
 
-.my-products-toolbar {
-  float: left;
-  padding-left: 62px;
-  display: inline;
-  .nav-tabs {
-    border-bottom: 0;
-  }
-}
-
-.glider-table {
-  padding: 0;
-}
-.my-products-toolbar > .nav > li > a {
-  padding: 8px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3)
-}
-
-#myProductTableSearch {
-  color: black;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+.changelog-block {
+  font-family: 'Abel', sans-serif;
+  border: 2px solid orange;
+  border-radius: 5px;
+  padding: 0 15px 0 15px;
   margin-bottom: 10px;
-}
-#myProductTableLength {
-  width: 55px;
-  margin-left: 20px;
-  margin-right: 10px;
-  padding-right: 0;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15)
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15)
 }
 
-.my-product-listing-expando {
-  width: 95%;
-  padding-top: 0;
-  padding-bottom: 5px;
-  border-top: 0;
-  border-right: 2px solid orange;
-  border-left: 2px solid orange;
-  border-bottom: 2px solid orange !important;
-  margin-bottom: 5px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-  tr:first-child td {
-    font-size: 1em;
-    font-weight: 200;
-    background-color: #646e78;
-    color: #d8d8d8;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
-  }
-  tr:last-child td {
-    text-align: center;
-    vertical-align: top;
-    border-right: 1px solid #ddd;
-  }
+.changelog_expand {
+  cursor: pointer;
+  margin: 10px 0 10px 0;
+}
+.changelog_expandable {
+  display: none;
 }
 
+.changelog-block:first-child > .changelog-expandable {
+  display: block !important;
+}

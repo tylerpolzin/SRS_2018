@@ -150,8 +150,8 @@ $(document).on("turbolinks:load", function() {
                 "scrollX": true,
                 "scrollY": true,
                 "colReorder": true,
-                // "products-toolbar" = "top_toobar" function below. "B" = Buttons. "glider-table" = "format" function below that injects the Expando table into each row. "t" = The Table. "ip" = "Showing x of x" and Pagination controls.
-                "dom": "<'products-toolbar'>Bp<'col-md-12 glider-table't><'col-md-12 bottom-row'ip>",
+                // "products-toolbar" = "top_toobar" function below. "B" = Buttons. "top-row paginate" = Parent class to help with adding CSS to Pagination controls. "t" = The Table. "bottom-row paginate ip" = "Showing x of x" and Pagination controls.
+                "dom": "<'products-toolbar'>B<'top-row paginate'p>t<'bottom-row paginate'ip>",
                 "buttons": [
                   // Standard Column Visibility Button that lists all columns.  ".noVis" is disabled via CSS in Application.scss because the ":not" method doesn"t work here
                   {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Column Visibility <span class='caret'></span>", className: "btn btn-header"},
@@ -249,6 +249,20 @@ $(document).on("turbolinks:load", function() {
     "  <li>"+
     "    <div class='productsFilterBy'><i class='fa fa-random' aria-hidden='true'></i> Filter By:</div>"+
     "  </li>"+
+    "  <li>"+
+    "    <div class='productsQuantityRangeFilter'>"+
+    "      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-exchange' aria-hidden='true'></i> Quantity Range <span class='caret'></span></button>"+
+    "      <ul class='dropdown-menu'>"+
+    "        <li>"+
+    "          <div class='input-quantity input-group'>"+
+    "            <input type='number' class='form-control filterStartQty' id='filterStartQty' name='start' placeholder='Start' />"+
+    "            <span class='input-group-addon'>to</span>"+
+    "            <input type='number' class='form-control filterEndQty' id='filterEndQty' name='end' placeholder='End ' />"+
+    "          </div>"+
+    "        </li>"+
+    "      </ul>"+
+    "    </div>"+
+    "  </li>"+
     ""+brand_names+
     ""+filters+
     "</ul>"+
@@ -264,6 +278,9 @@ $(document).on("turbolinks:load", function() {
     table.search("").draw();
   });
 
+  $(document).on("click", ".productsQuantityRangeFilter", function (e) {
+    e.stopPropagation(); // Stops the Brand Name Filter Menu from closing when an interior option is clicked
+  });
   $(document).on("click", ".productsBrandFilterMenu", function (e) {
     e.stopPropagation(); // Stops the Brand Name Filter Menu from closing when an interior option is clicked
   });
@@ -350,7 +367,7 @@ $(document).on("turbolinks:load", function() {
    "      </tr>"+
    "    </thead>"+
    "    <tbody>"+
-   "      <tr>"+
+   "      <tr class='no-table'>"+ // "no-table" class allows single-row expandos to not highlight on hover
    "        <td style='padding:0;'>"+attributes+"</td>"+
    "        <td style='padding:0;'>"+parts+"</td>"+
    "        <td>"+manufacturer+"</td>"+
@@ -387,6 +404,25 @@ $(document).on("turbolinks:load", function() {
       $("div.glider", row.child()).slideDown();
     }
   });
+
+  $.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+      var min = parseInt( $('#filterStartQty').val(), 10 );
+      var max = parseInt( $('#filterEndQty').val(), 10 );
+      var qty = parseFloat( data[5] ) || 0; // '5' is the Quantity Column number
+
+      if ( ( isNaN( min ) && isNaN( max ) ) ||
+        ( isNaN( min ) && qty <= max ) ||
+        ( min <= qty   && isNaN( max ) ) ||
+        ( min <= qty   && qty <= max ) ) {
+        return true;
+        }
+      return false;
+    }
+  );
+  $("#filterStartQty").on("change keyup", function() { table.draw(); });
+  $("#filterEndQty").on("change keyup", function() { table.draw(); });
+
 });
 
 //------------------------------------------------------------------------------------------------------

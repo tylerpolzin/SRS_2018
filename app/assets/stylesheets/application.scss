@@ -42,6 +42,9 @@ body {
 
 .details-highlight { // Used for highlighting tabs that have relevant data present
   background-color: #009e00 !important;
+  &[aria-expanded="true"] {
+    background-color: #a5f9a5 !important;
+  }
 }
 
 ::selection {
@@ -518,26 +521,74 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
   }
 }
 
-// Dropdown for Datatable rows
+// Expando controls buttons
 .details-control {
     background: url('details_open.png') no-repeat center center;
     cursor: pointer;
 }
 tr.shown td.details-control {
     background: url('details_close.png') no-repeat center center;
-    
-.glider-table {
-  padding-left: 0;
 }
 
+.glider-table {
+  padding: 0 !important;
 }
+
+
 div.glider {
-    display: none;
+  display: none;
+  table tbody tr.no-table {
+    background-color: white !important;
+  }
 }
 table.dataTable tbody td.no-padding {
-    padding-top: 0;
+  padding-top: 0;
+  padding-right: 5px;
+  padding-bottom: 5px;
+}
+
+// Basic pagination controls
+.top-row {
+  float: right;
+  &.paginate .dataTables_paginate {
+    border-top: 2px solid orange;
+    border-top-left-radius: 20px;
+  }
+}
+
+.bottom-row {
+  padding: 0 0 55px 20px;
+  .dataTables_info {
+    font-family: 'Abel', sans-serif;
+    font-size: 1.2em;
+  }
+  &.paginate .dataTables_paginate {
+    border-bottom: 2px solid orange;
+    border-bottom-left-radius: 20px;
+  }
+}
+
+.paginate {
+  .dataTables_paginate {
+    background: #e8e8e8;
+    font-family: 'Abel', sans-serif;
+    border-left: 2px solid orange;
     padding-right: 5px;
-    padding-bottom: 5px;
+    span .paginate_button, .paginate_button.previous, .paginate_button.next {
+      margin-bottom: 4px;
+      border-radius: 20px;
+      &:hover {
+        background: linear-gradient(to bottom, #afafaf 0%, #6d6d6d 100%) !important;
+        color: white;
+      }
+      &.disabled {
+        background: none !important;
+      }
+      &.current:hover {
+        color: white !important;
+      }
+    }
+  }
 }
 
 // Removing bottom margin in address field on tasks dashboard

@@ -634,60 +634,6 @@
     border-right: 1px solid #ccc;
   }}
 
-#productsDataTable_paginate {
-  background: #e8e8e8;
-  font-family: 'Abel', sans-serif;
-  border-top: 2px solid orange;
-  border-left: 2px solid orange;
-  border-top-left-radius: 20px;
-  padding-right: 5px;
-  span .paginate_button, .paginate_button.previous, .paginate_button.next {
-    margin-bottom: 4px;
-    border-radius: 20px;
-    &:hover {
-      background: linear-gradient(to bottom, #afafaf 0%, #6d6d6d 100%);
-      color: white;
-    }
-    &.disabled {
-      background: none;
-    }
-    &.current:hover {
-      color: white !important;
-    }
-  }
-}
-
-.bottom-row {
-  padding-right: 0;
-  margin-bottom: 5px;
-  .dataTables_paginate {
-    background: #e8e8e8;
-    font-family: 'Abel', sans-serif;
-    border-bottom: 2px solid orange;
-    border-left: 2px solid orange;
-    border-bottom-left-radius: 20px;
-    padding-right: 5px;
-    span .paginate_button, .paginate_button.previous, .paginate_button.next {
-      margin-bottom: 4px;
-      border-radius: 20px;
-      &:hover {
-        background: linear-gradient(to bottom, #afafaf 0%, #6d6d6d 100%) !important;
-        color: white;
-      }
-      &.disabled {
-        background: none !important;
-      }
-      &.current:hover {
-        color: white !important;
-      }
-    }
-  }
-}
-
-.glider-table {
-  padding: 0;
-}
-
 .products-toolbar {
   position: relative;
   bottom: -7px;
@@ -716,6 +662,71 @@
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
+    }
+    li .productsQuantityRangeFilter {
+      button {
+        margin: 0;
+        border-right: 0;
+        border-radius: 0;
+      }
+      ul {
+        border: 2px solid #2e353d;
+        li {
+        width: 200px;
+        margin: 0 5px 0 5px;
+        border: 2px solid #2e353d;
+        .input-quantity input {
+          border-radius: 0;
+          border: 0;
+        }
+        }
+      }
+    }
+    li .brandFilter {
+      button {
+      margin: 0;
+      border-right: 0;
+      border-radius: 0;
+      }
+      .productsBrandFilterMenu {
+        padding: 5px;
+        border-top: 0;
+        border-right: 2px solid #2e353d;
+        border-bottom: 2px solid #2e353d;
+        border-left: 2px solid #2e353d;
+        li {
+          padding: 0;
+          border-right: 2px solid #2e353d;
+          border-bottom: 2px solid #2e353d;
+          border-left: 2px solid #2e353d;
+          text-align: center;
+          background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
+          color: #a92b04;
+          &:hover {
+            background: linear-gradient(to top, #d6d6d6, #e4e4e4);
+          }
+          &.selected {
+            background: linear-gradient(to bottom, white, #f3f3f3);
+            color: #165407;
+            &:hover {
+              background: linear-gradient(to top, white, #f3f3f3);
+            }
+          }
+
+          &:first-child {
+            border-top: 2px solid #2e353d;
+          }
+          label {
+            padding: 5px;
+            margin: 0;
+            width: 140px;
+            user-select: none;
+            input {
+              display: none;
+            }
+          }
+        }
+      }
     }
     li .booleanFilter {
       button {
@@ -767,52 +778,6 @@
           button {
             width: 41%;
             font-size: 0.8em;
-          }
-        }
-      }
-    }
-    li .brandFilter {
-      button {
-      margin: 0;
-      border-right: 0;
-      border-radius: 0;
-      }
-      .productsBrandFilterMenu {
-        padding: 5px;
-        border-top: 0;
-        border-right: 2px solid #2e353d;
-        border-bottom: 2px solid #2e353d;
-        border-left: 2px solid #2e353d;
-        li {
-          padding: 0;
-          border-right: 2px solid #2e353d;
-          border-bottom: 2px solid #2e353d;
-          border-left: 2px solid #2e353d;
-          text-align: center;
-          background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
-          color: #a92b04;
-          &:hover {
-            background: linear-gradient(to top, #d6d6d6, #e4e4e4);
-          }
-          &.selected {
-            background: linear-gradient(to bottom, white, #f3f3f3);
-            color: #165407;
-            &:hover {
-              background: linear-gradient(to top, white, #f3f3f3);
-            }
-          }
-
-          &:first-child {
-            border-top: 2px solid #2e353d;
-          }
-          label {
-            padding: 5px;
-            margin: 0;
-            width: 140px;
-            user-select: none;
-            input {
-              display: none;
-            }
           }
         }
       }

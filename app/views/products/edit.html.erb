@@ -1,7 +1,7 @@
 <% @title = "SRS Portal | Edit #{@product.model_select}" %>
 <div class="defaultDiv" id="editProductDiv">
   <p class="defaultDivHeader">
-    <span class="show-product-brand-name" title="<%= @product.id %>"><%= @product.brand_name %> - <%= @product.description %></span></br>
+    <span class="show-product-brand-name" title="Product ID: <%= @product.id %>"><%= @product.brand_name %> - <%= @product.description %></span></br>
     <span class="show-product-description" style="font-size:0.8em">Entry Created: <%= @product.created_at.strftime('%B %d, %Y') %> | Last Modified: <%= @product.updated_at.strftime('%B %d, %Y') %></span>
   </p>
   <div class="container defaultForm">

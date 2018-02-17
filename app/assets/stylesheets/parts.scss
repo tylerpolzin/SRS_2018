@@ -465,6 +465,8 @@
 }
 
 .parts-toolbar {
+  position: relative;
+  bottom: -7px;
   float: left;
   padding-left: 30px;
   display: inline;
@@ -473,9 +475,6 @@
   }
 }
 
-.glider-table {
-  padding: 0;
-}
 .parts-toolbar > .nav > li {
   a {
     padding: 8px;
@@ -517,6 +516,8 @@
 }
 
 #partsDataTable_wrapper .dt-buttons {
+  position: relative;
+  bottom: -7px;
   .dtExportOptions {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;

@@ -113,7 +113,7 @@ $(document).on("turbolinks:load", function() {
                 "scrollX": true,
                 "scrollY": true,
                 "colReorder": true,
-                "dom": "<'parts-toolbar'>B<'col-md-12 glider-table't><'col-md-12'ip>",
+                "dom": "<'parts-toolbar'>B<'top-row paginate'p><'glider-table't><'bottom-row paginate'ip>",
                 "buttons": [
                   {extend: "collection", text: "<i class='fa fa-download' aria-hidden='true'></i> Export <span class='caret'></span>", className: "btn dtExportOptions",
                     buttons: [
@@ -267,7 +267,7 @@ $(document).on("turbolinks:load", function() {
    "      </tr>"+
    "    </thead>"+
    "    <tbody>"+
-   "      <tr>"+
+   "      <tr class='no-table'>"+ // "no-table" class allows single-row expandos to not highlight on hover
    "        <td style='padding:0;'>"+attributes+"</td>"+
    "        <td>"+manufacturer+"</td>"+
    "        <td>"+location+"</td>"+

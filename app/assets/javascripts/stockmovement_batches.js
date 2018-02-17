@@ -98,6 +98,9 @@ $(document).on("change", ".productMovementSearchBox", function() {
   var disable_value = $(this).find("option:selected").attr("value"); // To ensure an item doesnt get selected in a batch more than once, the option is disabled the first time it is selected
   $(".productMovementSearchBox option[value="+disable_value+"]").prop("disabled", true);
   tr.find(".product-previous-qty").attr("value", disable_value);
+  if (new_quantity == "0") {
+    bootbox.alert("Quantity has reached zero.  Please check inventory before proceeding.");
+  }
 });
 
 $(document).on("change", ".partMovementSearchBox", function() { // Same notes apply here as are found above in ".productMovementSearchBox"
@@ -111,6 +114,9 @@ $(document).on("change", ".partMovementSearchBox", function() { // Same notes ap
   var disable_value = $(this).find("option:selected").attr("value");
   $("#stockmovement_batch_stockmovements_attributes_new_stockmovements_part_id option[value="+disable_value+"]").prop("disabled", true);
   tr.find(".part-previous-qty").attr("value", disable_value);
+  if (new_quantity == "0") {
+    bootbox.alert("Quantity has reached zero.  Please check inventory before proceeding.");
+  }
 });
 
 $(function() { // Secondary button that clicks the hidden "Add Item" button.  Required due to Helper parameters.
@@ -121,7 +127,7 @@ $(function() { // Secondary button that clicks the hidden "Add Item" button.  Re
 
 $(function() { // To avoid sending duplicate items in a batch, each items "option" is disabled across all "Item Select" boxes when that item is first selected.
                // Caveat is that when the form is submitted, a disabled "option" doesnt get passed.  This function re-enables all options before finally submitting.
-  $("#adjustSubmitButton").on("click", function(e) {
+  $("#adjustSubmitButton").on("click", function() {
     $("option").prop("disabled", false);
   });
 });
@@ -144,8 +150,10 @@ $(document).on("change keyup", ".adjust-quantity", function() {
   var adjusted_quantity = $(this).val();
   var new_quantity = parseInt(current_quantity, 10) + parseInt(adjusted_quantity, 10);
   tr.find(".new-quantity").val(new_quantity);
-  if (new_quantity == "0") {
-    bootbox.alert("Quantity has reached zero.  Please make a physical inventory before proceeding.");
+  var quantity = tr.find(".new-quantity").val();
+  if (quantity == "0") {
+    bootbox.hideAll();
+    bootbox.alert("Quantity has reached zero.  Please check inventory before proceeding.");
   }
 });
 
@@ -155,8 +163,10 @@ $(document).on("change keyup", ".new-quantity", function() {
   var negative_quantity = tr.find(".adjust-quantity");
   var new_quantity = parseInt($(this).val(), 10) - parseInt(current_quantity, 10);
   negative_quantity.val(new_quantity);
-  if (new_quantity == "0") {
-    bootbox.alert("Quantity has reached zero.  Please make a physical inventory before proceeding.");
+  var quantity = tr.find(".new-quantity").val();
+  if (quantity == "0") {
+    bootbox.hideAll();
+    bootbox.alert("Quantity has reached zero.  Please check inventory before proceeding.");
   }
 });
 
@@ -203,7 +213,7 @@ $(document).on("turbolinks:load", function() {
                 "scrollX": true,
                 "scrollY": true,
                 "colReorder": true,
-                "dom": "<'adjust-history-toolbar'><'col-md-12 glider-table't><'col-md-12'ip>",
+                "dom": "<'adjust-history-toolbar'><'top-row paginate'p>t<'bottom-row paginate'ip>",
                 "pageLength": 25,
                 "bJQueryUI": true,
                 "columnDefs": [
@@ -322,7 +332,7 @@ $(document).on("turbolinks:load", function() {
                 "scrollX": true,
                 "scrollY": true,
                 "colReorder": true,
-                "dom": "<'adjust-history-individual-toolbar'>B<'col-md-12 glider-table't><'col-md-12'ip>",
+                "dom": "<'adjust-history-individual-toolbar'>B<'top-row paginate'p>t<'bottom-row paginate'ip>",
                 "buttons": [
                   // Button for toggling visibility of columns
                   {extend: "colvis", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Column Visibility <span class='caret'></span>", className: "btn btn-header"},
@@ -531,7 +541,7 @@ $(document).on("turbolinks:load", function() {
       return true;
     }
   );
-  $("#filterStartDate").on("change", function() {table.draw(); });
-  $("#filterEndDate").on("change", function() {table.draw(); });
-  
+  $("#filterStartDate").on("change keyup", function() { table.draw(); });
+  $("#filterEndDate").on("change keyup", function() { table.draw(); });
+
 });
