@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :upload_batches
+  resources :uploads
   resources :stockmovements
   resources :assignments
   resources :stockmovement_batches

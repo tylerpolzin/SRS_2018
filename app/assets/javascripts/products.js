@@ -45,6 +45,14 @@ $(document).on("turbolinks:load", function() {
     $("#editProductAdditions").addClass("details-highlight");
   }
 
+  if ($("#productFilesContainer tbody").find("tr").length > 0) {
+    $("#editProductUploads").addClass("details-highlight");
+  }
+  if ($("#productFilesContainer tbody tr td").text() == "No Files Found") {
+    $("#editProductUploads").removeClass("details-highlight");
+  }
+
+
   $(".productAttributeContainer").on("keyup", ".dynamicAttributeName", function(){
     var nameElem = $(this);
     var valueElem = nameElem.closest(".row").children("td").children(".text_field");
@@ -78,6 +86,12 @@ $(document).on("turbolinks:load", function() {
     }
     var contents = "<tr class='row'>" + $(".attributeTemplate").html() + "</tr>";
     $(".body").append(contents);
+  });
+
+  $(".add_file_button").on("click", function() {
+    $(".add_child").click();
+    $(".productFilesTopBorder").removeClass("hidden");
+    $(".productFilesBottomBorder").removeClass("hidden");
   });
 
 });
@@ -148,7 +162,8 @@ $(document).on("turbolinks:load", function() {
   var table = $("#productsDataTable").DataTable({
                 // fixedHeader: { headerOffset: 56 },
                 "scrollX": true,
-                "scrollY": true,
+                "scrollY": "75vh",
+                "scrollCollapse": true,
                 "colReorder": true,
                 // "products-toolbar" = "top_toobar" function below. "B" = Buttons. "top-row paginate" = Parent class to help with adding CSS to Pagination controls. "t" = The Table. "bottom-row paginate ip" = "Showing x of x" and Pagination controls.
                 "dom": "<'products-toolbar'>B<'top-row paginate'p>t<'bottom-row paginate'ip>",
@@ -255,9 +270,9 @@ $(document).on("turbolinks:load", function() {
     "      <ul class='dropdown-menu'>"+
     "        <li>"+
     "          <div class='input-quantity input-group'>"+
-    "            <input type='number' class='form-control filterStartQty' id='filterStartQty' name='start' placeholder='Start' />"+
+    "            <input type='number' class='form-control filterStartQty' id='filterStartQty' name='start' placeholder='Min' />"+
     "            <span class='input-group-addon'>to</span>"+
-    "            <input type='number' class='form-control filterEndQty' id='filterEndQty' name='end' placeholder='End ' />"+
+    "            <input type='number' class='form-control filterEndQty' id='filterEndQty' name='end' placeholder='Max' />"+
     "          </div>"+
     "        </li>"+
     "      </ul>"+
@@ -356,12 +371,12 @@ $(document).on("turbolinks:load", function() {
    "  <table class='product-listing-expando'>"+
    "    <thead>"+
    "      <tr>"+
-   "        <th>Custom Attributes</th>"+
+   "        <th>Additional Attributes</th>"+
    "        <th>Associated Parts</th>"+
+   "        <th>Associated Files</th>"+
    "        <th>Manufacturer</th>"+
    "        <th>UPC</th>"+
    "        <th>SRS SKU</th>"+
-   "        <th>Associated Files</th>"+
    "        <th>Meta Notes</th>"+
    "        <th>Meta Dates</th>"+
    "      </tr>"+
@@ -370,10 +385,10 @@ $(document).on("turbolinks:load", function() {
    "      <tr class='no-table'>"+ // "no-table" class allows single-row expandos to not highlight on hover
    "        <td style='padding:0;'>"+attributes+"</td>"+
    "        <td style='padding:0;'>"+parts+"</td>"+
+   "        <td style='padding:0;'>"+uploads+"</td>"+
    "        <td>"+manufacturer+"</td>"+
    "        <td>"+upc+"</td>"+
    "        <td>"+srs_sku+"</td>"+
-   "        <td>"+uploads+"</td>"+
    "        <td>"+notes+"</td>"+
    "        <td>"+dates+"</td>"+
    "      </tr>"+
@@ -432,7 +447,9 @@ $(document).on("turbolinks:load", function() {
 $(document).on("turbolinks:load", function() {
   var table = $("#batchProcessDataTable").DataTable({
                 "scrollX": true,
-                "scrollY": true,
+                "scrollY": "75vh",
+                "scrollCollapse": true,
+                "colReorder": true,
                 // fixedHeader: { headerOffset: 56 },
                 // "products-toolbar" = "top_toobar" function below. "B" = Buttons. "glider-table" = "format" function below that injects the Expando table into each row. "t" = The Table. "ip" = "Showing x of x" and Pagination controls.
                 "dom": "<'batch_process-toolbar'>B<'col-md-12 glider-table't><'col-md-12'ip>",

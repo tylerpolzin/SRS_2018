@@ -257,7 +257,7 @@ $(document).on("turbolinks:load", function() {
    "  <table class='part-listing-expando'>"+
    "    <thead>"+
    "      <tr>"+
-   "        <th>Custom Attributes</th>"+
+   "        <th>Additional Attributes</th>"+
    "        <th>Manufacturer</th>"+
    "        <th>Location</th>"+
    "        <th>UPC</th>"+

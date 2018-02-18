@@ -1,10 +1,12 @@
 class Product < ApplicationRecord
   has_many :stockmovements
   has_many :parts
+  has_many :uploads, dependent: :destroy
   
   validates :manufacturer_model_number, presence: true
   validates_uniqueness_of :manufacturer_model_number
   # validates_format_of :manufacturer_model_number, :with => /\A[a-z0-9]+\z/i
+  
   extend FriendlyId
   friendly_id :manufacturer_model_number, use: :slugged
 
@@ -14,7 +16,8 @@ class Product < ApplicationRecord
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\z/
   
   accepts_nested_attributes_for :parts, :allow_destroy => true
-
+  accepts_nested_attributes_for :uploads, :allow_destroy => true
+  
   def sku_if_sku  # Takes preference to showing the SRS SKU over the MFR Model Number if it exists
     if self.srs_sku.present?
       self.srs_sku

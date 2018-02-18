@@ -17,9 +17,9 @@
         </div>
       <% end %> <!-- if @product.errors.any? -->
       <ul class="nav nav-tabs">
-        <li class="active"><a id="editProductForm" href="#edit-product-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Product Details</a></li>
-        <li><a id="editProductAdditions" href="#edit-product-additions" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Edit Custom Attributes</a></li>
-        <!--<li><a id="editProductUploads" href="#edit-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Edit Associated Files</a></li>-->
+        <li class="active"><a id="editProductForm" href="#edit-product-form" class="tab-background" data-toggle="tab"><i class="fa fa-edit"></i> Edit Product Details</a></li>
+        <li><a id="editProductAdditions" href="#edit-product-additions" class="tab-background" data-toggle="tab"><i class="fa fa-asterisk"></i> Edit Additional Attributes</a></li>
+        <li><a id="editProductUploads" href="#edit-product-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file"></i> Edit Associated Files</a></li>
       </ul>
       <div class="defaultTabs">
         <div class="tab-content">
@@ -29,10 +29,9 @@
           <div id="edit-product-additions" class="tab-pane fade container">
             <br/><%= render "additions", :f => f %>
           </div>
-          <!--<div id="edit-product-uploads" class="tab-pane fade"><br/>-->
-          <!--  <p><%#= add_child_link " Add File", :uploads %></p>-->
-          <!--  <%#= new_child_fields_template f, :uploads %>-->
-          <!--</div>-->
+          <div id="edit-product-uploads" class="tab-pane fade"><br/>
+            <br/><%= render "edit_uploads", :f => f %>
+          </div>
         </div>
       </div>
       <%= f.submit "Update Product", :style => "float:right;" %>

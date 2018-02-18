@@ -14,11 +14,11 @@
 <div id="assignmentsTabs">
   <div class="tab-content">
     <% if development? %>
-      <div id="assignments-active" class="tab-pane fade in active container">
+      <div id="assignments-active" class="tab-pane fade <%= "in active" if development? %> container">
         <%= render "assignment_table", controller: @activeassignments %>
       </div>
     <% end %>
-    <div id="assignments-bug_report" class="tab-pane fade container">
+    <div id="assignments-bug_report" class="tab-pane fade <%= "in active" if production? %> container">
       <%= render "assignment_table", controller: @bugreports %>
     </div>
     <div id="assignments-complete" class="tab-pane fade container">

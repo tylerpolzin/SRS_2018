@@ -41,9 +41,12 @@ body {
 }
 
 .details-highlight { // Used for highlighting tabs that have relevant data present
-  background-color: #009e00 !important;
+  background: linear-gradient(to bottom, rgba(31,117,31,1) 0%,rgba(0,0,0,1) 100%) !important;
+  &:hover {
+    color: white;
+  }
   &[aria-expanded="true"] {
-    background-color: #a5f9a5 !important;
+    background: linear-gradient(to bottom, rgba(222,255,222,1) 0%,rgba(255,255,255,1) 100%) !important;
   }
 }
 
@@ -322,7 +325,7 @@ body {
   background-color: #2e353d;
   position: fixed;
   top: 55px;
-  width: 15%;
+  width: 10%;
   height: 100%;
   color: #d8d8d8;
   box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.5);

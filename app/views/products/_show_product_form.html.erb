@@ -23,7 +23,7 @@
     <thead></thead>
     <tbody>
       <tr>
-        <td class="show-product-details" colspan="2">Custom Attributes</td>
+        <td class="show-product-details" colspan="2">Additional Attributes</td>
       </tr>
       <% if @product.details.present? %>
         <% @product.details.try(:each) do |key, value| %>
@@ -37,11 +37,35 @@
       <% end %>
     </tbody>
   </table>
+  <table class="table table-bordered" id="showProductExtras"> <!-- Show Product Uploads -->
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td class="show-product-details" colspan="2">Associated Files</td>
+      </tr>
+      <% if @product.uploads.present? %>
+        <% @product.uploads.each do |f| %>
+          <tr>
+            <td><%= link_to f.file_file_name, f.file.url(:original, false), target: "_blank", title: "File Size: #{number_to_human_size(f.file_file_size, precision: 2)}" %></td>
+            <td>
+              <% if f.description.present? %>
+                <%= f.description %>
+              <% else %>
+                No Description
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+          <tr><td style="text-align:center;border-right:2px solid orange;">No Files Found</td></tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
 <table class="table table-bordered" id="showProductTable">
   <thead></thead>
   <tbody>
-    <% if current_user.admin? or current_user.has_role? :employee %>
+    <% if admin_or_employee? %>
       <tr>
         <td colspan="2">
           <%= link_to "Edit This Product", edit_product_path(id: @product), method: :get, class: 'btn btn-sm' %>

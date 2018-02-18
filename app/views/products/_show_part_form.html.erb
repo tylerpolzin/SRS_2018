@@ -6,7 +6,7 @@
         <option value="<%= part.id %>"><%= part.part_select %></option>
       <% end %>
     </select>
-    <% if current_user.admin? or current_user.has_role? :employee %>
+    <% if admin_or_employee? %>
       <%= link_to "Create New Part", new_part_path, method: :get, class: 'btn show-product-new-part-button' %>
     <% end %>
   </div>
@@ -19,7 +19,7 @@
     <table class="table table-bordered" id="showProductPartExtras">
       <thead></thead>
       <tbody>
-        <tr><td class="show-part-details" colspan="2">Custom Attributes</td></tr>
+        <tr><td class="show-part-details" colspan="2">Additional Attributes</td></tr>
         <tr><td colspan="2" style="text-align:center;">No Attributes Present</td></tr>
       </tbody>
     </table>
@@ -50,7 +50,7 @@
         <thead></thead>
         <tbody>
           <tr>
-            <td class="show-part-details" colspan="2">Custom Attributes</td>
+            <td class="show-part-details" colspan="2">Additional Attributes</td>
           </tr>
           <% if part.details.present? %>
             <% part.details.try(:each) do |key, value| %>
@@ -174,7 +174,7 @@
           <td colspan="2">
             <div>
               <%= link_to "Go To Part Page", part_path(part), method: :get, class: "btn btn-sm", :style => "margin-right:5px;" %>
-              <% if current_user.admin? or current_user.has_role? :employee %>
+              <% if admin_or_employee? %>
                 <%= link_to "Edit This Part", edit_part_path(id: part), method: :get, class: 'btn btn-sm' %>
               <% end %>
             </div>
@@ -356,7 +356,7 @@
     </table>
   <% end %>
 <% else %>
-  <% if current_user.admin? or current_user.has_role? :employee %>
+  <% if admin_or_employee? %>
     <div style="float:right;">
       <%= link_to "Create New Part", new_part_path, method: :get, class: 'btn show-product-new-part-button', :style => "margin-right:16px;" %>
     </div>

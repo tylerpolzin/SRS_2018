@@ -2,7 +2,7 @@ class PartsController < ApplicationController
   before_action :set_part, only: [:show, :edit, :update, :destroy]
 
   def index
-    if current_user.admin? or current_user.has_role? :employee
+    if admin_or_employee?
       @parts = Part.all
       @products = Product.select(:id, :manufacturer_model_number, :description, :brand_name).distinct.where(:has_parts => true)
     else
@@ -11,7 +11,7 @@ class PartsController < ApplicationController
   end
 
   def show
-    if current_user.admin? or current_user.has_role? :employee
+    if admin_or_employee?
       @part = Part.friendly.find(params[:id])
     else
       redirect_to authenticated_root_path, notice: "// You can't do that!"
@@ -20,7 +20,7 @@ class PartsController < ApplicationController
   end
 
   def new
-    if current_user.admin? or current_user.has_role? :employee
+    if admin_or_employee?
     @part = Part.new
     else
       redirect_to authenticated_root_path, notice: "// You can't do that!"
@@ -28,7 +28,7 @@ class PartsController < ApplicationController
   end
 
   def edit
-    if current_user.admin? or current_user.has_role? :employee
+    if admin_or_employee?
       @part = Part.friendly.find(params[:id])
     else
       redirect_to authenticated_root_path, notice: "// You can't do that!"

@@ -279,6 +279,14 @@
   border-top: 2px solid orange;
 }
 
+#new-product-uploads {
+  padding: 0 20px 0 10px;
+}
+
+.add_file_button {
+  margin-bottom: 10px;
+}
+
 //------------------------------------------------------------------------------------------------------
 //                               Product 'EDIT' related CSS                                            |
 //------------------------------------------------------------------------------------------------------
@@ -309,6 +317,123 @@
 
 .image-border-red {
   border: 2px solid red;
+}
+
+
+
+
+
+#productFilesContainer {
+  width: 100%;
+  margin: 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  border-right: 2px solid orange;
+  border-left: 2px solid orange;
+  thead tr th {
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+  }
+  tbody tr td {
+    .form-group {
+      margin: 0;
+    }
+  }
+  tbody tr td:first-child { // Left Column "File Name/File Select"
+    width: 350px;
+    border-right: 1px solid #ddd;
+    padding: 0;
+    .form-group input {
+      padding: 6px 2px 6px 6px;
+      border: none;
+      border-radius: 0;
+      &:focus {
+        box-shadow: inset 0px 0px 5px #ff9800;
+      }
+    }
+  }
+  tbody tr td:nth-child(2) { // Second Column "Description"
+    padding: 0;
+    border-right: 1px solid #ddd;
+    .form-group input {
+      padding: 6px 2px 6px 6px;
+      border: none;
+      border-radius: 0;
+      &:focus {
+        box-shadow: inset 0px 0px 5px #ff9800;
+      }
+    }
+  }
+  tbody tr td:last-child { // Right Column "Delete Entry"
+    width: 150px;
+    padding: 7px;
+    .checkbox {
+      color: red;
+      margin: 0;
+    }
+  }
+}
+
+.newFileContainer {
+  width: 100%;
+  margin: 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  border-top: 0 !important;
+  border-right: 2px solid orange;
+  border-left: 2px solid orange;
+  tbody tr td {
+    .form-group {
+      margin: 0;
+    }
+  }
+  tbody tr td:first-child { // Left Column "File Name/File Select"
+    width: 347px;
+    padding: 0;
+    border-right: 1px solid #ddd;
+    .form-group input {
+      padding: 6px 2px 6px 6px;
+      border: none;
+      border-radius: 0;
+      &:focus {
+        box-shadow: inset 0px 0px 5px #ff9800;
+      }
+    }
+  }
+  tbody tr td:nth-child(2) { // Second Column "Description"
+    padding: 0;
+    border-right: 1px solid #ddd;
+    .form-group input {
+      padding: 6px 2px 6px 6px;
+      border: none;
+      border-radius: 0;
+      &:focus {
+        box-shadow: inset 0px 0px 5px #ff9800;
+      }
+    }
+  }
+  tbody tr td:last-child { // Right Column "Delete Entry"
+    width: 146px;
+    padding: 7px;
+    .checkbox {
+      color: red;
+      margin: 0;
+    }
+  }
+}
+
+.productFilesTopBorder {
+  width: 994px;
+  padding-top: 10px;
+  margin: 0;
+  border-bottom: 2px solid orange;
+}
+
+.productFilesBottomBorder {
+  width: 994px;
+  padding-bottom: 5px;
+  margin: 0;
+  border-top: 2px solid orange;
 }
 
 //------------------------------------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :load_prelims, except: :show
 
 
   def index
-    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
-    if current_user.admin? or current_user.has_role? :employee
+    if admin_or_employee?
       @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
     elsif current_user.has_role? (:drsharp)
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Dr Sharp")
@@ -28,7 +28,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-    if current_user.admin? or current_user.has_role? :employee
+    if admin_or_employee?
       @product = Product.friendly.find(params[:id])
     elsif current_user.has_role? (:drsharp)
       @product = Product.friendly.where(:brand_name => "Dr Sharp").find(params[:id])
@@ -46,20 +46,17 @@ class ProductsController < ApplicationController
   end
 
   def new
-    if current_user.admin? or current_user.has_role? :employee
+    if admin_or_employee?
       @product = Product.new
-      @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
-      @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
+      @product.uploads.build
     else
       redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
   end
 
   def edit
-    if current_user.admin? or current_user.has_role? :employee
+    if admin_or_employee?
       @product = Product.friendly.find(params[:id])
-      @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
-      @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
     else
       redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
@@ -67,8 +64,6 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-    @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
-    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: '// Product has been created.' }
@@ -87,6 +82,14 @@ class ProductsController < ApplicationController
         if @product.remove_image == true
           @product.image = nil
           @product.save
+        end
+        @product.uploads.each do |u|
+          if u.remove_file == true
+            u.destroy
+          end
+          if u.file_file_size.blank?
+            u.destroy
+          end
         end
         format.html { redirect_to product_path(params[:id]), notice: '// Product has been updated.' }
         format.json { respond_with_bip(@product) }
@@ -112,6 +115,11 @@ class ProductsController < ApplicationController
   private
     def set_product
       @product = Product.friendly.find(params[:id])
+    end
+
+    def load_prelims
+      @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
+      @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
     end
 
     def product_params

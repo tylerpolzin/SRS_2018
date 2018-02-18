@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   end
   
   def index
-    if current_user.admin? or current_user.has_role? :employee
+    if admin_or_employee?
       @users = User.includes(:profile)
     else
       @users = User.where(:id => current_user)

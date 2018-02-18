@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180214194606) do
+ActiveRecord::Schema.define(version: 20180217233125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,13 +155,11 @@ ActiveRecord::Schema.define(version: 20180214194606) do
   end
 
   create_table "stockmovement_batches", force: :cascade do |t|
-    t.integer "stockmovement_id"
     t.integer "user_id"
     t.string "stockmovement_type"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["stockmovement_id"], name: "index_stockmovement_batches_on_stockmovement_id"
     t.index ["user_id"], name: "index_stockmovement_batches_on_user_id"
   end
 
@@ -176,6 +174,28 @@ ActiveRecord::Schema.define(version: 20180214194606) do
     t.index ["part_id"], name: "index_stockmovements_on_part_id"
     t.index ["product_id"], name: "index_stockmovements_on_product_id"
     t.index ["stockmovement_batch_id"], name: "index_stockmovements_on_stockmovement_batch_id"
+  end
+
+  create_table "upload_batches", force: :cascade do |t|
+    t.text "notes"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "uploads", force: :cascade do |t|
+    t.string "description"
+    t.integer "product_id"
+    t.integer "part_id"
+    t.integer "user_id"
+    t.integer "upload_batch_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
+    t.boolean "remove_file", default: false
   end
 
   create_table "users", force: :cascade do |t|

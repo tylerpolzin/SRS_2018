@@ -26,4 +26,8 @@ class ApplicationController < ActionController::Base
       @current_user = current_user
     end
     
+    def admin_or_employee?
+      current_user.admin? or current_user.has_role? :employee
+    end
+    
 end

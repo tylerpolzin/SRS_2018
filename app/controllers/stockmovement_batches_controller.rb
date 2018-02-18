@@ -2,7 +2,7 @@ class StockmovementBatchesController < ApplicationController
   before_action :set_stockmovement_batch, only: [:show, :edit, :update, :destroy]
 
   def index
-    if current_user.admin? or current_user.has_role? :employee
+    if admin_or_employee?
       @stockmovements = Stockmovement.all
       @stockmovement_batches = StockmovementBatch.all
     elsif current_user.has_role?(:drsharp)
@@ -38,7 +38,7 @@ class StockmovementBatchesController < ApplicationController
   end
 
   def new
-    if current_user.admin? or current_user.has_role? :employee
+    if admin_or_employee?
       @stockmovement_batches = StockmovementBatch.all
       @stockmovements = Stockmovement.all
       @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
