@@ -62,6 +62,30 @@
                                      <% else %>
                                        N/A
                                      <% end %>"
+                data-child-uploads="<table class='table childPartsTable'>
+                                      <thead>
+                                        <tr>
+                                          <th>File Name</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <% if part.uploads.present? %>
+                                          <% part.uploads.each do |upload| %>
+                                            <tr>
+                                              <td><a target='_blank' title='File Size: <%= number_to_human_size(upload.file_file_size, precision: 2) %>' href='<%= upload.file.url(:original, false) %>'><%= upload.file_file_name %></a>
+                                              <% if upload.description.present? %>
+                                                <td><%= upload.description %></td>
+                                              <% else %>
+                                                <td>N/A</td>
+                                              <% end %>
+                                            </tr>
+                                          <% end %>
+                                        <% else %>
+                                          <td colspan='2'>No Files Found</td>
+                                        <% end %>
+                                      </tbody>
+                                    </table>"
                   data-child-orders="Recent Orders Here"
                    data-child-notes="<% if part.active? %>
                                        <p><i class='fa fa-check-square-o' style='color:green'></i> Active&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

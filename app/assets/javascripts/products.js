@@ -64,6 +64,7 @@ $(document).on("turbolinks:load", function() {
     $(this).closest(".row").html("").parent().find("tr:empty").remove();
     var tr = $(".body").find("tr").length;
     if (tr == 1) {
+      console.log("One");
       $(".body").append(
         "<tr class='row hacky hidden'>"+
         "  <td>"+

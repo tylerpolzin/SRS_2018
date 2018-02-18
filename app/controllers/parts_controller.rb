@@ -22,6 +22,7 @@ class PartsController < ApplicationController
   def new
     if admin_or_employee?
     @part = Part.new
+    @part.uploads.build
     else
       redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
@@ -39,7 +40,7 @@ class PartsController < ApplicationController
     @part = Part.new(part_params)
       if @part.save
         Product.find_by(id: @part.product_id).update(has_parts: true)
-        redirect_to product_path(@part.product_id), notice: '// Part was successfully created.'
+        redirect_to part_path(@part), notice: '// Part was successfully created.'
       else
         render :new
       end
@@ -54,7 +55,15 @@ class PartsController < ApplicationController
           @part.image = nil
           @part.save
         end
-        format.html { redirect_to product_path(@part.product_id), notice: '// Part has been updated.' }
+        @part.uploads.each do |u|
+          if u.remove_file == true
+            u.destroy
+          end
+          if u.file_file_size.blank?
+            u.destroy
+          end
+        end
+        format.html { redirect_to part_path(@part), notice: '// Part has been updated.' }
         format.json { respond_with_bip(@part) }
       else
         format.html { render action: :edit }

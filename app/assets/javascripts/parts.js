@@ -251,13 +251,14 @@ $(document).on("turbolinks:load", function() {
     table.page.len($(this).find("option:selected").attr("value")).draw() ;
   });
 
-  function format (attributes, manufacturer, location, upc, orders, notes, dates) {
+  function format (attributes, uploads, manufacturer, location, upc, orders, notes, dates) {
     return ""+
    "<div class='glider'>"+
    "  <table class='part-listing-expando'>"+
    "    <thead>"+
    "      <tr>"+
    "        <th>Additional Attributes</th>"+
+   "        <th>Associated Files</th>"+
    "        <th>Manufacturer</th>"+
    "        <th>Location</th>"+
    "        <th>UPC</th>"+
@@ -269,6 +270,7 @@ $(document).on("turbolinks:load", function() {
    "    <tbody>"+
    "      <tr class='no-table'>"+ // "no-table" class allows single-row expandos to not highlight on hover
    "        <td style='padding:0;'>"+attributes+"</td>"+
+   "        <td style='padding:0;'>"+uploads+"</td>"+
    "        <td>"+manufacturer+"</td>"+
    "        <td>"+location+"</td>"+
    "        <td>"+upc+"</td>"+
@@ -292,12 +294,14 @@ $(document).on("turbolinks:load", function() {
       });
     }
     else {
-      row.child(format(tr.data("child-attributes"), tr.data("child-manufacturer"),
-                                                    tr.data("child-location"),
-                                                    tr.data("child-upc"),
-                                                    tr.data("child-orders"),
-                                                    tr.data("child-notes"),
-                                                    tr.data("child-dates")), "no-padding").show();
+      row.child(format(tr.data("child-attributes"), 
+                       tr.data("child-uploads"),
+                       tr.data("child-manufacturer"),
+                       tr.data("child-location"),
+                       tr.data("child-upc"),
+                       tr.data("child-orders"),
+                       tr.data("child-notes"),
+                       tr.data("child-dates")), "no-padding").show();
       tr.addClass("shown");
       $("div.glider", row.child()).slideDown();
     }

@@ -1,6 +1,7 @@
 class Part < ApplicationRecord
   belongs_to :product
   has_many :stockmovements
+  has_many :uploads, dependent: :destroy
   
   validates :product_id, presence: true
   validates :manufacturer_model_number, presence: true
@@ -13,6 +14,8 @@ class Part < ApplicationRecord
                     :styles => {:medium => "300x300>", :thumb => "100x100>" },
                     :default_url => "No_Image_Found"
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\z/
+  
+  accepts_nested_attributes_for :uploads, :allow_destroy => true
   
   def part_select # "MFR Model Number | Description"
     def a

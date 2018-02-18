@@ -341,6 +341,9 @@ body {
 .nav-side-menu .toggle-btn {
   display: none;
 }
+.sub-menu {
+  padding-left: 0 !important;
+}
 .nav-side-menu ul,
 .nav-side-menu li, .nav-side-menu a li {
   list-style: none;
@@ -376,6 +379,7 @@ body {
   border-left: 3px solid #d19b3d;
   background-color: #4f5b69;
 }
+
 .nav-side-menu ul .sub-menu li.active,
 .nav-side-menu li .sub-menu li.active {
   color: #d19b3d;
@@ -503,10 +507,16 @@ body {
 table.dataTable {
   margin-top: 0 !important;
   thead tr {
-    background-color: #2e353d;
+    background-color: #37495f;
     color: #d8d8d8;
     font-family: 'Quicksand', sans-serif;
     font-size: 0.9em;
+    th {
+      border-right: 1px solid #536882;
+    }
+    th:last-child {
+      border-right: 0;
+    }
   }
   tbody td {
     vertical-align: middle;
@@ -515,6 +525,11 @@ table.dataTable {
 
 table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after { // Fix to remove extra sort indicators in header columns
   display: none;
+}
+
+.dataTables_scrollHead {
+  width: inherit !important;
+  background-color: #37495f;
 }
 
 .dataTables_scrollHeadInner { // Fixes Header column width to be in line with body column width

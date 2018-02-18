@@ -23,6 +23,13 @@
         <tr><td colspan="2" style="text-align:center;">No Attributes Present</td></tr>
       </tbody>
     </table>
+    <table class="table table-bordered" id="showProductPartExtras">
+      <thead></thead>
+      <tbody>
+        <tr><td class="show-part-details" colspan="2">Associated Files</td></tr>
+        <tr><td colspan="2" style="text-align:center;">No Files Found</td></tr>
+      </tbody>
+    </table>
   </div>
   <% @parts.each do |part| %>
     <div class="show-product-part-wrapper" id="wrapper-number-<%= part.id %>">
@@ -61,6 +68,30 @@
             <% end %>
           <% else %>
             <tr><td colspan="2" style="text-align:center;">No Attributes Present</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+      <table class="table table-bordered" id="showProductPartExtras"> <!-- Show Product Uploads -->
+        <thead></thead>
+        <tbody>
+          <tr>
+            <td class="show-product-details" colspan="2">Associated Files</td>
+          </tr>
+          <% if part.uploads.present? %>
+            <% part.uploads.each do |f| %>
+              <tr>
+                <td><%= link_to f.file_file_name, f.file.url(:original, false), target: "_blank", title: "File Size: #{number_to_human_size(f.file_file_size, precision: 2)}" %></td>
+                <td>
+                  <% if f.description.present? %>
+                    <%= f.description %>
+                  <% else %>
+                    No Description
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+              <tr><td style="text-align:center;border-right:2px solid orange;">No Files Found</td></tr>
           <% end %>
         </tbody>
       </table>

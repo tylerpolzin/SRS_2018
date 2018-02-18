@@ -19,6 +19,7 @@
       <ul class="nav nav-tabs">
         <li class="active"><a id="editPartNavTab" href="#edit-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-edit"></i> Edit Part Details</a></li>
         <li><a id="editPartAdditions" href="#edit-part-additions" class="tab-background" data-toggle="tab"><i class="fa fa-asterisk"></i> Edit Additional Attributes</a></li>
+        <li><a id="editPartUploads" href="#edit-part-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file"></i> Edit Associated Files</a></li>
       </ul>
       <div class="defaultTabs">
         <div class="tab-content">
@@ -27,6 +28,9 @@
           </div>
           <div id="edit-part-additions" class="tab-pane fade container">
             <br/><%= render "additions", :f => f %>
+          </div>
+          <div id="edit-part-uploads" class="tab-pane fade"><br/>
+            <br/><%= render "edit_uploads", :f => f %>
           </div>
         </div>
       </div>

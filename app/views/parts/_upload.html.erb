@@ -1,0 +1,18 @@
+<div class="fields">
+  <table class="table newFileContainer">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td>
+          <%= f.file_field :file, hide_label: true %>
+        </td>
+        <td>
+          <%= f.text_field :description, hide_label: true, placeholder: "Ex: Product Manual" %>
+        </td>
+        <td>
+          <%= remove_child_upload_link "Remove", f %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

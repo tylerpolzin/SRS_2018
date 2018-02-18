@@ -91,7 +91,7 @@ class ProductsController < ApplicationController
             u.destroy
           end
         end
-        format.html { redirect_to product_path(params[:id]), notice: '// Product has been updated.' }
+        format.html { redirect_to product_path(@product), notice: '// Product has been updated.' }
         format.json { respond_with_bip(@product) }
       else
         format.html { render action: :edit }

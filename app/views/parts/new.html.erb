@@ -16,6 +16,7 @@
       <ul class="nav nav-tabs">
         <li class="active"><a id="newPartNavTab" href="#new-part-form" class="tab-background" data-toggle="tab"><i class="fa fa-plus-square"></i> Part Details</a></li>
         <li><a id="newPartAdditions" href="#new-part-additions" class="tab-background" data-toggle="tab"><i class="fa fa-asterisk"></i> Additional Attributes</a></li>
+        <li><a id="newPartUploads" href="#new-part-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file"></i> Associated Files</a></li>
       </ul>
       <div class="defaultTabs">
         <div class="tab-content">
@@ -25,9 +26,20 @@
           <div id="new-part-additions" class="tab-pane fade container">
             <br/><%= render "additions", :f => f %>
           </div>
+          <div id="new-part-uploads" class="tab-pane fade"><br/>
+            <a class="add_file_button btn"><i class="fa fa-file"></i> Add File</a>
+            <div class="productFilesTopBorder hidden"></div>
+            <p class="hidden"><%= add_child_link " Add File", :uploads %></p>
+            <div class="productFilesBottomBorder hidden"></div>
+            <%= new_child_fields_template f, :uploads %>
+          </div>
         </div>
       </div>
       <%= f.submit "Create Part", :style => "float:right;" %>
     <% end %>
   </div>
+</div>
+
+<div id="jstemplates">
+  <%= yield :jstemplates %>
 </div>

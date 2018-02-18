@@ -273,6 +273,10 @@
   border-top: 2px solid orange;
 }
 
+#new-part-uploads {
+  padding: 0 20px 0 10px;
+}
+
 //------------------------------------------------------------------------------------------------------
 //                               Part 'EDIT' related CSS                                               |
 //------------------------------------------------------------------------------------------------------
@@ -587,12 +591,17 @@
   border-bottom: 2px solid orange !important;
   margin-bottom: 5px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-  thead tr th {
-    font-size: 1em;
-    font-weight: 200;
-    background-color: #646e78;
-    color: #d8d8d8;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
+  thead tr {
+    th {
+      font-size: 1em;
+      font-weight: bold;
+      background-color: #eceaff;
+      color: black;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
+    }
+    th:last-child {
+      border-right: 0;
+    }
   }
   tbody tr td {
     text-align: center;
@@ -604,11 +613,13 @@
 
 .customPartAttributesTable {
   width: 100%;
+  font-size: 0.9em;
   thead tr th {
     border-bottom: 1px solid black;
-    background-color: white;
+    border-right: 1px solid #ccc;
+    background-color: #fffdea;
     color: black;
-    font-weight: 600;
+    font-weight: bold;
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3)
   }
   tbody tr {

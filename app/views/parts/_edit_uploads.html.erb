@@ -1,0 +1,38 @@
+<div class="container productAttributeContainer" style="width:100%;">
+  <a class="add_file_button btn"><i class="fa fa-file"></i> Add File</a>
+  <div class="productFilesTopBorder"></div>
+  <table class="table" id="productFilesContainer">
+    <thead>
+      <tr>
+        <th>File</th>
+        <th>Description</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @part.uploads.present? %>
+        <%= f.fields_for :uploads, @part.uploads.each do |u| %>
+          <tr>
+            <td>
+              <%= u.text_field :file_file_name, hide_label: true, readonly: true, :style => "background-color:white;" %>
+            </td>
+            <td>
+              <%= u.text_field :description, hide_label: true %>
+            </td>
+            <td>
+              <%= u.check_box :remove_file, :checked => false, label: "Mark for deletion" %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr><td colspan="3" style="text-align:center;">No Files Found</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+  <p class="hidden"><%= add_child_link " Add File", :uploads %></p>
+  <div class="productFilesBottomBorder"></div>
+</div>
+<%= new_child_fields_template f, :uploads %>
+<div id="jstemplates">
+  <%= yield :jstemplates %>
+</div>
