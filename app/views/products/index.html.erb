@@ -264,11 +264,11 @@
               <% if product.details.present? %><% product.details.try(:each) do |key, value| %><%= key %> : <%= value %> | <% end %><% end %>
             </td>
             <% if current_user.admin? %>
-              <td><%= best_in_place product, :has_parts, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
-              <td><%= best_in_place product, :active, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
-              <td><%= best_in_place product, :store_orderable, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
-              <td><%= best_in_place product, :warranty_orderable, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
-              <td><%= best_in_place product, :ecomm_sku, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
+              <td><%= product.has_parts %></td>
+              <td><%= product.active %></td>
+              <td><%= product.store_orderable %></td>
+              <td><%= product.warranty_orderable %></td>
+              <td><%= product.ecomm_sku %></td>
               <td><% if product.quantity_on_hand > 0 %>true<% else %>false<% end %></td>
             <% end %>
           </tr>

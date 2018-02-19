@@ -12,6 +12,7 @@
     <tbody>
       <% if @part.uploads.present? %>
         <%= f.fields_for :uploads, @part.uploads.each do |u| %>
+          <%= hidden_field :user_id, :value => current_user.id %>
           <tr>
             <td>
               <%= u.text_field :file_file_name, hide_label: true, readonly: true, :style => "background-color:white;" %>

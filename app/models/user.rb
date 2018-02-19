@@ -6,6 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   has_one :profile
   belongs_to :assignment, required: false
+  belongs_to :upload, required: false
   
   after_create :build_profile
   # after_create :assign_default_role

@@ -78,7 +78,7 @@
             <%= link_to user_path(id: current_user.id), method: :get do %>
               <li><i class="fa fa-user-circle-o fa-lg"></i> My Dashboard</li>
             <% end %>
-            <% if current_user.admin? %>
+            <% if current_user.admin? and development? %>
               <%= link_to new_assignment_path, method: :get do %>
                 <li><i class="fa fa-thumb-tack fa-lg"></i> New Assignment</li>
               <% end %>
@@ -112,6 +112,11 @@
                 <%= link_to new_part_path, method: :get do %>
                   <li>Create New Part</li>
                 <% end %>
+                <% if current_user.admin? %>
+                  <%= link_to batch_process_path, method: :get do %>
+                    <li>Batch Process Products</li>
+                  <% end %>
+                <% end %>
               </ul>
             <% else %>
               <%= link_to products_path do %>
@@ -121,11 +126,6 @@
             <% if admin_or_employee? %>
               <%= link_to inventory_adjustments_path, method: :get do %>
                 <li><i class="fa fa-exchange fa-lg"></i> Inventory Adjustments</li>
-              <% end %>
-              <% if current_user.admin? %>
-                <%= link_to inventory_history_path, method: :get do %>
-                  <li><i class="fa fa-exchange fa-lg"></i> Inventory History</li>
-                <% end %>
               <% end %>
             <% else %>
               <%= link_to inventory_history_path, method: :get do %>
@@ -144,7 +144,10 @@
             <!--<li><a><i class="fa fa-calculator fa-lg"></i> Shipment Calculator</a></li>-->
             <% if admin_or_employee? %>
               <%= link_to users_path do %>
-                <li><i class="fa fa-users fa-lg"></i> User List</li>
+                <li><i class="fa fa-users fa-lg"></i> User Index</li>
+              <% end %>
+              <%= link_to uploads_path do %>
+                <li><i class="fa fa-file fa-lg"></i> Master File List</li>
               <% end %>
             <% end %>
             <!--<li><a><i class="fa fa-sitemap fa-lg"></i> Site Map</a></li>-->
