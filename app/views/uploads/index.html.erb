@@ -1,37 +1,24 @@
 <% @title = "SRS Portal | Master File List" %>
 <div class="defaultDiv" id="uploadsDiv">
   <p class="defaultDivHeader">Master File List</p>
-  <div class="uploadsTable">
-    <table id="uploadsDataTable" class="display" style="width:100%">
-      <thead>
-        <tr>
-          <th>Upload ID</th>
-          <th>File Name</th>
-          <th>Description</th>
-          <th>File Size</th>
-          <th>Association</th>
-          <th>Uploaded By</th>
-          <th>Created At</th>
-          <th>Last Modified At</th>
-        </tr>
-      </thead>
-      <tbody class="uploads-table">
-        <% @uploads.each do |upload| %>
-          <tr>
-            <td><%= upload.id %></td>
-            <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank" %></td>
-            <td><%= upload.description %></td>
-            <td><%= number_to_human_size(upload.file_file_size, precision: 2) %></td>
-            <td>
-              <%= link_to upload.product.product_select, product_path(id: upload.product), method: :get, title: "View Product Details (ID: #{upload.product_id})" if upload.product_id? %>
-              <%= link_to upload.part.part_select, part_path(id: upload.part), method: :get, title: "View Part Details (ID: #{upload.part_id})" if upload.part_id? %>
-            </td>
-            <td><%= upload.user.header_name %></td>
-            <td><%= upload.created_at.strftime('%F') %></td>
-            <td><%= upload.updated_at.strftime('%F') %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="container defaultForm">
+      <ul class="nav nav-tabs">
+        <li class="active"><a id="uploadsIndex" href="#uploads-index" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf"></i> Files</a></li>
+        <li><a id="productUploadsIndex" href="#products-index" class="tab-background" data-toggle="tab"><i class="fa fa-file-image"></i> Product Images</a></li>
+        <li><a id="partUploadsIndex" href="#parts-index" class="tab-background" data-toggle="tab"><i class="fa fa-file-image"></i> Part Images</a></li>
+      </ul>
+      <div class="defaultTabs">
+        <div class="tab-content">
+          <div id="uploads-index" class="tab-pane fade in active">
+            <%= render "uploads_index" %>
+          </div>
+          <div id="products-index" class="tab-pane fade">
+            <%= render "products_index" %>
+          </div>
+          <div id="parts-index" class="tab-pane fade">
+            <%= render "parts_index" %>
+          </div>
+        </div>
+      </div>
   </div>
 </div>

@@ -1,0 +1,28 @@
+<div class="partUploadsTable">
+  <table id="partUploadsDataTable" class="display" style="width:100%;">
+    <thead>
+      <tr>
+        <th>Part ID</th>
+        <th>Part Description</th>
+        <th>File Name</th>
+        <th>File Type</th>
+        <th>Original File Size</th>
+        <th>Created At</th>
+        <th>Last Modified At</th>
+      </tr>
+    </thead>
+    <tbody class="part-uploads-table">
+      <% @parts.each do |part| %>
+        <tr>
+          <td><%= part.id %></td>
+          <td><%= link_to part.part_select, part_path(part), method: :get, title: "View Part Details (ID: #{part.id})" %></td>
+          <td><%= link_to part.image.original_filename, part.image.url, target: "_blank", title: "View Full Size Image" %></td>
+          <td><%= part.image_content_type.upcase %></td>
+          <td><%= number_to_human_size(part.image_file_size, precision: 2) %></td>
+          <td><%= part.created_at.strftime('%F') %></td>
+          <td><%= part.updated_at.strftime('%F') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

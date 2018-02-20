@@ -29,13 +29,13 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav-collapse">
               <span class="sr-only">Toggle navigation</span>
             </button>
-            <%= link_to authenticated_root_path, class: "navbar-brand" do %>
+            <%= link_to authenticated_root_path, class: "navbar-brand navbar-sitelink" do %>
               Strategic Retail Solutions
             <% end %>
-            <span class="navbar-brand" style="padding-left:10px">//&nbsp;&nbsp;<%= @current_user.header_name %></span>
-            <span class="navbar-brand" style="padding-left:10px;color:#ff8585;"><%= @devmode %></span>
+            <span class="navbar-brand navbar-user">//&nbsp;&nbsp;<%= @current_user.header_name %></span>
+            <span class="navbar-brand navbar-devmode"><%= @devmode %></span>
             <span class="turbolinks-progress-bar"></span>
-            <span class="navbar-brand navbar-animated navbar-fade" style="margin-left:-30px;color:orange;"><%= notice %></span>
+            <span class="navbar-brand navbar-animated navbar-fade navbar-notice"><%= notice %></span>
           </div>
           <div class="collapse navbar-collapse" id="main-nav-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -66,11 +66,11 @@
   <!--Sidebar Navigation-->
       <nav class="nav-side-menu">
         <% if current_user.admin? %>
-          <div class="brand">Admin Portal</div>
+          <div class="brand no-select">Admin Portal</div>
         <% elsif current_user.has_role? :employee %>
-          <div class="brand">Employee Portal</div>
+          <div class="brand no-select">Employee Portal</div>
         <% else %>
-          <div class="brand">Vendor Portal</div>
+          <div class="brand no-select">Vendor Portal</div>
         <% end %>
         <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
         <div class="menu-list">

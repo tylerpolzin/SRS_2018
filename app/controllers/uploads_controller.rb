@@ -5,6 +5,8 @@ class UploadsController < ApplicationController
   # GET /uploads.json
   def index
     @uploads = Upload.all
+    @products = Product.where.not(:image_file_name => nil)
+    @parts = Part.where.not(:image_file_name => nil)
   end
 
   # GET /uploads/1

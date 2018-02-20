@@ -12,7 +12,7 @@
       </li>
       <!--<li><a id="showTaskForm" href="#show-task-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Tasks</a></li>-->
       <% if current_user.admin? and current_user == @user %>
-        <li class="active"><a id="assignmentForm" href="#dashboard-assignment-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Website Assignments</a></li>
+        <li class="active"><a id="assignmentForm" href="#dashboard-assignment-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Assignments</a></li>
       <% end %>
       <!--<li><a id="showFilesForm" href="#show-files-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Files</a></li>-->
       <% if !current_user.admin? %>
