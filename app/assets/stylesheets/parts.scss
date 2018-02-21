@@ -378,6 +378,13 @@
   }
 }
 
+.part-belongs-to {
+  padding: 0 !important;
+  select, span {
+    width: 100% !important;
+  }
+}
+
 .show-image {
   font-family: 'Abel', sans-serif;
   font-weight: bold;
@@ -512,6 +519,14 @@
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
 }
 
+.part-table-product-search {
+  margin-left: 10px;
+  font-family: 'Abel', sans-serif;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+}
+
 // Hacky fix to remove the "searchable" column because removing the column in the DataTables JS isn't working
 #partsDataTable_wrapper {
   .dt-buttons .dt-button-collection .dt-button:nth-child(16) {
@@ -627,5 +642,22 @@
   }
   tbody tr:last-child {
     border-bottom: 0;
+  }
+}
+
+.parts_products {
+  padding: 0 !important;
+  table tbody tr {
+    background-color: #ffffff00 !important;
+    td {
+      border-right: 0 !important;
+      border-bottom: 1px solid #ccc !important;
+      &:hover {
+        background-color: #ffffff00 !important;
+      }
+    }
+  }
+  table tbody tr:last-child td {
+    border-bottom: 0 !important;
   }
 }

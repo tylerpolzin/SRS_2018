@@ -23,7 +23,13 @@
           <th></th>
         </tr>
       </thead>
-      <div class="partTableChildren" data-child-filter="<% @products.each do |pr| %><option name='<%= pr.manufacturer_model_number %>' value='<%= pr.id %>'><%= pr.product_select_with_model %></option><% end %>"></div>
+      <div class="partTableChildren" data-child-filter="
+        <% @parts.each do |part| %>
+          <% part.products.each do |product| %>
+            <option name='<%= product.manufacturer_model_number %>' value='<%= product.id %>'><%= product.product_select_with_model %></option>
+          <% end %>
+        <% end %>">
+      </div>
       <tbody class="part-table">
         <% @parts.each do |part| %>
           <tr
@@ -47,8 +53,8 @@
                                         <% end %>
                                       </tbody>
                                     </table>"
-            data-child-manufacturer="<% if part.product.vendor_name.present? %>
-                                       <%= part.product.vendor_name %>
+            data-child-manufacturer="<% if part.product_vendor_name.present? %>
+                                       <%= part.product_vendor_name %>
                                      <% else %>
                                        N/A
                                      <% end %>"
@@ -118,13 +124,28 @@
               <% end %>
             </td>
             <td>
-              <% if part.product.brand_name.present? %>
-                <%= part.product.brand_name %>
+              <% if part.product_brand_name.present? %>
+                <%= part.product_brand_name %>
               <% else %>
                 N/A
               <% end %>
             </td>
-            <td><%= link_to part.product.model_select, product_path(id: part.product), method: :get, title: "View Product Details (ID: #{part.product.id})" %></td>
+            <td class="parts_products">
+              <% if part.products.present? %>
+                <table class="table">
+                  <thead></thead>
+                  <tbody>
+                    <% part.products.each do |product| %>
+                      <tr>
+                        <td><%= link_to product.model_select, product_path(product), method: :get, title: "View Product Details (ID: #{product.id})" %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              <% else %>
+                <p>No Associated Products</p>
+              <% end %>
+            </td>
             <td>
               <% if part.manufacturer_model_number.present? %>
                 <%= link_to part.manufacturer_model_number, part_path(id: part), method: :get, title: "View Part Details (ID: #{part.id})" %>
@@ -182,7 +203,7 @@
               <% end %>
             </td>
             <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
-              <% if part.product.vendor_name.present? %><%= part.product.vendor_name %><% end %> | 
+              <% if part.product_vendor_name.present? %><%= part.product_vendor_name %><% end %> | 
               <% if part.location.present? %><%= part.location %><% end %> | 
               <% if part.upc.present? %><%= part.upc %><% end %> | 
               <% if part.active? %>Active | <% else %>Not Active<% end %> | 

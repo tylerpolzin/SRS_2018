@@ -4,7 +4,6 @@ class PartsController < ApplicationController
   def index
     if admin_or_employee?
       @parts = Part.all
-      @products = Product.select(:id, :manufacturer_model_number, :description, :brand_name).distinct.where(:has_parts => true)
     else
       redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
@@ -16,13 +15,15 @@ class PartsController < ApplicationController
     else
       redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
-    @stockmovements = Stockmovement.order(created_at: :desc).where(:product_id => params[:id]).limit(20)
+    @stockmovements = Stockmovement.order(created_at: :desc).where(:part_id => @part).limit(20)
   end
 
   def new
     if admin_or_employee?
-    @part = Part.new
-    @part.uploads.build
+      @part = Part.new
+      @part.uploads.build
+      @part.products_parts.build
+      @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
     else
       redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
@@ -31,6 +32,8 @@ class PartsController < ApplicationController
   def edit
     if admin_or_employee?
       @part = Part.friendly.find(params[:id])
+      @part.products_parts.build
+      @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
     else
       redirect_to authenticated_root_path, notice: "// You can't do that!"
     end
@@ -38,19 +41,17 @@ class PartsController < ApplicationController
 
   def create
     @part = Part.new(part_params)
-      if @part.save
-        Product.find_by(id: @part.product_id).update(has_parts: true)
-        redirect_to part_path(@part), notice: '// Part was successfully created.'
-      else
-        render :new
-      end
+    if @part.save
+      redirect_to part_path(@part), notice: '// Part was successfully created.'
+    else
+      render :new
+    end
   end
 
   def update
     @part = Part.friendly.find(params[:id])
     respond_to do |format|
       if @part.update_attributes(part_params)
-        Product.find_by(id: @part.product_id).update(has_parts: true)
         if @part.remove_image == true
           @part.image = nil
           @part.save
@@ -76,7 +77,7 @@ class PartsController < ApplicationController
     if current_user.admin?
     @part.destroy
     respond_to do |format|
-      format.html { redirect_to parts_url, notice: 'Part was successfully destroyed.' }
+      format.html { redirect_to parts_url, notice: 'Part was successfully deleted.' }
       format.json { head :no_content }
     end
     else

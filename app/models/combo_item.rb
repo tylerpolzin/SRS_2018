@@ -1,0 +1,2 @@
+class ComboItem < ApplicationRecord
+end

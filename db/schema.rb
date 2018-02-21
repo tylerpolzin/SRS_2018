@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180217233125) do
+ActiveRecord::Schema.define(version: 20180221024858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,24 @@ ActiveRecord::Schema.define(version: 20180217233125) do
     t.index ["user_id"], name: "index_assignments_on_user_id"
   end
 
+  create_table "combo_items", force: :cascade do |t|
+    t.string "model_number"
+    t.string "description"
+    t.string "upc"
+    t.decimal "vendor_cost", default: "0.0"
+    t.decimal "retail_cost", default: "0.0"
+    t.decimal "shipping_cost", default: "0.0"
+    t.boolean "active", default: true
+    t.boolean "remove_image", default: false
+    t.text "notes"
+    t.hstore "details"
+    t.string "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["details"], name: "index_combo_items_on_details", using: :gin
+    t.index ["slug"], name: "index_combo_items_on_slug"
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -41,7 +59,6 @@ ActiveRecord::Schema.define(version: 20180217233125) do
   end
 
   create_table "parts", force: :cascade do |t|
-    t.integer "product_id"
     t.string "manufacturer_model_number"
     t.string "srs_sku"
     t.boolean "store_orderable", default: true
@@ -75,7 +92,6 @@ ActiveRecord::Schema.define(version: 20180217233125) do
     t.integer "max_quantity", default: 0
     t.string "slug"
     t.index ["details"], name: "index_parts_on_details", using: :gin
-    t.index ["product_id"], name: "index_parts_on_product_id"
     t.index ["slug"], name: "index_parts_on_slug"
   end
 
@@ -103,7 +119,6 @@ ActiveRecord::Schema.define(version: 20180217233125) do
     t.decimal "retail_cost", default: "0.0"
     t.decimal "shipping_cost", default: "0.0"
     t.boolean "active", default: true
-    t.boolean "has_parts", default: false
     t.string "image_file_name"
     t.string "image_content_type"
     t.integer "image_file_size"
@@ -117,6 +132,13 @@ ActiveRecord::Schema.define(version: 20180217233125) do
     t.string "slug"
     t.index ["details"], name: "index_products_on_details", using: :gin
     t.index ["slug"], name: "index_products_on_slug"
+  end
+
+  create_table "products_parts", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "part_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "profiles", force: :cascade do |t|

@@ -69,7 +69,7 @@ class StockmovementBatchesController < ApplicationController
   def update
     respond_to do |format|
       if @stockmovement_batch.update(stockmovement_batch_params)
-        format.html { redirect_to @stockmovement_batch, notice: 'Stockmovement batch was successfully updated.' }
+        format.html { redirect_to inventory_adjustments_path, notice: 'Stockmovement batch was successfully updated.' }
         format.json { respond_with_bip(@stockmovement_batch) }
       else
         format.html { render :edit }
@@ -82,7 +82,7 @@ class StockmovementBatchesController < ApplicationController
     if current_user.admin?
       @stockmovement_batch.destroy
       respond_to do |format|
-        format.html { redirect_to stockmovement_batches_url, notice: 'Stockmovement batch was successfully destroyed.' }
+        format.html { redirect_to inventory_adjustments_path, notice: 'Stockmovement batch was successfully destroyed.' }
         format.json { head :no_content }
       end
     else

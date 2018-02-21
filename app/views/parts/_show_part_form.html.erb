@@ -1,7 +1,3 @@
-<div class="show-part-top">
-  <p class="show-part-brand-name"><%= @part.product.brand_name %></p>
-  <p class="show-part-description"><%= @part.description %></p>
-</div>
 <div id="show-part-wrapper">
   <div class="show-image">
     <% if @part.image.present? %>
@@ -45,6 +41,30 @@
     <thead></thead>
     <tbody>
       <tr>
+        <td class="show-product-details" colspan="2">Belongs To Product<% if @part.products.count > 1 %>s<% end %></td>
+      </tr>
+      <% if @part.products.present? %>
+        <% @part.products.each do |product| %>
+          <tr>
+            <td><%= link_to product.manufacturer_model_number, product_path(product), method: :get %></td>
+            <td>
+              <% if product.description.present? %>
+                <%= product.description %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+          <tr><td style="text-align:center;border-right:2px solid orange;">No Associated Products</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+  <table class="table table-bordered" id="showProductExtras"> <!-- Show Product Uploads -->
+    <thead></thead>
+    <tbody>
+      <tr>
         <td class="show-product-details" colspan="2">Associated Files</td>
       </tr>
       <% if @part.uploads.present? %>
@@ -55,7 +75,7 @@
               <% if f.description.present? %>
                 <%= f.description %>
               <% else %>
-                No Description
+                N/A
               <% end %>
             </td>
           </tr>
@@ -75,14 +95,10 @@
       </tr>
     <% end %>
     <tr class=<%= "firstRowFix" if !current_user.admin? or !current_user.has_role? :employee %>>
-      <td>Belongs To</td>
-      <td><%= link_to @part.product.model_select, product_path(id: @part.product), method: :get %></td>
-    </tr>
-    <tr>
       <td>Manufacturer</td>
       <td>
-        <% if @part.product.vendor_name.present? %>
-          <%= @part.product.vendor_name %>
+        <% if @part.product_vendor_name.present? %>
+          <%= @part.product_vendor_name %>
         <% else %>
           N/A
         <% end %>
@@ -111,8 +127,8 @@
     <tr>
       <td>Brand Name</td>
       <td>
-        <% if @part.product.brand_name.present? %>
-          <%= @part.product.brand_name %>
+        <% if @part.product_brand_name.present? %>
+          <%= @part.product_brand_name %>
         <% else %>
           N/A
         <% end %>

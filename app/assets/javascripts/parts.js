@@ -11,9 +11,6 @@ $(document).on("turbolinks:load", function(){
   $(".newPartProductSearch").select2({
     theme:"bootstrap",
     placeholder: "Select Product...",
-    containerCssClass: "select2SearchCss",
-    selectOnClose: true,
-    dropdownAutoWidth: false
   });
 
   $("#builder").closest(".row").html("");
@@ -96,8 +93,18 @@ $(document).on("turbolinks:load", function() {
 });
 
 //------------------------------------------------------------------------------------------------------
-//                               Product "SHOW" related CSS                                            |
+//                               Part "SHOW" related CSS                                               |
 //------------------------------------------------------------------------------------------------------
+
+$(document).on("turbolinks:load", function(){
+  $(".partBelongsToSelect").select2({
+    theme:"bootstrap",
+    placeholder: "Multiple Products...",
+    selectOnClose: false,
+    allowClear: true,
+    minimumResultsForSearch: 20
+  });
+});
 
 //------------------------------------------------------------------------------------------------------
 //                               Part "INDEX" related CSS                                              |
@@ -162,8 +169,6 @@ $(document).on("turbolinks:load", function() {
                   }
 
                 ],
-                "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
-                "pageLength": 50,
                 "bJQueryUI": true,
                 "columnDefs": [
                   {
@@ -176,7 +181,7 @@ $(document).on("turbolinks:load", function() {
                   }
                 ],
                 "order": [[2, "asc"]],
-                "oLanguage": {"sZeroRecords": "No parts to display for this view"}
+                "oLanguage": {"sZeroRecords": "No parts to display for this view"},
               });
 
   table.page.len(50000).draw();
@@ -236,12 +241,8 @@ $(document).on("turbolinks:load", function() {
 
   // "Filter By Product" dropdown executes a search of a given product by searching Column 3, "MFR Product #"
   $("#partTableProductSearch").on("change", function() {
-    $("div.glider-table").slideUp(300);
-    setTimeout(function() {
       table.column(3).search("").draw();
       table.column(3).search($("#partTableProductSearch").find("option:selected").attr("name")).draw();
-    }, 280);
-    $("div.glider-table").slideDown(300);
   });
 
   $("#partTableSearch").keyup(function(){
@@ -250,7 +251,16 @@ $(document).on("turbolinks:load", function() {
   $("#partTableLength").on("change", function(){
     table.page.len($(this).find("option:selected").attr("value")).draw() ;
   });
-
+  
+  $("#partTableProductSearch").select2({
+    theme:"bootstrap",
+    placeholder: "Filter by Product...",
+    containerCssClass: "part-table-product-search",
+    selectOnClose: false,
+    dropdownAutoWidth : true,
+    minimumResultsForSearch: 10
+  });
+  
   function format (attributes, uploads, manufacturer, location, upc, orders, notes, dates) {
     return ""+
    "<div class='glider'>"+

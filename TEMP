@@ -1,115 +1,29 @@
-          data-child-type="<% i.stockmovements.each do |s| %>
-                             <% if s.is_product %>
-                               <p>Product</p>
-                             <% elsif s.is_part %>
-                               <p>Part</p>
-                              <% end %>
-                           <% end %>"
-          data-child-model="<% i.stockmovements.each do |s| %>
-                              <% if s.is_product %>
-                                <% if s.product.present? %>
-                                  &lt;p&gt;&lt;a href=&quot;/products/<%= s.product_id %>&quot;&gt;<%= s.product.manufacturer_model_number %>&lt;/a&gt;&lt;/p&gt;
-                                <% else %>
-                                  <p></p>
-                                <% end %>
-                              <% elsif s.is_part %>
-                                <% if s.part.present? %>
-                                  &lt;p&gt;&lt;a href=&quot;/parts/<%= s.part_id %>&quot;&gt;<%= s.part.manufacturer_model_number %>&lt;/a&gt;&lt;/p&gt;
-                                <% else %>
-                                  <p></p>
-                                <% end %>
-                              <% else %>
-                                <p>No Sku's Present</p>
-                              <% end %>
-                            <% end %>"
-          data-child-description="<% i.stockmovements.each do |s| %>
-                                    <% if s.is_product %>
-                                      <% if s.product.present? %>
-                                        <p><%= s.product.description %></p>
-                                      <% else %>
-                                        <p>Product no longer exists</p>
-                                      <% end %>
-                                    <% elsif s.is_part %>
-                                      <% if s.part.present? %>
-                                        <p><%= s.part.description %></p>
-                                      <% else %>
-                                        <p>Part no longer exists</p>
-                                      <% end %>
-                                    <% else %>
-                                      <p>No Sku's Present</p>
-                                    <% end %>
-                                  <% end %>"
-          data-child-adjust_quantity="<% i.stockmovements.each do |aq| %>
-                                        <p class='quantities'><%= aq.adjust_quantity_plus %></p>
-                                      <% end %>"
-          data-child-new_quantity="<% i.stockmovements.each do |q| %>
-                                      <p class='quantities'><%= q.quantity %></p>
-                                    <% end %>"
-          data-child-undo="<% if current_user.admin? %>
-                             <td>
-                               <% i.stockmovements.each do |u| %>
-                                 <p class='deleteStockmovement bootbox-confirm' id='<%= u.id %>'>Undo</p>
-                               <% end %>
-                             </td>
-                           <% end %>"
-                           
-.adjust-history-expando {
-  width: 95%;
-  padding-top: 0;
-  padding-bottom: 5px;
-  border-top: 0;
-  border-right: 2px solid orange;
-  border-left: 2px solid orange;
-  border-bottom: 2px solid orange !important;
-  margin-bottom: 5px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-  tr:first-child td {
-    font-size: 1em;
-    font-weight: 200;
-    background-color: #646e78;
-    color: #d8d8d8;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
-  }
-  tr:last-child td {
-    text-align: center;
-    vertical-align: top;
-    border-right: 1px solid #ddd;
-    padding: 0;
-    margin: 0;
-    p {
-      border-bottom: 1px solid #ddd;
-      padding: 5px 0 5px 0;
-      margin: 0;
-    }
-    p:last-child {
-      border-bottom: 0;
-      padding: 5px 0 5px 0;
-      margin: 0;
-    }
-  }
-  tr:last-child td:last-child {
-    padding: 5px 0 5px 0;
-  }
-}
 
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= hidden_field_tag "part[product_ids][]", nil %>
+    <% @products.each do |product| %>
+      <%= check_box_tag "part[product_ids][]", product.id, @part.product_ids.include?(product.id), id: dom_id(product) %>
+      <%= label_tag dom_id(product), product.name %><br>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
 
-   "<div class='glider'>"+
-   "  <table class='adjust-history-expando'>"+
-   "    <tr>"+
-   "      <td>Item Type</td>"+
-   "      <td>Model #</td>"+
-   "      <td>Description</td>"+
-   "      <td>Difference</td>"+
-   "      <td>New Quantity</td>"+undo_header+
-   "      <td>Notes</td>"+
-   "    </tr>"+
-   "    <tr>"+
-   "      <td>"+type+"</td>"+
-   "      <td>"+model+"</td>"+
-   "      <td>"+description+"</td>"+
-   "      <td>"+adjust_quantity+"</td>"+
-   "      <td>"+new_quantity+"</td>"+undo+
-   "      <td>"+notes+"</td>"+
-   "    </tr>"+
-   "  </table>"+
-   "</div>";
+<%= bootstrap_form_for @part, url: parts_path, method: :post, :html => { :multipart => true } do |f| %>
+  <%= f.fields_for(@products_parts) do |ff| %>
+    <%= ff.collection_select(:product_ids, @product, :id, :product_select_with_model,
+                             {:placeholder => "Select Product...", hide_label: true, :selected => @part.products.map(&:id)},
+                             {:multiple => true, :class => 'newPartProductSearch', :style => "width:100%;"}) %>
+  <% end %>
+  <%= f.submit "Create Part", :style => "float:right;" %>
+<% end %>

@@ -1,9 +1,10 @@
 class Part < ApplicationRecord
-  belongs_to :product
+  has_many :products_parts
+  has_many :products, through: :products_parts
   has_many :stockmovements
   has_many :uploads, dependent: :destroy
   
-  validates :product_id, presence: true
+  # validates :product_id, presence: true
   validates :manufacturer_model_number, presence: true
   validates_uniqueness_of :manufacturer_model_number
   
@@ -16,6 +17,7 @@ class Part < ApplicationRecord
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\z/
   
   accepts_nested_attributes_for :uploads, :allow_destroy => true
+  accepts_nested_attributes_for :products_parts, :allow_destroy => true
   
   def part_select # "MFR Model Number | Description"
     def a
@@ -65,6 +67,68 @@ class Part < ApplicationRecord
       end
     end
     quantity
+  end
+
+  def product_brand_name
+    name = []
+    if self.products.exists?
+      self.products.last(1).each do |product|
+        name = product.brand_name
+      end
+    else
+      name = "N/A"
+    end
+    name
+  end
+  
+  def product_vendor_name
+    name = []
+    if self.products.exists?
+      self.products.last(1).each do |product|
+        name = product.vendor_name
+      end
+    else
+      name = "N/A"
+    end
+    name
+  end
+  
+  def product_model_select
+    name = []
+    if self.products.exists?
+      self.products.last(1).each do |product|
+        def a
+          if product.manufacturer_model_number.present?
+            "#{product.manufacturer_model_number}"
+          else
+            if product.srs_sku.present?
+              "#{product.srs_sku}"
+            else
+              "No Model Number Present"
+            end
+          end
+        end
+        def b
+          if product.description.present?
+            " | #{product.description}"
+          else
+            " | No Description Present"
+          end
+        end
+        name = a+b
+      end
+    else
+      name = "N/A"
+    end
+  end
+  
+  def product_id
+    id = []
+    if self.products.exists?
+      self.products.last(1).each do |product|
+        id = product.id
+      end
+    end
   end
 
   def qty_last_updated

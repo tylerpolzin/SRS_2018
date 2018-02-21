@@ -104,7 +104,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <% if product.has_parts? %>
+                                  <% if product.parts.exists? %>
                                     <% product.parts.each do |part| %>
                                       <tr>
                                         <% if part.manufacturer_model_number.present? %>
@@ -254,7 +254,7 @@
               <% end %>
             </td>
             <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
-              <% if product.has_parts? %><% product.parts.each do |part| %>
+              <% if product.parts.exists? %><% product.parts.each do |part| %>
               <% if part.manufacturer_model_number.present? %><%= part.manufacturer_model_number %><% end %> | 
               <% if part.description.present? %><%= part.description %><% end %> | 
               <% end %><% end %> | 
@@ -264,7 +264,13 @@
               <% if product.details.present? %><% product.details.try(:each) do |key, value| %><%= key %> : <%= value %> | <% end %><% end %>
             </td>
             <% if current_user.admin? %>
-              <td><%= product.has_parts %></td>
+              <td>
+                <% if product.parts.exists? %>
+                  true
+                <% else %>
+                  false
+                <% end %>
+              </td>
               <td><%= product.active %></td>
               <td><%= product.store_orderable %></td>
               <td><%= product.warranty_orderable %></td>

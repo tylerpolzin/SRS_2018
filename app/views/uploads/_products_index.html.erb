@@ -16,7 +16,7 @@
         <tr>
           <td><%= product.id %></td>
           <td><%= link_to product.product_select, product_path(product), method: :get, title: "View Product Details (ID: #{product.id})" %></td>
-          <td><%= link_to product.image.original_filename, product.image.url, target: "_blank", title: "View Full Size Image" %></td>
+          <td><%= link_to product.image.original_filename, product.image.url, target: "_blank", title: "View Full Size Image" %> -- <%= link_to "(m)", product.image.url(:medium), target: "_blank", title: "View Medium Size Image" %> <%= link_to "(s)", product.image.url(:thumb), target: "_blank", title: "View Small Size Image" %></td>
           <td><%= product.image_content_type.upcase %></td>
           <td><%= number_to_human_size(product.image_file_size, precision: 2) %></td>
           <td><%= product.created_at.strftime('%F') %></td>

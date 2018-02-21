@@ -1,0 +1,17 @@
+<%= form_with(model: combo_item, local: true) do |form| %>
+  <% if combo_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(combo_item.errors.count, "error") %> prohibited this combo_item from being saved:</h2>
+
+      <ul>
+      <% combo_item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

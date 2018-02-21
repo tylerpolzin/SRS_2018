@@ -3,10 +3,12 @@
     <thead></thead>
     <tbody>
       <tr>
-        <td>Associated Product</td>
+        <td>Associated Product(s)</td>
         <td>
-          <%= f.collection_select(:product_id, Product.order(brand_name: :asc).order(manufacturer_model_number: :asc), :id, :product_select_with_model, {:include_blank => "Select Product...", hide_label: true}, {:class => 'newPartProductSearch', :style => "width:100%;"}) %>
-          </td>
+          <%= f.collection_select(:product_ids, @products, :id, :product_select_with_model,
+                                  {include_blank: false, :include_hidden => false, hide_label: true, :selected => @part.products.map(&:id)},
+                                  {:multiple => true, :class => "newPartProductSearch", :style => "width:100%;"}) %>
+        </td>
       </tr>
       <tr>
         <td>MFR Model Number</td>

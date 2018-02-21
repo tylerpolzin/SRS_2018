@@ -34,6 +34,8 @@
 // Default blue textured background
 body {
   background: url("main-content-bg-3.jpg") #122648;
+  min-height: 100vh;
+  width: 100%; // probably you won't need the width.
 }
 
 .silverBack {
@@ -178,6 +180,10 @@ body {
 
 .select2-container--bootstrap .select2-selection--single .select2-selection__arrow {
   display: none;
+}
+
+.select2-search--inline, .select2-search__field {
+  width: 100% !important;
 }
 
 // Default Div Header

@@ -207,7 +207,6 @@ $(document).on("turbolinks:load", function() {
                     ]
                   }
                 ],
-                "pageLength": 100,
                 "bJQueryUI": true,
                 "columnDefs": [
                   {

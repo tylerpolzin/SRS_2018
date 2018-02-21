@@ -1,8 +1,8 @@
-<% if @parts.present? %>
+<% if @product.parts.present? %>
   <div class="show-product-part-top">
     <select id="productShowPartSelect" class="form-control">
       <option value="0" selected disabled>Select Part...</option>
-      <% @parts.each do |part| %>
+      <% @product.parts.each do |part| %>
         <option value="<%= part.id %>"><%= part.part_select %></option>
       <% end %>
     </select>
@@ -31,7 +31,7 @@
       </tbody>
     </table>
   </div>
-  <% @parts.each do |part| %>
+  <% @product.parts.each do |part| %>
     <div class="show-product-part-wrapper" id="wrapper-number-<%= part.id %>">
       <div class="show-product-part-image">
           <% if part.image.present? %>
@@ -104,7 +104,7 @@
     </div>
   </div>
 <% end %>
-<% if @parts.present? %>
+<% if @product.parts.present? %>
 <table class="table table-bordered showProductPartTable" id="part-number-0">
   <thead></thead>
   <tbody>
@@ -197,7 +197,7 @@
     </tr>
   </tbody>
 </table>
-  <% @parts.each do |part| %>
+  <% @product.parts.each do |part| %>
     <table class="table table-bordered showProductPartTable" id="part-number-<%= part.id %>">
       <thead></thead>
       <tbody>
@@ -214,8 +214,8 @@
         <tr>
           <td>Manufacturer</td>
           <td>
-            <% if part.product.vendor_name.present? %>
-              <%= part.product.vendor_name %>
+            <% if part.product_vendor_name.present? %>
+              <%= part.product_vendor_name %>
             <% else %>
               N/A
             <% end %>
@@ -244,8 +244,8 @@
         <tr>
           <td>Brand Name</td>
           <td>
-            <% if part.product.brand_name.present? %>
-              <%= part.product.brand_name %>
+            <% if part.product_brand_name.present? %>
+              <%= part.product_brand_name %>
             <% else %>
               N/A
             <% end %>

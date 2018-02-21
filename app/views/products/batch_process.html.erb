@@ -30,7 +30,6 @@
           <th>Retail Cost</th>
           <th>Shipping Cost</th>
           <th>Additional Notes</th>
-          <th>Has Parts?</th>
           <th>Active?</th>
           <th>Store Orderable?</th>
           <th>Warranty Orderable?</th>
@@ -73,7 +72,6 @@
 <!--RETAIL COST-->      <td><%= best_in_place product, :retail_cost %></td>
 <!--SHIPPING COST-->    <td><%= best_in_place product, :shipping_cost %></td>
 <!--NOTES-->            <td><%= best_in_place product, :notes, :as => :textarea, class: 'input-small', inner_class: 'input-small' %></td>
-<!--HAS PARTS?-->       <td><%= best_in_place product, :has_parts, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
 <!--ACTIVE?-->          <td><%= best_in_place product, :active, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
 <!--STORE ORDERABLE-->  <td><%= best_in_place product, :store_orderable, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>
 <!--WARRANTY ORDERABL--><td><%= best_in_place product, :warranty_orderable, :as => :checkbox, collection: {'false' => "false", 'true' => "true"} %></td>

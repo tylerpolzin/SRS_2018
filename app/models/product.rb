@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   has_many :stockmovements
-  has_many :parts
+  has_many :products_parts
+  has_many :parts, through: :products_parts
   has_many :uploads, dependent: :destroy
   
   validates :manufacturer_model_number, presence: true
