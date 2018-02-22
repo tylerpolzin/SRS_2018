@@ -44,7 +44,7 @@ class AssignmentsController < ApplicationController
         format.json { head :no_content }
       end
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
 

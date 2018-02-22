@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if current_user != @user
       if !current_user.admin?
-        redirect_to authenticated_root_path, notice: "// You can't do that!"
+        default_redirect
       end
     end
     @profile = @user.profile

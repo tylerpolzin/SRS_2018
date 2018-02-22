@@ -40,7 +40,7 @@ $(document).on("turbolinks:load", function(){
         "    <input class='text_field dynamicAttributeName form-control' id='' name='' placeholder='New Attribute Name' type='text'/>"+
         "  </td>"+
         "  <td>"+
-        "    <input class='text_field form-control' id='product_details' name='product[details]' placeholder='Description' type='text'/>"+
+        "    <input class='text_field form-control' id='part_details' name='part[details]' placeholder='Description' type='text'/>"+
         "  </td>"+
         "  <td>"+
         "    <a href='#' class='removeRow'>X</a>"+

@@ -34,7 +34,7 @@ $(document).on("turbolinks:load", function() {
     });
   });
 
-
+  // JS for Additional Attributes Tab
   $("#builder").closest(".row").html("").remove();
   $("#namespace").closest(".row").html("").remove();
   $("#parent_builder").closest(".row").html("").remove();
@@ -89,6 +89,7 @@ $(document).on("turbolinks:load", function() {
     $(".body").append(contents);
   });
 
+  // JS for Uploads Tab
   $(".add_file_button").on("click", function() {
     $(".add_child").click();
     $(".productFilesTopBorder").removeClass("hidden");
@@ -420,7 +421,7 @@ $(document).on("turbolinks:load", function() {
     }
   });
 
-  $.fn.dataTable.ext.search.push(
+  $.fn.dataTable.ext.search.push( // Function for the "Quantity Range Filter"
     function( settings, data, dataIndex ) {
       var min = parseInt( $('#filterStartQty').val(), 10 );
       var max = parseInt( $('#filterEndQty').val(), 10 );

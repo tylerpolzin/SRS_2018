@@ -1,4 +1,27 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_combo_item_path(@combo_item) %> |
-<%= link_to 'Back', combo_items_path %>
+<% @title = "SRS Portal | Combo Item #{@combo_item.model_number}" %>
+<div class="defaultDiv" id="showComboItemDiv">
+  <p class="defaultDivHeader">
+    <span class="show-product-brand-name" title="Combo Item ID: <%= @combo_item.id %>"><%= @combo_item.product_brand_name %></span></br>
+    <span class="show-product-description"><%= @combo_item.model_number %> | <%= @combo_item.description %></span>
+  </p>  <div class="container defaultForm">
+    <ul class="nav nav-tabs">
+      <li class="active"><a id="showComboItemForm" href="#show-combo-item-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Combo Item Information</a></li>
+      <!--<li><a id="showComboItemMovementHistory" href="#show-combo-item-movement-history" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Inventory History</a></li>-->
+      <!--<li><a id="showPartRecentOrders" href="#show-part-recent-orders" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Recent Orders</a></li>-->
+    </ul>
+    
+    <div class="defaultTabs">
+      <div class="tab-content">
+        <div id="show-combo-item-form" class="tab-pane fade in active container">
+          <%= render "show_combo_item_form" %>
+        </div>
+        <!--<div id="show-combo-item-movement-history" class="tab-pane fade container">-->
+        <!--  <%#= render "show_movement_history" %>-->
+        <!--</div>-->
+        <!--<div id="show-part-recent-orders" class="tab-pane fade container">-->
+        <!--  <%#= render "show_recent_orders" %>-->
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
+</div>

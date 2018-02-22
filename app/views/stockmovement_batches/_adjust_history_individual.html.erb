@@ -31,7 +31,7 @@
       <% @stockmovements.each do |i| %>
         <tr>
           <td><%= i.created_at.strftime('%Y-%m-%d (%R)') %></td>
-          <td>
+          <td> <!-- Item Type -->
             <% if i.is_product %>
               Product
             <% elsif i.is_part %>
@@ -40,7 +40,7 @@
               Error, No Sku Present
             <% end %>
           </td>
-          <td>
+          <td> <!-- Brand Name -->
             <% if i.is_product %>
               <% if i.product.present? %>
                 <%= i.product.brand_name %>
@@ -55,22 +55,22 @@
               Error, No Sku Present
             <% end %>
           </td>
-          <td>
+          <td> <!-- Model # -->
             <% if i.is_product %>
               <% if i.product.present? %>
-                <%= link_to i.product.model_select, product_path(id: i.product), method: :get %>
+                <%= link_to i.product.manufacturer_model_number, product_path(id: i.product), method: :get %>
               <% else %>
               <% end %>
             <% elsif i.is_part %>
               <% if i.part.present? %>
-                <%= link_to i.part.part_select, part_path(id: i.part), method: :get %>
+                <%= link_to i.part.manufacturer_model_number, part_path(id: i.part), method: :get %>
               <% else %>
               <% end %>
             <% else %>
               Error, No Sku Present
             <% end %>
           </td>
-          <td>
+          <td> <!-- Description -->
             <% if i.is_product %>
               <% if i.product.present? %>
                 <%= i.product.description %>
@@ -87,22 +87,22 @@
               Error, No Sku Present
             <% end %>
           </td>
-          <td class="quantities">
+          <td class="quantities"> <!-- Adjustment Quantity -->
             <% if i.adjust_quantity.present? %>
               <%= i.adjust_quantity_plus %>
             <% else %>
               None Indicated
             <% end %>
           </td>
-          <td class="quantities">
+          <td class="quantities"> <!-- New Quantity -->
             <% if i.quantity.present? %>
               <%= i.quantity %>
             <% else %>
               None Indicated
             <% end %>
           </td>
-          <td><%= i.stockmovement_batch.stockmovement_type %></td>
-          <td><%= i.stockmovement_batch.user.header_name %></td>
+          <td><%= i.stockmovement_batch.stockmovement_type %></td> <!-- Adjustment Type -->
+          <td><%= i.stockmovement_batch.user.header_name %></td> <!-- Created By -->
         </tr>
       <% end %>
     </tbody>

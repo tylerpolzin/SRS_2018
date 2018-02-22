@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
       @current_user = current_user
     end
     
+    def default_redirect
+      redirect_to authenticated_root_path, notice: "// You can't do that!"
+    end
+    
     def admin_or_employee?
       current_user.admin? or current_user.has_role? :employee
     end

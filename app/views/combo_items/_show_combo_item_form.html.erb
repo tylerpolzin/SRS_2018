@@ -1,0 +1,172 @@
+<div id="show-combo-item-wrapper">
+  <div class="show-image">
+    <% if @combo_item.image.exists? %>
+      <%= link_to (image_tag (@combo_item.image.url (:medium))), @combo_item.image.url, target: "_blank", title: "View Full Size Image" %>
+    <% else %>
+      <p style="margin: 10px;">No Image Available</p>
+    <% end %>
+  </div>
+  <table class="table table-bordered" id="showComboItemNotes">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td >Notes</td>
+      </tr>
+      <tr>
+        <td>
+          <%= best_in_place @combo_item, :notes, :as => :textarea, inner_class: "form-control input-resize", place_holder: "No notes present, click here to edit" %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered" id="showComboItemAttributes">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td colspan="2">Additional Attributes</td>
+      </tr>
+      <% if @combo_item.details.present? %>
+        <% @combo_item.details.try(:each) do |key, value| %>
+          <tr>
+            <td><%= key %></td>
+            <td><%= value %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr><td colspan="2" style="text-align:center;">No Attributes Present</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<table class="table table-bordered" id="showComboItemAssociations"> <!-- Show Combo Item Associations -->
+<thead></thead>
+<tbody>
+  <tr>
+    <td colspan="2">Combo Item<% if @combo_item.products.count > 1 %>s<% end %></td>
+  </tr>
+  <% if @combo_item.products.present? %>
+    <% @combo_item.products.each do |product| %>
+      <tr>
+        <td><%= link_to product.manufacturer_model_number, product_path(product), method: :get %></td>
+        <td>
+          <% if product.description.present? %>
+            <%= product.description %>
+          <% else %>
+            N/A
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  <% else %>
+      <tr><td style="text-align:center;border-right:2px solid orange;">No Associated Products</td></tr>
+  <% end %>
+</tbody>
+</table>
+<table class="table table-bordered" id="showPartTable">
+  <thead></thead>
+  <tbody>
+    <% if admin_or_employee? %>
+      <tr>
+        <td colspan="2"><%= link_to "Edit This Combo Item", edit_combo_item_path(id: @combo_item), method: :get, class: 'btn btn-sm' %></td>
+      </tr>
+    <% end %>
+    <tr class=<%= "firstRowFix" if !current_user.admin? or !current_user.has_role? :employee %>>
+      <td>Manufacturer</td>
+      <td>
+        <% if @combo_item.product_vendor_name.present? %>
+          <%= @combo_item.product_vendor_name %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Model Number</td>
+      <td>
+        <% if @combo_item.model_number.present? %>
+          <%= @combo_item.model_number %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>UPC #</td>
+      <td>
+        <% if @combo_item.upc.present? %>
+          <%= @combo_item.upc %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Brand Name</td>
+      <td>
+        <% if @combo_item.product_brand_name.present? %>
+          <%= @combo_item.product_brand_name %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td>
+        <% if @combo_item.description.present? %>
+          <%= @combo_item.description %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Vendor Cost</td>
+      <td>
+        <% if @combo_item.vendor_cost >= 0.01 %>
+          $<%= @combo_item.vendor_cost %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Retail Cost</td>
+      <td>
+        <% if @combo_item.retail_cost >= 0.01 %>
+          $<%= @combo_item.retail_cost %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Shipping Cost</td>
+      <td>
+        <% if @combo_item.shipping_cost >= 0.01 %>
+          $<%= @combo_item.shipping_cost %>
+        <% else %>
+          N/A
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Active?</td>
+      <td>
+        <% if @combo_item.active? %>
+          Yes
+        <% else %>
+          No
+        <% end %>
+        </td>
+    </tr>
+    <tr>
+      <td>Combo Item Creation Date</td>
+      <td><%= @combo_item.created_at.strftime('%B %d, %Y') %></td>
+    </tr>
+    <tr>
+      <td>Combo Item Last Modified</td>
+      <td><%= @combo_item.updated_at.strftime('%B %d, %Y') %></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,18 @@
+---
+:ComboItem:
+  :image:
+  - :medium
+  - :thumb
+:Part:
+  :image:
+  - :medium
+  - :thumb
+:Product:
+  :image:
+  - :medium
+  - :thumb
+  - :xsmall
+:Upload:
+  :file:
+  - :medium
+  - :thumb

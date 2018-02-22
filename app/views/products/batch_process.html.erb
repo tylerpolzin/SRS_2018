@@ -43,7 +43,7 @@
           <tr>
 <!--ID-->               <td><%= link_to product.id, product_path(id: product), method: :get, title: "View Product Details" %></td>
 <!--IMAGE-->            <td>
-                          <% if product.image.present? %>
+                          <% if product.image.exists? %>
                             <%= link_to (image_tag (product.image.url (:thumb))), product.image.url, target: "_blank", title: "View Full Size Image" %>
                           <% else %>
                             No Image

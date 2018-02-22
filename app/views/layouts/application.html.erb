@@ -112,6 +112,12 @@
                 <%= link_to new_part_path, method: :get do %>
                   <li>Create New Part</li>
                 <% end %>
+                <%= link_to combo_items_path do %>
+                  <li>All Combo Items</li>
+                <% end %>
+                <%= link_to new_combo_item_path, method: :get do %>
+                  <li>Create New Combo Item</li>
+                <% end %>
                 <% if current_user.admin? %>
                   <%= link_to batch_process_path, method: :get do %>
                     <li>Batch Process Products</li>

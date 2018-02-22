@@ -1,25 +1,175 @@
-<p id="notice"><%= notice %></p>
+<% @title = "SRS Portal | Part List" %>
+<div class="defaultDiv" id="comboItemsTableDiv">
+  <p class="defaultDivHeader">Combo Items</p>
+  <div class="comboItemsTable">
+    <table id="comboItemsDataTable" class="display" style="width:100%;">
+      <thead>
+        <tr>
+          <th><p style="display:none;">Details</p></th> <!-- hacky way to get the word "Details" to show up in the Colvis buttons dropdown -->
+          <th>Combo Items</th>
+          <th>Image</th>
+          <th>Brand Name</th>
+          <th>Model Number</th>
+          <th>Description</th>
+          <th>Pricing</th>
+          <th>Additional Notes</th>
+          <th>Active?</th>
+          <th></th>
+        </tr>
+      </thead>
+      <div class="comboItemsTableChildren" data-child-filter="<% @combo_items.each do |combo| %>
+                                                                <% combo.products.each do |product| %>
+                                                                  <option name='<%= product.manufacturer_model_number %>' value='<%= product.id %>'><%= product.product_select_with_model %></option>
+                                                                <% end %>
+                                                              <% end %>"
+                                          data-child-brand_names='<% if admin_or_employee? %>
+                                                                    <li>
+                                                                      <div class="button-group brandFilter">
+                                                                        <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Brand Name <span class="caret"></span></button>
+                                                                        <ul class="dropdown-menu comboItemsBrandFilterMenu">
+                                                                          <% @brand.each do |brand| %>
+                                                                            <li class="selected"><label><input type="checkbox" checked name="brand" value="<%= brand %>"/>&nbsp;<%= brand %></label></li>
+                                                                          <% end %>
+                                                                        </ul>
+                                                                      </div>
+                                                                    </li>
+                                                                  <% end %>'
+                                          data-child-filters='<% if admin_or_employee? %>
+                                                                <li>
+                                                                  <div class="button-group booleanFilter">
+                                                                    <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Filter <span class="caret"></span></button>
+                                                                    <ul class="dropdown-menu booleanFilterMenu">
+                                                                      <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="active" bool="" value="Active"/>&nbsp;Active</label><button id="activeClear" class="btn" disabled>Clear Filter</button></li>
+                                                                    </ul>
+                                                                  </div>
+                                                                </li>
+                                                              <% end %>'>
+      </div>
+      <tbody class="combo-items-table">
+        <% @combo_items.each do |combo| %>
+          <tr
+            data-child-attributes=" <table class='comboItemsAttributesTable'>
+                                      <thead>
+                                        <tr>
+                                          <th>Attribute</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <% if combo.details.present? %>
+                                          <% combo.details.try(:each) do |key, value| %>
+                                            <tr>
+                                                <td><%= key %></td>
+                                                <td><%= value %></td>
+                                            </tr>
+                                          <% end %>
+                                        <% else %>
+                                          <td colspan='2'>No Attributes Found</td>
+                                        <% end %>
+                                      </tbody>
+                                    </table>"
+            data-child-product_details="<table class='comboItemsProductsTable'>
+                                          <thead>
+                                            <tr>
+                                              <th>Image</th>
+                                              <th>Model #</th>
+                                              <th>Qty On Hand</th>
+                                              <th>Qty Last Updated </th>
+                                              <th>Packaged Weight</th>
+                                              <th>Packaged Dims</th>
+                                              <th>Notes</th>
+                                              <th>Files</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <% if combo.products.present? %>
+                                              <% combo.products.each do |product| %>
+                                                <tr>
+                                                  <td><%= product.image_html if product.image.exists? %><%= "No Image Available" if product.image.blank? %></td>
+                                                  <td><%= product.manufacturer_model_number %></td>
+                                                  <td><%= product.quantity_on_hand %></td>
+                                                  <td><%= product.qty_last_updated %></td>
+                                                  <td><%= product.product_weight %></td>
+                                                  <td><%= product.product_dims_l %>&quot;x<%= product.product_dims_w %>&quot;x<%= product.product_dims_h %>&quot;</td>
+                                                  <td><%= simple_format product.notes if product.notes.present? %><%= "N/A" if product.notes.blank? %></td>
+                                                  <td>
+                                                    <% if product.uploads.present? %>
+                                                      <% product.uploads.each do |upload| %>
+                                                        <p><a target='_blank' title='File Size: <%= number_to_human_size(upload.file_file_size, precision: 2) %>' href='<%= upload.file.url(:original, false) %>'><%= upload.description_if_description %></a></p>
+                                                      <% end %>
+                                                    <% else %>
+                                                      No Files Found
+                                                    <% end %>
+                                                  </td>
+                                                </tr>
+                                              <% end %>
+                                            <% end %>
+                                          </tbody>
+                                        </table>"
+            data-child-upc="<% if combo.upc.present? %>
+                              <%= combo.upc %>
+                            <% else %>
+                              N/A
+                            <% end %>"
+            data-child-dates="<p>Added on <%= combo.created_at.strftime('%B %d, %Y') %></p>
+                              <p>Last Modified on <%= combo.updated_at.strftime('%B %d, %Y') %></p>
+                              <p><i class='<%= "fa fa-check-square-o fa-green" if combo.active? %><%= "fa fa-close fa-red" if !combo.active? %>'></i> Active</p>">
+            <td class="details-control"></td>
+            <td class="combo_products"> <!-- COMBO ITEMS -->
+              <% if combo.products.present? %>
+                <table class="table" style="<%= "height:120px;" if combo.products.length < 3 %>">
+                  <thead></thead>
+                  <tbody>
+                    <% combo.products.each do |product| %>
+                      <tr>
+                        <td style="border-right:1px solid #ddd !important;width:40%;"><%= link_to product.manufacturer_model_number, product_path(product), method: :get, title: "View Product Details (ID: #{product.id})" %></td>
+                        <td>
+                          <%= product.description if product.description.present? %>
+                          <%= "N/A" if product.description.blank? %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              <% else %>
+                <p>No Associated Products</p>
+              <% end %>
+            </td>
+            <td> <!-- IMAGE -->
+              <%= link_to (image_tag (combo.image.url (:thumb))), combo.image.url, target: "_blank", title: "View Full Size Image" if combo.image.exists? %>
+              <%= "No Image Available" if combo.image.blank? %>
+            </td>
+            <td>
+              <%= combo.product_brand_name if combo.product_brand_name.present? %>
+              <%= "N/A" if combo.product_brand_name.blank? %>
+            </td>
+            <td> <!-- MODEL NUMBER -->
+              <%= link_to combo.model_number, combo_item_path(id: combo), method: :get, title: "View Combo Item Details (ID: #{combo.id})" if combo.model_number.present? %>
+              <%= link_to "N/A", combo_item_path(id: combo), method: :get, title: "View Combo Item Details (ID: #{combo.id})" if combo.model_number.blank? %>
+            </td>
+            <td> <!-- DESCRIPTION -->
+              <%= combo.description if combo.description.present? %>
+              <%= "N/A" if combo.description.blank? %>
+            </td>
+            <td> <!-- PRICING -->
+              <p>Vendor Cost: <%= "$" + number_with_precision(combo.vendor_cost, precision: 2) if combo.vendor_cost >= 0.01 %>
+              <%= "N/A" if combo.vendor_cost < 0.01 %></p>
+              <p>Retail Cost: <%= "$" + number_with_precision(combo.retail_cost, precision: 2) if combo.retail_cost >= 0.01 %>
+              <%= "N/A" if combo.retail_cost < 0.01 %></p>
+              <p>Shipping Cost: <%= "$" + number_with_precision(combo.shipping_cost, precision: 2) if combo.shipping_cost >= 0.01 %>
+              <%= "N/A" if combo.shipping_cost < 0.01 %></p>
+            </td>
+            <td> <!-- NOTES -->
+              <p><%= simple_format combo.notes if combo.notes.present? %><%= "N/A" if combo.notes.blank? %></p>
+              <p><%= link_to "Edit This Combo", edit_combo_item_path(id: combo), method: :get, class: 'btn btn-sm' if admin_or_employee? %></p>
+            </td>
+            <td><%= combo.active %></td>
+            <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
 
-<h1>Combo Items</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @combo_items.each do |combo_item| %>
-      <tr>
-        <td><%= link_to 'Show', combo_item %></td>
-        <td><%= link_to 'Edit', edit_combo_item_path(combo_item) %></td>
-        <td><%= link_to 'Destroy', combo_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Combo Item', new_combo_item_path %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

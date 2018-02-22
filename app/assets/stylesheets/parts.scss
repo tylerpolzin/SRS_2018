@@ -442,6 +442,29 @@
   }
 }
 
+#showPartAttributes, #showPartAssociations, #showPartUploads {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    width: 35%;
+    text-align: right;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tbody tr:nth-child(1) {
+    td {
+      text-align: center;
+    }
+  }
+}
+
 //                               'SHOW_MOVEMENT_HISTORY' related CSS                                   |
 
 // CSS for this tab is duplicate of the same tab from the 'Products' CSS

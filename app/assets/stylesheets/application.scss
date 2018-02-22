@@ -66,6 +66,14 @@ body {
   background: #f7cb00; /* Gecko Browsers */
 }
 
+.fa-green { // Mainly used for Meta Active, Ecomm Order, etc. style notes in Products & Parts index
+  color: green;
+}
+
+.fa-red {
+  color: red;
+}
+
 // Bootstrap form orange glow color
 .form-control:focus {
   border-color: #ffc55f;

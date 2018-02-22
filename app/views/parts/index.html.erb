@@ -1,6 +1,6 @@
 <% @title = "SRS Portal | Part List" %>
 <div class="defaultDiv" id="partListDiv">
-  <p class="defaultDivHeader">Part List</p>
+  <p class="defaultDivHeader">Parts List</p>
   <div class="partsTable">
     <table id="partsDataTable" class="display" style="width:100%;">
       <thead>
@@ -115,9 +115,9 @@
                                      <% end %>"
                    data-child-dates="<p>Added on <%= part.created_at.strftime('%B %d, %Y') %></p>
                                      <p>Last Modified on <%= part.updated_at.strftime('%B %d, %Y') %></p>">
-            <td class="details-control"><div class="hidden partProductId" name="<%= part.product_id %>"><%= part.product_id %></div></td>
+            <td class="details-control"></td>
             <td>
-              <% if part.image.present? %>
+              <% if part.image.exists? %>
                 <%= link_to (image_tag (part.image.url (:thumb))), part.image.url, target: "_blank", title: "View Full Size Image" %>
               <% else %>
                 No Image Available
@@ -132,12 +132,13 @@
             </td>
             <td class="parts_products">
               <% if part.products.present? %>
-                <table class="table">
+                <table class="table" style="<% if part.products.length < 3 %>height:150px;<% else %><% end %>">
                   <thead></thead>
                   <tbody>
                     <% part.products.each do |product| %>
                       <tr>
-                        <td><%= link_to product.model_select, product_path(product), method: :get, title: "View Product Details (ID: #{product.id})" %></td>
+                        <td style="border-right:1px solid #ddd !important;width:40%;"><%= link_to product.manufacturer_model_number, product_path(product), method: :get, title: "View Product Details (ID: #{product.id})" %></td>
+                        <td><%= product.description %></td>
                       </tr>
                     <% end %>
                   </tbody>
@@ -150,7 +151,7 @@
               <% if part.manufacturer_model_number.present? %>
                 <%= link_to part.manufacturer_model_number, part_path(id: part), method: :get, title: "View Part Details (ID: #{part.id})" %>
               <% else %>
-                <%= link_to "N/A", part_path(id: part), method: :get, title: "View Part Details" %>
+                <%= link_to "N/A", part_path(id: part), method: :get, title: "View Part Details (ID: #{part.id})" %>
               <% end %>
             </td>
             <td>

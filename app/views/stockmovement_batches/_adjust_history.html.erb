@@ -26,13 +26,13 @@
                               <% end %>
                               <% if s.is_product %>
                                 <% if s.product.present? %>
-                                  &lt;td&gt;&lt;a href=&quot;/products/<%= s.product.slug %>&quot;&gt;<%= s.product.model_select %>&lt;/a&gt;&lt;/td&gt;
+                                  &lt;td&gt;&lt;a href=&quot;/products/<%= s.product.slug %>&quot;&gt;<%= s.product.manufacturer_model_number %>&lt;/a&gt;&lt;/td&gt;
                                 <% else %>
                                   <td></td>
                                 <% end %>
                               <% elsif s.is_part %>
                                 <% if s.part.present? %>
-                                  &lt;td&gt;&lt;a href=&quot;/parts/<%= s.part.slug %>&quot;&gt;<%= s.part.part_select %>&lt;/a&gt;&lt;/td&gt;
+                                  &lt;td&gt;&lt;a href=&quot;/parts/<%= s.part.slug %>&quot;&gt;<%= s.part.manufacturer_model_number %>&lt;/a&gt;&lt;/td&gt;
                                 <% else %>
                                   <td></td>
                                 <% end %>

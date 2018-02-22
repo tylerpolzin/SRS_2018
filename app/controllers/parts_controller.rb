@@ -5,7 +5,7 @@ class PartsController < ApplicationController
     if admin_or_employee?
       @parts = Part.all
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
 
@@ -13,7 +13,7 @@ class PartsController < ApplicationController
     if admin_or_employee?
       @part = Part.friendly.find(params[:id])
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
     @stockmovements = Stockmovement.order(created_at: :desc).where(:part_id => @part).limit(20)
   end
@@ -22,25 +22,24 @@ class PartsController < ApplicationController
     if admin_or_employee?
       @part = Part.new
       @part.uploads.build
-      @part.products_parts.build
-      @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
+      build_product_association
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
 
   def edit
     if admin_or_employee?
       @part = Part.friendly.find(params[:id])
-      @part.products_parts.build
-      @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
+      build_product_association
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
 
   def create
     @part = Part.new(part_params)
+    @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
     if @part.save
       redirect_to part_path(@part), notice: '// Part was successfully created.'
     else
@@ -50,6 +49,7 @@ class PartsController < ApplicationController
 
   def update
     @part = Part.friendly.find(params[:id])
+    @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
     respond_to do |format|
       if @part.update_attributes(part_params)
         if @part.remove_image == true
@@ -81,13 +81,18 @@ class PartsController < ApplicationController
       format.json { head :no_content }
     end
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
 
   private
     def set_part
       @part = Part.friendly.find(params[:id])
+    end
+
+    def build_product_association
+      @part.products_parts.build
+      @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
     end
 
     def part_params

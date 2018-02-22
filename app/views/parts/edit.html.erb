@@ -36,7 +36,7 @@
       </div>
       <%= f.submit "Update Part", :style => "float:right;" %>
     <% end %>
-    <%= button_to "Delete", part_path(:id => params[:id]), :method => :delete, class: 'hidden partDelete' %>
+    <%= button_to "Delete", part_path(:id => @part), :method => :delete, class: 'hidden partDelete' %>
     <button class="btn btn-sm btn-danger delete-button deletePart bootbox-confirm">Delete This Part</button>
   </div>
 </div>

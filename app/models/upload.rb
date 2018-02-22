@@ -24,6 +24,14 @@ class Upload < ApplicationRecord
     file_content_type =~ %r{^(image|(x-)?application)/(bmp|gif|jpeg|jpg|pjpeg|png|x-png)$}
   end
 
+  def description_if_description
+    if self.description.present?
+      "#{self.description}"
+    else
+      "#{self.file_file_name}"
+    end
+  end
+
   private
 
     def resize_images

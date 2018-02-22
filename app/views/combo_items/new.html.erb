@@ -1,5 +1,41 @@
-<h1>New Combo Item</h1>
-
-<%= render 'form', combo_item: @combo_item %>
-
-<%= link_to 'Back', combo_items_path %>
+<% @title = "SRS Portal | Create New Combo Item" %>
+<div class="defaultDiv" id="newComboItemDiv">
+  <p class="defaultDivHeader">Create New Combo Item</p>
+  <div class="container defaultForm">
+    <%= bootstrap_form_for @combo_item, url: combo_items_path, method: :post, :html => { :class => :form, :multipart => true } do |f| %>
+      <% if @combo_item.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@combo_item.errors.count, "error") %> prohibited this Item from being created:</h2>
+          <ul>
+          <% @combo_item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <ul class="nav nav-tabs">
+        <li class="active"><a id="newComboItemNavTab" href="#new-combo-item-form" class="tab-background" data-toggle="tab"><i class="fa fa-plus-square"></i> Item Details</a></li>
+        <li><a id="newComboItemAttributes" href="#new-combo-item-attributes" class="tab-background" data-toggle="tab"><i class="fa fa-asterisk"></i> Additional Attributes</a></li>
+        <!--<li><a id="newComboItemUploads" href="#new-combo-item-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-file"></i> Associated Files</a></li>-->
+      </ul>
+      <div class="defaultTabs">
+        <div class="tab-content">
+          <div id="new-combo-item-form" class="tab-pane fade in active container">
+            <br/><%= render "form", :f => f %>
+          </div>
+          <div id="new-combo-item-attributes" class="tab-pane fade container">
+            <br/><%= render "attributes", :f => f %>
+          </div>
+          <!--<div id="new-product-uploads" class="tab-pane fade"><br/>-->
+          <!--  <a class="add_file_button btn"><i class="fa fa-file"></i> Add File</a>-->
+          <!--  <div class="productFilesTopBorder hidden"></div>-->
+          <!--  <p class="hidden"><%#= add_child_link " Add File", :uploads %></p>-->
+          <!--  <div class="productFilesBottomBorder hidden"></div>-->
+          <!--  <%#= new_child_fields_template f, :uploads %>-->
+          <!--</div>-->
+        </div>
+      </div>
+      <%= f.submit "Create Combo Item", :style => "float:right;" %>
+    <% end %>
+  </div>
+</div>

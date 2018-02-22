@@ -1,3 +1,668 @@
-// Place all the styles related to the ComboItems controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+//------------------------------------------------------------------------------------------------------
+//                               Combo Item 'NEW' related CSS                                          |
+//------------------------------------------------------------------------------------------------------
+
+#newComboItemDiv {
+  width: 700px;
+}
+
+//                            New Product 'Form' related CSS                                           |
+
+.comboItemTableContainer {
+  width: 100%;
+  padding: 0;
+}
+
+#newComboItemTable {
+  table-layout: fixed !important;
+  width: 100%;
+  margin: 0 0 10px -7.5px;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+
+  tbody tr td:nth-child(1) { // Left Column "Description"
+    text-align: right;
+    background-color: #fafafa;
+    width: 30%;
+  }
+  tbody tr td:nth-child(2) { // Right Column "Inputs"
+    padding: 0;
+    .form-group {
+      margin: 0;
+      input {
+        border: none;
+        border-radius: 0;
+        &:focus {
+          box-shadow: inset 0px 0px 5px #ff9800;
+        }
+      }
+      select {
+        border: none;
+        border-radius: 0;
+        padding-left: 8px;
+        &:focus {
+          box-shadow: inset 0px 0px 5px #ff9800;
+        }
+      }
+    }
+  }
+  tbody tr {
+    background-color: #eee;
+  }
+  tbody tr:nth-child(5) td:last-child { // Image Row
+    background-color: white;
+    div input {
+      padding: 6px 6px 10px 6px;
+      background-color: white;
+    }
+  }
+  tbody tr:nth-child(6), tbody tr:nth-child(7), tbody tr:nth-child(8) { // Currency Rows
+    td:nth-child(2) {
+      .form-group .input-group .input-group-addon {
+          border-radius: 0;
+          font-weight: bold;
+          border-top: 0;
+          border-bottom: 0;
+          border-left: 0;
+          background-color: #fafafa;
+      }
+    }
+  }
+}
+
+#new-combo-item-attributes {
+  padding: 0 20px 5px 5px;
+}
+
+.comboItemAttributeContainer {
+  padding: 0;
+}
+
+#comboItemAttributeContainer {
+  width: 100%;
+  margin: 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border-left: 2px solid orange;
+  border-right: 2px solid orange;
+  tbody tr td {
+    border-top: 0;
+    border-bottom: 0;
+  }
+  tbody tr td:first-child { // Left Column "Attribute Name"
+    padding: 0;
+    input {
+      padding: 6px 2px 6px 6px;
+      border: none;
+      border-radius: 0;
+      &:focus {
+        box-shadow: inset 0px 0px 5px #ff9800;
+      }
+    }
+  }
+  tbody tr td:nth-child(2) { // Second Column "Description"
+    padding: 0;
+    span {
+      width: 100% !important;
+    }
+    input {
+      padding: 6px 2px 6px 6px;
+      border: none;
+      border-radius: 0;
+      &:focus {
+        box-shadow: inset 0px 0px 5px #ff9800;
+      }
+    }
+  }
+  tbody tr td:last-child { // Right Column "Delete Entry"
+    a {
+      cursor: pointer;
+      padding: 6px;
+      color: red;
+      margin: 0;
+    }
+  }
+}
+
+.comboItemAttributeTopBorder {
+  width: 100%;
+  padding-top: 10px;
+  margin: 0;
+  border-bottom: 2px solid orange;
+}
+
+.comboItemAttributeBottomBorder {
+  width: 100%;
+  padding-bottom: 5px;
+  margin: 0;
+  border-top: 2px solid orange;
+}
+
+// #new-product-uploads {
+//   padding: 0 20px 0 10px;
+// }
+
+// .add_file_button {
+//   margin-bottom: 10px;
+// }
+
+//------------------------------------------------------------------------------------------------------
+//                               Combo Item 'EDIT' related CSS                                         |
+//------------------------------------------------------------------------------------------------------
+
+#editComboItemDiv {
+  width: 1060px;
+}
+
+#editImageOptions {
+  border: 0 0 1px 0 solid #ccc;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px solid #ccc;
+  border-left: 0;
+  border-radius: 0;
+  &:focus {
+    box-shadow: inset 0px 0px 5px #ff9800;
+  }
+}
+
+.image-border {
+  background-color: white;
+  margin: 5px;
+  padding: 2px;
+  border: 2px solid orange;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.image-border-red {
+  border: 2px solid red;
+}
+
+
+//------------------------------------------------------------------------------------------------------
+//                               Combo Item 'SHOW' related CSS                                         |
+//------------------------------------------------------------------------------------------------------
+
+#showComboItemDiv {
+  width: 850px;
+}
+
+//                               'SHOW_PART_FORM' related CSS                                       |
+
+
+#show-combo-item-form {
+  padding: 15px 15px 0 0;
+}
+
+#show-combo-item-wrapper {
+  float: right;
+  width: 49%;
+}
+
+#showPartTable {
+  width: 49%;
+  float: left;
+  margin: 0 0 5px 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr:first-child {
+    text-align: center;
+  }
+  tbody tr td:first-child {
+    text-align: right;
+    width: 35%;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tbody tr:nth-child(1) {
+    td {
+      text-align: center;
+    }
+  }
+}
+
+.part-belongs-to {
+  padding: 0 !important;
+  select, span {
+    width: 100% !important;
+  }
+}
+
+.show-image {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  text-align: center;
+  vertical-align: middle;
+  margin-top: 0;
+  border: 2px solid orange;
+  background: white;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  img {
+    display: block;
+    margin: auto;
+  }
+}
+
+#showComboItemNotes {
+  margin-top: 15px;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    text-align: center;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+#showComboItemAttributes {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    width: 35%;
+    text-align: right;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tbody tr:nth-child(1) {
+    td {
+      text-align: center;
+    }
+  }
+}
+
+#showComboItemAssociations {
+  width: 49%;
+  float: left;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid orange;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    width: 35%;
+    text-align: right;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tbody tr:nth-child(1) {
+    td {
+      text-align: center;
+    }
+  }
+}
+
+//------------------------------------------------------------------------------------------------------
+//                              Part 'INDEX' related CSS                                               |
+//------------------------------------------------------------------------------------------------------
+
+#comboItemsTableDiv {
+  width: 1600px;
+}
+
+.comboItemsTable {
+  width: 100%;
+  padding: 20px 0 20px 0px;
+  background-color: #d1dbe4;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+  border-bottom-right-radius: 30px;
+}
+
+.combo-items-table {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  text-align: center;
+  vertical-align: middle;
+  tr td {
+    border-right: 1px solid #ccc;
+  }
+}
+
+.combo-items-toolbar {
+  position: relative;
+  bottom: -7px;
+  float: left;
+  padding-left: 30px;
+  display: inline;
+  .nav {
+    border-bottom: 0 !important;
+    li .comboItemsButton {
+      padding: 8px;
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+    }
+    li .comboItemsFilterBy {
+      margin: 0;
+      padding: 6px 12px 6px 12px;
+      cursor: context-menu;
+      font-weight: bold;
+      color: black;
+      border-top: 1px solid #ccc;
+      border-right: 0;
+      border-bottom: 1px solid #ccc;
+      border-left: 1px solid #ccc;
+      background: linear-gradient(to bottom, white, #d5dfe7);
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+    li .brandFilter {
+      button {
+      margin: 0;
+      border-right: 0;
+      border-radius: 0;
+      }
+      .comboItemsBrandFilterMenu {
+        padding: 5px;
+        border-top: 0;
+        border-right: 2px solid #2e353d;
+        border-bottom: 2px solid #2e353d;
+        border-left: 2px solid #2e353d;
+        li {
+          padding: 0;
+          border-right: 2px solid #2e353d;
+          border-bottom: 2px solid #2e353d;
+          border-left: 2px solid #2e353d;
+          text-align: center;
+          background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
+          color: #a92b04;
+          &:hover {
+            background: linear-gradient(to top, #d6d6d6, #e4e4e4);
+          }
+          &.selected {
+            background: linear-gradient(to bottom, white, #f3f3f3);
+            color: #165407;
+            &:hover {
+              background: linear-gradient(to top, white, #f3f3f3);
+            }
+          }
+
+          &:first-child {
+            border-top: 2px solid #2e353d;
+          }
+          label {
+            padding: 5px;
+            margin: 0;
+            width: 140px;
+            user-select: none;
+            input {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+    li .booleanFilter {
+      button {
+      margin: 0;
+      border-right: 0;
+      border-radius: 0;
+      }
+      .booleanFilterMenu {
+        padding: 5px;
+        border-top: 0;
+        border-right: 2px solid #2e353d;
+        border-bottom: 2px solid #2e353d;
+        border-left: 2px solid #2e353d;
+        li {
+          display: inline-flex;
+          padding: 0;
+          border-right: 2px solid #2e353d;
+          border-bottom: 2px solid #2e353d;
+          border-left: 2px solid #2e353d;
+          text-align: center;
+          background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
+          color: #a92b04;
+          &:hover {
+            background: linear-gradient(to top, #d6d6d6, #e4e4e4);
+          }
+          &.selected {
+            background: linear-gradient(to bottom, white, #f3f3f3);
+            color: #165407;
+            &:hover {
+              background: linear-gradient(to top, white, #f3f3f3);
+            }
+          }
+
+          &:first-child {
+            border-top: 2px solid #2e353d;
+          }
+          label {
+            padding: 5px;
+            margin: 0;
+            width: 140px;
+            user-select: none;
+            &.nil {
+              color: #255aad;
+            }
+            input {
+              display: none;
+            }
+          }
+          button {
+            width: 41%;
+            font-size: 0.8em;
+          }
+        }
+      }
+    }
+  }
+}
+
+.combo-items-toolbar > .nav > li {
+  a {
+    padding: 8px;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+  }
+  form > input {
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+#comboItemsTableSearch {
+  font-family: 'Abel', sans-serif;
+  color: black;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+  margin-left: 9px;
+}
+
+#comboItemsTableProductSearch {
+  font-family: 'Abel', sans-serif;
+  width: 200px;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+  margin-left: 10px;
+}
+
+#comboItemsTableLength {
+  font-family: 'Abel', sans-serif;
+  width: 55px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-right: 0;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+}
+
+.combo-items-table-product-search {
+  margin-left: 10px;
+  font-family: 'Abel', sans-serif;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+}
+
+// Hacky fix to remove the Searchable column because removing the column in the DataTables JS isnt working
+#comboItemsDataTable_wrapper {
+  .dt-buttons .dt-button-collection .dt-button:nth-child(10) {
+    display: none;
+  }
+}
+
+// Export & Column Visibility buttons on toolbar
+#comboItemsDataTable_wrapper .dt-buttons {
+  position: relative;
+  bottom: -7px;
+  .buttons-colvis {
+    margin: 0;
+    border-radius: 0;
+    border: 1px solid #ccc;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background: linear-gradient(to bottom, white, #f3f3f3);
+  }
+  .dtExportOptions {
+    margin-left: 10px;
+    padding: 6px 12px 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: linear-gradient(to bottom, white, #f3f3f3);
+  }
+  .dt-button-collection {
+    margin-top: 0;
+    padding: 5px;
+    border-right: 2px solid #2e353d;
+    border-bottom: 2px solid #2e353d;
+    border-left: 2px solid #2e353d;
+    border-radius: 4px;
+    display: inline-grid;
+    .dt-button {
+      padding: 5px;
+      margin: 0;
+      font-family: 'Abel', sans-serif;
+      font-weight: bold;
+      text-align: center;
+      color: #a92b04;
+      border-top: 1px solid #2e353d;
+      border-right: 2px solid #2e353d;
+      border-bottom: 1px solid #2e353d;
+      border-left: 2px solid #2e353d;
+      border-radius: 0;
+      background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
+      &:first-child {
+        border-top: 2px solid #2e353d;
+      }
+      &:last-child {
+        border-bottom: 2px solid #2e353d;
+      }
+      &.active {
+        background: linear-gradient(to bottom, white, #f3f3f3);
+        color: #165407;
+        &:hover {
+          background: linear-gradient(to top, white, #f3f3f3);
+        }
+      }
+      &:hover {
+        background: linear-gradient(to top, #d6d6d6, #e4e4e4);
+        text-decoration: none;
+      }
+
+    }
+    .buttons-excel, .buttons-pdf, .buttons-print, .buttons-copy {
+      background: linear-gradient(to bottom, white, #f3f3f3);
+      color: #165407;
+      &:hover {
+        background: linear-gradient(to top, white, #f3f3f3);
+      }
+    }
+  }
+  .dtColumnVisibility {
+    border-left: 0;
+    margin-left: 0;
+    padding: 6px 12px 6px 12px;
+  }
+}
+
+.combo-items-listing-expando {
+  width: 95%;
+  padding-top: 0;
+  padding-bottom: 5px;
+  border-top: 0;
+  border-right: 2px solid orange;
+  border-left: 2px solid orange;
+  border-bottom: 2px solid orange !important;
+  margin-bottom: 5px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  thead tr {
+    th {
+      font-size: 1em;
+      font-weight: bold;
+      background-color: #eceaff;
+      color: black;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
+    }
+    th:last-child {
+      border-right: 0;
+    }
+  }
+  tbody tr td {
+    text-align: center;
+    vertical-align: top;
+    border-right: 1px solid #ddd;
+    padding-bottom: 0;
+  }
+}
+
+.comboItemsAttributesTable, .comboItemsProductsTable {
+  width: 100%;
+  font-size: 0.9em;
+  thead tr th {
+    border-bottom: 1px solid black;
+    border-right: 1px solid #ccc;
+    background-color: #fffdea;
+    color: black;
+    font-weight: bold;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3)
+  }
+  tbody tr {
+    border-bottom: 1px solid #ccc;
+  }
+  tbody tr:last-child {
+    border-bottom: 0;
+  }
+}
+
+.combo_products {
+  padding: 0 !important;
+  table tbody tr {
+    background-color: #ffffff00 !important;
+    td {
+      border-right: 0 !important;
+      border-bottom: 1px solid #ccc !important;
+      &:hover {
+        background-color: #ffffff00 !important;
+      }
+    }
+  }
+  table tbody tr:last-child td {
+    border-bottom: 0 !important;
+  }
+}

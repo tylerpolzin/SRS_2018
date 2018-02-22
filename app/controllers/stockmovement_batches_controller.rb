@@ -30,7 +30,7 @@ class StockmovementBatchesController < ApplicationController
                                                  .where(:product_id => Product.select(:id)
                                                  .where(:brand_name => "Firplak"))})
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
     @products = Product.all # Used in "_stockmovement.html.erb"
     @parts = Part.all # Used in "_stockmovement.html.erb"
@@ -47,7 +47,7 @@ class StockmovementBatchesController < ApplicationController
       @stockmovement_batch = StockmovementBatch.new
       @stockmovement = Stockmovement.new
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
 
@@ -86,7 +86,7 @@ class StockmovementBatchesController < ApplicationController
         format.json { head :no_content }
       end
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
 

@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
     elsif current_user.has_role? (:firplak)
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Firplak")
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
   
@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
     if current_user.admin?
       @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
 
@@ -50,7 +50,7 @@ class ProductsController < ApplicationController
       @product = Product.new
       @product.uploads.build
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
 
@@ -58,7 +58,7 @@ class ProductsController < ApplicationController
     if admin_or_employee?
       @product = Product.friendly.find(params[:id])
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
 
@@ -108,7 +108,7 @@ class ProductsController < ApplicationController
         format.json { head :no_content }
       end
     else
-      redirect_to authenticated_root_path, notice: "// You can't do that!"
+      default_redirect
     end
   end
 

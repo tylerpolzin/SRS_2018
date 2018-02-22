@@ -1,34 +1,33 @@
 class ComboItemsController < ApplicationController
   before_action :set_combo_item, only: [:show, :edit, :update, :destroy]
 
-  # GET /combo_items
-  # GET /combo_items.json
   def index
     @combo_items = ComboItem.all
+    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
   end
 
-  # GET /combo_items/1
-  # GET /combo_items/1.json
   def show
   end
 
-  # GET /combo_items/new
   def new
-    @combo_item = ComboItem.new
+    if admin_or_employee?
+      @combo_item = ComboItem.new
+      build_product_association
+    else
+      default_redirect
+    end
   end
 
-  # GET /combo_items/1/edit
   def edit
+    build_product_association
   end
 
-  # POST /combo_items
-  # POST /combo_items.json
   def create
     @combo_item = ComboItem.new(combo_item_params)
-
+    @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
     respond_to do |format|
       if @combo_item.save
-        format.html { redirect_to @combo_item, notice: 'Combo item was successfully created.' }
+        format.html { redirect_to @combo_item, notice: '// Combo Item has been created.' }
         format.json { render :show, status: :created, location: @combo_item }
       else
         format.html { render :new }
@@ -37,38 +36,44 @@ class ComboItemsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /combo_items/1
-  # PATCH/PUT /combo_items/1.json
   def update
+    @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
     respond_to do |format|
       if @combo_item.update(combo_item_params)
-        format.html { redirect_to @combo_item, notice: 'Combo item was successfully updated.' }
-        format.json { render :show, status: :ok, location: @combo_item }
+        if @combo_item.remove_image == true
+          @combo_item.image = nil
+          @combo_item.save
+        end
+        format.html { redirect_to @combo_item, notice: '// Combo Item has been updated.' }
+        format.json { respond_with_bip(@combo_item) }
       else
-        format.html { render :edit }
-        format.json { render json: @combo_item.errors, status: :unprocessable_entity }
+        format.html { render action: :edit }
+        format.json { respond_with_bip(@combo_item) }
       end
     end
   end
 
-  # DELETE /combo_items/1
-  # DELETE /combo_items/1.json
   def destroy
-    @combo_item.destroy
-    respond_to do |format|
-      format.html { redirect_to combo_items_url, notice: 'Combo item was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.admin?
+      @combo_item.destroy
+      respond_to do |format|
+        format.html { redirect_to combo_items_url, notice: '// Combo Item has been deleted.' }
+        format.json { head :no_content }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_combo_item
-      @combo_item = ComboItem.find(params[:id])
+      @combo_item = ComboItem.friendly.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    def build_product_association
+      @combo_item.combo_products.build
+      @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
+    end
+
     def combo_item_params
-      params.fetch(:combo_item, {})
+      params.require(:combo_item).permit!
     end
 end

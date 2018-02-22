@@ -2,23 +2,25 @@ class Product < ApplicationRecord
   has_many :stockmovements
   has_many :products_parts
   has_many :parts, through: :products_parts
+  has_many :combo_products
+  has_many :combo_items, through: :combo_products
   has_many :uploads, dependent: :destroy
-  
+
   validates :manufacturer_model_number, presence: true
   validates_uniqueness_of :manufacturer_model_number
   # validates_format_of :manufacturer_model_number, :with => /\A[a-z0-9]+\z/i
-  
+
   extend FriendlyId
   friendly_id :manufacturer_model_number, use: :slugged
 
   has_attached_file :image,
-                    :styles => {:medium => "300x300>", :thumb => "100x100>" },
+                    :styles => {:medium => "300x300>", :thumb => "100x100>", :xsmall => "60x60>" },
                     :default_url => "No_Image_Found"
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\z/
-  
+
   accepts_nested_attributes_for :parts, :allow_destroy => true
   accepts_nested_attributes_for :uploads, :allow_destroy => true
-  
+
   def sku_if_sku  # Takes preference to showing the SRS SKU over the MFR Model Number if it exists
     if self.srs_sku.present?
       self.srs_sku
@@ -30,7 +32,7 @@ class Product < ApplicationRecord
       end
     end
   end
-  
+
   def product_select # "Brand Name (Description)"
     def a
       if brand_name.present?
@@ -147,6 +149,10 @@ class Product < ApplicationRecord
     quantity
   end
 
+  def image_html
+    "<a target='_blank' title='View Full Size Image' href='/system/products/images/000/000/#{self.id_w_leading_zero}/original/#{self.image.original_filename}'><img src='/system/products/images/000/000/#{self.id_w_leading_zero}/xsmall/#{self.image.original_filename}' alt='#{self.image.original_filename}'></a>"
+  end
+
   def product_ounces
     if self.weight_ounces == 0
       ""
@@ -162,5 +168,9 @@ class Product < ApplicationRecord
       "#{self.weight_pounds} lbs. #{self.product_ounces}"
     end
   end
-  
+
+  def meta_notes_expando
+    
+  end
+
 end

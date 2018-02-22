@@ -40,6 +40,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'seed_dump' # Generates seed file from existing database, use for dumping database and re-upping
 gem 'bootbox-rails', '~>0.4' # Wrappers for Javascript Alerts
 gem 'friendly_id', '~> 5.1.0'
+gem 'csso-rails' # Use for optimizing and compressing CSS
 
 # gem 'nprogress-rails' # Use to add Loading Progress bar, https://github.com/caarlos0-graveyard/nprogress-rails
 # gem 'approval' # Use to require approval on database changes

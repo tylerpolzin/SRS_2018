@@ -1,6 +1,6 @@
 <div id="show-part-wrapper">
   <div class="show-image">
-    <% if @part.image.present? %>
+    <% if @part.image.exists? %>
       <%= link_to (image_tag (@part.image.url (:medium))), @part.image.url, target: "_blank", title: "View Full Size Image" %>
     <% else %>
       <p style="margin: 10px;">No Image Available</p>
@@ -10,7 +10,7 @@
     <thead></thead>
     <tbody>
       <tr>
-        <td class="show-part-details">Notes</td>
+        <td >Notes</td>
       </tr>
       <tr>
         <td>
@@ -19,11 +19,11 @@
       </tr>
     </tbody>
   </table>
-  <table class="table table-bordered" id="showPartExtras">
+  <table class="table table-bordered" id="showPartAttributes">
     <thead></thead>
     <tbody>
       <tr>
-        <td class="show-part-details" colspan="2">Additional Attributes</td>
+        <td  colspan="2">Additional Attributes</td>
       </tr>
       <% if @part.details.present? %>
         <% @part.details.try(:each) do |key, value| %>
@@ -37,11 +37,11 @@
       <% end %>
     </tbody>
   </table>
-  <table class="table table-bordered" id="showProductExtras"> <!-- Show Product Uploads -->
+  <table class="table table-bordered" id="showPartAssociations"> <!-- Show Part Associations -->
     <thead></thead>
     <tbody>
       <tr>
-        <td class="show-product-details" colspan="2">Belongs To Product<% if @part.products.count > 1 %>s<% end %></td>
+        <td colspan="2">Belongs To Product<% if @part.products.count > 1 %>s<% end %></td>
       </tr>
       <% if @part.products.present? %>
         <% @part.products.each do |product| %>
@@ -61,11 +61,11 @@
       <% end %>
     </tbody>
   </table>
-  <table class="table table-bordered" id="showProductExtras"> <!-- Show Product Uploads -->
+  <table class="table table-bordered" id="showPartUploads"> <!-- Show Part Uploads -->
     <thead></thead>
     <tbody>
       <tr>
-        <td class="show-product-details" colspan="2">Associated Files</td>
+        <td colspan="2">Associated Files</td>
       </tr>
       <% if @part.uploads.present? %>
         <% @part.uploads.each do |f| %>
@@ -91,7 +91,7 @@
   <tbody>
     <% if admin_or_employee? %>
       <tr>
-        <td colspan="2"><%= link_to "Edit This Part", edit_part_path(id: params[:id]), method: :get, class: 'btn btn-sm' %></td>
+        <td colspan="2"><%= link_to "Edit This Part", edit_part_path(id: @part), method: :get, class: 'btn btn-sm' %></td>
       </tr>
     <% end %>
     <tr class=<%= "firstRowFix" if !current_user.admin? or !current_user.has_role? :employee %>>

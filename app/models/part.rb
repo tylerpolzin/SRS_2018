@@ -3,22 +3,22 @@ class Part < ApplicationRecord
   has_many :products, through: :products_parts
   has_many :stockmovements
   has_many :uploads, dependent: :destroy
-  
-  # validates :product_id, presence: true
+
+  validates :products, presence: true
   validates :manufacturer_model_number, presence: true
   validates_uniqueness_of :manufacturer_model_number
-  
+
   extend FriendlyId
   friendly_id :manufacturer_model_number, use: :slugged
-  
+
   has_attached_file :image,
                     :styles => {:medium => "300x300>", :thumb => "100x100>" },
                     :default_url => "No_Image_Found"
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\z/
-  
+
   accepts_nested_attributes_for :uploads, :allow_destroy => true
   accepts_nested_attributes_for :products_parts, :allow_destroy => true
-  
+
   def part_select # "MFR Model Number | Description"
     def a
       if manufacturer_model_number.present?
@@ -80,7 +80,7 @@ class Part < ApplicationRecord
     end
     name
   end
-  
+
   def product_vendor_name
     name = []
     if self.products.exists?
@@ -92,7 +92,7 @@ class Part < ApplicationRecord
     end
     name
   end
-  
+
   def product_model_select
     name = []
     if self.products.exists?
@@ -121,7 +121,7 @@ class Part < ApplicationRecord
       name = "N/A"
     end
   end
-  
+
   def product_id
     id = []
     if self.products.exists?
@@ -161,7 +161,7 @@ class Part < ApplicationRecord
       "#{self.weight_ounces} oz."
     end
   end
-  
+
   def part_weight
     if self.weight_pounds == 1
       "#{self.weight_pounds} lb. #{self.part_ounces}"
@@ -169,5 +169,5 @@ class Part < ApplicationRecord
       "#{self.weight_pounds} lbs. #{self.part_ounces}"
     end
   end
-  
+
 end
