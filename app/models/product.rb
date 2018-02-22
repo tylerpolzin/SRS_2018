@@ -149,13 +149,12 @@ class Product < ApplicationRecord
     quantity
   end
 
-  def image_html
-    if development?
+  def image_html_dev
     "<a target='_blank' title='View Full Size Image' href='/system/products/images/000/000/#{self.id_w_leading_zero}/original/#{self.image.original_filename}'><img src='/system/products/images/000/000/#{self.id_w_leading_zero}/xsmall/#{self.image.original_filename}' alt='#{self.image.original_filename}'></a>"
-    end
-    if production?
+  end
+
+  def image_html_prod
     "<a target='_blank' title='View Full Size Image' href='//s3-us-east-2.amazonaws.com/srs-file-uploads/products/images/000/000/#{self.id_w_leading_zero}/original/#{self.image.original_filename}'><img src='//s3-us-east-2.amazonaws.com/srs-file-uploads/products/images/000/000/#{self.id_w_leading_zero}/xsmall/#{self.image.original_filename}' alt='#{self.image.original_filename}'></a>"
-    end
   end
 
   def product_ounces

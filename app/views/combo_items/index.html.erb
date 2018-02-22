@@ -85,7 +85,11 @@
                                             <% if combo.products.present? %>
                                               <% combo.products.each do |product| %>
                                                 <tr>
-                                                  <td><%= product.image_html if product.image.exists? %><%= "No Image Available" if product.image.blank? %></td>
+                                                  <td>
+                                                    <%= product.image_html_dev if product.image.exists? and development? %>
+                                                    <%= product.image_html_prod if product.image.exists? and production? %>
+                                                    <%= "No Image Available" if product.image.blank? %>
+                                                  </td>
                                                   <td><%= product.manufacturer_model_number %></td>
                                                   <td><%= product.quantity_on_hand %></td>
                                                   <td><%= product.qty_last_updated %></td>
