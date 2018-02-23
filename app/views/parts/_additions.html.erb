@@ -5,10 +5,11 @@
     <thead></thead>
     <tbody class="body">
       <%= f.fields_for_without_bootstrap :details, @part.details do |d| %>
+        <%= hidden_field_tag "part[details]", nil, class: "hide-tag" %>
         <% @part.details.try(:each) do |key, value| %>
             <tr class="row">
               <td>
-                <%= text_field_tag key, key, :class => 'text_field dynamicAttributeName form-control' %>
+                <%= text_field_tag key, key, :class => 'text_field dynamicAttributeName form-control', required: true %>
               </td>
               <td>
                 <%= d.text_field_without_bootstrap key, :class => 'text_field form-control', :value => value %>
@@ -19,7 +20,7 @@
             </tr>
         <% end %>
       <%- end -%>
-      <tr class='row attributeTemplate <%= 'hide' if @part.details.present? %>'>
+      <tr class='row attributeTemplate hide'>
         <td>
           <input class='text_field dynamicAttributeName form-control' id='' name='' placeholder='New Attribute Name' type='text'/>
         </td>

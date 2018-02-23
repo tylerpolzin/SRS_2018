@@ -35,7 +35,8 @@
           </div>
         </div>
       </div>
-      <%= f.submit "Create Part", :style => "float:right;" %>
+      <button id="partFirstSubmit" class="btn" style="float:right;">Create Part</button>
+      <%= f.submit "Create Part", :id => "partSubmit", :style => "display:none;" %>
     <% end %>
   </div>
 </div>

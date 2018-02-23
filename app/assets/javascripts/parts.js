@@ -30,32 +30,25 @@ $(document).on("turbolinks:load", function(){
     valueElem.attr("id", "part_details_"+value);
     valueElem.attr("name", "part[details]["+value+"]");
   });
+  
   $(".partAttributeContainer").on("click", ".removeRow", function(){
     $(this).closest(".row").html("").parent().find("tr:empty").remove();
-    var tr = $(".body").find("tr").length;
-    if (tr == 1) {
-      $(".body").append(
-        "<tr class='row hacky hidden'>"+
-        "  <td>"+
-        "    <input class='text_field dynamicAttributeName form-control' id='' name='' placeholder='New Attribute Name' type='text'/>"+
-        "  </td>"+
-        "  <td>"+
-        "    <input class='text_field form-control' id='part_details' name='part[details]' placeholder='Description' type='text'/>"+
-        "  </td>"+
-        "  <td>"+
-        "    <a href='#' class='removeRow'>X</a>"+
-        "  </td>"+
-        "</tr>"
-      );
-    }
   });
+  
   $(".partAddAttribute").on("click", function(e){
     e.preventDefault();
-    if ($(".row.hacky").length) {
-      $(".row.hacky").remove();
-    }
     var contents = "<tr class='row'>" + $(".attributeTemplate").html() + "</tr>";
     $(".body").append(contents);
+    $(".body").find(".row:last-child").find(".dynamicAttributeName").prop("required", true);
+  });
+
+  $("#partFirstSubmit").on("click", function(e) {
+    e.preventDefault();
+    var tr = $(".body").find("tr").length;
+    if (tr > 1) {
+      $(".hide-tag").remove();
+    }
+    $("#partSubmit").click();
   });
 
 });
@@ -116,6 +109,7 @@ $(document).on("turbolinks:load", function() {
   var date;
   MyDate.setDate(MyDate.getDate());
   date = MyDate.getFullYear() + "-" + ("0" + (MyDate.getMonth()+1)).slice(-2) + "-" + ("0" + MyDate.getDate()).slice(-2);
+  var child_columns = $(".partTableChildren").data("child-columns"); // Employees & Vendors have a different set of columns visible to them adjusted via the ProductTableChildren div on index.html.erb
   var table = $("#partsDataTable").DataTable({
                 "scrollX": true,
                 "scrollY": true,
@@ -172,7 +166,7 @@ $(document).on("turbolinks:load", function() {
                 "bJQueryUI": true,
                 "columnDefs": [
                   {
-                  "targets": [9,10,15],
+                  "targets": child_columns,
                   "visible": false,
                   },
                   {
@@ -261,7 +255,7 @@ $(document).on("turbolinks:load", function() {
     minimumResultsForSearch: 10
   });
   
-  function format (attributes, uploads, manufacturer, location, upc, orders, notes, dates) {
+  function format (attributes, uploads, manufacturer, location, upc, orders, notes) {
     return ""+
    "<div class='glider'>"+
    "  <table class='part-listing-expando'>"+
@@ -274,7 +268,6 @@ $(document).on("turbolinks:load", function() {
    "        <th>UPC</th>"+
    "        <th>Recent Orders</th>"+
    "        <th>Meta Notes</th>"+
-   "        <th>Meta Dates</th>"+
    "      </tr>"+
    "    </thead>"+
    "    <tbody>"+
@@ -286,7 +279,6 @@ $(document).on("turbolinks:load", function() {
    "        <td>"+upc+"</td>"+
    "        <td>"+orders+"</td>"+
    "        <td>"+notes+"</td>"+
-   "        <td>"+dates+"</td>"+
    "      </tr>"+
    "    </tbody>"+
    "  </table>"+
@@ -310,8 +302,7 @@ $(document).on("turbolinks:load", function() {
                        tr.data("child-location"),
                        tr.data("child-upc"),
                        tr.data("child-orders"),
-                       tr.data("child-notes"),
-                       tr.data("child-dates")), "no-padding").show();
+                       tr.data("child-notes")), "no-padding").show();
       tr.addClass("shown");
       $("div.glider", row.child()).slideDown();
     }

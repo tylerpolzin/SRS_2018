@@ -34,7 +34,8 @@
           </div>
         </div>
       </div>
-      <%= f.submit "Update Part", :style => "float:right;" %>
+      <button id="partFirstSubmit" class="btn" style="float:right;">Update Part</button>
+      <%= f.submit "Update Part", :id => "partSubmit", :style => "display:none;" %>
     <% end %>
     <%= button_to "Delete", part_path(:id => @part), :method => :delete, class: 'hidden partDelete' %>
     <button class="btn btn-sm btn-danger delete-button deletePart bootbox-confirm">Delete This Part</button>

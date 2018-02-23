@@ -60,33 +60,25 @@ $(document).on("turbolinks:load", function() {
     valueElem.attr("id", "product_details_"+value);
     valueElem.attr("name", "product[details]["+value+"]");
   });
+  
   $(".productAttributeContainer").on("click", ".removeRow", function(){
     $(this).closest(".row").html("").parent().find("tr:empty").remove();
-    var tr = $(".body").find("tr").length;
-    if (tr == 1) {
-      console.log("One");
-      $(".body").append(
-        "<tr class='row hacky hidden'>"+
-        "  <td>"+
-        "    <input class='text_field dynamicAttributeName form-control' id='' name='' placeholder='New Attribute Name' type='text'/>"+
-        "  </td>"+
-        "  <td>"+
-        "    <input class='text_field form-control' id='product_details' name='product[details]' placeholder='Description' type='text'/>"+
-        "  </td>"+
-        "  <td>"+
-        "    <a href='#' class='removeRow'>X</a>"+
-        "  </td>"+
-        "</tr>"
-      );
-    }
   });
+  
   $(".productAddAttribute").on("click", function(e){
     e.preventDefault();
-    if ($(".row.hacky").length) {
-      $(".row.hacky").remove();
-    }
     var contents = "<tr class='row'>" + $(".attributeTemplate").html() + "</tr>";
     $(".body").append(contents);
+    $(".body").find(".row:last-child").find(".dynamicAttributeName").prop("required", true);
+  });
+
+  $("#productFirstSubmit").on("click", function(e) {
+    e.preventDefault();
+    var tr = $(".body").find("tr").length;
+    if (tr > 1) {
+      $(".hide-tag").remove();
+    }
+    $("#productSubmit").click();
   });
 
   // JS for Uploads Tab
@@ -366,32 +358,32 @@ $(document).on("turbolinks:load", function() {
     table.page.len($(this).find("option:selected").attr("value")).draw() ;
   });
 
-  function format (attributes, parts, manufacturer, upc, srs_sku, uploads, notes, dates) {
+  function format (attributes, combos, parts, manufacturer, upc, srs_sku, uploads, notes) {
     return ""+
    "<div class='glider'>"+
    "  <table class='product-listing-expando'>"+
    "    <thead>"+
    "      <tr>"+
    "        <th>Additional Attributes</th>"+
+   "        <th>Associated Combo Items"+
    "        <th>Associated Parts</th>"+
    "        <th>Associated Files</th>"+
    "        <th>Manufacturer</th>"+
    "        <th>UPC</th>"+
    "        <th>SRS SKU</th>"+
    "        <th>Meta Notes</th>"+
-   "        <th>Meta Dates</th>"+
    "      </tr>"+
    "    </thead>"+
    "    <tbody>"+
    "      <tr class='no-table'>"+ // "no-table" class allows single-row expandos to not highlight on hover
    "        <td style='padding:0;'>"+attributes+"</td>"+
+   "        <td style='padding:0;'>"+combos+"</td>"+
    "        <td style='padding:0;'>"+parts+"</td>"+
    "        <td style='padding:0;'>"+uploads+"</td>"+
    "        <td>"+manufacturer+"</td>"+
    "        <td>"+upc+"</td>"+
    "        <td>"+srs_sku+"</td>"+
    "        <td>"+notes+"</td>"+
-   "        <td>"+dates+"</td>"+
    "      </tr>"+
    "    </tbody>"+
    "  </table>"+
@@ -409,13 +401,14 @@ $(document).on("turbolinks:load", function() {
       });
     }
     else {
-      row.child(format(tr.data("child-attributes"), tr.data("child-parts"),
-                                                    tr.data("child-manufacturer"),
-                                                    tr.data("child-upc"),
-                                                    tr.data("child-srs_sku"),
-                                                    tr.data("child-uploads"),
-                                                    tr.data("child-notes"),
-                                                    tr.data("child-dates")), "no-padding").show();
+      row.child(format(tr.data("child-attributes"),
+                       tr.data("child-combos"),
+                       tr.data("child-parts"),
+                       tr.data("child-manufacturer"),
+                       tr.data("child-upc"),
+                       tr.data("child-srs_sku"),
+                       tr.data("child-uploads"),
+                       tr.data("child-notes")), "no-padding").show();
       tr.addClass("shown");
       $("div.glider", row.child()).slideDown();
     }

@@ -40,7 +40,8 @@
           <!--</div>-->
         </div>
       </div>
-      <%= f.submit "Create Product", :style => "float:right;" %>
+      <button id="productFirstSubmit" class="btn" style="float:right;">Create Product</button>
+      <%= f.submit "Create Product", :id => "productSubmit", :style => "display:none;" %>
     <% end %>
   </div>
 </div>

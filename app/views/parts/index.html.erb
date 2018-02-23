@@ -21,14 +21,22 @@
           <th>Pricing</th>
           <th>Additional Notes</th>
           <th></th>
+          <% if current_user.admin? %>
+            <th>Active?</th>
+            <th>Store Orderable?</th>
+            <th>Warranty Orderable?</th>
+            <th>E-Commerce SKU?</th>
+            <th>In Stock?</th>
+          <% end %>
         </tr>
       </thead>
-      <div class="partTableChildren" data-child-filter="
-        <% @parts.each do |part| %>
-          <% part.products.each do |product| %>
-            <option name='<%= product.manufacturer_model_number %>' value='<%= product.id %>'><%= product.product_select_with_model %></option>
-          <% end %>
-        <% end %>">
+      <div class="partTableChildren" 
+        data-child-filter="<% @parts.each do |part| %>
+                             <% part.products.each do |product| %>
+                               <option name='<%= product.manufacturer_model_number %>' value='<%= product.id %>'><%= product.product_select_with_model %></option>
+                             <% end %>
+                           <% end %>"
+        data-child-columns="<% if current_user.admin? %>[9,10,15,16,17,18,19,20]<% else %>[9,10,15]<% end %>"> <!-- Used in the dataTable "columnDefs" for visible targets -->
       </div>
       <tbody class="part-table">
         <% @parts.each do |part| %>
@@ -53,21 +61,9 @@
                                         <% end %>
                                       </tbody>
                                     </table>"
-            data-child-manufacturer="<% if part.product_vendor_name.present? %>
-                                       <%= part.product_vendor_name %>
-                                     <% else %>
-                                       N/A
-                                     <% end %>"
-                data-child-location="<% if part.location.present? %>
-                                       <%= part.location %>
-                                     <% else %>
-                                       N/A
-                                     <% end %>"
-                     data-child-upc="<% if part.upc.present? %>
-                                       <%= part.upc %>
-                                     <% else %>
-                                       N/A
-                                     <% end %>"
+            data-child-manufacturer="<%= part.product_vendor_name if part.product_vendor_name.present? %><%= "N/A" if part.product_vendor_name.blank? %>"
+                data-child-location="<%= part.location if part.location.present? %><%= "N/A" if part.location.blank? %>"
+                     data-child-upc="<%= part.upc if part.upc.present? %><%= "N/A" if part.upc.blank? %>"
                 data-child-uploads="<table class='table childPartsTable'>
                                       <thead>
                                         <tr>
@@ -93,43 +89,18 @@
                                       </tbody>
                                     </table>"
                   data-child-orders="Recent Orders Here"
-                   data-child-notes="<% if part.active? %>
-                                       <p><i class='fa fa-check-square-o' style='color:green'></i> Active&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                     <% else %>
-                                       <p><i class='fa fa-close' style='color:red'></i> Active&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                     <% end %>
-                                     <% if part.store_orderable? %>
-                                       <i class='fa fa-check-square-o' style='color:green'></i> Store Orderable</p>
-                                     <% else %>
-                                       <i class='fa fa-close' style='color:red'></i> Store Orderable</p>
-                                     <% end %>
-                                     <% if part.ecomm_sku? %>
-                                       <p><i class='fa fa-check-square-o' style='color:green'></i> E-Commerce SKU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                     <% else %>
-                                       <p><i class='fa fa-close' style='color:red'></i> E-Commerce SKU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                     <% end %>
-                                     <% if part.warranty_orderable? %>
-                                       <i class='fa fa-check-square-o' style='color:green'></i> Warranty Orderable</p>
-                                     <% else %>
-                                       <i class='fa fa-close' style='color:red'></i> Warranty Orderable</p>
-                                     <% end %>"
-                   data-child-dates="<p>Added on <%= part.created_at.strftime('%B %d, %Y') %></p>
+                   data-child-notes="<p><i class='<%= "fa fa-check-square-o fa-green" if part.active? %><%= "fa fa-close fa-red" if !part.active? %>'></i> Active</p>
+                                     <p><i class='<%= "fa fa-check-square-o fa-green" if part.store_orderable? %><%= "fa fa-close fa-red" if !part.store_orderable? %>'></i> Store Orderable</p>
+                                     <p><i class='<%= "fa fa-check-square-o fa-green" if part.ecomm_sku? %><%= "fa fa-close fa-red" if !part.ecomm_sku? %>'></i> E-Commerce SKU</p>
+                                     <p><i class='<%= "fa fa-check-square-o fa-green" if part.warranty_orderable? %><%= "fa fa-close fa-red" if !part.warranty_orderable? %>'></i> Warranty Orderable</p>
+                                     <p>Added on <%= part.created_at.strftime('%B %d, %Y') %></p>
                                      <p>Last Modified on <%= part.updated_at.strftime('%B %d, %Y') %></p>">
             <td class="details-control"></td>
             <td>
-              <% if part.image.exists? %>
-                <%= link_to (image_tag (part.image.url (:thumb))), part.image.url, target: "_blank", title: "View Full Size Image" %>
-              <% else %>
-                No Image Available
-              <% end %>
+              <%= link_to (image_tag (part.image.url (:thumb))), part.image.url, target: "_blank", title: "View Full Size Image" if part.image.exists? %>
+              <%= "No Image Available" if !part.image.exists? %>
             </td>
-            <td>
-              <% if part.product_brand_name.present? %>
-                <%= part.product_brand_name %>
-              <% else %>
-                N/A
-              <% end %>
-            </td>
+            <td><%= part.product_brand_name if part.product_brand_name.present? %><%= "N/A" if part.product_brand_name.blank? %></td>
             <td class="parts_products">
               <% if part.products.present? %>
                 <table class="table" style="<% if part.products.length < 3 %>height:150px;<% else %><% end %>">
@@ -138,7 +109,7 @@
                     <% part.products.each do |product| %>
                       <tr>
                         <td style="border-right:1px solid #ddd !important;width:40%;"><%= link_to product.manufacturer_model_number, product_path(product), method: :get, title: "View Product Details (ID: #{product.id})" %></td>
-                        <td><%= product.description %></td>
+                        <td><%= product.description if product.description.present? %><%= "N/A" if product.description.blank? %></td>
                       </tr>
                     <% end %>
                   </tbody>
@@ -148,26 +119,11 @@
               <% end %>
             </td>
             <td>
-              <% if part.manufacturer_model_number.present? %>
-                <%= link_to part.manufacturer_model_number, part_path(id: part), method: :get, title: "View Part Details (ID: #{part.id})" %>
-              <% else %>
-                <%= link_to "N/A", part_path(id: part), method: :get, title: "View Part Details (ID: #{part.id})" %>
-              <% end %>
+              <%= link_to part.manufacturer_model_number, part_path(id: part), method: :get, title: "View Part Details (ID: #{part.id})" if part.manufacturer_model_number.present? %>
+              <%= link_to "N/A", part_path(id: part), method: :get, title: "View Part Details (ID: #{part.id})" if part.manufacturer_model_number.blank? %>
             </td>
-            <td>
-              <% if part.srs_sku.present? %>
-                <%= part.srs_sku %>
-              <% else %>
-                N/A
-              <% end %>
-            </td>
-            <td>
-              <% if part.description.present? %>
-                <%= part.description %>
-              <% else %>
-                N/A
-              <% end %>
-            </td>
+            <td><%= part.srs_sku if part.srs_sku.present? %><%= "N/A" if part.srs_sku.blank? %></td>
+            <td><%= part.description if part.description.present? %><%= "N/A" if part.description.blank? %></td>
             <td class="quantities"><%= part.quantity_on_hand %></td>
             <td><%= part.qty_last_updated %></td>
             <td><%= part.max_quantity %></td>
@@ -178,41 +134,30 @@
               <p>Packaged: <%= part.packaged_dims_l %>"x<%= part.packaged_dims_w %>"x<%= part.packaged_dims_h %>"</p>
             </td>
             <td>
-              <% if part.vendor_cost >= 0.01 %>
-                <p>Vendor Cost: $<%= number_with_precision(part.vendor_cost, precision: 2) %></p>
-              <% else %>
-                <p>Vendor Cost: N/A</p>
-              <% end %>
-              <% if part.retail_cost >= 0.01 %>
-                <p>Retail Cost: $<%= number_with_precision(part.retail_cost, precision: 2) %></p>
-              <% else %>
-                <p>Retail Cost: N/A</p>
-              <% end %>
-              <% if part.shipping_cost >= 0.01 %>
-                <p>Shipping Cost: $<%= number_with_precision(part.shipping_cost, precision: 2) %></p>
-              <% else %>
-                <p>Shipping Cost: N/A</p>
-              <% end %>
+              <p>Vendor Cost: <%= "$" + number_with_precision(part.vendor_cost, precision: 2) if part.vendor_cost >= 0.01 %>
+              <%= "N/A" if part.vendor_cost < 0.01 %></p>
+              <p>Retail Cost: <%= "$" + number_with_precision(part.retail_cost, precision: 2) if part.retail_cost >= 0.01 %>
+              <%= "N/A" if part.retail_cost < 0.01 %></p>
+              <p>Shipping Cost: <%= "$" + number_with_precision(part.shipping_cost, precision: 2) if part.shipping_cost >= 0.01 %>
+              <%= "N/A" if part.shipping_cost < 0.01 %></p>
             </td>
             <td>
-              <% if part.notes.present? %>
-                <p><%= simple_format part.notes %></p>
-                <p><%= link_to "Edit This Part", edit_part_path(id: part), method: :get, class: 'btn btn-sm' %></p>
-              <% else %>
-                <p>N/A</p>
-                <p><%= link_to "Edit This Part", edit_part_path(id: part), method: :get, class: 'btn btn-sm' %></p>
-              <% end %>
+              <p><%= simple_format part.notes if part.notes.present? %><%= "N/A" if part.notes.blank? %></p>
+              <%= link_to "Edit This Part", edit_part_path(id: part), method: :get, class: 'btn btn-sm' if admin_or_employee? %></p>
             </td>
             <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
-              <% if part.product_vendor_name.present? %><%= part.product_vendor_name %><% end %> | 
-              <% if part.location.present? %><%= part.location %><% end %> | 
-              <% if part.upc.present? %><%= part.upc %><% end %> | 
-              <% if part.active? %>Active | <% else %>Not Active<% end %> | 
-              <% if part.store_orderable? %>Store Orderable | <% else %>Not Store Orderable<% end %> | 
-              <% if part.ecomm_sku? %>E-Commerce SKU | <% else %>Not E-Commerce SKU<% end %> | 
-              <% if part.warranty_orderable? %>Warranty Orderable | <% else %>Not Warranty Orderable<% end %>
+                <%= part.product_vendor_name %> | <%= part.location %> | <%= part.upc %> | 
               <% if part.details.present? %><% part.details.try(:each) do |key, value| %><%= key %> : <%= value %> | <% end %><% end %>
+              <% if part.uploads.present? %><% part.uploads.each do |upload| %><%= upload.file_file_name %> | <%= upload.description %> | <% end %><% end %>
             </td>
+            <% if current_user.admin? %>
+              <td><%= part.active %></td>
+              <td><%= part.store_orderable %></td>
+              <td><%= part.warranty_orderable %></td>
+              <td><%= part.ecomm_sku %></td>
+              <td><%= "true" if part.quantity_on_hand > 0 %><%= "false" if part.quantity_on_hand < 1%></td>
+            <% end %>
+
           </tr>
         <% end %>
       </tbody>

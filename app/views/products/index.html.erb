@@ -96,6 +96,30 @@
                                         <% end %>
                                       </tbody>
                                     </table>"
+            data-child-combos=" <table class='clear productComboItemsTable'>
+                                  <thead>
+                                    <tr>
+                                      <th>Combo Item</th>
+                                      <th>Description</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <% if product.combo_items.present? %>
+                                      <% product.combo_items.each do |combo| %>
+                                        <tr>
+                                            <td>
+                                              <a target='_blank' href='/combo_items/<%= combo.slug %>' title='View Combo Item Details(ID: <%= combo.id %>)'>
+                                                <%= combo.model_number if combo.model_number.present? %><%= "N/A" if combo.model_number.blank? %>
+                                              </a>
+                                            </td>
+                                            <td><%= combo.description %></td>
+                                        </tr>
+                                      <% end %>
+                                    <% else %>
+                                      <td colspan='2'>No Combo Items found</td>
+                                    <% end %>
+                                  </tbody>
+                                </table>"
             data-child-parts="<table class='clear childPartsTable'>
                                 <thead>
                                   <tr>
@@ -108,7 +132,7 @@
                                     <% product.parts.each do |part| %>
                                       <tr>
                                         <td>
-                                          <a target='blank' href='/parts/<%= part.slug %>' title='View Part Details (ID: <%= part.id %>)'>
+                                          <a target='_blank' href='/parts/<%= part.slug %>' title='View Part Details (ID: <%= part.id %>)'>
                                             <%= part.part_select if part.manufacturer_model_number.present? %>
                                             <%= "N/A" if part.manufacturer_model_number.blank? %>
                                           </a>
@@ -147,9 +171,9 @@
             data-child-notes="<p><i class='<%= "fa fa-check-square-o fa-green" if product.active? %><%= "fa fa-close fa-red" if !product.active? %>'></i> Active</p>
                               <p><i class='<%= "fa fa-check-square-o fa-green" if product.store_orderable? %><%= "fa fa-close fa-red" if !product.store_orderable? %>'></i> Store Orderable</p>
                               <p><i class='<%= "fa fa-check-square-o fa-green" if product.ecomm_sku? %><%= "fa fa-close fa-red" if !product.ecomm_sku? %>'></i> E-Commerce SKU</p>
-                              <p><i class='<%= "fa fa-check-square-o fa-green" if product.warranty_orderable? %><%= "fa fa-close fa-red" if !product.warranty_orderable? %>'></i> Warranty Orderable</p>"
-            data-child-dates="<p>Added on <%= product.created_at.strftime('%B %d, %Y') %></p>
-                             <p>Last Modified on <%= product.updated_at.strftime('%B %d, %Y') %></p>">
+                              <p><i class='<%= "fa fa-check-square-o fa-green" if product.warranty_orderable? %><%= "fa fa-close fa-red" if !product.warranty_orderable? %>'></i> Warranty Orderable</p>
+                              <p>Added on <%= product.created_at.strftime('%B %d, %Y') %></p>
+                              <p>Last Modified on <%= product.updated_at.strftime('%B %d, %Y') %></p>">
             <td class="details-control"></td>
             <td>
               <%= link_to (image_tag (product.image.url (:thumb))), product.image.url, target: "_blank", title: "View Full Size Image" if product.image.exists? %>
@@ -190,12 +214,11 @@
             </td>
             <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
               <% if product.parts.exists? %><% product.parts.each do |part| %>
-              <%= part.manufacturer_model_number if part.manufacturer_model_number.present? %> | 
-              <%= part.description if part.description.present? %> | <% end %><% end %> | 
-              <%= product.vendor_name if product.vendor_name.present? %> | 
-              <%= product.upc if product.upc.present? %> | 
-              <%= product.srs_sku if product.srs_sku.present? %> | 
+              <%= part.manufacturer_model_number %> | <%= part.description %> | <% end %><% end %> | 
+              <%= product.vendor_name %> | <%= product.upc %> | <%= product.srs_sku %> | 
               <% if product.details.present? %><% product.details.try(:each) do |key, value| %><%= key %> : <%= value %> | <% end %><% end %>
+              <% if product.uploads.present? %><% product.uploads.each do |upload| %><%= upload.file_file_name %> | <%= upload.description %> | <% end %><% end %>
+              <% if product.combo_items.present? %><% product.combo_items.each do |combo| %><%= combo.model_number %> | <%= combo.description %> | <% end %><% end %>
             </td>
             <% if current_user.admin? %>
               <td><%= "true" if product.parts.exists? %><%= "false" if !product.parts.exists? %></td>

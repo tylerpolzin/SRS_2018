@@ -78,16 +78,10 @@
             <td colspan="2">Associated Files</td>
           </tr>
           <% if part.uploads.present? %>
-            <% part.uploads.each do |f| %>
+            <% part.uploads.each do |upload| %>
               <tr>
-                <td><%= link_to f.file_file_name, f.file.url(:original, false), target: "_blank", title: "File Size: #{number_to_human_size(f.file_file_size, precision: 2)}" %></td>
-                <td>
-                  <% if f.description.present? %>
-                    <%= f.description %>
-                  <% else %>
-                    No Description
-                  <% end %>
-                </td>
+                <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", title: "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}" %></td>
+                <td><%= upload.description if upload.description.present? %><%= "N/A" if upload.description.blank? %></td>
               </tr>
             <% end %>
           <% else %>
@@ -205,80 +199,57 @@
           <td colspan="2">
             <div>
               <%= link_to "Go To Part Page", part_path(part), method: :get, class: "btn btn-sm", :style => "margin-right:5px;" %>
-              <% if admin_or_employee? %>
-                <%= link_to "Edit This Part", edit_part_path(id: part), method: :get, class: 'btn btn-sm' %>
-              <% end %>
+              <%= link_to "Edit This Part", edit_part_path(id: part), method: :get, class: 'btn btn-sm' if admin_or_employee? %>
             </div>
           </td>
         </tr>
         <tr>
           <td>Manufacturer</td>
           <td>
-            <% if part.product_vendor_name.present? %>
-              <%= part.product_vendor_name %>
-            <% else %>
-              N/A
-            <% end %>
+            <%= part.product_vendor_name if part.product_vendor_name.present? %>
+            <%= "N/A" if part.product_vendor_name.blank? %>
           </td>
         </tr>
         <tr>
-          <td title="Part ID: <%= part.id %>">Model #</td>
+          <td title="Part ID: <%= part.id %>">MFR Model #</td>
           <td>
-            <% if part.manufacturer_model_number.present? %>
-              <%= part.manufacturer_model_number %>
-            <% else %>
-              N/A
-            <% end %>
+            <%= part.manufacturer_model_number if part.manufacturer_model_number.present? %>
+            <%= "N/A" if part.manufacturer_model_number.blank? %>
           </td>
         </tr>
         <tr>
           <td>UPC #</td>
           <td>
-            <% if part.upc.present? %>
-              <%= part.upc %>
-            <% else %>
-              N/A
-            <% end %>
+            <%= part.upc if part.upc.present? %>
+            <%= "N/A" if part.upc.blank? %>
           </td>
         </tr>
         <tr>
           <td>Brand Name</td>
           <td>
-            <% if part.product_brand_name.present? %>
-              <%= part.product_brand_name %>
-            <% else %>
-              N/A
-            <% end %>
+            <%= part.product_brand_name if part.product_brand_name.present? %>
+            <%= "N/A" if part.product_brand_name.blank? %>
           </td>
         </tr>
         <tr>
           <td>SRS SKU</td>
           <td>
-            <% if part.srs_sku.present? %>
-              <%= part.srs_sku %>
-            <% else %>
-              N/A
-            <% end %>
+            <%= part.srs_sku if part.srs_sku.present? %>
+            <%= "N/A" if part.srs_sku.blank? %>
           </td>
         </tr>
         <tr>
           <td>Location</td>
           <td>
-            <% if part.location.present? %>
-              <%= part.location %>
-            <% else %>
-              N/A
-            <% end %>
+            <%= part.location if part.location.present? %>
+            <%= "N/A" if part.location.blank? %>
           </td>
         </tr>
         <tr>
           <td>Description</td>
           <td>
-            <% if part.description.present? %>
-              <%= part.description %>
-            <% else %>
-              N/A
-            <% end %>
+            <%= part.description if part.description.present? %>
+            <%= "N/A" if part.description.blank? %>
           </td>
         </tr>
         <tr>
@@ -295,85 +266,48 @@
         </tr>
         <tr>
           <td>Part Dimensions</td>
-          <td>
-            <%= part.product_dims_l %>"x<%= part.product_dims_w %>"x<%= part.product_dims_h %>"
-          </td>
+          <td><%= part.product_dims_l %>"x<%= part.product_dims_w %>"x<%= part.product_dims_h %>"</td>
         </tr>
         <tr>
           <td>Packaged Dimensions</td>
-          <td>
-            <%= part.packaged_dims_l %>"x<%= part.packaged_dims_w %>"x<%= part.packaged_dims_h.to_f %>"
-          </td>
+          <td><%= part.packaged_dims_l %>"x<%= part.packaged_dims_w %>"x<%= part.packaged_dims_h.to_f %>"</td>
         </tr>
         <tr>
           <td>Vendor Cost</td>
           <td>
-            <% if part.vendor_cost >= 0.01 %>
-              $<%= part.vendor_cost %>
-            <% else %>
-              N/A
-            <% end %>
+            <%= "$" + number_with_precision(part.vendor_cost, precision: 2) if part.vendor_cost >= 0.01 %>
+            <%= "N/A" if part.vendor_cost < 0.01 %>
           </td>
         </tr>
         <tr>
           <td>Retail Cost</td>
           <td>
-            <% if part.retail_cost >= 0.01 %>
-              $<%= part.retail_cost %>
-            <% else %>
-              N/A
-            <% end %>
+            <%= "$" + number_with_precision(part.retail_cost, precision: 2) if part.retail_cost >= 0.01 %>
+            <%= "N/A" if part.retail_cost < 0.01 %>
           </td>
         </tr>
         <tr>
           <td>Shipping Cost</td>
           <td>
-            <% if part.shipping_cost >= 0.01 %>
-              $<%= part.shipping_cost %>
-            <% else %>
-              N/A
-            <% end %>
+            <%= "$" + number_with_precision(part.shipping_cost, precision: 2) if part.shipping_cost >= 0.01 %>
+            <%= "N/A" if part.shipping_cost < 0.01 %>
           </td>
         </tr>
         <tr>
           <td>Store Orderable?</td>
-          <td>
-            <% if part.store_orderable? %>
-              Yes
-            <% else %>
-              No
-            <% end %>
-          </td>
+          <td><%= "Yes" if part.store_orderable? %><%= "No" if !part.store_orderable? %></td>
         </tr>
         <tr>
           <td>Warranty Orderable?</td>
-          <td>
-            <% if part.warranty_orderable? %>
-              Yes
-            <% else %>
-              No
-            <% end %>
-          </td>
+          <td><%= "Yes" if part.warranty_orderable? %><%= "No" if !part.warranty_orderable? %></td>
         </tr>
         <tr>
           <td>E-Commerce SKU?</td>
-          <td>
-            <% if part.ecomm_sku? %>
-              Yes
-            <% else %>
-              No
-            <% end %>
-          </td>
+          <td><%= "Yes" if part.ecomm_sku? %><%= "No" if !part.ecomm_sku? %></td>
         </tr>
         <tr>
           <td>Active?</td>
-          <td>
-            <% if part.active? %>
-              Yes
-            <% else %>
-              No
-            <% end %>
-            </td>
+          <td><%= "Yes" if part.active? %><%= "No" if !part.active? %></td>
         </tr>
         <tr>
           <td>Part Creation Date</td>

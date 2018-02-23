@@ -10,7 +10,7 @@
     <thead></thead>
     <tbody>
       <tr>
-        <td >Notes</td>
+        <td>Notes</td>
       </tr>
       <tr>
         <td>
@@ -47,13 +47,13 @@
   <% if @combo_item.products.present? %>
     <% @combo_item.products.each do |product| %>
       <tr>
-        <td><%= link_to product.manufacturer_model_number, product_path(product), method: :get %></td>
         <td>
-          <% if product.description.present? %>
-            <%= product.description %>
-          <% else %>
-            N/A
-          <% end %>
+          <%= link_to (image_tag (product.image.url (:xsmall))), product.image.url, target: "_blank", title: "View Full Size Image" if product.image.exists? %>
+          <%= "No Image Available" if product.image.blank? %>
+        </td>
+        <td>
+          <p><%= link_to product.manufacturer_model_number, product_path(product), method: :get %></p>
+          <p><%= product.description if product.description.present? %><%= "N/A" if product.description.blank? %></p>
         </td>
       </tr>
     <% end %>
@@ -73,92 +73,62 @@
     <tr class=<%= "firstRowFix" if !current_user.admin? or !current_user.has_role? :employee %>>
       <td>Manufacturer</td>
       <td>
-        <% if @combo_item.product_vendor_name.present? %>
-          <%= @combo_item.product_vendor_name %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @combo_item.product_vendor_name if @combo_item.product_vendor_name.present? %>
+        <%= "N/A" if @combo_item.product_vendor_name.blank? %>
       </td>
     </tr>
     <tr>
       <td>Model Number</td>
       <td>
-        <% if @combo_item.model_number.present? %>
-          <%= @combo_item.model_number %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @combo_item.model_number if @combo_item.model_number.present? %>
+        <%= "N/A" if @combo_item.model_number.blank? %>
       </td>
     </tr>
     <tr>
       <td>UPC #</td>
       <td>
-        <% if @combo_item.upc.present? %>
-          <%= @combo_item.upc %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @combo_item.upc if @combo_item.upc.present? %>
+        <%= "N/A" if @combo_item.upc.blank? %>
       </td>
     </tr>
     <tr>
       <td>Brand Name</td>
       <td>
-        <% if @combo_item.product_brand_name.present? %>
-          <%= @combo_item.product_brand_name %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @combo_item.product_brand_name if @combo_item.product_brand_name.present? %>
+        <%= "N/A" if @combo_item.product_brand_name.blank? %>
       </td>
     </tr>
     <tr>
       <td>Description</td>
       <td>
-        <% if @combo_item.description.present? %>
-          <%= @combo_item.description %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @combo_item.description if @combo_item.description.present? %>
+        <%= "N/A" if @combo_item.description.blank? %>
       </td>
     </tr>
     <tr>
       <td>Vendor Cost</td>
       <td>
-        <% if @combo_item.vendor_cost >= 0.01 %>
-          $<%= @combo_item.vendor_cost %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= "$" + number_with_precision(@combo_item.vendor_cost, precision: 2) if @combo_item.vendor_cost >= 0.01 %>
+        <%= "N/A" if @combo_item.vendor_cost < 0.01 %>
       </td>
     </tr>
     <tr>
       <td>Retail Cost</td>
       <td>
-        <% if @combo_item.retail_cost >= 0.01 %>
-          $<%= @combo_item.retail_cost %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= "$" + number_with_precision(@combo_item.retail_cost, precision: 2) if @combo_item.retail_cost >= 0.01 %>
+        <%= "N/A" if @combo_item.retail_cost < 0.01 %>
       </td>
     </tr>
     <tr>
       <td>Shipping Cost</td>
       <td>
-        <% if @combo_item.shipping_cost >= 0.01 %>
-          $<%= @combo_item.shipping_cost %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= "$" + number_with_precision(@combo_item.shipping_cost, precision: 2) if @combo_item.shipping_cost >= 0.01 %>
+        <%= "N/A" if @combo_item.shipping_cost < 0.01 %>
       </td>
     </tr>
     <tr>
       <td>Active?</td>
-      <td>
-        <% if @combo_item.active? %>
-          Yes
-        <% else %>
-          No
-        <% end %>
-        </td>
+      <td><%= "Yes" if @combo_item.active? %><%= "No" if !@combo_item.active? %></td>
     </tr>
     <tr>
       <td>Combo Item Creation Date</td>

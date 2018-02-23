@@ -34,7 +34,8 @@
           </div>
         </div>
       </div>
-      <%= f.submit "Update Product", :style => "float:right;" %>
+      <button id="productFirstSubmit" class="btn" style="float:right;">Update Product</button>
+      <%= f.submit "Update Product", :id => "productSubmit", :style => "display:none;" %>
     <% end %>
     <%= button_to "Delete", product_path(:id => @product), :method => :delete, class: 'hidden productDelete' %>
     <button class="btn btn-sm btn-danger delete-button deleteProduct bootbox-confirm">Delete This Product</button>

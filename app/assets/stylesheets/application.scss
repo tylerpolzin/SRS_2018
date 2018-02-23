@@ -66,6 +66,12 @@ body {
   background: #f7cb00; /* Gecko Browsers */
 }
 
+:invalid { // if a field has the "required" attribute, this highlights them as red when they're empty
+  &:required {
+    background: #ffc4c4;
+  }  
+}
+
 .fa-green { // Mainly used for Meta Active, Ecomm Order, etc. style notes in Products & Parts index
   color: green;
 }

@@ -34,7 +34,8 @@
           <!--</div>-->
         </div>
       </div>
-      <%= f.submit "Update Combo Item", :style => "float:right;" %>
+      <button id="comboItemFirstSubmit" class="btn" style="float:right;">Update Combo Item</button>
+      <%= f.submit "Update Combo Item", :id => "comboItemSubmit", :style => "display:none;" %>
     <% end %>
     <%= button_to "Delete", combo_item_path(:id => @combo_item), :method => :delete, class: 'hidden partDelete' %>
     <button class="btn btn-sm btn-danger delete-button deletePart bootbox-confirm">Delete This Combo Item</button>

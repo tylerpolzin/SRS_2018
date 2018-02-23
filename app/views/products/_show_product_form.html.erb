@@ -37,6 +37,24 @@
       <% end %>
     </tbody>
   </table>
+  <table class="table table-bordered" id="showProductComboItems"> <!-- Show Product Combo Items -->
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td colspan="2">Associated Combo Items</td>
+      </tr>
+      <% if @product.combo_items.present? %>
+        <% @product.combo_items.each do |combo| %>
+          <tr>
+            <td><%= link_to combo.model_number, combo_item_path(combo), target: "_blank", title: "Combo Item ID: #{combo.id}" %></td>
+            <td><%= combo.description if combo.description.present? %><%= "N/A" if combo.description.blank? %></td>
+          </tr>
+        <% end %>
+      <% else %>
+          <tr><td style="text-align:center;border-right:2px solid orange;">No Associated Combo Items Found</td></tr>
+      <% end %>
+    </tbody>
+  </table>
   <table class="table table-bordered" id="showProductUploads"> <!-- Show Product Uploads -->
     <thead></thead>
     <tbody>
@@ -44,16 +62,10 @@
         <td colspan="2">Associated Files</td>
       </tr>
       <% if @product.uploads.present? %>
-        <% @product.uploads.each do |f| %>
+        <% @product.uploads.each do |upload| %>
           <tr>
-            <td><%= link_to f.file_file_name, f.file.url(:original, false), target: "_blank", title: "File Size: #{number_to_human_size(f.file_file_size, precision: 2)}" %></td>
-            <td>
-              <% if f.description.present? %>
-                <%= f.description %>
-              <% else %>
-                No Description
-              <% end %>
-            </td>
+            <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", title: "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}" %></td>
+            <td><%= upload.description if upload.description.present? %><%= "N/A" if upload.description.blank? %></td>
           </tr>
         <% end %>
       <% else %>
@@ -75,71 +87,50 @@
     <tr class=<%= "firstRowFix" if !current_user.admin? or !current_user.has_role? :employee %>>
       <td>Manufacturer</td>
       <td>
-        <% if @product.vendor_name.present? %>
-          <%= @product.vendor_name %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @product.vendor_name if @product.vendor_name.present? %>
+        <%= "N/A" if @product.vendor_name.blank? %>
       </td>
     </tr>
     <tr>
       <td>MFR Model #</td>
       <td>
-        <% if @product.manufacturer_model_number.present? %>
-          <%= @product.manufacturer_model_number %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @product.manufacturer_model_number if @product.manufacturer_model_number.present? %>
+        <%= "N/A" if @product.manufacturer_model_number.blank? %>
       </td>
     </tr>
     <tr>
       <td>UPC #</td>
       <td>
-        <% if @product.upc.present? %>
-          <%= @product.upc %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @product.upc if @product.upc.present? %>
+        <%= "N/A" if @product.upc.blank? %>
       </td>
     </tr>
     <tr>
       <td>Brand Name</td>
       <td>
-        <% if @product.brand_name.present? %>
-          <%= @product.brand_name %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @product.brand_name if @product.brand_name.present? %>
+        <%= "N/A" if @product.brand_name.blank? %>
       </td>
     </tr>
     <tr>
       <td>SRS SKU</td>
       <td>
-        <% if @product.srs_sku.present? %>
-          <%= @product.srs_sku %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @product.srs_sku if @product.srs_sku.present? %>
+        <%= "N/A" if @product.srs_sku.blank? %>
       </td>
     </tr>
     <tr>
       <td>Location</td>
       <td>
-        <% if @product.location.present? %>
-          <%= @product.location %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @product.location if @product.location.present? %>
+        <%= "N/A" if @product.location.blank? %>
       </td>
     </tr>
     <tr>
       <td>Description</td>
       <td>
-        <% if @product.description.present? %>
-          <%= @product.description %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= @product.description if @product.description.present? %>
+        <%= "N/A" if @product.description.blank? %>
       </td>
     </tr>
     <tr>
@@ -156,85 +147,48 @@
     </tr>
     <tr>
       <td>Product Dimensions</td>
-      <td>
-        <%= @product.product_dims_l %>"x<%= @product.product_dims_w %>"x<%= @product.product_dims_h %>"
-      </td>
+      <td><%= @product.product_dims_l %>"x<%= @product.product_dims_w %>"x<%= @product.product_dims_h %>"</td>
     </tr>
     <tr>
       <td>Packaged Dimensions</td>
-      <td>
-        <%= @product.packaged_dims_l %>"x<%= @product.packaged_dims_w %>"x<%= @product.packaged_dims_h.to_f %>"
-      </td>
+      <td><%= @product.packaged_dims_l %>"x<%= @product.packaged_dims_w %>"x<%= @product.packaged_dims_h.to_f %>"</td>
     </tr>
     <tr>
       <td>Vendor Cost</td>
       <td>
-        <% if @product.vendor_cost >= 0.01 %>
-          $<%= @product.vendor_cost %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= "$" + number_with_precision(@product.vendor_cost, precision: 2) if @product.vendor_cost >= 0.01 %>
+        <%= "N/A" if @product.vendor_cost < 0.01 %>
       </td>
     </tr>
     <tr>
       <td>Retail Cost</td>
       <td>
-        <% if @product.retail_cost >= 0.01 %>
-          $<%= @product.retail_cost %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= "$" + number_with_precision(@product.retail_cost, precision: 2) if @product.retail_cost >= 0.01 %>
+        <%= "N/A" if @product.retail_cost < 0.01 %>
       </td>
     </tr>
     <tr>
       <td>Shipping Cost</td>
       <td>
-        <% if @product.shipping_cost >= 0.01 %>
-          $<%= @product.shipping_cost %>
-        <% else %>
-          N/A
-        <% end %>
+        <%= "$" + number_with_precision(@product.shipping_cost, precision: 2) if @product.shipping_cost >= 0.01 %>
+        <%= "N/A" if @product.shipping_cost < 0.01 %>
       </td>
     </tr>
     <tr>
       <td>Store Orderable?</td>
-      <td>
-        <% if @product.store_orderable? %>
-          Yes
-        <% else %>
-          No
-        <% end %>
-      </td>
+      <td><%= "Yes" if @product.store_orderable? %><%= "No" if !@product.store_orderable? %></td>
     </tr>
     <tr>
       <td>Warranty Orderable?</td>
-      <td>
-        <% if @product.warranty_orderable? %>
-          Yes
-        <% else %>
-          No
-        <% end %>
-      </td>
+      <td><%= "Yes" if @product.warranty_orderable? %><%= "No" if !@product.warranty_orderable? %></td>
     </tr>
     <tr>
       <td>E-Commerce SKU?</td>
-      <td>
-        <% if @product.ecomm_sku? %>
-          Yes
-        <% else %>
-          No
-        <% end %>
-      </td>
+      <td><%= "Yes" if @product.ecomm_sku? %><%= "No" if !@product.ecomm_sku? %></td>
     </tr>
     <tr>
       <td>Active?</td>
-      <td>
-        <% if @product.active? %>
-          Yes
-        <% else %>
-          No
-        <% end %>
-        </td>
+      <td><%= "Yes" if @product.active? %><%= "No" if !@product.active? %></td>
     </tr>
     <tr>
       <td>Product Creation Date</td>

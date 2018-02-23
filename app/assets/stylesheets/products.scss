@@ -554,7 +554,7 @@
   }
 }
 
-#showProductAttributes, #showProductUploads {
+#showProductAttributes, #showProductComboItems, #showProductUploads {
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
@@ -1043,7 +1043,7 @@
   }
 }
 
-.customProductAttributesTable, .childPartsTable {
+.customProductAttributesTable, .productComboItemsTable, .childPartsTable {
   width: 100%;
   font-size: 0.9em;
   thead tr th {

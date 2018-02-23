@@ -1,4 +1,4 @@
-<% @title = "SRS Portal | Part List" %>
+<% @title = "SRS Portal | Combo <Items></Items>" %>
 <div class="defaultDiv" id="comboItemsTableDiv">
   <p class="defaultDivHeader">Combo Items</p>
   <div class="comboItemsTable">
@@ -17,33 +17,34 @@
           <th></th>
         </tr>
       </thead>
-      <div class="comboItemsTableChildren" data-child-filter="<% @combo_items.each do |combo| %>
-                                                                <% combo.products.each do |product| %>
-                                                                  <option name='<%= product.manufacturer_model_number %>' value='<%= product.id %>'><%= product.product_select_with_model %></option>
-                                                                <% end %>
-                                                              <% end %>"
-                                          data-child-brand_names='<% if admin_or_employee? %>
-                                                                    <li>
-                                                                      <div class="button-group brandFilter">
-                                                                        <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Brand Name <span class="caret"></span></button>
-                                                                        <ul class="dropdown-menu comboItemsBrandFilterMenu">
-                                                                          <% @brand.each do |brand| %>
-                                                                            <li class="selected"><label><input type="checkbox" checked name="brand" value="<%= brand %>"/>&nbsp;<%= brand %></label></li>
-                                                                          <% end %>
-                                                                        </ul>
-                                                                      </div>
-                                                                    </li>
-                                                                  <% end %>'
-                                          data-child-filters='<% if admin_or_employee? %>
-                                                                <li>
-                                                                  <div class="button-group booleanFilter">
-                                                                    <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Filter <span class="caret"></span></button>
-                                                                    <ul class="dropdown-menu booleanFilterMenu">
-                                                                      <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="active" bool="" value="Active"/>&nbsp;Active</label><button id="activeClear" class="btn" disabled>Clear Filter</button></li>
-                                                                    </ul>
-                                                                  </div>
-                                                                </li>
-                                                              <% end %>'>
+      <div class="comboItemsTableChildren" 
+        data-child-filter="<% @combo_items.each do |combo| %>
+                              <% combo.products.each do |product| %>
+                                <option name='<%= product.manufacturer_model_number %>' value='<%= product.id %>'><%= product.product_select_with_model %></option>
+                              <% end %>
+                            <% end %>"
+        data-child-brand_names='<% if admin_or_employee? %>
+                                  <li>
+                                    <div class="button-group brandFilter">
+                                      <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Brand Name <span class="caret"></span></button>
+                                      <ul class="dropdown-menu comboItemsBrandFilterMenu">
+                                        <% @brand.each do |brand| %>
+                                          <li class="selected"><label><input type="checkbox" checked name="brand" value="<%= brand %>"/>&nbsp;<%= brand %></label></li>
+                                        <% end %>
+                                      </ul>
+                                    </div>
+                                  </li>
+                                <% end %>'
+        data-child-filters='<% if admin_or_employee? %>
+                              <li>
+                                <div class="button-group booleanFilter">
+                                  <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Filter <span class="caret"></span></button>
+                                  <ul class="dropdown-menu booleanFilterMenu">
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="active" bool="" value="Active"/>&nbsp;Active</label><button id="activeClear" class="btn" disabled>Clear Filter</button></li>
+                                  </ul>
+                                </div>
+                              </li>
+                            <% end %>'>
       </div>
       <tbody class="combo-items-table">
         <% @combo_items.each do |combo| %>

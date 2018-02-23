@@ -31,32 +31,25 @@ $(document).on("turbolinks:load", function(){
     valueElem.attr("id", "combo_item_details_"+value);
     valueElem.attr("name", "combo_item[details]["+value+"]");
   });
+
   $(".comboItemAttributeContainer").on("click", ".removeRow", function(){
     $(this).closest(".row").html("").parent().find("tr:empty").remove();
-    var tr = $(".body").find("tr").length;
-    if (tr == 1) {
-      $(".body").append(
-        "<tr class='row hacky hidden'>"+
-        "  <td>"+
-        "    <input class='text_field dynamicAttributeName form-control' id='' name='' placeholder='New Attribute Name' type='text'/>"+
-        "  </td>"+
-        "  <td>"+
-        "    <input class='text_field form-control' id='combo_item_details' name='combo_item[details]' placeholder='Description' type='text'/>"+
-        "  </td>"+
-        "  <td>"+
-        "    <a href='#' class='removeRow'>X</a>"+
-        "  </td>"+
-        "</tr>"
-      );
-    }
   });
+
   $(".comboItemAddAttribute").on("click", function(e){
     e.preventDefault();
-    if ($(".row.hacky").length) {
-      $(".row.hacky").remove();
-    }
     var contents = "<tr class='row'>" + $(".attributeTemplate").html() + "</tr>";
     $(".body").append(contents);
+    $(".body").find(".row:last-child").find(".dynamicAttributeName").prop("required", true);
+  });
+
+  $("#comboItemFirstSubmit").on("click", function(e) {
+    e.preventDefault();
+    var tr = $(".body").find("tr").length;
+    if (tr > 1) {
+      $(".hide-tag").remove();
+    }
+    $("#comboItemSubmit").click();
   });
 
 });
@@ -178,8 +171,8 @@ $(document).on("turbolinks:load", function() {
 
   // "Filter By Product" dropdown executes a search of a given product by searching Column 5, "Combo Items"
   $("#comboItemsTableProductSearch").on("change", function() {
-      table.column(5).search("").draw();
-      table.column(5).search($("#comboItemsTableProductSearch").find("option:selected").attr("name")).draw();
+      table.column(1).search("").draw();
+      table.column(1).search($("#comboItemsTableProductSearch").find("option:selected").attr("name")).draw();
   });
 
   $("#comboItemsTableSearch").keyup(function(){
@@ -192,7 +185,7 @@ $(document).on("turbolinks:load", function() {
   $("#comboItemsTableProductSearch").select2({
     theme:"bootstrap",
     placeholder: "Filter by Product...",
-    containerCssClass: "combo-item-table-product-search",
+    containerCssClass: "combo-items-table-product-search",
     selectOnClose: false,
     dropdownAutoWidth : true,
     minimumResultsForSearch: 10

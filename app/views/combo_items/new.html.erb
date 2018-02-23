@@ -35,7 +35,8 @@
           <!--</div>-->
         </div>
       </div>
-      <%= f.submit "Create Combo Item", :style => "float:right;" %>
+      <button id="comboItemFirstSubmit" class="btn" style="float:right;">Create Combo Item</button>
+      <%= f.submit "Create Combo Item", :id => "comboItemSubmit", :style => "display:none;" %>
     <% end %>
   </div>
 </div>
