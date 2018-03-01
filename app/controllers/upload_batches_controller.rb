@@ -30,7 +30,7 @@ class UploadBatchesController < ApplicationController
     @upload_batch = UploadBatch.new(upload_batch_params)
     respond_to do |format|
       if @upload_batch.save
-        format.html { redirect_to @upload_batch, notice: '// Uploads successfully created.' }
+        format.html { redirect_to uploads_path, notice: '// Uploads successfully created.' }
         format.json { render :show, status: :created, location: @upload_batch }
       else
         format.html { render :new }
