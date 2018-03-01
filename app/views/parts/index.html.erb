@@ -5,10 +5,10 @@
     <table id="partsDataTable" class="display" style="width:100%;">
       <thead>
         <tr>
-          <th><p style="display:none;">Details</p></th> <!-- hacky way to get the word "Details" to show up in the Colvis buttons dropdown -->
+          <th style="width:5px;"><p style="display:none;">Details</p></th> <!-- hacky way to get the word "Details" to show up in the Colvis buttons dropdown -->
           <th>Image</th>
           <th>Brand Name</th>
-          <th>Belongs To</th>
+          <th>Product Association</th>
           <th>MFR Part #</th>
           <th>SRS SKU</th>
           <th>Description</th>
@@ -30,18 +30,55 @@
           <% end %>
         </tr>
       </thead>
-      <div class="partTableChildren" 
-        data-child-filter="<% @parts.each do |part| %>
-                             <% part.products.each do |product| %>
-                               <option name='<%= product.manufacturer_model_number %>' value='<%= product.id %>'><%= product.product_select_with_model %></option>
-                             <% end %>
-                           <% end %>"
-        data-child-columns="<% if current_user.admin? %>[9,10,15,16,17,18,19,20]<% else %>[9,10,15]<% end %>"> <!-- Used in the dataTable "columnDefs" for visible targets -->
+      <div class="partTableChildren"
+        data-child-products="<li>
+                               <div class='dataTables_product_filter productFilter'>
+                                 <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-wrench' aria-hidden='true'></i> Product <span class='caret'></span></button>
+                                 <ul class='dropdown-menu partProductFilterMenu'>
+                                   <select class='form-control' id='partTableProductSearch' name='product[product_id]' id='product_product_id' data-cip-id='cIPJQ342845639'>
+                                     <option selected disabled>Select Product...</option>
+                                     <option name=''>Clear Filter</option>
+                                     <% @parts.each do |part| %>
+                                       <% part.products.each do |product| %>
+                                         <option name='<%= product.manufacturer_model_number %>' value='<%= product.id %>'><%= product.product_select_with_model %></option>
+                                       <% end %>
+                                     <% end %>
+                                   </select>
+                                 </ul>
+                               </div>
+                             </li>"
+        data-child-brand_names='<% if admin_or_employee? %>
+                                  <li>
+                                    <div class="button-group brandFilter">
+                                      <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Brand <span class="caret"></span></button>
+                                      <ul class="dropdown-menu partsBrandFilterMenu">
+                                        <% @brand.each do |brand| %>
+                                          <li class="selected"><label><input type="checkbox" checked name="brand" value="<%= brand %>"/>&nbsp;<%= brand %></label></li>
+                                        <% end %>
+                                      </ul>
+                                    </div>
+                                  </li>
+                                <% end %>'
+        data-child-variables='<% if admin_or_employee? %>
+                              <li>
+                                <div class="button-group booleanFilter">
+                                  <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Variables <span class="caret"></span></button>
+                                  <ul class="dropdown-menu booleanFilterMenu">
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="active" bool="" value="Active"/>&nbsp;Active</label><button id="activeClear" class="btn" disabled>Clear Filter</button></li>
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="storeOrderable" bool="" value="Store Orderable"/>&nbsp;Store Orderable</label><button id="storeOrderableClear" class="btn" disabled>Clear Filter</button></li>
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="warrantyOrderable" bool="" value="Warranty Orderable"/>&nbsp;Warranty Orderable</label><button id="warrantyOrderableClear" class="btn" disabled>Clear Filter</button></li>
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="ecommSku" bool="" value="E-Commerce SKU"/>&nbsp;E-Commerce SKU</label><button id="ecommSkuClear" class="btn" disabled>Clear Filter</button></li>
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="inStock" bool="" value="In Stock"/>&nbsp;In Stock</label><button id="inStockClear" class="btn" disabled>Clear Filter</button></li>
+                                  </ul>
+                                </div>
+                              </li>
+                            <% end %>'
+        data-child-columns="<% if current_user.admin? %>[9,10,12,13,15,16,17,18,19,20]<% else %>[9,10,12,13,15]<% end %>"> <!-- Used in the dataTable "columnDefs" for visible targets -->
       </div>
       <tbody class="part-table">
         <% @parts.each do |part| %>
           <tr
-            data-child-attributes=" <table class='customPartAttributesTable'>
+            data-child-attributes=" <table class='defaultExpandoInnerTable'>
                                       <thead>
                                         <tr>
                                           <th>Attribute</th>
@@ -64,7 +101,7 @@
             data-child-manufacturer="<%= part.product_vendor_name if part.product_vendor_name.present? %><%= "N/A" if part.product_vendor_name.blank? %>"
                 data-child-location="<%= part.location if part.location.present? %><%= "N/A" if part.location.blank? %>"
                      data-child-upc="<%= part.upc if part.upc.present? %><%= "N/A" if part.upc.blank? %>"
-                data-child-uploads="<table class='table childPartsTable'>
+                data-child-uploads="<table class='table defaultExpandoInnerTable'>
                                       <thead>
                                         <tr>
                                           <th>File Name</th>
@@ -102,18 +139,29 @@
             </td>
             <td><%= part.product_brand_name if part.product_brand_name.present? %><%= "N/A" if part.product_brand_name.blank? %></td>
             <td class="parts_products">
-              <% if part.products.present? %>
-                <table class="table" style="<% if part.products.length < 3 %>height:150px;<% else %><% end %>">
-                  <thead></thead>
-                  <tbody>
-                    <% part.products.each do |product| %>
-                      <tr>
-                        <td style="border-right:1px solid #ddd !important;width:40%;"><%= link_to product.manufacturer_model_number, product_path(product), method: :get, title: "View Product Details (ID: #{product.id})" %></td>
-                        <td><%= product.description if product.description.present? %><%= "N/A" if product.description.blank? %></td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
+              <% if part.products.present? %><% @length = part.products.length %>
+                <% if part.products.length < 4 %>
+                  <table class="table" style="<% if part.products.length < 3 %>height:100px;<% else %><% end %>">
+                    <thead></thead>
+                    <tbody>
+                      <% part.products.each do |product| %>
+                        <tr>
+                          <td style="border-right:1px solid #ddd !important;width:40%;"><%= link_to product.manufacturer_model_number, product_path(product), method: :get, title: "View Product Details (ID: #{product.id})" %></td>
+                          <td><%= product.description if product.description.present? %><%= "N/A" if product.description.blank? %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                <% else %>
+                  <li class="dropdown" style="list-style:none;">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> Show <%= @length %> Products <i class="fa fa-angle-double-down"></i></a>
+                    <ul class="dropdown-menu">
+                      <% part.products.each do |product| %>
+                        <li><a target="_blank" href="/products/<%= product.slug %>"><%= product.product_select_with_model %></a></li>
+                      <% end %>
+                    </ul>
+                  </li>
+                <% end %>
               <% else %>
                 <p>No Associated Products</p>
               <% end %>
@@ -164,3 +212,4 @@
     </table>
   </div>
 </div>
+

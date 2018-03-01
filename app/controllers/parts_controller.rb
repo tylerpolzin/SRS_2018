@@ -1,5 +1,6 @@
 class PartsController < ApplicationController
   before_action :set_part, only: [:show, :edit, :update, :destroy]
+  before_action :load_prelims, except: :show
 
   def index
     if admin_or_employee?
@@ -93,6 +94,11 @@ class PartsController < ApplicationController
     def build_product_association
       @part.products_parts.build
       @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
+    end
+
+    def load_prelims
+      @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
+      @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
     end
 
     def part_params

@@ -30,6 +30,12 @@ rails db:migrate
 
 rails c --sandbox # use for testing
 
+------------------------------------------------------------------
+'annotate' generates up to date schemas in model files
+
+'bundle exec erd' generates a PDF of model associations
+------------------------------------------------------------------
+
 Remember to populate the assets.rb file ->
 images under custom folder won't compile. You need to add something like 
 

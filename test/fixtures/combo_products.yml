@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: combo_products
+#
+#  id            :integer          not null, primary key
+#  combo_item_id :integer
+#  product_id    :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 # This model initially had no columns defined. If you add columns to the

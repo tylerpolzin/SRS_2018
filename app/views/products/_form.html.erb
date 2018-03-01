@@ -75,7 +75,7 @@
             <option>Replace Current Image</option>
           </select>
           <%= f.check_box_without_bootstrap :remove_image, :checked => false, class: 'hidden', :id => "editRemoveImage" %>
-          <div class="image-border"><%= link_to (image_tag (@product.image.url (:thumb))), @product.image.url, target: "_blank", title: "View Full Size Image" %></div>
+          <div class="image-border"><%= link_to (image_tag (@product.image.url (:thumb))), @product.image.url, target: "_blank", title: "View Full Size Image", :id => "editImageTag" %></div>
           <div class="form-group" id="editNewImage">
             <%= f.file_field_without_bootstrap :image %>
           </div>

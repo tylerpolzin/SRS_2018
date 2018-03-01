@@ -68,7 +68,8 @@ body {
 
 :invalid { // if a field has the "required" attribute, this highlights them as red when they're empty
   &:required {
-    background: #ffc4c4;
+    background: #ecb0ff14;
+    box-shadow: inset 0px 0px 5px #ff0000;
   }  
 }
 
@@ -80,25 +81,24 @@ body {
   color: red;
 }
 
-// Bootstrap form orange glow color
+// Bootstrap form #b5b5f7 glow color
 .form-control:focus {
-  border-color: #ffc55f;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 188, 0, 0.4);
+  border-color: solid #b5b5f7;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(13, 0, 255, 0.4);
 }
 
 #main-content {
-  width: 85%;
   height: auto;
+  width: inherit;
   position: absolute;
-  left: 15%;
-  top: 85px;
+  top: 80px;
 }
 
 .btn {
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   color: #255aad;
-  border: 1px solid orange;
+  border: 1px solid #b5b5f7;
   background: linear-gradient(to bottom, white, #d5dfe7);
   box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.15);
   &:focus, &:hover {
@@ -125,11 +125,21 @@ body {
 // Only allows text areas in "New" and "Edit" views to be dragged vertically within their table
 .textarea-vertical {
   textarea {
-   resize: vertical;
-   border-radius: 0;
-   border: 0;
-   min-height: 35px;
+    font-family: 'Abel', sans-serif;
+    resize: vertical;
+    border-radius: 0;
+    border: 0;
+    min-height: 35px;
   }
+}
+
+// Default "Comments" Header found in any New and Edit views
+
+.commentsHeader {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: 1.3em;
+  color: darkcyan;
 }
 
 // Default "Delete" button
@@ -144,7 +154,7 @@ body {
 // Default Error Message
 
 #error_explanation {
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   border-radius: 15px;
   background: white;
   font-family: 'Abel', sans-serif;
@@ -174,22 +184,22 @@ body {
 }
 
 .select2-dropdown--above {
-  border: 1px solid orange !important;
+  border: 1px solid #b5b5f7 !important;
   border-bottom: none !important;	 
 }
 
 .select2-dropdown--below{
-  border: 1px solid orange !important;
+  border: 1px solid #b5b5f7 !important;
   border-top: none !important;	 
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple{
-  border: 1px solid orange !important;
+  border: 1px solid #b5b5f7 !important;
 }
 
 .select2-container--bootstrap.select2-container--focus .select2-selection, .select2-container--bootstrap.select2-container--open .select2-selection {
-  border-color: #ffc55f;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 188, 0, 0.4);
+  border-color: solid #b5b5f7;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(13, 0, 255, 0.4);
 }
 
 .select2-container--bootstrap .select2-selection--single .select2-selection__arrow {
@@ -201,6 +211,16 @@ body {
 }
 
 // Default Div Header
+
+.defaultDiv {
+  margin: 0 20px 20px 0;
+  padding: 0;
+  padding-left: 0;
+  position: absolute;
+  width: auto;
+  left: -1000px;
+  opacity: 0;
+}
 
 .defaultDivHeader {
   cursor: context-menu;
@@ -218,14 +238,6 @@ body {
   &.signInHeader {
     border-top-right-radius: 0;
   }
-}
-
-.defaultDiv {
-  margin: 0 20px 20px 0;
-  padding-left: 0;
-  position: absolute;
-  left: -1000px;
-  opacity: 0;
 }
 
 .defaultForm {
@@ -258,9 +270,13 @@ body {
 }
 
 .turbolinks-progress-bar {  // Not working
-  height: 25px;
+  height: 3px;
   background-color: green;
-  z-index: 99;
+  z-index: 999999;
+  position: absolute;
+  left: 200px;
+  top: 56px;
+  box-shadow: 5px 0px 15px solid #b5b5f7
 }
 
 
@@ -292,7 +308,7 @@ body {
   }
   .navbar-notice {
     margin-left: -30px !important;
-    color: orange !important;
+    color: #b5b5f7 !important;
     cursor: context-menu;
     user-select: none;
   }
@@ -376,7 +392,7 @@ body {
   background-color: #2e353d;
   position: fixed;
   top: 55px;
-  width: 10%;
+  width: 200px;
   height: 100%;
   color: #d8d8d8;
   box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.5);
@@ -579,7 +595,7 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 }
 
 .dataTables_scrollHead {
-  width: inherit !important;
+  width: 100% !important;
   background-color: #37495f;
 }
 
@@ -620,7 +636,7 @@ table.dataTable tbody td.no-padding {
 .top-row {
   float: right;
   &.paginate .dataTables_paginate {
-    border-top: 2px solid orange;
+    border-top: 2px solid #b5b5f7;
     border-top-left-radius: 20px;
   }
 }
@@ -632,7 +648,7 @@ table.dataTable tbody td.no-padding {
     font-size: 1.2em;
   }
   &.paginate .dataTables_paginate {
-    border-bottom: 2px solid orange;
+    border-bottom: 2px solid #b5b5f7;
     border-bottom-left-radius: 20px;
   }
 }
@@ -641,7 +657,7 @@ table.dataTable tbody td.no-padding {
   .dataTables_paginate {
     background: #e8e8e8;
     font-family: 'Abel', sans-serif;
-    border-left: 2px solid orange;
+    border-left: 2px solid #b5b5f7;
     padding-right: 5px;
     span .paginate_button, .paginate_button.previous, .paginate_button.next {
       margin-bottom: 4px;
@@ -715,19 +731,19 @@ table.dataTable tbody td.no-padding {
 
 @-webkit-keyframes flash {
     0% { background-color: #181c20; }
-    10% { background-color: orange; }
+    10% { background-color: #b5b5f7; }
     100% { background-color: #181c20; }
 }
 
 @-moz-keyframes flash {
     0% { background-color: #181c20; }
-    10% { background-color: orange; }
+    10% { background-color: #b5b5f7; }
     100% { background-color: #181c20; }
 }
 
 @-ms-keyframes flash {
     0% { background-color: #181c20; }
-    10% { background-color: orange; }
+    10% { background-color: #b5b5f7; }
     100% { background-color: #181c20; }
 }
 

@@ -1,5 +1,20 @@
+# == Schema Information
+#
+# Table name: stockmovements
+#
+#  id                     :integer          not null, primary key
+#  product_id             :integer
+#  part_id                :integer
+#  quantity               :integer
+#  adjust_quantity        :integer
+#  stockmovement_batch_id :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+
 class Stockmovement < ApplicationRecord
   around_destroy :destroy_orphaned_parent # Deletes the Stockmovement Batch if the last child Stockmovement in the batch is deleted individually
+  has_many :comments, as: :commentable
   belongs_to :stockmovement_batch
   belongs_to :product, optional: true
   belongs_to :part, optional: true

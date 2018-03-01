@@ -1,0 +1,31 @@
+<div class="comboItemUploadsTable">
+  <table id="comboItemUploadsDataTable" class="display" style="width:100%;">
+    <thead>
+      <tr>
+        <th>Combo Item ID</th>
+        <th>Combo Item Description</th>
+        <th>File Name</th>
+        <th>File Type</th>
+        <th>Original File Size</th>
+        <th>Created At</th>
+        <th>Last Modified At</th>
+      </tr>
+    </thead>
+    <tbody class="combo-item-uploads-table">
+      <% @combo_items.each do |combo| %>
+        <tr>
+          <td><%= combo.id %></td>
+          <td><%= link_to combo.combo_select_with_model, combo_item_path(combo), method: :get, title: "View Combo Item Details (ID: #{combo.id})" %></td>
+          <td>
+            <p><%= link_to combo.image.original_filename.upcase, combo.image.url, target: "_blank", title: "View Full Size Image", :style => "color:#0f9e2f;" %></p>
+            <p><%= link_to "(medium)", combo.image.url(:medium), target: "_blank", title: "View Medium Size Image", :style => "color:#f2990f;" %> -- <%= link_to "(small)", combo.image.url(:thumb), target: "_blank", title: "View Small Size Image", :style => "color:#5488CF;" %></p>
+          </td>
+          <td><%= combo.image_content_type.upcase %></td>
+          <td><%= number_to_human_size(combo.image_file_size, precision: 2) %></td>
+          <td><%= combo.created_at.strftime('%F') %></td>
+          <td><%= combo.updated_at.strftime('%F') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

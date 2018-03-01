@@ -15,8 +15,11 @@
       <% @parts.each do |part| %>
         <tr>
           <td><%= part.id %></td>
-          <td><%= link_to part.part_select, part_path(part), method: :get, title: "View Part Details (ID: #{part.id})" %></td>
-          <td><%= link_to part.image.original_filename, part.image.url, target: "_blank", title: "View Full Size Image" %> -- <%= link_to "(m)", part.image.url(:medium), target: "_blank", title: "View Medium Size Image" %> <%= link_to "(s)", part.image.url(:thumb), target: "_blank", title: "View Small Size Image" %></td>
+          <td><%= link_to part.part_select_with_model, part_path(part), method: :get, title: "View Part Details (ID: #{part.id})" %></td>
+          <td>
+            <p><%= link_to part.image.original_filename.upcase, part.image.url, target: "_blank", title: "View Full Size Image", :style => "color:#0f9e2f;" %></p>
+            <p><%= link_to "(medium)", part.image.url(:medium), target: "_blank", title: "View Medium Size Image", :style => "color:#f2990f;" %> -- <%= link_to "(small)", part.image.url(:thumb), target: "_blank", title: "View Small Size Image", :style => "color:#5488CF;" %></p>
+          </td>
           <td><%= part.image_content_type.upcase %></td>
           <td><%= number_to_human_size(part.image_file_size, precision: 2) %></td>
           <td><%= part.created_at.strftime('%F') %></td>

@@ -20,7 +20,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
 
   tbody tr td:nth-child(1) { // Left Column "Description"
@@ -36,7 +36,7 @@
         border: none;
         border-radius: 0;
         &:focus {
-          box-shadow: inset 0px 0px 5px #ff9800;
+          box-shadow: inset 0px 0px 5px solid #b5b5f7;
         }
       }
       select {
@@ -44,7 +44,7 @@
         border-radius: 0;
         padding-left: 8px;
         &:focus {
-          box-shadow: inset 0px 0px 5px #ff9800;
+          box-shadow: inset 0px 0px 5px solid #b5b5f7;
         }
       }
     }
@@ -87,8 +87,8 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border-left: 2px solid orange;
-  border-right: 2px solid orange;
+  border-left: 2px solid #b5b5f7;
+  border-right: 2px solid #b5b5f7;
   tbody tr td {
     border-top: 0;
     border-bottom: 0;
@@ -100,7 +100,7 @@
       border: none;
       border-radius: 0;
       &:focus {
-        box-shadow: inset 0px 0px 5px #ff9800;
+        box-shadow: inset 0px 0px 5px solid #b5b5f7;
       }
     }
   }
@@ -114,7 +114,7 @@
       border: none;
       border-radius: 0;
       &:focus {
-        box-shadow: inset 0px 0px 5px #ff9800;
+        box-shadow: inset 0px 0px 5px solid #b5b5f7;
       }
     }
   }
@@ -132,14 +132,14 @@
   width: 100%;
   padding-top: 10px;
   margin: 0;
-  border-bottom: 2px solid orange;
+  border-bottom: 2px solid #b5b5f7;
 }
 
 .comboItemAttributeBottomBorder {
   width: 100%;
   padding-bottom: 5px;
   margin: 0;
-  border-top: 2px solid orange;
+  border-top: 2px solid #b5b5f7;
 }
 
 // #new-product-uploads {
@@ -155,7 +155,7 @@
 //------------------------------------------------------------------------------------------------------
 
 #editComboItemDiv {
-  width: 1060px;
+  width: 700px;
 }
 
 #editImageOptions {
@@ -166,7 +166,7 @@
   border-left: 0;
   border-radius: 0;
   &:focus {
-    box-shadow: inset 0px 0px 5px #ff9800;
+    box-shadow: inset 0px 0px 5px solid #b5b5f7;
   }
 }
 
@@ -174,7 +174,7 @@
   background-color: white;
   margin: 5px;
   padding: 2px;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -210,7 +210,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   tbody tr:first-child {
     text-align: center;
@@ -246,7 +246,7 @@
   text-align: center;
   vertical-align: middle;
   margin-top: 0;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   background: white;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   img {
@@ -260,7 +260,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   tbody tr td:nth-child(1) {
     text-align: center;
@@ -277,7 +277,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   tbody tr td:nth-child(1) {
     width: 35%;
@@ -302,7 +302,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   tbody tr td:nth-child(1) {
     width: 35%;
@@ -324,10 +324,6 @@
 //------------------------------------------------------------------------------------------------------
 //                              Part 'INDEX' related CSS                                               |
 //------------------------------------------------------------------------------------------------------
-
-#comboItemsTableDiv {
-  width: 1600px;
-}
 
 .comboItemsTable {
   width: 100%;
@@ -356,10 +352,6 @@
   display: inline;
   .nav {
     border-bottom: 0 !important;
-    li .comboItemsButton {
-      padding: 8px;
-      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
-    }
     li .comboItemsFilterBy {
       margin: 0;
       padding: 6px 12px 6px 12px;
@@ -375,6 +367,24 @@
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
+    }
+    li .productFilter {
+      button {
+      margin: 0;
+      border-right: 0;
+      border-radius: 0;
+      }
+      .comboItemsProductFilterMenu {
+        padding: 5px;
+        width: 300px;
+        border-top: 0;
+        border-right: 2px solid #2e353d;
+        border-bottom: 2px solid #2e353d;
+        border-left: 2px solid #2e353d;
+        .select2.select2-container.select2-container--bootstrap {
+          width: 100% !important;
+        }
+      }
     }
     li .brandFilter {
       button {
@@ -496,12 +506,6 @@
   margin-left: 9px;
 }
 
-#comboItemsTableProductSearch {
-  font-family: 'Abel', sans-serif;
-  width: 200px;
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
-  margin-left: 10px;
-}
 
 #comboItemsTableLength {
   font-family: 'Abel', sans-serif;
@@ -512,8 +516,13 @@
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
 }
 
+#comboItemsTableProductSearch {
+  font-family: 'Abel', sans-serif;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+}
+
 .combo-items-table-product-search {
-  margin-left: 10px;
+  margin: 0;
   font-family: 'Abel', sans-serif;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15) !important;
   border: 1px solid #ccc !important;
@@ -606,9 +615,9 @@
   padding-top: 0;
   padding-bottom: 5px;
   border-top: 0;
-  border-right: 2px solid orange;
-  border-left: 2px solid orange;
-  border-bottom: 2px solid orange !important;
+  border-right: 2px solid #b5b5f7;
+  border-left: 2px solid #b5b5f7;
+  border-bottom: 2px solid #b5b5f7 !important;
   margin-bottom: 5px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   thead tr {

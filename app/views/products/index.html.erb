@@ -5,7 +5,7 @@
     <table id="productsDataTable" class="display" style="width:100%">
       <thead>
         <tr>
-          <th><p style="display:none;">Details</p></th> <!-- the <p> is a hacky way to get "Details" to show up in the Colvis buttons dropdown -->
+          <th style="width:5px;"><p style="display:none;">Details</p></th> <!-- the <p> is a hacky way to get "Details" to show up in the Colvis buttons dropdown -->
           <th>Image</th>
           <th>Brand Name</th>
           <th>MFR Model #</th>
@@ -29,35 +29,36 @@
           <% end %>
         </tr>
       </thead>
-      <div class="productTableChildren" data-child-user_check=''
-                                        data-child-brand_names='<% if admin_or_employee? %>
-                                                                  <li>
-                                                                    <div class="button-group brandFilter">
-                                                                      <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Brand Name <span class="caret"></span></button>
-                                                                      <ul class="dropdown-menu productsBrandFilterMenu">
-                                                                        <% @brand.each do |brand| %>
-                                                                          <li class="selected"><label><input type="checkbox" checked name="brand" value="<%= brand %>"/>&nbsp;<%= brand %></label></li>
-                                                                        <% end %>
-                                                                      </ul>
-                                                                    </div>
-                                                                  </li>
-                                                                <% end %>'
-                                        data-child-filters='<% if admin_or_employee? %>
-                                                              <li>
-                                                                <div class="button-group booleanFilter">
-                                                                  <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Filter <span class="caret"></span></button>
-                                                                  <ul class="dropdown-menu booleanFilterMenu">
-                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="active" bool="" value="Active"/>&nbsp;Active</label><button id="activeClear" class="btn" disabled>Clear Filter</button></li>
-                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="storeOrderable" bool="" value="Store Orderable"/>&nbsp;Store Orderable</label><button id="storeOrderableClear" class="btn" disabled>Clear Filter</button></li>
-                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="warrantyOrderable" bool="" value="Warranty Orderable"/>&nbsp;Warranty Orderable</label><button id="warrantyOrderableClear" class="btn" disabled>Clear Filter</button></li>
-                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="ecommSku" bool="" value="E-Commerce SKU"/>&nbsp;E-Commerce SKU</label><button id="ecommSkuClear" class="btn" disabled>Clear Filter</button></li>
-                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="inStock" bool="" value="In Stock"/>&nbsp;In Stock</label><button id="inStockClear" class="btn" disabled>Clear Filter</button></li>
-                                                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="hasParts" bool="" value="Has Parts"/>&nbsp;Has Parts</label><button id="hasPartsClear" class="btn" disabled>Clear Filter</button></li>
-                                                                  </ul>
-                                                                </div>
-                                                              </li>
-                                                            <% end %>'
-                                        data-child-columns='<% if current_user.admin? %>[7,8,13,14,15,16,17,18,19]<% else %>[7,8,13]<% end %>'> <!-- Used in the dataTable "columnDefs" for visible targets -->
+      <div class="productTableChildren"
+        data-child-user_check=''
+        data-child-brand_names='<% if admin_or_employee? %>
+                                  <li>
+                                    <div class="button-group brandFilter">
+                                      <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Brand <span class="caret"></span></button>
+                                      <ul class="dropdown-menu productsBrandFilterMenu">
+                                        <% @brand.each do |brand| %>
+                                          <li class="selected"><label><input type="checkbox" checked name="brand" value="<%= brand %>"/>&nbsp;<%= brand %></label></li>
+                                        <% end %>
+                                      </ul>
+                                    </div>
+                                  </li>
+                                <% end %>'
+        data-child-variables='<% if admin_or_employee? %>
+                              <li>
+                                <div class="button-group booleanFilter">
+                                  <button type="button" class="btn header-btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i> Variables <span class="caret"></span></button>
+                                  <ul class="dropdown-menu booleanFilterMenu">
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="active" bool="" value="Active"/>&nbsp;Active</label><button id="activeClear" class="btn" disabled>Clear Filter</button></li>
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="storeOrderable" bool="" value="Store Orderable"/>&nbsp;Store Orderable</label><button id="storeOrderableClear" class="btn" disabled>Clear Filter</button></li>
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="warrantyOrderable" bool="" value="Warranty Orderable"/>&nbsp;Warranty Orderable</label><button id="warrantyOrderableClear" class="btn" disabled>Clear Filter</button></li>
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="ecommSku" bool="" value="E-Commerce SKU"/>&nbsp;E-Commerce SKU</label><button id="ecommSkuClear" class="btn" disabled>Clear Filter</button></li>
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="inStock" bool="" value="In Stock"/>&nbsp;In Stock</label><button id="inStockClear" class="btn" disabled>Clear Filter</button></li>
+                                    <li class="selected"><label class="nil"><input type="checkbox" checked name="boolean" def="hasParts" bool="" value="Has Parts"/>&nbsp;Has Parts</label><button id="hasPartsClear" class="btn" disabled>Clear Filter</button></li>
+                                  </ul>
+                                </div>
+                              </li>
+                            <% end %>'
+        data-child-columns='<% if current_user.admin? %>[7,8,10,11,13,14,15,16,17,18,19]<% else %>[7,8,10,11,13]<% end %>'> <!-- Used in the dataTable "columnDefs" for visible targets -->
         
       </div>
       <!--<div class="productTableChildren"--><!-- Temporarily Disabled -->
@@ -76,7 +77,7 @@
       <tbody class="product-table">
         <% @products.each do |product| %>
           <tr
-            data-child-attributes=" <table class='clear customProductAttributesTable'>
+            data-child-attributes=" <table class='clear defaultExpandoInnerTable'>
                                       <thead>
                                         <tr>
                                           <th>Attribute</th>
@@ -96,7 +97,7 @@
                                         <% end %>
                                       </tbody>
                                     </table>"
-            data-child-combos=" <table class='clear productComboItemsTable'>
+            data-child-combos=" <table class='clear defaultExpandoInnerTable'>
                                   <thead>
                                     <tr>
                                       <th>Combo Item</th>
@@ -120,7 +121,7 @@
                                     <% end %>
                                   </tbody>
                                 </table>"
-            data-child-parts="<table class='clear childPartsTable'>
+            data-child-parts="<table class='clear defaultExpandoInnerTable'>
                                 <thead>
                                   <tr>
                                     <th>Model #</th>
@@ -148,7 +149,7 @@
             data-child-manufacturer="<%= product.vendor_name if product.vendor_name.present? %><%= "N/A" if product.vendor_name.blank? %>"
             data-child-upc="<%= product.upc if product.upc.present? %><%= "N/A" if product.upc.blank? %>"
             data-child-srs_sku="<%= product.srs_sku if product.srs_sku.present? %><%= "N/A" if product.srs_sku.blank? %>"
-            data-child-uploads="<table class='clear childPartsTable'>
+            data-child-uploads="<table class='clear defaultExpandoInnerTable'>
                                   <thead>
                                     <tr>
                                       <th>File Name</th>

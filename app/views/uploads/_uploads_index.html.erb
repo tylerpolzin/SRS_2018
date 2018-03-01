@@ -2,29 +2,72 @@
   <table id="uploadsDataTable" class="display" style="width:100%">
     <thead>
       <tr>
+        <th style="width:5px;"><p style="display:none;">Details</p></th> <!-- hacky way to get the word "Details" to show up in the Colvis buttons dropdown -->
         <th>Upload ID</th>
         <th>File Name</th>
         <th>Description</th>
         <th>File Size</th>
         <th>File Type</th>
-        <th>Association</th>
         <th>Uploaded By</th>
-        <th>Created At</th>
-        <th>Last Modified At</th>
+        <th>Upload Date</th>
+        <th>Last Modified Date</th>
       </tr>
     </thead>
     <tbody class="uploads-table">
       <% @uploads.each do |upload| %>
-        <tr>
+        <tr
+          data-child-attributes="
+          <tbody>
+            <tr class='no-table'>
+              <td style='padding:0;'>
+                <% if upload.products.present? %>
+                  <table class='clear defaultExpandoInnerTable'>
+                    <tbody>
+                      <% upload.products.each do |product| %>
+                        <tr>
+                          <td><a title='View Product Details (ID: <%= product.id %>)' data-method='get' href='/products/<%= product.slug %>'><%= product.product_select_with_model %></a></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                <% else %>
+                  No Associations Found
+                <% end %>
+              </td>
+              <td style='padding:0;'>
+                <% if upload.parts.present? %>
+                  <table class='clear defaultExpandoInnerTable'>
+                    <tbody>
+                      <% upload.parts.each do |part| %>
+                        <tr>
+                          <td><a title='View Part Details (ID: <%= part.id %>)' data-method='get' href='/parts/<%= part.slug %>'><%= part.part_select_with_model %></a></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                <% else %>
+                  <p style='padding:8px 10px 8px 10px;'>No Associations Found</p>
+                <% end %>
+              </td>
+              <td>No Associations Found</td>
+              <td>No Associations Found</td>
+              <td>No Associations Found</td>
+              <td>
+                <% if upload.upload_batch.present? %>
+                  <a title='View Batch Details (ID: <%= upload.upload_batch.id %>)' data-method='get' href='/upload_batches/<%= upload.upload_batch.id %>'><%= upload.upload_batch.created_at.strftime("%F (%T)") %></a>
+                <% else %>
+                  No Association Found
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+          ">
+          <td class="details-control"></td>
           <td><%= upload.id %></td>
           <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank" %></td>
-          <td><%= upload.description %></td>
+          <td style="padding:0;"><%= best_in_place upload, :description, class: "form-control", inner_class: "input-small input-width" %></td>
           <td><%= number_to_human_size(upload.file_file_size, precision: 2) %></td>
           <td><%= upload.file_content_type.upcase %></td>
-          <td>
-            <%= link_to upload.product.product_select, product_path(id: upload.product), method: :get, title: "View Product Details (ID: #{upload.product_id})" if upload.product_id? %>
-            <%= link_to upload.part.part_select, part_path(id: upload.part), method: :get, title: "View Part Details (ID: #{upload.part_id})" if upload.part_id? %>
-          </td>
           <td><%= upload.user.header_name %></td>
           <td><%= upload.created_at.strftime('%F') %></td>
           <td><%= upload.updated_at.strftime('%F') %></td>

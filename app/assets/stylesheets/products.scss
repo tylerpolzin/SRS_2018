@@ -21,9 +21,9 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border-top: 2px solid orange;
-  border-bottom: 2px solid orange;
-  border-left: 2px solid orange;
+  border-top: 2px solid #b5b5f7;
+  border-bottom: 2px solid #b5b5f7;
+  border-left: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
 
   tbody tr td:nth-child(1) { // Left Column "Description"
@@ -39,7 +39,7 @@
         border: none;
         border-radius: 0;
         &:focus {
-          box-shadow: inset 0px 0px 5px #ff9800;
+          box-shadow: inset 0px 0px 5px solid #b5b5f7;
         }
       }
       select {
@@ -47,7 +47,7 @@
         border-radius: 0;
         padding-left: 8px;
         &:focus {
-          box-shadow: inset 0px 0px 5px #ff9800;
+          box-shadow: inset 0px 0px 5px solid #b5b5f7;
         }
       }
     }
@@ -86,7 +86,7 @@
   }
   tbody tr:nth-child(10) td:last-child { // Image Row
     background-color: white;
-    border-right: 2px solid orange;
+    border-right: 2px solid #b5b5f7;
     div input {
       padding: 6px 6px 10px 6px;
       background-color: white;
@@ -102,9 +102,9 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border-top: 2px solid orange;
-  border-right: 2px solid orange;
-  border-bottom: 2px solid orange;
+  border-top: 2px solid #b5b5f7;
+  border-right: 2px solid #b5b5f7;
+  border-bottom: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   tbody tr td:nth-child(1) { // Left Column "Description"
     text-align: right;
@@ -119,7 +119,7 @@
         border: none;
         border-radius: 0;
         &:focus {
-          box-shadow: inset 0px 0px 5px #ff9800;
+          box-shadow: inset 0px 0px 5px solid #b5b5f7;
         }
       }
       select {
@@ -127,7 +127,7 @@
         border-radius: 0;
         padding-left: 8px;
         &:focus {
-          box-shadow: inset 0px 0px 5px #ff9800;
+          box-shadow: inset 0px 0px 5px solid #b5b5f7;
         }
       }
     }
@@ -214,7 +214,7 @@
     display:none;
   }
   &:focus {
-    box-shadow: inset 0px 0px 5px #ff9800;
+    box-shadow: inset 0px 0px 5px solid #b5b5f7;
   }
 }
 
@@ -224,8 +224,8 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border-left: 2px solid orange;
-  border-right: 2px solid orange;
+  border-left: 2px solid #b5b5f7;
+  border-right: 2px solid #b5b5f7;
   tbody tr td {
     border-top: 0;
     border-bottom: 0;
@@ -237,7 +237,7 @@
       border: none;
       border-radius: 0;
       &:focus {
-        box-shadow: inset 0px 0px 5px #ff9800;
+        box-shadow: inset 0px 0px 5px solid #b5b5f7;
       }
     }
   }
@@ -251,7 +251,7 @@
       border: none;
       border-radius: 0;
       &:focus {
-        box-shadow: inset 0px 0px 5px #ff9800;
+        box-shadow: inset 0px 0px 5px solid #b5b5f7;
       }
     }
   }
@@ -269,14 +269,14 @@
   width: 60%;
   padding-top: 10px;
   margin: 0;
-  border-bottom: 2px solid orange;
+  border-bottom: 2px solid #b5b5f7;
 }
 
 .productAttributeBottomBorder {
   width: 60%;
   padding-bottom: 5px;
   margin: 0;
-  border-top: 2px solid orange;
+  border-top: 2px solid #b5b5f7;
 }
 
 #new-product-uploads {
@@ -285,6 +285,10 @@
 
 .add_file_button {
   margin-bottom: 10px;
+}
+
+.productFilesContainer {
+  padding: 0 21px 5px 10px;
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -303,7 +307,7 @@
   border-left: 0;
   border-radius: 0;
   &:focus {
-    box-shadow: inset 0px 0px 5px #ff9800;
+    box-shadow: inset 0px 0px 5px solid #b5b5f7;
   }
 }
 
@@ -312,12 +316,16 @@
   background-color: white;
   margin: 5px;
   padding: 2px;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .image-border-red {
   border: 2px solid red;
+  background: #cacaca;
+  a img {
+    opacity: 0.35;
+  }
 }
 
 
@@ -329,8 +337,8 @@
   margin: 0;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
-  border-right: 2px solid orange;
-  border-left: 2px solid orange;
+  border-right: 2px solid #b5b5f7;
+  border-left: 2px solid #b5b5f7;
   thead tr th {
     border-bottom: 1px solid #ddd;
     font-weight: bold;
@@ -349,7 +357,7 @@
       border: none;
       border-radius: 0;
       &:focus {
-        box-shadow: inset 0px 0px 5px #ff9800;
+        box-shadow: inset 0px 0px 5px solid #b5b5f7;
       }
     }
   }
@@ -361,13 +369,14 @@
       border: none;
       border-radius: 0;
       &:focus {
-        box-shadow: inset 0px 0px 5px #ff9800;
+        box-shadow: inset 0px 0px 5px solid #b5b5f7;
       }
     }
   }
   tbody tr td:last-child { // Right Column "Delete Entry"
-    width: 150px;
+    width: 175px;
     padding: 7px;
+    font-weight: bold;
     .checkbox {
       color: red;
       margin: 0;
@@ -381,8 +390,8 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   border-top: 0 !important;
-  border-right: 2px solid orange;
-  border-left: 2px solid orange;
+  border-right: 2px solid #b5b5f7;
+  border-left: 2px solid #b5b5f7;
   tbody tr td {
     .form-group {
       margin: 0;
@@ -397,7 +406,7 @@
       border: none;
       border-radius: 0;
       &:focus {
-        box-shadow: inset 0px 0px 5px #ff9800;
+        box-shadow: inset 0px 0px 5px solid #b5b5f7;
       }
     }
   }
@@ -409,12 +418,12 @@
       border: none;
       border-radius: 0;
       &:focus {
-        box-shadow: inset 0px 0px 5px #ff9800;
+        box-shadow: inset 0px 0px 5px solid #b5b5f7;
       }
     }
   }
   tbody tr td:last-child { // Right Column "Delete Entry"
-    width: 146px;
+    width: 175px;
     padding: 7px;
     .checkbox {
       color: red;
@@ -427,14 +436,14 @@
   width: 994px;
   padding-top: 10px;
   margin: 0;
-  border-bottom: 2px solid orange;
+  border-bottom: 2px solid #b5b5f7;
 }
 
 .productFilesBottomBorder {
   width: 994px;
   padding-bottom: 5px;
   margin: 0;
-  border-top: 2px solid orange;
+  border-top: 2px solid #b5b5f7;
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -483,7 +492,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   tbody tr:nth-child(1) {
     text-align: center;
@@ -527,7 +536,7 @@
   text-align: center;
   vertical-align: middle;
   margin-top: 0;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   background: white;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   img {
@@ -541,7 +550,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   tbody tr td:nth-child(1) {
     text-align: center;
@@ -558,7 +567,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   tbody tr td:nth-child(1) {
     width: 35%;
@@ -619,7 +628,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   tbody tr:nth-child(1) {
     text-align: center;
@@ -655,7 +664,7 @@
   text-align: center;
   vertical-align: middle;
   margin-top: 0;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   background: white;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   img {
@@ -669,7 +678,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   tbody tr td:nth-child(1) {
     text-align: center;
@@ -686,7 +695,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   tbody tr td:nth-child(1) {
     width: 35%;
@@ -718,7 +727,7 @@
   margin-bottom: 15px;
   font-family: 'Abel', sans-serif;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   thead tr th {
     font-weight: bold;
@@ -737,10 +746,6 @@
 //------------------------------------------------------------------------------------------------------
 //                              Product 'INDEX' related CSS                                            |
 //------------------------------------------------------------------------------------------------------
-
-#productListDiv {
-  width: 1600px;
-}
 
 .productsTable {
   width: 100%;
@@ -767,13 +772,9 @@
   font-family: 'Abel', sans-serif;
   float: left;
   display: inline;
-  padding-left: 30px;
+  padding-left: 5px;
   .nav {
     border-bottom: 0 !important;
-    li .allproductsTab {
-      padding: 8px;
-      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
-    }
     li .productsFilterBy {
       margin: 0;
       padding: 6px 12px 6px 12px;
@@ -1009,18 +1010,15 @@
   }
 }
 
-
-
-
 .product-listing-expando {
   width: 95%;
   padding-top: 0;
   padding-bottom: 5px;
   border-top: 0;
-  border-right: 2px solid orange;
-  border-left: 2px solid orange;
-  border-bottom: 2px solid orange !important;
-  margin-bottom: 5px;
+  border-right: 2px solid #b5b5f7;
+  border-left: 2px solid #b5b5f7;
+  border-bottom: 2px solid #b5b5f7 !important;
+  margin-bottom: 5px !important;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   thead tr {
     th {
@@ -1039,11 +1037,10 @@
     text-align: center;
     vertical-align: top;
     border-right: 1px solid #ddd;
-    padding-bottom: 0;
   }
 }
 
-.customProductAttributesTable, .productComboItemsTable, .childPartsTable {
+.defaultExpandoInnerTable { // Also used across other Expando views
   width: 100%;
   font-size: 0.9em;
   thead tr th {

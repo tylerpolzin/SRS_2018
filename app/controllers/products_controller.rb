@@ -2,17 +2,16 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :load_prelims, except: :show
 
-
   def index
     if admin_or_employee?
       @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
-    elsif current_user.has_role? (:drsharp)
+    elsif current_user.has_role? :drsharp
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Dr Sharp")
-    elsif current_user.has_role? (:colonial)
+    elsif current_user.has_role? :colonial
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Colonial Elegance")
-    elsif current_user.has_role? (:padula)
+    elsif current_user.has_role? :padula
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Ray Padula")
-    elsif current_user.has_role? (:firplak)
+    elsif current_user.has_role? :firplak
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Firplak")
     else
       default_redirect
@@ -30,13 +29,13 @@ class ProductsController < ApplicationController
   def show
     if admin_or_employee?
       @product = Product.friendly.find(params[:id])
-    elsif current_user.has_role? (:drsharp)
+    elsif current_user.has_role? :drsharp
       @product = Product.friendly.where(:brand_name => "Dr Sharp").find(params[:id])
-    elsif current_user.has_role? (:colonial)
+    elsif current_user.has_role? :colonial
       @product = Product.friendly.where(:brand_name => "Colonial Elegance").find(params[:id])
-    elsif current_user.has_role? (:padula)
+    elsif current_user.has_role? :padula
       @product = Product.friendly.where(:brand_name => "Ray Padula").find(params[:id])
-    elsif current_user.has_role? (:firplak)
+    elsif current_user.has_role? :firplak
       @product = Product.friendly.where(:brand_name => "Firplak").find(params[:id])
     else
       redirect_to products_url, notice: "// You can't do that!"
@@ -57,6 +56,8 @@ class ProductsController < ApplicationController
   def edit
     if admin_or_employee?
       @product = Product.friendly.find(params[:id])
+      @product.item_uploads.build
+      @uploads = Upload.includes(:products).order(file_file_name: :asc).where.not(:products => {:id => @product})
     else
       default_redirect
     end
@@ -85,10 +86,8 @@ class ProductsController < ApplicationController
         end
         @product.uploads.each do |u|
           if u.remove_file == true
-            u.destroy
-          end
-          if u.file_file_size.blank?
-            u.destroy
+            ItemUpload.where(upload_id: u, itemable_id: @product).delete_all
+            u.update(remove_file: false)
           end
         end
         format.html { redirect_to product_path(@product), notice: '// Product has been updated.' }

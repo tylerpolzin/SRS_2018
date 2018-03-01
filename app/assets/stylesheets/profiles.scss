@@ -10,7 +10,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid orange;
+  border: 2px solid #b5b5f7;
   margin-bottom: 15px;
   border-collapse: inherit;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
@@ -33,7 +33,7 @@
         border: none;
         border-radius: 0;
         &:focus {
-          box-shadow: inset 0px 0px 5px #ff9800;
+          box-shadow: inset 0px 0px 5px solid #b5b5f7;
         }
       }
       select {
@@ -41,7 +41,7 @@
         border-radius: 0;
         padding-left: 8px;
         &:focus {
-          box-shadow: inset 0px 0px 5px #ff9800;
+          box-shadow: inset 0px 0px 5px solid #b5b5f7;
         }
       }
     }

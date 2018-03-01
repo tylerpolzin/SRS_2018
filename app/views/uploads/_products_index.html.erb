@@ -15,8 +15,11 @@
       <% @products.each do |product| %>
         <tr>
           <td><%= product.id %></td>
-          <td><%= link_to product.product_select, product_path(product), method: :get, title: "View Product Details (ID: #{product.id})" %></td>
-          <td><%= link_to product.image.original_filename, product.image.url, target: "_blank", title: "View Full Size Image" %> -- <%= link_to "(m)", product.image.url(:medium), target: "_blank", title: "View Medium Size Image" %> <%= link_to "(s)", product.image.url(:thumb), target: "_blank", title: "View Small Size Image" %></td>
+          <td><%= link_to product.product_select_with_model, product_path(product), method: :get, title: "View Product Details (ID: #{product.id})" %></td>
+          <td>
+            <p><%= link_to product.image.original_filename.upcase, product.image.url, target: "_blank", title: "View Full Size Image", :style => "color:#0f9e2f;" %></p>
+            <p><%= link_to "(medium)", product.image.url(:medium), target: "_blank", title: "View Medium Size Image", :style => "color:#f2990f;" %> -- <%= link_to "(small)", product.image.url(:thumb), target: "_blank", title: "View Small Size Image", :style => "color:#5488CF;" %> -- <%= link_to "(x-small)", product.image.url(:xsmall), target: "_blank", title: "View Extra Small Size Image", :style => "color:#CD0BFF;" %></p>
+          </td>
           <td><%= product.image_content_type.upcase %></td>
           <td><%= number_to_human_size(product.image_file_size, precision: 2) %></td>
           <td><%= product.created_at.strftime('%F') %></td>

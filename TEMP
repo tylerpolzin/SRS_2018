@@ -1,35 +1,21 @@
-  $(".productAttributeContainer").on("keyup", ".dynamicAttributeName", function(){
-    var nameElem = $(this);
-    var valueElem = nameElem.closest(".row").children("td").children(".text_field");
-    var value = nameElem.val();
-    valueElem.attr("id", "product_details_"+value);
-    valueElem.attr("name", "product[details]["+value+"]");
-  });
-  $(".productAttributeContainer").on("click", ".removeRow", function(){
-    $(this).closest(".row").html("").parent().find("tr:empty").remove();
-    var tr = $(".body").find("tr").length;
-    if (tr == 1) {
-      console.log("One");
-      $(".body").append(
-        "<tr class='row hacky hidden'>"+
-        "  <td>"+
-        "    <input class='text_field dynamicAttributeName form-control' id='' name='' placeholder='New Attribute Name' type='text'/>"+
-        "  </td>"+
-        "  <td>"+
-        "    <input class='text_field form-control' id='product_details' name='product[details]' placeholder='Description' type='text'/>"+
-        "  </td>"+
-        "  <td>"+
-        "    <a href='#' class='removeRow'>X</a>"+
-        "  </td>"+
-        "</tr>"
-      );
-    }
-  });
-  $(".productAddAttribute").on("click", function(e){
-    e.preventDefault();
-    if ($(".row.hacky").length) {
-      $(".row.hacky").remove();
-    }
-    var contents = "<tr class='row'>" + $(".attributeTemplate").html() + "</tr>";
-    $(".body").append(contents);
-  })
+class Upload < ActiveRecord::Base
+  has_many :item_uploads
+  has_many :parts, through: :item_uploads, source: :itemable, source_type: 'Part'
+  has_many :products, through: :item_uploads, source: :itemable, source_type: 'Product'
+end
+
+class ItemUpload < ActiveRecord::Base
+  belongs_to :upload
+  belongs_to :itemable, polymorphic: true
+end
+
+class Product < ActiveRecord::Base
+  has_many :item_uploads, as: :itemable, dependent: :destroy
+  has_many :uploads, through: :item_uploads
+end
+
+class Part < ActiveRecord::Base
+  has_many :item_uploads, as: :itemable, dependent: :destroy
+  has_many :uploads, through: :item_uploads
+end
+

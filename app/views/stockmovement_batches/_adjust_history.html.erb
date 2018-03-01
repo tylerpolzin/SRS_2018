@@ -62,7 +62,7 @@
                             </tr>
                           <% end %>">
           <td class="details-control"></td>
-          <td><%= i.created_at.strftime('%Y-%m-%d (%R)') %></td>
+          <td><%= link_to i.created_at.strftime("%Y-%m-%d (%R)"), stockmovement_batch_path(id: i), method: :get, title: "View Batch Details (ID: #{i.id})" %></td>
           <td><%= i.stockmovement_type %></td>
           <td>
             <%= i.user.header_name %>

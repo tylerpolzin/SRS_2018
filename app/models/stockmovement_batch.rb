@@ -1,5 +1,18 @@
+# == Schema Information
+#
+# Table name: stockmovement_batches
+#
+#  id                 :integer          not null, primary key
+#  user_id            :integer
+#  stockmovement_type :string
+#  notes              :text
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
 class StockmovementBatch < ApplicationRecord
   has_many :stockmovements, dependent: :destroy
+  has_many :comments, as: :commentable
   #has_many :products, :through => :stockmovements
   #has_and_belongs_to_many :stockmovements, optional: true
   belongs_to :user, foreign_key: :user_id # Test this to see if I can delete the 'foreign_key' parameter

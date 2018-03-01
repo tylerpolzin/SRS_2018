@@ -1,5 +1,7 @@
-<div class="container productAttributeContainer" style="width:100%;">
-  <a class="add_file_button btn"><i class="fa fa-file"></i> Add File</a>
+<div class="productFilesContainer" style="width:100%;">
+  <span class="productsEditTopRow">
+    <a class="add_file_button btn"><i class="fa fa-file"></i> Add File</a>
+  </span>
   <div class="productFilesTopBorder"></div>
   <table class="table" id="productFilesContainer">
     <thead>
@@ -12,7 +14,7 @@
     <tbody>
       <% if @product.uploads.present? %>
         <%= f.fields_for :uploads, @product.uploads.each do |u| %>
-          <%= hidden_field :user_id, :value => current_user.id %>
+          <%= u.hidden_field :uploaded_by, :value => current_user.id %>
           <tr>
             <td>
               <%= u.text_field :file_file_name, hide_label: true, readonly: true, :style => "background-color:white;" %>
@@ -21,7 +23,7 @@
               <%= u.text_field :description, hide_label: true %>
             </td>
             <td>
-              <%= u.check_box :remove_file, :checked => false, label: "Mark for deletion" %>
+              <%= u.check_box :remove_file, :checked => false, label: "Remove File Association" %>
             </td>
           </tr>
         <% end %>

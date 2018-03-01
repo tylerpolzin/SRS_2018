@@ -1,4 +1,29 @@
+# == Schema Information
+#
+# Table name: combo_items
+#
+#  id                 :integer          not null, primary key
+#  model_number       :string
+#  description        :string
+#  upc                :string
+#  vendor_cost        :decimal(, )      default(0.0)
+#  retail_cost        :decimal(, )      default(0.0)
+#  shipping_cost      :decimal(, )      default(0.0)
+#  active             :boolean          default(TRUE)
+#  remove_image       :boolean          default(FALSE)
+#  notes              :text
+#  details            :hstore
+#  slug               :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  image_file_name    :string
+#  image_content_type :string
+#  image_file_size    :integer
+#  image_updated_at   :datetime
+#
+
 class ComboItem < ApplicationRecord
+  has_many :comments, as: :commentable
   has_many :combo_products
   has_many :products, through: :combo_products
 
@@ -36,6 +61,39 @@ class ComboItem < ApplicationRecord
     name
   end
 
+  def combo_select # "Model Number | Description"
+    def a
+      "#{model_number}"
+    end
+    def b
+      if description.present?
+        " | #{description}"
+      else
+        " | No Description Present"
+      end
+    end
+    a+b
+  end
 
+  def combo_select_with_model # Brand Name (Model Number | Description)
+    def a
+      if product_brand_name.present?
+        "#{product_brand_name}"
+      else
+        "No Brand Name Present"
+      end
+    end
+    def b
+      " (#{model_number}"
+    end
+    def c
+      if description.present?
+        " | #{description})"
+      else
+        " | No Description Present)"
+      end
+    end
+    a+b+c
+  end
 
 end

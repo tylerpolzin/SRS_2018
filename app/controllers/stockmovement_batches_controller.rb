@@ -1,6 +1,9 @@
 class StockmovementBatchesController < ApplicationController
   before_action :set_stockmovement_batch, only: [:show, :edit, :update, :destroy]
 
+  def show
+  end
+
   def index
     if admin_or_employee?
       @stockmovements = Stockmovement.all

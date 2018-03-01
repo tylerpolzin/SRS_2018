@@ -28,7 +28,7 @@
                 <tbody>
                   <tr>
                     <td>Adjustment Type</td>
-                    <td><%= f.select_without_bootstrap :stockmovement_type, options_for_select(["Ecomm Order", "Warranty Order", "Physical Inventory", "Product Return", "Defective Destroy"]), {:prompt => "Select Type..."}, class: "form-control", :id => "typeSelect" %></td>
+                    <td><%= f.select_without_bootstrap :stockmovement_type, options_for_select(["Ecomm Orders", "Warranty Order", "Physical Inventory", "Product Return", "Defective Destroy"]), {:prompt => "Select Type..."}, class: "form-control", :id => "typeSelect" %></td>
                     <td><%= f.text_field :notes, hide_label: true, :placeholder => "Notes..." %></td>
                   </tr>
                 </tbody>
@@ -39,7 +39,7 @@
                 <thead>
                   <tr>
                     <th>Item Type</th>
-                    <th id="quadClickClear">Information</th>
+                    <th id="quadClickClear">Information</th> <!-- "quadClickClear" is currently not working -->
                     <th>Current Qty</th>
                     <th>New Qty</th>
                     <th>Adjust Qty</th>

@@ -7,7 +7,8 @@ module AssignmentsHelper
       ["Products", "Products"],
       ["Parts", "Parts"],
       ["Inventory Adjustments", "Stock Movements"],
-      # ["Uploads", "Uploads"],
+      ["Uploads", "Uploads"],
+      ["Combo Items", "Combo Items"]
     ]
   end
   

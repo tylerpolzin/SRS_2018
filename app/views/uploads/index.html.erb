@@ -6,6 +6,7 @@
         <li class="active"><a id="uploadsIndex" href="#uploads-index" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf"></i> Files</a></li>
         <li><a id="productUploadsIndex" href="#products-index" class="tab-background" data-toggle="tab"><i class="fa fa-file-image"></i> Product Images</a></li>
         <li><a id="partUploadsIndex" href="#parts-index" class="tab-background" data-toggle="tab"><i class="fa fa-file-image"></i> Part Images</a></li>
+        <li><a id="comboItemUploadsIndex" href="#combo-items-index" class="tab-background" data-toggle="tab"><i class="fa fa-file-image"></i> Combo Item Images</a></li>
       </ul>
       <div class="defaultTabs">
         <div class="tab-content">
@@ -17,6 +18,9 @@
           </div>
           <div id="parts-index" class="tab-pane fade">
             <%= render "parts_index" %>
+          </div>
+          <div id="combo-items-index" class="tab-pane fade">
+            <%= render "combo_items_index" %>
           </div>
         </div>
       </div>

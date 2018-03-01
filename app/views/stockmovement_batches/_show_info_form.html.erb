@@ -1,0 +1,87 @@
+<table class="table table-bordered" id="showBatchInfoTable">
+  <thead></thead>
+  <tbody>
+    <tr>
+      <td>Batch Date</td>
+      <td>
+        <%= @stockmovement_batch.created_at.strftime("%Y-%m-%d (%R)") %>
+      </td>
+    </tr>
+    <tr>
+      <td>Adjustment Type</td>
+      <td>
+        <%= @stockmovement_batch.stockmovement_type %>
+      </td>
+    </tr>
+    <tr>
+      <td>Created By</td>
+      <td>
+        <%= @stockmovement_batch.user.header_name %>
+      </td>
+    </tr>
+    <tr>
+      <td>Notes</td>
+      <td>
+        <%= best_in_place @stockmovement_batch, :notes, :as => :textarea, inner_class: "input input-resize", placeholder: "No notes present, click here to edit" %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-bordered" id="showBatchItemsTable">
+  <thead>
+    <tr>
+      <th>Item Type</th>
+      <th>Brand Name</th>
+      <th>Model #</th>
+      <th>Description</th>
+      <th>Difference</th>
+      <th>New Quantity</th>
+      <% if current_user.admin? %>
+        <th>Undo Entry</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stockmovement_batch.stockmovements.each do |s| %>
+      <tr>
+        <td><%= "Product" if s.is_product %><%= "Part" if s.is_part %></td>
+        <td><%= s.product.brand_name if s.is_product %><%= s.part.product_brand_name if s.is_part %></td>
+        <% if s.is_product %>
+          <% if s.product.present? %>
+            <td>
+              <%= link_to s.product.manufacturer_model_number, product_path(id: s.product), method: :get, title: "View Product Details (ID: #{s.product.id})" if s.product.manufacturer_model_number.present? %>
+              <%= link_to "N/A", product_path(id: s.product), method: :get, title: "View Product Details (ID: #{s.product.id})" if s.product.manufacturer_model_number.blank? %>
+            </td>
+          <% else %>
+            <td></td>
+          <% end %>
+        <% elsif s.is_part %>
+          <% if s.part.present? %>
+            <td>
+              <%= link_to s.part.manufacturer_model_number, part_path(id: s.part), method: :get, title: "View Part Details (ID: #{s.part.id})" if s.part.manufacturer_model_number.present? %>
+              <%= link_to "N/A", part_path(id: s.part), method: :get, title: "View Part Details (ID: #{s.part.id})" if s.part.manufacturer_model_number.blank? %>
+            </td>
+          <% else %>
+            <td></td>
+          <% end %>
+        <% else %>
+          <td>No Model Numbers Present</td>
+        <% end %>
+        <% if s.is_product %>
+          <td><%= s.product.description if s.product.present? %><%= "Product no longer exists" if s.product.blank? %></td>
+        <% elsif s.is_part %>
+          <td><%= s.part.description if s.part.present? %><%= "Part no longer exists" if s.part.blank? %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+        <td><%= s.adjust_quantity_plus %></td>
+        <td><%= s.quantity %></td>
+        <% if current_user.admin? %>
+          <td class='deleteStockmovement bootbox-confirm' id='<%= s.id %>'>Undo</td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

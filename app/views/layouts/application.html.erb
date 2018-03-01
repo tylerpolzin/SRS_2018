@@ -7,7 +7,7 @@
            background-color: #122648 !important;
           }
       </style>
-      <% @devmode = "// DEVELOPMENT // DEVELOPMENT // DEVELOPMENT // DEVELOPMENT // DEVELOPMENT" %>
+      <% @devmode = "// DEVELOPMENT" %>
       <% @title = "DEVELOPMENT" %>
     <% end %> <!-- Sets background color to silver only while in Development.  Production generates usual textured blue background -->
     <%= favicon_link_tag asset_path('favicon.png'), :rel => 'icon', :type =>  'image/png' %>
@@ -34,7 +34,7 @@
             <% end %>
             <span class="navbar-brand navbar-user">//&nbsp;&nbsp;<%= @current_user.header_name %></span>
             <span class="navbar-brand navbar-devmode"><%= @devmode %></span>
-            <span class="turbolinks-progress-bar"></span>
+            <!--<span class="turbolinks-progress-bar"></span>-->
             <span class="navbar-brand navbar-animated navbar-fade navbar-notice"><%= notice %></span>
           </div>
           <div class="collapse navbar-collapse" id="main-nav-collapse">
@@ -97,7 +97,7 @@
             <!--</ul>-->
             <% if admin_or_employee? %>
               <li data-toggle="collapse" data-target="#products" class="collapsed">
-                <a data-target="#"><i class="fa fa-shopping-bag fa-lg"></i> Products<span class="arrow"></span></a>
+                <a data-target="#"><i class="fa fa-shopping-bag fa-lg"></i> Items<span class="arrow"></span></a>
               </li>
               <ul class="sub-menu collapse" id="products">
                 <%= link_to products_path do %>
@@ -130,6 +130,19 @@
               <% end %>
             <% end %>
             <% if admin_or_employee? %>
+              <li data-toggle="collapse" data-target="#files" class="collapsed">
+                <a data-target="#"><i class="fa fa-file fa-lg"></i> Files<span class="arrow"></span></a>
+              </li>
+              <ul class="sub-menu collapse" id="files">
+                <%= link_to uploads_path do %>
+                  <li>Master File List</li>
+                <% end %>
+                <%= link_to new_upload_batch_path, method: :get do %>
+                  <li>Upload New Files</li>
+                <% end %>
+              </ul>
+            <% end %>
+            <% if admin_or_employee? %>
               <%= link_to inventory_adjustments_path, method: :get do %>
                 <li><i class="fa fa-exchange fa-lg"></i> Inventory Adjustments</li>
               <% end %>
@@ -152,9 +165,7 @@
               <%= link_to users_path do %>
                 <li><i class="fa fa-users fa-lg"></i> User Index</li>
               <% end %>
-              <%= link_to uploads_path do %>
-                <li><i class="fa fa-file fa-lg"></i> Master File List</li>
-              <% end %>
+
             <% end %>
             <!--<li><a><i class="fa fa-sitemap fa-lg"></i> Site Map</a></li>-->
           </ul>

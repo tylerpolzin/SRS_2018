@@ -1,8 +1,49 @@
+# == Schema Information
+#
+# Table name: parts
+#
+#  id                        :integer          not null, primary key
+#  manufacturer_model_number :string
+#  srs_sku                   :string
+#  store_orderable           :boolean          default(TRUE)
+#  warranty_orderable        :boolean          default(TRUE)
+#  ecomm_sku                 :boolean          default(FALSE)
+#  upc                       :string
+#  description               :text
+#  weight_pounds             :integer          default(0)
+#  weight_ounces             :integer          default(0)
+#  product_dims_l            :integer          default(0)
+#  product_dims_w            :integer          default(0)
+#  product_dims_h            :integer          default(0)
+#  packaged_dims_l           :integer          default(0)
+#  packaged_dims_w           :integer          default(0)
+#  packaged_dims_h           :integer          default(0)
+#  location                  :string
+#  count_on_hand             :integer          default(0)
+#  vendor_cost               :decimal(, )      default(0.0)
+#  retail_cost               :decimal(, )      default(0.0)
+#  shipping_cost             :decimal(, )      default(0.0)
+#  active                    :boolean          default(TRUE)
+#  image_file_name           :string
+#  image_content_type        :string
+#  image_file_size           :integer
+#  image_updated_at          :datetime
+#  remove_image              :boolean          default(FALSE)
+#  notes                     :text
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  details                   :hstore
+#  max_quantity              :integer          default(0)
+#  slug                      :string
+#
+
 class Part < ApplicationRecord
+  include Itemable
+
+  has_many :stockmovements
+  has_many :comments, as: :commentable
   has_many :products_parts
   has_many :products, through: :products_parts
-  has_many :stockmovements
-  has_many :uploads, dependent: :destroy
 
   validates :products, presence: true
   validates :manufacturer_model_number, presence: true
@@ -39,6 +80,31 @@ class Part < ApplicationRecord
       end
     end
     a+b
+  end
+
+  def part_select_with_model # "Brand Name (MFR Model Number | Description)"
+    def a
+      if product_brand_name.present?
+        "#{product_brand_name}"
+      else
+        "No Brand Name Present"
+      end
+    end
+    def b
+      if manufacturer_model_number.present?
+        " (#{manufacturer_model_number}"
+      else
+        " (No Model Number Present"
+      end
+    end
+    def c
+      if description.present?
+        " | #{description})"
+      else
+        " | No Description Present)"
+      end
+    end
+    a+b+c
   end
 
   def id_w_leading_zero # Displays ID's that are less than 100 as "001"-"099", used when manually linking attached image URL's where the helper doesn't work

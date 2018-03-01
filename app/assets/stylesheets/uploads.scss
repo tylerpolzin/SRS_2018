@@ -1,20 +1,107 @@
 //-----------------------------------------------------------------------------------
+//          START 'NEW UPLOADS' CSS                                                 |
+//-----------------------------------------------------------------------------------
+
+#newUploadsDiv {
+  width: 1000px;
+}
+
+#addFileButton, #addUploadBatchCommentButton {
+  margin-bottom: 0;
+  margin-left: 5px;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.newUploadProductSearchDiv, .newUploadPartSearchDiv {
+  display: none;
+}
+
+.newUploadsContainer {
+  width: 100%;
+  padding: 0;
+}
+
+.commentFields {
+  margin-bottom: 15px;
+}
+
+.newUploadContainer, .newUploadBatchCommentContainer {
+  border: 2px solid #b5b5f7;
+  margin: 20px 0 0 -10px;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td {
+    padding: 0;
+    .form-group {
+      margin: 0;
+    }
+    .form-group textarea {
+      width: 900px;
+    }
+  }
+  tbody tr td:first-child {
+    width: 450px;
+  }
+  tbody tr td:nth-child(2) {
+    width: 450px;
+  }
+  tbody tr:first-child { // Left Column "File Field"
+    td:first-child {
+      .form-group input {
+        padding: 6px 2px 6px 6px;
+        border-right: 1px solid #ddd;
+      }
+    }
+    td:nth-child(2) { // Middle Column "Description"
+      border-right: 1px solid #ddd;
+      .form-group input {
+        border: 0;
+        border-radius: 0;
+        &:focus {
+          box-shadow: inset 0px 0px 5px solid #b5b5f7;
+        }
+      }
+    }
+    td:last-child { // Last Column "Remove File"
+      vertical-align: middle;
+      text-align: center;
+      a {
+        padding: 6px;
+        color: red;
+        margin: 0;
+        font-size: 1.5em;
+      }
+    }
+  }
+  tbody tr:last-child {
+    td:first-child {
+      border-right: 1px solid #ddd;
+    }
+  }
+  
+}
+
+//-----------------------------------------------------------------------------------
 //          START 'UPLOADS INDEX' CSS                                               |
 //-----------------------------------------------------------------------------------
 
-#uploadsDiv {
-  width: 1300px;
-}
-
-.uploadsTable, .productUploadsTable, .partUploadsTable {
+.uploadsTable, .productUploadsTable, .partUploadsTable, .comboItemUploadsTable {
   margin-left: -15px;
   padding: 10px 0 5px 0px;
   .dataTables_wrapper {
     margin-top: 15px;
   }
+  table tbody tr td span {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: #ffffff00;
+  }
 }
 
-.uploads-table, .product-uploads-table, .part-uploads-table {
+.uploads-table, .product-uploads-table, .part-uploads-table, .combo-item-uploads-table {
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
@@ -25,7 +112,7 @@
   }
 }
 
-.uploads-toolbar, .productUploads-toolbar, .partUploads-toolbar {
+.uploads-toolbar, .productUploads-toolbar, .partUploads-toolbar, .comboItemUploads-toolbar {
   float: left;
   margin-right: 4px;
   padding-left: 30px;
@@ -35,39 +122,16 @@
   }
 }
 
-#uploadsSearch, #productUploadsSearch, #partUploadsSearch {
+#uploadsSearch, #productUploadsSearch, #partUploadsSearch, #comboItemUploadsSearch {
   color: black;
   font-family: 'Abel', sans-serif;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
   margin: 5px;
 }
-#uploadsLength, #productUploadsLength, #partUploadsLength {
+#uploadsLength, #productUploadsLength, #partUploadsLength, #comboItemUploadsLength {
   font-family: 'Abel', sans-serif;
   width: 55px;
   margin: 5px 10px 5px 10px;
   padding-right: 0;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15)
 }
-
-// .uploads-expando {
-//   width: 95%;
-//   padding-top: 0;
-//   padding-bottom: 5px;
-//   border-top: 0;
-//   border-right: 2px solid orange;
-//   border-left: 2px solid orange;
-//   border-bottom: 2px solid orange !important;
-//   margin-bottom: 5px;
-//   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-//   tr:first-child td {
-//     font-size: 1em;
-//     font-weight: 200;
-//     background-color: #646e78;
-//     color: #d8d8d8;
-//     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
-//   }
-//   tr:last-child td {
-//     text-align: center;
-//     border-right: 1px solid #ddd;
-//   }
-// }

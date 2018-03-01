@@ -1,0 +1,35 @@
+<div class="fields">
+    <table class="table newUploadContainer">
+      <thead>
+        <tr>
+          <th colspan="3">File</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <%= f.file_field :file, hide_label: true, :style => "width:100%;" %>
+          </td>
+          <td>
+            <%= f.text_field :description, hide_label: true, placeholder: "File Description" %>
+          </td>
+          <td rowspan="2">
+            <%= remove_child_link_upload "X", f %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= f.collection_select(:product_ids, @products, :id, :product_select_with_model,
+                                    {include_blank: false, :include_hidden => false, hide_label: true, :selected => @upload.products.map(&:id)},
+                                    {:multiple => true, :class => "newUploadProductSearch"}) %>
+          </td>
+          <td>
+            <%= f.collection_select(:part_ids, @parts, :id, :part_select_with_model,
+                                    {include_blank: false, :include_hidden => false, hide_label: true, :selected => @upload.parts.map(&:id)},
+                                    {:multiple => true, :class => "newUploadPartSearch"}) %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <%= f.hidden_field :uploaded_by, :value => current_user.id %>
+</div>

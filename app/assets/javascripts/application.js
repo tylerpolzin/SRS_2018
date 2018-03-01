@@ -62,7 +62,7 @@
 $(document).on("turbolinks:load", function() {
   $(".best_in_place").best_in_place(); // Enables the Best In Place gem for in-line editing
   $("input[type='number']").forceNumeric(); // Use to accept only numbers in number_fields
-  $(".defaultDiv").animate({left: -96, opacity: 100}, 500); // Slides all main DIV content in from the left
+  $(".defaultDiv").animate({left: 200, opacity: 100}, 500); // Slides all main DIV content in from the left
 
   // Child Fields Template Loader
   $(document).on('click', 'a.add_child', function() {
@@ -82,7 +82,25 @@ $(document).on("turbolinks:load", function() {
     $(this).parents('.fields').remove();
     return false;
   });
-  
+
+  $(document).on('click', 'a.add_comment', function() { // Generic for Comment Fields
+    var association, new_id, regexp, template;
+    association = $(this).attr('data-association');
+    template = $('#' + association + '_fields_template').html();
+    regexp = new RegExp('new_' + association, 'g');
+    new_id = (new Date).getTime();
+    $(this).parent().before(template.replace(regexp, new_id));
+    return false;
+  });
+  $(document).on("click", 'a.remove_comment', function() {
+    var hidden_field = $(this).prev('input[type=hidden]')[0];
+    if(hidden_field) {
+      hidden_field.value = '1';
+    }
+    $(this).parents('.comment_field').remove();
+    return false;
+  });
+
 });
 
 // forceNumeric() plug-in implementation

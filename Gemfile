@@ -41,6 +41,7 @@ gem 'seed_dump' # Generates seed file from existing database, use for dumping da
 gem 'bootbox-rails', '~>0.4' # Wrappers for Javascript Alerts
 gem 'friendly_id', '~> 5.1.0'
 gem 'csso-rails' # Use for optimizing and compressing CSS
+gem 'html5_validators' # converts Rails validators to HTML5 "required" validators
 
 # gem 'nprogress-rails' # Use to add Loading Progress bar, https://github.com/caarlos0-graveyard/nprogress-rails
 # gem 'approval' # Use to require approval on database changes
@@ -48,6 +49,8 @@ gem 'csso-rails' # Use for optimizing and compressing CSS
 # gem 'smarter_csv' # If CSV importing ever becomes a thing, this will be essential
 # gem 'letter_opener', :group => :development # Use if email is ever implemented, https://github.com/ryanb/letter_opener
 # gem 'paranoia' # Maybe use this for soft-deleting records, https://github.com/rubysherpas/paranoia
+# gem 'acts-as-taggable-on', '~> 4.0' # Use to add tags to models, https://github.com/mbleigh/acts-as-taggable-on
+# gem 'auto-session-timeout' # https://github.com/pelargir/auto-session-timeout
 
 # gem 'active_shipping'
 
@@ -88,6 +91,8 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'active_record_doctor' # Use to help with Indexes in the database -- https://github.com/gregnavis/active_record_doctor
   gem 'brakeman', :require => false
+  gem 'annotate' # Use to add schema information to the top of models
+  gem 'rails-erd', :require => false
 end
 
 group :production do

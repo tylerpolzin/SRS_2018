@@ -1,0 +1,19 @@
+<% @title = "SRS Portal | Adjustment Batch ##{@stockmovement_batch.id}" %>
+<div class="defaultDiv" id="showStockmovementBatchDiv">
+  <p class="defaultDivHeader">
+    <span class="show-product-brand-name"><%= @stockmovement_batch.stockmovement_type %> # <%= @stockmovement_batch.id %></span></br>
+    <span class="show-product-description"><%= @stockmovement_batch.created_at.strftime("%F (%T)") %></span>
+  </p>
+  <div class="container defaultForm">
+    <ul class="nav nav-tabs">
+      <li class="active"><a id="showInfoForm" href="#show-info-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Information</a></li>
+    </ul>
+    <div class="defaultTabs">
+      <div class="tab-content">
+        <div id="show-info-form" class="tab-pane fade in active container">
+          <%= render "show_info_form" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

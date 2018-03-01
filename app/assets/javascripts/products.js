@@ -48,10 +48,6 @@ $(document).on("turbolinks:load", function() {
   if ($("#productFilesContainer tbody").find("tr").length > 0) {
     $("#editProductUploads").addClass("details-highlight");
   }
-  if ($("#productFilesContainer tbody tr td").text() == "No Files Found") {
-    $("#editProductUploads").removeClass("details-highlight");
-  }
-
 
   $(".productAttributeContainer").on("keyup", ".dynamicAttributeName", function(){
     var nameElem = $(this);
@@ -78,6 +74,7 @@ $(document).on("turbolinks:load", function() {
     if (tr > 1) {
       $(".hide-tag").remove();
     }
+    $("#jstemplates").html("");
     $("#productSubmit").click();
   });
 
@@ -95,6 +92,10 @@ $(document).on("turbolinks:load", function() {
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
+  $("#editProductUploadsSearch").select2({
+    theme:"bootstrap",
+    placeholder: "Associate With Existing Files...",
+  });
   $("#editNewImage").hide();
   $("#imageClose").hide();
 
@@ -102,17 +103,20 @@ $(document).on("turbolinks:load", function() {
     if ($("#editImageOptions").find("option:selected").text() == "Keep Current Image") {
       $("#editRemoveImage").prop("checked", false);
       $("#editNewImage").hide();
-      $("#editImageTag").show().removeClass("image-border-red");
+      $("#editImageTag").show();
+      $(".image-border").show().removeClass("image-border-red");
     }
     if ($("#editImageOptions").find("option:selected").text() == "Delete Current Image") {
       $("#editRemoveImage").prop("checked", true);
       $("#editNewImage").hide();
-      $("#editImageTag").show().addClass("image-border-red");
+      $("#editImageTag").show();
+      $(".image-border").show().addClass("image-border-red");
     }
     if ($("#editImageOptions").find("option:selected").text() == "Replace Current Image") {
       $("#editRemoveImage").prop("checked", false);
       $("#editNewImage").show();
       $("#editImageTag").hide();
+      $(".image-border").hide();
     }
   });
 
@@ -147,7 +151,8 @@ $(document).on("turbolinks:load", function() {
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  // Function to add a leading zero to dates between 1-9
+  setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#ihHackFixButton" below
+  $("#productsHackFixButton").click();},200);  // Function to add a leading zero to dates between 1-9
   var MyDate = new Date();
   var date;
   MyDate.setDate(MyDate.getDate());
@@ -163,7 +168,7 @@ $(document).on("turbolinks:load", function() {
                 "dom": "<'products-toolbar'>B<'top-row paginate'p>t<'bottom-row paginate'ip>",
                 "buttons": [
                   // Standard Column Visibility Button that lists all columns.  ".noVis" is disabled via CSS in Application.scss because the ":not" method doesn"t work here
-                  {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Column Visibility <span class='caret'></span>", className: "btn btn-header"},
+                  {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Columns <span class='caret'></span>", className: "btn btn-header"},
 
                   {extend: "collection", text: "<i class='fa fa-download' aria-hidden='true'></i> Export <span class='caret'></span>", className: "btn btn-header dtExportOptions",
                     buttons: [
@@ -232,47 +237,43 @@ $(document).on("turbolinks:load", function() {
     }
   });
   
-  table.page.len(50).draw();
 
-  function top_toolbar (user_check, brand_names, filters) {
+  function top_toolbar (user_check, brand_names, variables) {
     return ""+
     "<ul class='nav nav-tabs'>"+
-    " <li class='active'><a data-toggle='tab' class='allproductsTab tab-background'>All Products</a></li>"+
-    " <li><div class='dataTables_filter'><input class='form-control' id='productTableSearch' placeholder='Search Table...'></div>"+
-    " <li>"+
-    "    <div class='dataTables_length'>"+
-    "     <select "+
-    "       class='form-control'"+
-    "       title='Number of records to show'"+
-    "       id='productTableLength'>"+
-    "       <option value='5'>5</option>"+
-    "       <option value='10'>10</option>"+
-    "       <option value='25'>25</option>"+
-    "       <option selected='selected' value='50'>50</option>"+
-    "       <option value='100'>100</option>"+
-    "       <option value='-1'>All</option>"+
-    "     </select>"+
-    "   </div>"+
-    " </li>"+//user_check+ -- Temporarily Disabled -- Pulls html from div in Index specifically to check for user permissions on 'Create' buttons
+    "  <li><a class='btn hidden' id='productsHackFixButton'></a></li>"+
+    "  <li><div class='dataTables_filter'><input class='form-control' id='productTableSearch' placeholder='Search Table...'></div>"+
     "  <li>"+
-    "    <div class='productsFilterBy'><i class='fa fa-random' aria-hidden='true'></i> Filter By:</div>"+
+    "    <div class='dataTables_length'>"+
+    "      <select class='form-control' title='Number of records to show' id='productTableLength'>"+
+    "        <option value='5'>5</option>"+
+    "        <option value='10'>10</option>"+
+    "        <option value='25'>25</option>"+
+    "        <option selected='selected' value='50'>50</option>"+
+    "        <option value='100'>100</option>"+
+    "        <option value='-1'>All</option>"+
+    "      </select>"+
+    "    </div>"+
+    "  </li>"+//user_check+ -- Temporarily Disabled -- Pulls html from div in Index specifically to check for user permissions on 'Create' buttons
+    "  <li>"+
+    "    <div class='productsFilterBy'><i class='fa fa-random' aria-hidden='true'></i> Filters:</div>"+
     "  </li>"+
     "  <li>"+
     "    <div class='productsQuantityRangeFilter'>"+
-    "      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-exchange' aria-hidden='true'></i> Quantity Range <span class='caret'></span></button>"+
+    "      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-exchange' aria-hidden='true'></i> Quantity <span class='caret'></span></button>"+
     "      <ul class='dropdown-menu'>"+
     "        <li>"+
     "          <div class='input-quantity input-group'>"+
-    "            <input type='number' class='form-control filterStartQty' id='filterStartQty' name='start' placeholder='Min' />"+
+    "            <input type='number' class='form-control filterStartQty' id='productFilterStartQty' name='start' placeholder='Min' />"+
     "            <span class='input-group-addon'>to</span>"+
-    "            <input type='number' class='form-control filterEndQty' id='filterEndQty' name='end' placeholder='Max' />"+
+    "            <input type='number' class='form-control filterEndQty' id='productFilterEndQty' name='end' placeholder='Max' />"+
     "          </div>"+
     "        </li>"+
     "      </ul>"+
     "    </div>"+
     "  </li>"+
     ""+brand_names+
-    ""+filters+
+    ""+variables+
     "</ul>"+
     "";
   }
@@ -280,14 +281,14 @@ $(document).on("turbolinks:load", function() {
   var children = $(".productTableChildren");
   $("div.products-toolbar").html(top_toolbar(children.data("child-user_check"),
                                              children.data("child-brand_names"),
-                                             children.data("child-filters")));
+                                             children.data("child-variables")));
   $("#productTableSearch").addClear();
   $("#productTableSearch").next().on("click", function(){ // Adds "X" button and clears properly when clicked
     table.search("").draw();
   });
 
   $(document).on("click", ".productsQuantityRangeFilter", function (e) {
-    e.stopPropagation(); // Stops the Brand Name Filter Menu from closing when an interior option is clicked
+    e.stopPropagation(); // Stops the Quantity Range Filter Menu from closing when an interior option is clicked
   });
   $(document).on("click", ".productsBrandFilterMenu", function (e) {
     e.stopPropagation(); // Stops the Brand Name Filter Menu from closing when an interior option is clicked
@@ -301,6 +302,7 @@ $(document).on("turbolinks:load", function() {
     }
     else
       table.column(2).search(brands, true, false, false).draw();
+      console.log(brands);
   });
 
 
@@ -365,7 +367,7 @@ $(document).on("turbolinks:load", function() {
    "    <thead>"+
    "      <tr>"+
    "        <th>Additional Attributes</th>"+
-   "        <th>Associated Combo Items"+
+   "        <th>Associated Combo Items</th>"+
    "        <th>Associated Parts</th>"+
    "        <th>Associated Files</th>"+
    "        <th>Manufacturer</th>"+
@@ -414,10 +416,11 @@ $(document).on("turbolinks:load", function() {
     }
   });
 
+  $.fn.DataTable.ext.pager.numbers_length = 5; // Number of numbers to show in Pagination controls
   $.fn.dataTable.ext.search.push( // Function for the "Quantity Range Filter"
     function( settings, data, dataIndex ) {
-      var min = parseInt( $('#filterStartQty').val(), 10 );
-      var max = parseInt( $('#filterEndQty').val(), 10 );
+      var min = parseInt( $('#productFilterStartQty').val(), 10 );
+      var max = parseInt( $('#productFilterEndQty').val(), 10 );
       var qty = parseFloat( data[5] ) || 0; // '5' is the Quantity Column number
 
       if ( ( isNaN( min ) && isNaN( max ) ) ||
@@ -429,8 +432,12 @@ $(document).on("turbolinks:load", function() {
       return false;
     }
   );
-  $("#filterStartQty").on("change keyup", function() { table.draw(); });
-  $("#filterEndQty").on("change keyup", function() { table.draw(); });
+  $("#productFilterStartQty").on("change keyup", function() { table.draw(); });
+  $("#productFilterEndQty").on("change keyup", function() { table.draw(); });
+
+  $("#productsHackFixButton").on("click", function(){
+    table.page.len(25).draw(); // Fixes header column width issues
+  });
 
 });
 

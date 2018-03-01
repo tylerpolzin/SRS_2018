@@ -52,6 +52,11 @@ $(document).on("turbolinks:load", function(){
     $("#comboItemSubmit").click();
   });
 
+  if ($(".body").find("tr").length > 1) {
+    $("#editComboItemAttributes").addClass("details-highlight");
+  }
+
+
 });
 
 //------------------------------------------------------------------------------------------------------
@@ -59,19 +64,20 @@ $(document).on("turbolinks:load", function(){
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  // Function to add a leading zero to dates between 1-9
+  // Function to add a leading zero to dates between 1-9, used for the Excel Spreadsheet file name
   var MyDate = new Date();
   var date;
   MyDate.setDate(MyDate.getDate());
   date = MyDate.getFullYear() + "-" + ("0" + (MyDate.getMonth()+1)).slice(-2) + "-" + ("0" + MyDate.getDate()).slice(-2);
   var table = $("#comboItemsDataTable").DataTable({
                 "scrollX": true,
-                "scrollY": true,
+                "scrollY": "75vh",
+                "scrollCollapse": true,
                 "colReorder": true,
                 "dom": "<'combo-items-toolbar'>B<'top-row paginate'p><'glider-table't><'bottom-row paginate'ip>",
                 "buttons": [
                   // Standard Column Visibility Button that lists all columns.  ".noVis" is disabled via CSS in Application.scss because the ":not" method doesn"t work here
-                  {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Column Visibility <span class='caret'></span>", className: "btn btn-header"},
+                  {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Columns <span class='caret'></span>", className: "btn btn-header"},
 
                   {extend: "collection", text: "<i class='fa fa-download' aria-hidden='true'></i> Export <span class='caret'></span>", className: "btn btn-header dtExportOptions",
                     buttons: [
@@ -122,46 +128,35 @@ $(document).on("turbolinks:load", function() {
                 "order": [[2, "asc"]],
                 "oLanguage": {"sZeroRecords": "No Combo Items to display for this view"},
               });
-
   table.page.len(50000).draw();
 
-  table.page.len(50).draw();
-
-  function top_toolbar (filter, brand_names, filters) {
+  function top_toolbar (product, brand_names, filters) {
     return ""+
       "<ul class='nav nav-tabs'>"+
-      "  <li class='active'><a data-toggle='tab' class='comboItemsButton tab-background'>Combo Items</a></li>"+
+      "  <li><a class='btn hidden' id='comboItemsHackFixButton'></a></li>"+
       "  <li><div class='dataTables_filter'><input class='form-control' id='comboItemsTableSearch' placeholder='Search Table...'></div></li>"+
-      "  <li>"+
-      "    <div class='dataTables_product_filter'>"+
-      "      <select class='form-control' id='comboItemsTableProductSearch' name='product[product_id]' id='product_product_id' data-cip-id='cIPJQ342845639'>"+
-      "        <option selected disabled>Filter by Product...</option>"+
-      "        <option name=''>Clear Filter</option>"+filter+
-      "      </select>"+
-      "    </div>"+
-      "  </li>"+
-      "  <li>"+
       "    <div class='dataTables_length'>"+
       "      <select class='form-control' title='Number of records to show' id='comboItemsTableLength'>"+
       "        <option value='5'>5</option>"+
       "        <option value='10'>10</option>"+
-      "        <option value='25'>25</option>"+
-      "        <option selected='selected' value='50'>50</option>"+
+      "        <option selected='selected' value='25'>25</option>"+
+      "        <option value='50'>50</option>"+
       "        <option value='100'>100</option>"+
       "        <option value='-1'>All</option>"+
       "      </select>"+
       "    </div>"+
       "  </li>"+
       "  <li>"+
-      "    <div class='comboItemsFilterBy'><i class='fa fa-random' aria-hidden='true'></i> Filter By:</div>"+
+      "    <div class='comboItemsFilterBy'><i class='fa fa-random' aria-hidden='true'></i> Filters:</div>"+
       "  </li>"+
+      ""+product+
       ""+brand_names+
       ""+filters+
       "</ul>"+
       "";
   }
   var children = $(".comboItemsTableChildren");
-  $("div.combo-items-toolbar").html(top_toolbar(children.data("child-filter"),
+  $("div.combo-items-toolbar").html(top_toolbar(children.data("child-product"),
                                                 children.data("child-brand_names"),
                                                 children.data("child-filters")));
   $("#comboItemsTableSearch").addClear();
@@ -171,8 +166,8 @@ $(document).on("turbolinks:load", function() {
 
   // "Filter By Product" dropdown executes a search of a given product by searching Column 5, "Combo Items"
   $("#comboItemsTableProductSearch").on("change", function() {
-      table.column(1).search("").draw();
-      table.column(1).search($("#comboItemsTableProductSearch").find("option:selected").attr("name")).draw();
+      table.column(5).search("").draw();
+      table.column(5).search($("#comboItemsTableProductSearch").find("option:selected").attr("name")).draw();
   });
 
   $("#comboItemsTableSearch").keyup(function(){
@@ -215,18 +210,23 @@ $(document).on("turbolinks:load", function() {
    "</div>";
   }
 
+  $(document).on("click", ".comboItemsProductFilterMenu", function (e) {
+    e.stopPropagation(); // Stops the Brand Name Filter Menu from closing when an interior option is clicked
+  });
+
   $(document).on("click", ".comboItemsBrandFilterMenu", function (e) {
     e.stopPropagation(); // Stops the Brand Name Filter Menu from closing when an interior option is clicked
   });
-  $(".comboItemsBrandFilterMenu").on("change", function() {
+
+    $(".comboItemsBrandFilterMenu").on("change", function() {
     var brands = $("input:checkbox[name='brand']:checked").map(function() {
       return "^" + this.value + ".*\$";
       }).get().join("|");
     if (brands === "") {
-      table.column(3).search("xxxxxxxxxx").draw();
+      table.column(2).search("xxxxxxxxxx").draw();
     }
     else
-      table.column(3).search(brands, true, false, false).draw();
+      table.column(2).search(brands, true, false, false).draw();
   });
 
 
@@ -272,26 +272,6 @@ $(document).on("turbolinks:load", function() {
       $(this).parent().parent().removeClass("selected");
   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   $("#comboItemsDataTable").on("click", "td.details-control", function() {
     var tr = $(this).closest("tr");
     var td = $(tr).find("td:first-child");
@@ -311,4 +291,13 @@ $(document).on("turbolinks:load", function() {
       $("div.glider", row.child()).slideDown();
     }
   });
+
+  $("#comboItemsHackFixButton").on("click", function(){
+    table.page.len(25).draw(); // Fixes header column width issues
+  });
+
+  setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#ihHackFixButton" below
+  $("#comboItemsHackFixButton").click();},200);  // Function to add a leading zero to dates between 1-9
+
+
 });

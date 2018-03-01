@@ -211,18 +211,18 @@ $(document).on("click", "a.add_child_ia", function() {
 $(document).on("turbolinks:load", function() {
   var table = $("#adjustHistoryDataTable").DataTable({
                 "scrollX": true,
-                "scrollY": true,
+                "scrollY": "75vh",
+                "scrollCollapse": true,
                 "colReorder": true,
                 "dom": "<'adjust-history-toolbar'><'top-row paginate'p>t<'bottom-row paginate'ip>",
-                "pageLength": 25,
                 "bJQueryUI": true,
                 "columnDefs": [
                   {
-                  "targets": [5],
+                  "targets": 5,
                   "visible": false,
                   },
                   {
-                  "targets": [0],
+                  "targets": 0,
                   "orderable": false
                   }
                 ],
@@ -243,8 +243,8 @@ $(document).on("turbolinks:load", function() {
     "        id='adjustHistoryTableLength'>"+
     "        <option value='5'>5</option>"+
     "        <option value='10'>10</option>"+
-    "        <option selected='selected' value='25'>25</option>"+
-    "        <option value='50'>50</option>"+
+    "        <option value='25'>25</option>"+
+    "        <option selected='selected' value='50'>50</option>"+
     "        <option value='100'>100</option>"+
     "        <option value='-1'>All</option>"+
     "      </select>"+
@@ -310,7 +310,7 @@ $(document).on("turbolinks:load", function() {
     });
   });
   $("#bhHackFixButton").on("click", function(){
-    table.page.len(25).draw(); // Fixes header column width issues
+    table.page.len(50).draw(); // Fixes header column width issues
   });
 
 
@@ -330,12 +330,13 @@ $(document).on("turbolinks:load", function() {
 
   var table = $("#adjustHistoryIndividualDataTable").DataTable({
                 "scrollX": true,
-                "scrollY": true,
+                "scrollY": "75vh",
+                "scrollCollapse": true,
                 "colReorder": true,
                 "dom": "<'adjust-history-individual-toolbar'>B<'top-row paginate'p>t<'bottom-row paginate'ip>",
                 "buttons": [
                   // Button for toggling visibility of columns
-                  {extend: "colvis", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Column Visibility <span class='caret'></span>", className: "btn btn-header"},
+                  {extend: "colvis", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Columns <span class='caret'></span>", className: "btn btn-header"},
 
                   {extend: "collection", text: "<i class='fa fa-download' aria-hidden='true'></i> Export <span class='caret'></span>", className: "btn btn-header dtExportOptions",
                     buttons: [
@@ -374,7 +375,6 @@ $(document).on("turbolinks:load", function() {
                   }
 
                 ],
-                "pageLength": 25,
                 "columnDefs": [
                   {
                   "targets": [1,2],
@@ -417,8 +417,8 @@ $(document).on("turbolinks:load", function() {
     "      <select class='form-control' title='Number of records to show' id='adjustHistoryIndividualTableLength'>"+
     "        <option value='5'>5</option>"+
     "        <option value='10'>10</option>"+
-    "        <option selected='selected' value='25'>25</option>"+
-    "        <option value='50'>50</option>"+
+    "        <option value='25'>25</option>"+
+    "        <option selected='selected' value='50'>50</option>"+
     "        <option value='100'>100</option>"+
     "        <option value='-1'>All</option>"+
     "      </select>"+
@@ -443,7 +443,7 @@ $(document).on("turbolinks:load", function() {
     "  </li>"+brand_names+
     "  <li>"+
     "    <div class='button-group inventoryTypeFilter'>"+
-    "      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-wrench' aria-hidden='true'></i> Adjustment Type <span class='caret'></span></button>"+
+    "      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-wrench' aria-hidden='true'></i> Type <span class='caret'></span></button>"+
     "      <ul class='dropdown-menu inventoryTypeFilterMenu'>"+
     "        <li class='selected'><label><input type='checkbox' checked name='type' value='Ecomm Order'/>&nbsp;Ecomm Order</label></li>"+
     "        <li class='selected'><label><input type='checkbox' checked name='type' value='Warranty Order'/>&nbsp;Warranty Order</label></li>"+
@@ -500,7 +500,7 @@ $(document).on("turbolinks:load", function() {
     table.page.len($(this).find("option:selected").attr("value")).draw();
   });
   $("#ihHackFixButton").on("click", function(){
-    table.page.len(25).draw(); // Fixes header column width issues
+    table.page.len(50).draw(); // Fixes header column width issues
   });
   $(".input-daterange").datepicker({
       format: "yyyy-mm-dd",
