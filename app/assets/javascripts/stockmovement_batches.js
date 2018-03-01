@@ -2,7 +2,23 @@
 /*global bootbox*/
 
 //------------------------------------------------------------------------------------------------------
-//                          "MAIN DIV" related JS                                                      |
+//                          "SHOW" related JS                                                          |
+//------------------------------------------------------------------------------------------------------
+
+$(document).on("turbolinks:load", function() {
+  $(".showDeleteStockmovement").on("click", function() {
+    var id = $(this).attr("id");
+    console.log(id);
+    bootbox.confirm("Are you sure you want to undo this adjustment?", function(result){
+      if (result === true) {
+        $(".showStockmovementDelete[id='"+id+"'").click();
+      }
+    });
+  });
+});
+
+//------------------------------------------------------------------------------------------------------
+//                          "INVENTORY ADJUSTMENTS" related JS                                         |
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
@@ -12,6 +28,7 @@ $(document).on("turbolinks:load", function() {
   $("#jstemplates").find(".new-quantity").hide();
   $("#jstemplates").find(".adjust-quantity").hide();
   $("#addItemButton").hide();
+  $("#add10ItemsButton").hide();
   $("#adjustSubmitButton").hide();
   if ($("#typeSelect option:selected").text() == "Select Type...") {
     $("#typeSelect option:selected").attr("disabled", true);
@@ -22,21 +39,25 @@ $(function() { // Removes the "Submit" and "Add Item" buttons if either of the "
   $("#newInventoryAdjust").on("click", function() {
     if ($("#typeSelect option:selected").text() == "Select Type...") {
       $("#addItemButton").fadeOut(300);
+      $("#add10ItemsButton").fadeOut(300);
       $("#adjustSubmitButton").fadeOut(300);
     }
     else {
       $("#addItemButton").fadeIn(300);
+      $("#add10ItemsButton").fadeIn(300);
       $("#adjustSubmitButton").fadeIn(300);
     }
   });
   $("#adjustHistory").on("click", function() {
     $("#addItemButton").fadeOut(300);
+    $("#add10ItemsButton").fadeOut(300);
     $("#adjustSubmitButton").fadeOut(300);
     setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#bhHackFixButton" below
     $("#bhHackFixButton").click();},200);
   });
   $("#adjustHistoryIndividual").on("click", function() {
     $("#addItemButton").fadeOut(300);
+    $("#add10ItemsButton").fadeOut(300);
     $("#adjustSubmitButton").fadeOut(300).delay( 800 );
     setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#ihHackFixButton" below
     $("#ihHackFixButton").click();},200);
@@ -51,10 +72,12 @@ $(function() { // Ensures that the "Add Item" and "Submit" buttons arent visible
   $("#typeSelect").on("change", function() {
     if ($(this).text() == "Select Type...") {
       $("#addItemButton").fadeOut(300);
+      $("#add10ItemsButton").fadeOut(300);
       $("#adjustSubmitButton").fadeOut(300);
     }
     else {
       $("#addItemButton").fadeIn(300);
+      $("#add10ItemsButton").fadeIn(300);
       $("#adjustSubmitButton").fadeIn(300);
     }
   });
@@ -119,8 +142,23 @@ $(document).on("change", ".partMovementSearchBox", function() { // Same notes ap
   }
 });
 
-$(function() { // Secondary button that clicks the hidden "Add Item" button.  Required due to Helper parameters.
-  $("#addItemButton").on("click", function() {
+$(function() { 
+  $("#addItemButton").on("click", function() { // Secondary button that clicks the hidden "Add Item" button.  Required due to Helper parameters.
+    $(".add_child_ia").click();
+  });
+});
+
+$(function() { 
+  $("#add10ItemsButton").on("click", function() { // Secondary button that clicks the hidden "Add Item" button.  Required due to Helper parameters.
+    $(".add_child_ia").click();
+    $(".add_child_ia").click();
+    $(".add_child_ia").click();
+    $(".add_child_ia").click();
+    $(".add_child_ia").click();
+    $(".add_child_ia").click();
+    $(".add_child_ia").click();
+    $(".add_child_ia").click();
+    $(".add_child_ia").click();
     $(".add_child_ia").click();
   });
 });

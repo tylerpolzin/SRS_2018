@@ -66,8 +66,8 @@
           <td><%= i.stockmovement_type %></td>
           <td>
             <%= i.user.header_name %>
-            <% i.stockmovements.each do |u| %>
-              <%= link_to u.id, u, :method => :delete, class: 'hidden stockmovementDelete', :id => u.id %>
+            <% i.stockmovements.each do |delete| %>
+              <%= link_to delete.id, delete, :method => :delete, class: 'hidden stockmovementDelete', :id => delete.id if current_user.admin? %>
             <% end %>
           </td>
           <td>

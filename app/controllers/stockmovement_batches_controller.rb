@@ -2,6 +2,25 @@ class StockmovementBatchesController < ApplicationController
   before_action :set_stockmovement_batch, only: [:show, :edit, :update, :destroy]
 
   def show
+    if admin_or_employee?
+      @stockmovements = @stockmovement_batch.stockmovements
+    elsif current_user.has_role?(:drsharp)
+      @stockmovements = @stockmovement_batch.stockmovements.where(:stockmovements => {:id => Stockmovement.select(:id)
+                                            .where(:product_id => Product.select(:id)
+                                            .where(:brand_name => "Dr Sharp"))})
+    elsif current_user.has_role?(:colonial)
+      @stockmovements = @stockmovement_batch.stockmovements.where(:stockmovements => {:id => Stockmovement.select(:id)
+                                            .where(:product_id => Product.select(:id)
+                                            .where(:brand_name => "Colonial Elegance"))})
+    elsif current_user.has_role?(:padula)
+      @stockmovements = @stockmovement_batch.stockmovements.where(:stockmovements => {:id => Stockmovement.select(:id)
+                                            .where(:product_id => Product.select(:id)
+                                            .where(:brand_name => "Ray Padula"))})
+    elsif current_user.has_role?(:firplak)
+      @stockmovements = @stockmovement_batch.stockmovements.where(:stockmovements => {:id => Stockmovement.select(:id)
+                                            .where(:product_id => Product.select(:id)
+                                            .where(:brand_name => "Firplak"))})
+    end
   end
 
   def index

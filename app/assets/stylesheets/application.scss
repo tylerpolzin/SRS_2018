@@ -308,8 +308,9 @@ body {
   }
   .navbar-notice {
     margin-left: -30px !important;
-    color: #b5b5f7 !important;
+    color: orange !important;
     cursor: context-menu;
+    font-weight: bold;
     user-select: none;
   }
 }

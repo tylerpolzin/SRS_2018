@@ -22,7 +22,12 @@
     <tr>
       <td>Notes</td>
       <td>
-        <%= best_in_place @stockmovement_batch, :notes, :as => :textarea, inner_class: "input input-resize", placeholder: "No notes present, click here to edit" %>
+        <% if admin_or_employee? %>
+          <%= best_in_place @stockmovement_batch, :notes, :as => :textarea, inner_class: "input input-resize", placeholder: "Click here to add notes" %>
+        <% else %>
+          <%= simple_format @stockmovement_batch.notes, :style => "padding-left:8px;" if @stockmovement_batch.notes.present? %>
+          <%= "N/A" if @stockmovement_batch.notes.blank? %>
+        <% end %>
       </td>
     </tr>
   </tbody>
@@ -43,7 +48,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @stockmovement_batch.stockmovements.each do |s| %>
+    <% @stockmovements.each do |s| %>
       <tr>
         <td><%= "Product" if s.is_product %><%= "Part" if s.is_part %></td>
         <td><%= s.product.brand_name if s.is_product %><%= s.part.product_brand_name if s.is_part %></td>
@@ -76,9 +81,12 @@
           <td></td>
         <% end %>
         <td><%= s.adjust_quantity_plus %></td>
-        <td><%= s.quantity %></td>
+        <td>
+          <%= s.quantity %>
+          <%= link_to s.id, s, :method => :delete, class: 'hidden showStockmovementDelete', :id => s.id %>
+        </td>
         <% if current_user.admin? %>
-          <td class='deleteStockmovement bootbox-confirm' id='<%= s.id %>'>Undo</td>
+          <td class='showDeleteStockmovement bootbox-confirm' id='<%= s.id %>'>Undo</td>
         <% end %>
       </tr>
     <% end %>

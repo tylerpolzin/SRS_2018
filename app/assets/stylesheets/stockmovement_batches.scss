@@ -217,7 +217,7 @@
   border-top: 2px solid #b5b5f7;
 }
 
-#addItemButton {
+#addItemButton, #add10ItemsButton {
   margin-bottom: 0;
   margin-left: 5px;
   padding: 5px;
@@ -319,7 +319,7 @@
   }
 }
 
-.deleteStockmovement {
+.deleteStockmovement, .showDeleteStockmovement {
   cursor: pointer;
   border: 1px solid red;
   color: #da2323;

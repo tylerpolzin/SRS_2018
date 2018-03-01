@@ -67,7 +67,7 @@ $(document).on("turbolinks:load", function() {
     basicConfirm("part");
   });
 
-  if ($("#partFilesContainer tbody").find("tr").length > 0) {
+  if ($("#partFilesContainer tbody tr").find("td").length > 1) {
     $("#editPartUploads").addClass("details-highlight");
   }
 
@@ -372,7 +372,7 @@ $(document).on("turbolinks:load", function() {
     }
   });
 
-  $.fn.DataTable.ext.pager.numbers_length = 5; // Number of numbers to show in Pagination controls
+  $.fn.DataTable.ext.pager.numbers_length = 5; // Number of numbers to show in Pagination controls -- this is GLOBAL
   $.fn.dataTable.ext.search.push( // Function for the "Quantity Range Filter"
     function( settings, data, dataIndex ) {
       var min = parseInt( $('#partFilterStartQty').val(), 10 );

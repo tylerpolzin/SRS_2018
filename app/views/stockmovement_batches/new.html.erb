@@ -18,6 +18,7 @@
         <li><a id="adjustHistory" href="#adjust-history" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Batch History</a></li>
         <li><a id="adjustHistoryIndividual" href="#adjust-history-individual" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Individual History</a></li>
         <li><a id="addItemButton"class="btn"><i class="fa fa-plus-circle"></i> Add Item</a></li> <!-- This button acts as a proxy to click the hidden 'add_child_ia' button below -->
+        <li><a id="add10ItemsButton"class="btn"><i class="fa fa-plus-circle"></i> 10 Items</a></li>
       </ul>
       <div class="defaultTabs">
         <div class="tab-content">
@@ -28,7 +29,7 @@
                 <tbody>
                   <tr>
                     <td>Adjustment Type</td>
-                    <td><%= f.select_without_bootstrap :stockmovement_type, options_for_select(["Ecomm Orders", "Warranty Order", "Physical Inventory", "Product Return", "Defective Destroy"]), {:prompt => "Select Type..."}, class: "form-control", :id => "typeSelect" %></td>
+                    <td><%= f.select_without_bootstrap :stockmovement_type, options_for_select(["Ecomm Orders", "Warranty Order", "Physical Inventory", "Product Return", "Defective Destroy", "Product Return + Defective Destroy"]), {:prompt => "Select Type..."}, class: "form-control", :id => "typeSelect" %></td>
                     <td><%= f.text_field :notes, hide_label: true, :placeholder => "Notes..." %></td>
                   </tr>
                 </tbody>
