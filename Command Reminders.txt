@@ -5,7 +5,7 @@ git checkout -b new_branch # Creates a new branch for Github
 bundle install # installs all pending gems
 bundle update # updates all gems
 
-git status # gives status for edited files
+git status
 git add .
 git commit -m "Description of Update"
 git push origin current_branch

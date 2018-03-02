@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tasks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Initiated by</th>
+      <th>Initiated for</th>
+      <th>Task type</th>
+      <th>Active</th>
+      <th>Status</th>
+      <th>Due date</th>
+      <th>Completion date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.initiated_by %></td>
+        <td><%= task.initiated_for %></td>
+        <td><%= task.task_type %></td>
+        <td><%= task.active %></td>
+        <td><%= task.status %></td>
+        <td><%= task.due_date %></td>
+        <td><%= task.completion_date %></td>
+        <td><%= link_to 'Show', task %></td>
+        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Task', new_task_path %>

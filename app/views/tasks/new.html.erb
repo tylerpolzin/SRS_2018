@@ -1,0 +1,74 @@
+<% @title = "SRS Portal | New Task" %>
+<div class="defaultDiv" id="newTaskDiv">
+  <p class="defaultDivHeader">Create New Task</p>
+  <div class="container defaultForm">
+    <%= bootstrap_form_for @task, url: tasks_path, method: :post do |f| %>
+      <% if @task.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@task.errors.count, "error") %> prohibited this product from being saved:</h2>
+          <ul>
+          <% @task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <ul class="nav nav-tabs">
+        <li class="active"><a id="newTaskTab" href="#new-task-tab" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> New Task</a></li>
+        <!--<li><a id="adjustHistory" href="#adjust-history" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Batch History</a></li>-->
+        <!--<li><a id="adjustHistoryIndividual" href="#adjust-history-individual" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Individual History</a></li>-->
+        <li><a id="addOrderButton"class="btn"><i class="fa fa-plus-circle"></i> Add Order</a></li> <!-- This button acts as a proxy to click the hidden 'add_child_link' button below -->
+        <!--<li><a id="add10ItemsButton"class="btn"><i class="fa fa-plus-circle"></i> 10 Items</a></li>-->
+      </ul>
+      <div class="defaultTabs">
+        <div class="tab-content">
+          <div id="new-task-tab" class="tab-pane fade in active">
+            <div class="container newTaskContainer">
+              <table class="table table-bordered" id="newTaskSelectTable">
+                <thead>
+                  <th>Recipient</th>
+                  <th>Task Type</th>
+                  <th>Due Date</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><%= f.select_without_bootstrap :initiated_for_id, options_for_select([["Tyler Polzin", "1"]]), {:prompt => "Select Recipient..."}, class: "form-control", :id => "taskRecipientSelect" %></td>
+                    <td><%= f.select_without_bootstrap :task_type, options_for_select(["Ecomm Order", "Warranty Order"]), {:prompt => "Select Type..."}, class: "form-control", :id => "taskTypeSelect" %></td>
+                    <td><%= f.text_field :due_date, hide_label: true, :id => "task-datepicker", :placeholder => "Select Date..." %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="container newIAContainer">
+              <table class="table table-bordered IAItemSelectHeader hidden">
+                <thead>
+                  <tr>
+                    <th>Retailer</th>
+                    <th>Customer Name</th>
+                    <th>Order Number</th>
+                    <th>Order Date</th>
+                  </tr>
+                </thead>
+              </table>
+              <%#= new_child_fields_template_ia f, :stockmovements %>
+              <p hidden><%#= add_child_link_ia " Add Item", :stockmovements %></p> <!-- Renders '_stockmovement.html.erb' -->
+              <div class="IAItemSelectBottomBorder hidden"></div>
+            </div>
+          </div>
+          <!--<div id="adjust-history" class="tab-pane fade">-->
+            <%#= render "adjust_history" %>
+          <!--</div>-->
+          <!--<div id="adjust-history-individual" class="tab-pane fade">-->
+            <%#= render "adjust_history_individual" %>
+          <!--</div>-->
+        </div>
+      </div>
+    <%= f.hidden_field :active, :value => 1 %>
+    <%= f.hidden_field :initiated_by_id, :value => current_user.id %>
+    <%= f.submit "Create Task", :id => "createTaskSubmitButton", :style => "float:right;" %>
+    <% end %>
+  </div>
+</div>
+<div id="jstemplates">
+  <%= yield :jstemplates %>
+</div>

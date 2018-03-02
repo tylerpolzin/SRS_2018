@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: warranty_orders
+#
+#  id                    :integer          not null, primary key
+#  task_id               :integer
+#  customer_name         :string
+#  order_number          :string
+#  ecomm_order_reference :integer
+#  details               :hstore
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task_id: 1
+  customer_name: MyString
+  order_number: MyString
+  ecomm_order_reference: 1
+  details: 
+
+two:
+  task_id: 1
+  customer_name: MyString
+  order_number: MyString
+  ecomm_order_reference: 1
+  details: 

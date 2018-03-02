@@ -1,0 +1,73 @@
+//------------------------------------------------------------------------------------------------------
+//                               "NEW TASK" related CSS                                                |
+//------------------------------------------------------------------------------------------------------
+
+
+#newTaskDiv {
+  width: 1200px;
+}
+
+.newTaskContainer {
+  width: 100%;
+  padding-left: 0;
+}
+
+#addOrderButton {
+  margin-bottom: 0;
+  margin-left: 5px;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+#newTaskSelectTable {
+  width: 60%;
+  margin: 15px 0 5px 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid #b5b5f7;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  thead tr th {
+    border-bottom-width: 0 !important;
+  }
+  tbody tr {
+    background-color: #eee;
+  }
+  tbody tr td:nth-child(1) { // Left Column "Recipient"
+    padding: 0;
+    width: 30%;
+    select {
+      border: none;
+      border-radius: 0;
+      padding-left: 8px;
+      &:focus {
+        box-shadow: inset 0px 0px 5px solid #b5b5f7;
+      }
+    }
+  }
+  tbody tr td:nth-child(2) { // Middle Column "Task Type"
+    padding: 0;
+    width: 30%;
+    select {
+      border: none;
+      border-radius: 0;
+      padding-left: 8px;
+      &:focus {
+        box-shadow: inset 0px 0px 5px solid #b5b5f7;
+      }
+    }
+  }
+  tbody tr td:nth-child(3) { // Right Column "Due Date"
+    padding: 0;
+    .form-group {
+      margin: 0;
+      input {
+        border: none;
+        border-radius: 0;
+        &:focus {
+          box-shadow: inset 0px 0px 5px solid #b5b5f7;
+        }
+      }
+    }
+  }
+}

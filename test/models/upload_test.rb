@@ -12,6 +12,7 @@
 #  file_file_size    :integer
 #  file_updated_at   :datetime
 #  remove_file       :boolean          default(FALSE)
+#  uploaded_by       :integer
 #
 
 require 'test_helper'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180226192045) do
+ActiveRecord::Schema.define(version: 20180302051853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(version: 20180226192045) do
     t.integer "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["combo_item_id"], name: "index_combo_products_on_combo_item_id"
+    t.index ["product_id"], name: "index_combo_products_on_product_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -64,6 +66,19 @@ ActiveRecord::Schema.define(version: 20180226192045) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
+  end
+
+  create_table "ecomm_orders", force: :cascade do |t|
+    t.integer "task_id"
+    t.string "retailer"
+    t.string "customer_name"
+    t.string "order_number"
+    t.datetime "order_date"
+    t.hstore "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["details"], name: "index_ecomm_orders_on_details"
+    t.index ["task_id"], name: "index_ecomm_orders_on_task_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -85,6 +100,19 @@ ActiveRecord::Schema.define(version: 20180226192045) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["itemable_type", "itemable_id"], name: "index_item_uploads_on_itemable_type_and_itemable_id"
+    t.index ["upload_id"], name: "index_item_uploads_on_upload_id"
+  end
+
+  create_table "line_items", force: :cascade do |t|
+    t.integer "line_item_order_id"
+    t.string "line_item_order_type"
+    t.integer "line_item_item_id"
+    t.string "line_item_item_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "quantity", default: 0
+    t.index ["line_item_item_id", "line_item_item_type"], name: "index_line_items_on_line_item_item_id_and_line_item_item_type"
+    t.index ["line_item_order_id", "line_item_order_type"], name: "index_line_items_on_line_item_order_id_and_line_item_order_type"
   end
 
   create_table "parts", force: :cascade do |t|
@@ -168,6 +196,8 @@ ActiveRecord::Schema.define(version: 20180226192045) do
     t.integer "part_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["part_id"], name: "index_products_parts_on_part_id"
+    t.index ["product_id"], name: "index_products_parts_on_product_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -227,11 +257,40 @@ ActiveRecord::Schema.define(version: 20180226192045) do
     t.index ["stockmovement_batch_id"], name: "index_stockmovements_on_stockmovement_batch_id"
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "name"
+    t.bigint "initiated_by_id"
+    t.bigint "initiated_for_id"
+    t.string "task_type"
+    t.boolean "active"
+    t.string "status"
+    t.datetime "due_date"
+    t.datetime "completion_date"
+    t.hstore "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["details"], name: "index_tasks_on_details"
+    t.index ["initiated_by_id"], name: "index_tasks_on_initiated_by_id"
+    t.index ["initiated_for_id"], name: "index_tasks_on_initiated_for_id"
+  end
+
+  create_table "tracking_numbers", force: :cascade do |t|
+    t.integer "line_item_id"
+    t.string "carrier"
+    t.string "tracking_number"
+    t.decimal "shipping_cost"
+    t.datetime "ship_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["line_item_id"], name: "index_tracking_numbers_on_line_item_id"
+  end
+
   create_table "upload_batches", force: :cascade do |t|
     t.text "notes"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_upload_batches_on_user_id"
   end
 
   create_table "uploads", force: :cascade do |t|
@@ -245,6 +304,7 @@ ActiveRecord::Schema.define(version: 20180226192045) do
     t.datetime "file_updated_at"
     t.boolean "remove_file", default: false
     t.integer "uploaded_by"
+    t.index ["upload_batch_id"], name: "index_uploads_on_upload_batch_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -272,6 +332,18 @@ ActiveRecord::Schema.define(version: 20180226192045) do
     t.index ["role_id"], name: "index_users_roles_on_role_id"
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
     t.index ["user_id"], name: "index_users_roles_on_user_id"
+  end
+
+  create_table "warranty_orders", force: :cascade do |t|
+    t.integer "task_id"
+    t.string "customer_name"
+    t.string "order_number"
+    t.integer "ecomm_order_reference"
+    t.hstore "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["details"], name: "index_warranty_orders_on_details"
+    t.index ["task_id"], name: "index_warranty_orders_on_task_id"
   end
 
 end

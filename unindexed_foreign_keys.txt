@@ -1,5 +1,0 @@
-assignments user_id
-parts product_id
-profiles user_id
-stockmovement_batches stockmovement_id user_id
-stockmovements part_id product_id stockmovement_batch_id

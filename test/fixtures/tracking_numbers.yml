@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: tracking_numbers
+#
+#  id              :integer          not null, primary key
+#  line_item_id    :integer
+#  carrier         :string
+#  tracking_number :string
+#  shipping_cost   :decimal(, )
+#  ship_date       :datetime
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  line_item_id: 1
+  carrier: MyString
+  tracking_number: MyString
+  shipping_cost: 9.99
+  ship_date: 2018-03-02 02:06:02
+
+two:
+  line_item_id: 1
+  carrier: MyString
+  tracking_number: MyString
+  shipping_cost: 9.99
+  ship_date: 2018-03-02 02:06:02

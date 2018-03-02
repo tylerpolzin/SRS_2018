@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: ecomm_orders
+#
+#  id            :integer          not null, primary key
+#  task_id       :integer
+#  retailer      :string
+#  customer_name :string
+#  order_number  :string
+#  order_date    :datetime
+#  details       :hstore
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task_id: 1
+  retailer: MyString
+  customer_name: MyString
+  order_number: MyString
+  order_date: 2018-03-02 02:02:33
+  details: 
+
+two:
+  task_id: 1
+  retailer: MyString
+  customer_name: MyString
+  order_number: MyString
+  order_date: 2018-03-02 02:02:33
+  details: 

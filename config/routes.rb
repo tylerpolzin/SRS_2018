@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :tasks
   resources :combo_items
   resources :upload_batches
   resources :uploads
