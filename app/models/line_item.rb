@@ -2,19 +2,27 @@
 #
 # Table name: line_items
 #
-#  id                   :integer          not null, primary key
-#  line_item_order_id   :integer
-#  line_item_order_type :string
-#  line_item_item_id    :integer
-#  line_item_item_type  :string
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
+#  id                :integer          not null, primary key
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  quantity          :integer          default(0)
+#  product_id        :integer
+#  part_id           :integer
+#  combo_item_id     :integer
+#  ecomm_order_id    :integer
+#  warranty_order_id :integer
 #
 
 class LineItem < ApplicationRecord
 
-  belongs_to :line_item_order, polymorphic: true
-  belongs_to :line_item_item, polymorphic: true
+  belongs_to :ecomm_order, optional: true
+  belongs_to :warranty_order, optional: true
+  belongs_to :product, optional: true
+  belongs_to :part, optional: true
+  belongs_to :combo_item, optional: true
+  
   has_many :tracking_numbers
+
+  accepts_nested_attributes_for :tracking_numbers, :allow_destroy => true
 
 end

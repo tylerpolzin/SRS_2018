@@ -45,6 +45,10 @@ class Part < ApplicationRecord
   has_many :products_parts
   has_many :products, through: :products_parts
 
+  has_many :line_items, as: :line_item_item
+  has_many :ecomm_orders, through: :line_items
+  has_many :warranty_orders, through: :line_items
+
   validates :products, presence: true
   validates :manufacturer_model_number, presence: true
   validates_uniqueness_of :manufacturer_model_number

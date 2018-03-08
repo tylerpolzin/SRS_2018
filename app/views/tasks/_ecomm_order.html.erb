@@ -1,0 +1,28 @@
+<div class="ecomm_order_fields">
+  <table class="table table-bordered newEcommOrderContainer">
+    <thead>
+      <tr>
+        <th>Retailer</th>
+        <th>Customer Name</th>
+        <th>Order Number</th>
+        <th>Order Date</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="addTaskEcommOrderLineItemButton btn"><i class="fa fa-plus-circle"></i> Add Item <i class="caret"></i></a>
+        <%= f.select_without_bootstrap :retailer, options_for_select(["Home Depot", "Wayfair", "Wal-Mart", "Amazon"]), {:prompt => "Select Retailer..."}, class: "form-control", :id => "taskRetailerSelect" %></td>
+        <td><%= f.text_field :customer_name, hide_label: true, placeholder: "Customer Name" %></td>
+        <td><%= f.text_field :order_number, hide_label: true, placeholder: "Order #" %></td>
+        <td><%= f.text_field :order_date, hide_label: true, placeholder: "Order Date", class: "ecomm_order-duedate-datepicker" %></td>
+        <td><%= remove_child_link_ecomm_order "Χ", f %></td>
+    </tbody>
+  </table>
+  <p hidden><%= add_child_link_ecomm_order_line_item "Add Item", :line_items %></p>
+  <%= new_child_fields_template_ecomm_order_line_item f, :line_items %>
+  <div class="new_task_ecomm_order_line_item">
+    <%= yield :new_task_ecomm_order_line_item_fields %>
+  </div>
+</div>
+

@@ -9,13 +9,24 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = Task.new
+    if admin_or_employee?
+      @task = Task.new
+      @task.uploads.build
+      @task.ecomm_orders.build.line_items.build.tracking_numbers.build
+      @task.warranty_orders.build.line_items.build.tracking_numbers.build
+      @products = Product.all
+      @parts = Part.all
+    else
+      default_redirect
+    end
   end
 
   def edit
   end
 
   def create
+    @products = Product.all
+    @parts = Part.all
     @task = Task.new(task_params)
 
     respond_to do |format|

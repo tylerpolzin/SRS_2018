@@ -50,6 +50,10 @@ class Product < ApplicationRecord
   has_many :combo_products
   has_many :combo_items, through: :combo_products
 
+  has_many :line_items#, inverse_of: :products
+  has_many :ecomm_orders, through: :line_items
+  has_many :warranty_orders, through: :line_items
+
   validates :manufacturer_model_number, presence: true
   validates_uniqueness_of :manufacturer_model_number
   # validates_format_of :manufacturer_model_number, :with => /\A[a-z0-9]+\z/i

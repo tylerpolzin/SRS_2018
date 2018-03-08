@@ -1,0 +1,16 @@
+<div class="new_task_ecomm_order_line_item_fields">
+  <table class="table newEcommOrderLineItemContainer">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td>
+          <%= ff.select :product_id, options_for_select(@products.order(manufacturer_model_number: :asc).map {|product| [product.model_select, product.id, {'data-quantity' => product.quantity_on_hand}]}), {:include_blank => ""}, {:class => 'LineItemProductBox'} %>
+
+        </td>
+        <td>
+          <%= ff.text_field :quantity %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

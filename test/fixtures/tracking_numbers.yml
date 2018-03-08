@@ -10,6 +10,7 @@
 #  ship_date       :datetime
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  shipping_method :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

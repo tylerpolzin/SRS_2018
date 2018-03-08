@@ -16,7 +16,12 @@
 class EcommOrder < ApplicationRecord
 
   belongs_to :task
-  has_many :line_items
+  has_many :line_items#, inverse_of: :ecomm_orders
+  #has_many :products, through: :line_items
+  #has_many :parts, through: :line_items
+  #has_many :combo_items, through: :line_items
   has_many :warranty_orders
+
+  accepts_nested_attributes_for :line_items, :allow_destroy => true
 
 end

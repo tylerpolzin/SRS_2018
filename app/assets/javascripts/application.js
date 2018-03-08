@@ -15,6 +15,8 @@
 //X require pdfmake/build/pdfmake.js 
 //X require pdfmake/build/vfs_fonts.js
 //= require moment.min.js
+//= require dateTimeFormat.js
+//= require collapsibleLists.js
 //= require jquery3
 //= require jquery_ujs
 //= require jquery-ui

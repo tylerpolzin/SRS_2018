@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180302051853) do
+ActiveRecord::Schema.define(version: 20180308015154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,15 +104,14 @@ ActiveRecord::Schema.define(version: 20180302051853) do
   end
 
   create_table "line_items", force: :cascade do |t|
-    t.integer "line_item_order_id"
-    t.string "line_item_order_type"
-    t.integer "line_item_item_id"
-    t.string "line_item_item_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "quantity", default: 0
-    t.index ["line_item_item_id", "line_item_item_type"], name: "index_line_items_on_line_item_item_id_and_line_item_item_type"
-    t.index ["line_item_order_id", "line_item_order_type"], name: "index_line_items_on_line_item_order_id_and_line_item_order_type"
+    t.integer "product_id"
+    t.integer "part_id"
+    t.integer "combo_item_id"
+    t.integer "ecomm_order_id"
+    t.integer "warranty_order_id"
   end
 
   create_table "parts", force: :cascade do |t|
@@ -282,6 +281,7 @@ ActiveRecord::Schema.define(version: 20180302051853) do
     t.datetime "ship_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "shipping_method"
     t.index ["line_item_id"], name: "index_tracking_numbers_on_line_item_id"
   end
 

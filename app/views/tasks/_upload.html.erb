@@ -1,0 +1,19 @@
+<div class="new_task_upload_fields">
+  <table class="table newTaskFileContainer">
+    <thead></thead>
+    <tbody>
+      <%= f.hidden_field :uploaded_by, :value => current_user.id %>
+      <tr>
+        <td>
+          <%= f.file_field :file, hide_label: true, :style => "width:100%;" %>
+        </td>
+        <td>
+          <%= f.text_field :description, hide_label: true, placeholder: "Description" %>
+        </td>
+        <td>
+          <%= remove_child_link_new_task_upload "Remove File", f %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -10,10 +10,9 @@
 #  ship_date       :datetime
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  shipping_method :string
 #
 
 class TrackingNumber < ApplicationRecord
-
   belongs_to :line_item
-
 end

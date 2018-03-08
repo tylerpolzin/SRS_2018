@@ -17,5 +17,7 @@ class WarrantyOrder < ApplicationRecord
   belongs_to :task
   has_many :line_items
   belongs_to :ecomm_order, optional: true
+  
+  accepts_nested_attributes_for :line_items, :allow_destroy => true
 
 end

@@ -106,6 +106,13 @@ body {
   }
 }
 
+.btn-toolbar {
+  margin-bottom: 0 !important;
+  margin-left: 5px !important;
+  padding: 5px !important;
+  border-radius: 10px !important;
+}
+
 // Top Toolbar sign out button
 .signOutButton {
   background-color: #23282e !important;
@@ -267,6 +274,10 @@ body {
     margin: 0;
     width: 100%;
   }
+}
+
+.initialBlankDiv {
+  margin: 50px;
 }
 
 .turbolinks-progress-bar {  // Not working

@@ -2,13 +2,15 @@
 #
 # Table name: line_items
 #
-#  id                   :integer          not null, primary key
-#  line_item_order_id   :integer
-#  line_item_order_type :string
-#  line_item_item_id    :integer
-#  line_item_item_type  :string
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
+#  id                :integer          not null, primary key
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  quantity          :integer          default(0)
+#  product_id        :integer
+#  part_id           :integer
+#  combo_item_id     :integer
+#  ecomm_order_id    :integer
+#  warranty_order_id :integer
 #
 
 require 'test_helper'

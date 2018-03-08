@@ -8,7 +8,6 @@
 $(document).on("turbolinks:load", function() {
   $(".showDeleteStockmovement").on("click", function() {
     var id = $(this).attr("id");
-    console.log(id);
     bootbox.confirm("Are you sure you want to undo this adjustment?", function(result){
       if (result === true) {
         $(".showStockmovementDelete[id='"+id+"'").click();
