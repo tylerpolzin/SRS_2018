@@ -1,5 +1,5 @@
 <% @title = "SRS Portal | Change Your Password" %>
-<div style="width: 400px;" id="editProfileDiv">
+<div class="defaultDiv" id="editProfileDiv">
   <p class="defaultDivHeader">Change Your Password</p>
   <div class="form-horizontal editProfileForm">
     <%= form_for(@user, :url => { :action => "update_password" }, method: :patch ) do |f| %>
