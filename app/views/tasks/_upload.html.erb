@@ -8,10 +8,10 @@
           <%= f.file_field :file, hide_label: true, :style => "width:100%;" %>
         </td>
         <td>
-          <%= f.text_field :description, hide_label: true, placeholder: "Description" %>
+          <%= f.text_field :description, hide_label: true, placeholder: "Enter Description..." %>
         </td>
         <td>
-          <%= remove_child_link_new_task_upload "Remove File", f %>
+          <%= remove_child_link_new_task_upload "<i class='fa fa-close'></i>".html_safe, f %>
         </td>
       </tr>
     </tbody>

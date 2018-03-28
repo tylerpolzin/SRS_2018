@@ -1,0 +1,39 @@
+<div class="ecomm_order_attributes">
+  <div class="attributes_header">
+    <span class="attributes_title">Custom Attributes</span>
+    <span class="attributes_remove_button"><i class="fa fa-close"></i></span>
+  </div>
+  <div class="orderAttributeTopBorder"></div>
+  <table class="table orderAttributeContainer">
+    <thead></thead>
+    <tbody class="body">
+      <%= f.fields_for_without_bootstrap :details, f.object.comments do |d| %>
+        <%= hidden_field_tag "task[ecomm_orders_attributes][new_ecomm_orders][details]", nil, class: "hide-tag" %>
+        <%= hidden_field_tag "new_ecomm_orders", nil, class: "attrTimestamp" %>
+        <% f.object.details.try(:each) do |key, value| %>
+            <tr class="row new_row">
+              <td>
+                <%= text_field_tag key, key, :class => 'text_field ecommOrderDynamicAttributeName form-control', required: true %>
+              </td>
+              <td>
+                <%= d.text_field_without_bootstrap key, :class => 'text_field form-control', :value => value %>
+              </td>
+              <td>
+                <a class="orderRemoveAttributeRow"><i class="fa fa-close"></i></a>
+              </td>
+            </tr>
+        <% end %>
+      <%- end -%>
+      <tr class='row ecommOrderAttributeTemplate hide'>
+        <td>
+          <input class='text_field ecommOrderDynamicAttributeName form-control' id='' name='' placeholder='New Attribute Name' type='text'/>
+        </td>
+        <td>
+          <input class='text_field form-control' id='' name='' placeholder='Description' type='text'/>
+        </td>
+        <td class="orderRemoveAttributeRow"><i class="fa fa-close"></i></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="orderAttributeBottomBorder"></div>
+</div>

@@ -7,7 +7,7 @@
 #  initiated_by_id  :integer
 #  initiated_for_id :integer
 #  task_type        :string
-#  active           :boolean
+#  active           :boolean          default(TRUE)
 #  status           :string
 #  due_date         :datetime
 #  completion_date  :datetime

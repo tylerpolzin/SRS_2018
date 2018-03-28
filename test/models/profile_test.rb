@@ -17,8 +17,8 @@
 #  phone2_type :string
 #  email       :string
 #  notes       :text
-#  lat         :float
-#  long        :float
+#  lat         :string
+#  long        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  details     :hstore

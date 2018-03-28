@@ -1,0 +1,55 @@
+<%= f.fields_for :customer, @customer do |f| %>
+  <tr>
+    <td>First Name</td>
+    <td>
+      <%= f.text_field :firstname, hide_label: true, required: true, placeholder: "Enter First Name...", class: "warrantyOrderCustomerFirstName" %>
+      <%= f.text_field :lastname, hide_label: true, required: true, prepend: "Last Name", placeholder: "Enter Last Name...", class: "warrantyOrderCustomerLastName" %>
+      <%= f.text_field :company, hide_label: true, prepend: "Company", placeholder: "Enter Company Name..." %>
+    </td>
+  </tr>
+  <tr>
+    <td>Address 1</td>
+    <td>
+      <%= f.text_field :address1, hide_label: true, placeholder: "Enter Address..." %>
+      <%= f.text_field :address2, hide_label: true, prepend: "Address 2", placeholder: "Enter Apt/Suite..." %>
+    </td>
+  </tr>
+  <tr>
+    <td>Zip Code<i class="fa fa-question-circle warranty_order_customer_zipcode_tooltip"></i></td>
+    <td>
+      <div class="form-group">
+        <%= text_field_tag "", nil, class: "warrantyOrderCustomerZipcode form-control", :name => "zipcode", placeholder: "Enter Zip Code..." %>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">City</span>
+          <%= text_field_tag "", nil, class: "warrantyOrderCustomerCity form-control", :name => "city" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">State</span>
+          <%= select_tag "", options_for_select(us_states), {class: "warrantyOrderCustomerState form-control", :name => "state"} %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Country</span>
+          <%= f.country_select :country, selected: "US", priority_countries: ["US", "CA", "CN", "MX", "CO"] %>
+        </div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>Phone Number</td>
+    <td>
+      <%= f.text_field :phone, hide_label: true, class: "phone_mask", placeholder: "Enter Phone Number...", class: "warrantyOrderCustomerPhone" %>
+      <%= f.email_field :email, hide_label: true, prepend: "Email Address", placeholder: "Enter Email Address..." %>
+    </td>
+  </tr>
+  <%= f.hidden_field :city, class: "warrantyOrderCustomerCityHidden" %>
+  <%= f.hidden_field :state, class: "warrantyOrderCustomerStateHidden form-control" %>
+  <%= f.hidden_field :zipcode, class: "warrantyOrderCustomerZipcodeHidden" %>
+  <%= f.hidden_field :lat %>
+  <%= f.hidden_field :long %>
+<% end %>

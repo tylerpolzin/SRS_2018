@@ -1,16 +1,46 @@
-<div class="new_task_ecomm_order_line_item_fields">
-  <table class="table newEcommOrderLineItemContainer">
-    <thead></thead>
+<div class="new_task_line_item_fields">
+  <div class="line_item_header">
+    <span class="line_item_title">Line Item</span>
+    <span class="line_item_add_tracking_number_button"><i class="fa fa-plus"></i> Tracking Number</span>
+    <span class="line_item_remove_button" title="Remove This Line Item"><i class="fa fa-close"></i></span>
+  </div>
+  <table class="table newLineItemContainer">
+    <thead>
+      <tr>
+        <th>Item Type</th>
+        <th>Item Select</th>
+        <th>Item Cost</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
     <tbody>
       <tr>
-        <td>
-          <%= ff.select :product_id, options_for_select(@products.order(manufacturer_model_number: :asc).map {|product| [product.model_select, product.id, {'data-quantity' => product.quantity_on_hand}]}), {:include_blank => ""}, {:class => 'LineItemProductBox'} %>
-
+        <td> <!-- Item Type Field -->
+          <select class="lineItemItemType form-control">
+            <option disabled selected>Select Item Type...</option>
+            <option>Combo Item</option>
+            <option>Product</option>
+            <option>Part</option>
+          </select>
         </td>
         <td>
-          <%= ff.text_field :quantity %>
+          <%= f.select :product_id, options_for_select(@products.order(manufacturer_model_number: :asc).map {|product| [product.model_select, product.id, {'data-quantity' => product.quantity_on_hand}]}), {:include_blank => "", hide_label: true}, {:class => 'lineItemProductBox'} %>
+          <%= f.select :part_id, options_for_select(@parts.order(manufacturer_model_number: :asc).map {|part| [part.part_select, part.id, {'data-quantity' => part.quantity_on_hand}]}), {:include_blank => "", hide_label: true}, {:class => 'lineItemPartBox'} %>
+          <%= f.select :combo_item_id, options_for_select(@combo_items.order(model_number: :asc).map {|ci| [ci.combo_select, ci.id, {}]}), {:include_blank => "", hide_label: true}, {:class => 'lineItemComboItemBox'} %>
+        </td>
+        <td><%= f.number_field :item_cost, hide_label: true, prepend: "$", class: "lineItemCost", min: 0, value: number_to_currency(f.object.item_cost.to_f, delimiter: '', unit: ''), :step => 0.01 %></td>
+        <td>
+          <%= f.number_field :quantity, hide_label: true, placeholder: "Order Quantity", min: 0, value: 1, required: true, class: "lineItemQuantityBox" %>
+          <%= remove_child_link_line_item "fra", f %>
         </td>
       </tr>
     </tbody>
   </table>
+  <div class="trackingNumbersTopBorder"></div>
+  <p hidden><%= add_child_link_line_item_tracking_number "", :tracking_numbers %></p>
+  <%= new_child_fields_template_line_item_tracking_number f, :tracking_numbers %>
+  <div class="trackingNumbersBottomBorder"></div>
+  <div class="line_item_tracking_number">
+    <%= yield :line_item_tracking_number_fields %>
+  </div>
 </div>

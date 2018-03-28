@@ -1,6 +1,115 @@
-<h1>Editing Task</h1>
+<% @title = "SRS Portal | Edit Task" %>
+<div class="defaultDiv" id="editTaskDiv">
+  <p class="defaultDivHeader"><%= @task.name %></p>
+  <div class="container defaultForm">
+    <%= bootstrap_form_for @task, url: task_path, method: :patch, :html => { :multipart => true } do |f| %>
+      <% if @task.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@task.errors.count, "error") %> prohibited this product from being saved:</h2>
+          <ul>
+          <% @task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <ul class="nav nav-tabs">
+        <li class="active"><a id="editTaskTab" href="#edit-task-tab" class="tab-background" data-toggle="tab"><i class="fa fa-info-circle"></i> Task</a></li>
+        <li><a id="editTaskEcommOrders" href="#edit-task-ecomm-orders" class="tab-background" data-toggle="tab"><i class="fa fa-shopping-cart"></i> E-Commerce Orders</a></li>
+        <li><a id="editTaskWarrantyOrders" href="#edit-task-warranty-orders" class="tab-background" data-toggle="tab"><i class="fa fa-shopping-cart"></i> Customer Orders</a></li>
 
-<%= render 'form', task: @task %>
+        <li><a id="addTaskFileButton"class="btn btn-toolbar"><i class="fa fa-plus"></i> Add File</a></li>
+        <li><a id="addEcommOrderButton"class="btn btn-toolbar"><i class="fa fa-plus"></i> Add Order</a></li> <!-- This button acts as a proxy to click the hidden 'add_child_link' button below -->
+        <li><a id="addWarrantyOrderButton"class="btn btn-toolbar"><i class="fa fa-plus"></i> Add Order</a></li> <!-- This button acts as a proxy to click the hidden 'add_child_link' button below -->
+      </ul>
+      <div class="defaultTabs">
+        <div class="tab-content">
+          <div id="edit-task-tab" class="tab-pane fade in active"> <!-- EDIT TASK TAB -->
+            <div class="container editTaskContainer">
+              <div class="task_fields">
+                <div class="task_header">
+                  <span class="task_title">Task Details</span>
+                  <span class="task_add_attributes_button"><i class="fa fa-plus"></i> Attribute<i class="fa fa-question-circle"></i></span>
+                  <span class="task_add_comment_button"><i class="fa fa-plus"></i> Comment<i class="fa fa-question-circle"></i></span>
+                  <span class="task_add_file_button"><i class="fa fa-plus"></i> File<i class="fa fa-question-circle"></i></span>
+                </div>
+                <div class="task_basic_details">
+                  <div class="task_basic_details_header">Basic Information</div>
+                  <table class="table table-bordered" id="editTaskSelectTable">
+                    <thead>
+                      <th>Recipient</th>
+                      <th>Task Type</th>
+                      <th>Due Date</th>
+                      <th>Task Name</th>
+                      <th>Task Status</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><%= f.select_without_bootstrap :initiated_for_id, options_for_select([["Tyler Polzin", "1"]], selected: f.object.initiated_for_id), {:prompt => "Select Recipient..."}, required: true, class: "form-control", :id => "taskRecipientSelect" %></td>
+                        <td><%= f.text_field :task_type, readonly: true, hide_label: true, :id => "taskTypeSelectEdit" %></td>
+                        <td><%= f.text_field :due_date, limit: 10, value: f.object.due_date_trunc, hide_label: true, readonly: true, :id => "taskDatepicker", :placeholder => "Select Due Date..." %></td>
+                        <td><%= f.text_field :name, hide_label: true, readonly: true, :placeholder => "Select Task Type on the left...", class: "cursor-fix", :id => "newTaskName" %></td>
+                        <td><%= f.select :status, options_for_select(["Pending", "Accepted", "Completed"], selected: f.object.status), {hide_label: true}, required: true, :id => "taskStatusSelect" %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-<%= link_to 'Show', @task %> |
-<%= link_to 'Back', tasks_path %>
+                <div class="taskAttributesContainer"><%= render "task_attributes", :f => f %></div>
+                <%= render "tasks/edit/edit_task_comment", :f => f %>
+                <p hidden><%= add_child_link_task_comment "", :comments %></p>
+                <%= new_child_fields_template_task_comment f, :comments %>
+
+
+                <div class="editTaskUploadsContainer">
+                  <div class="new_task_files_header">
+                    <span class="new_task_files_title">Associated Files</span>
+                    <span class="files_remove_button"><i class="fa fa-close"></i></span>
+                  </div>
+                  <div class="new_task_files_top_border"></div>
+                  <%= render "tasks/edit/edit_task_upload", :f => f %>
+                  <p><%= add_child_link_new_task_upload " Add File", :uploads %></p> <!-- Renders '_upload.html.erb' -->
+                  <div class="new_task_files_bottom_border"></div>
+                  <%= new_child_fields_template_new_task_upload f, :uploads %>
+                </div>
+
+
+
+
+              </div>
+            </div>
+          </div>
+          <div id="edit-task-ecomm-orders" class="tab-pane fade">
+            <div class="container editEcommOrdersContainer">
+              <div class="initialBlankDiv"></div>
+              <%= render "tasks/edit/edit_ecomm_order", :f => f %>
+              <%= new_child_fields_template_ecomm_order f, :ecomm_orders %>
+              <p hidden><%= add_child_link_ecomm_order "", :ecomm_orders %></p> <!-- Renders '_ecomm_order.html.erb' -->
+            </div>
+          </div>
+          <div id="edit-task-warranty-orders" class="tab-pane fade">
+            <div class="container editWarrantyOrdersContainer">
+              <div class="initialBlankDiv"></div>
+              <%#= new_child_fields_template_warranty_order f, :warranty_orders %>
+              <p hidden><%#= add_child_link_warranty_order " Add Order", :warranty_orders %></p> <!-- Renders '_warranty_order.html.erb' -->
+            </div>
+          </div>
+        </div>
+      </div>
+    <button id="taskFirstSubmit" class="btn">Submit Edits</button>
+    <%= f.submit "Create Task", class: "hidden", :id => "createTaskSubmitButton" %>
+    <% end %>
+  </div>
+</div>
+<div id="jstemplates_new_task_comment">
+  <%= yield :new_task_comment_fields %>
+</div>
+<div id="jstemplates_ecomm_order">
+  <%= yield :new_task_ecomm_order_fields %>
+</div>
+<div id="jstemplates_warranty_order">
+  <%#= yield :new_task_warranty_order_fields %>
+</div>
+<div id="jstemplates_new_task_upload">
+  <%= yield :new_task_upload_fields %>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180308015154) do
+ActiveRecord::Schema.define(version: 20180319034305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,25 @@ ActiveRecord::Schema.define(version: 20180308015154) do
     t.index ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
   end
 
+  create_table "customers", force: :cascade do |t|
+    t.string "firstname"
+    t.string "lastname"
+    t.string "company"
+    t.string "address1"
+    t.string "address2"
+    t.string "city"
+    t.string "state"
+    t.string "zipcode"
+    t.string "country"
+    t.string "phone"
+    t.string "email"
+    t.hstore "details"
+    t.string "lat", default: "0.0"
+    t.string "long", default: "0.0"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "ecomm_orders", force: :cascade do |t|
     t.integer "task_id"
     t.string "retailer"
@@ -77,6 +96,11 @@ ActiveRecord::Schema.define(version: 20180308015154) do
     t.hstore "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "New"
+    t.datetime "due_date"
+    t.datetime "completion_date"
+    t.string "cancellation_reason"
+    t.boolean "active", default: true
     t.index ["details"], name: "index_ecomm_orders_on_details"
     t.index ["task_id"], name: "index_ecomm_orders_on_task_id"
   end
@@ -112,6 +136,7 @@ ActiveRecord::Schema.define(version: 20180308015154) do
     t.integer "combo_item_id"
     t.integer "ecomm_order_id"
     t.integer "warranty_order_id"
+    t.decimal "item_cost", default: "0.0"
   end
 
   create_table "parts", force: :cascade do |t|
@@ -214,8 +239,8 @@ ActiveRecord::Schema.define(version: 20180308015154) do
     t.string "phone2_type"
     t.string "email"
     t.text "notes"
-    t.float "lat"
-    t.float "long"
+    t.string "lat"
+    t.string "long"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.hstore "details"
@@ -256,12 +281,32 @@ ActiveRecord::Schema.define(version: 20180308015154) do
     t.index ["stockmovement_batch_id"], name: "index_stockmovements_on_stockmovement_batch_id"
   end
 
+  create_table "stores", force: :cascade do |t|
+    t.integer "yard"
+    t.string "abbrv"
+    t.string "name"
+    t.string "prototype"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zipcode"
+    t.float "lat"
+    t.float "long"
+    t.string "phone"
+    t.string "service_rep"
+    t.integer "service_rep_id"
+    t.date "lastvisit"
+    t.hstore "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.string "name"
     t.bigint "initiated_by_id"
     t.bigint "initiated_for_id"
     t.string "task_type"
-    t.boolean "active"
+    t.boolean "active", default: true
     t.string "status"
     t.datetime "due_date"
     t.datetime "completion_date"
@@ -342,6 +387,12 @@ ActiveRecord::Schema.define(version: 20180308015154) do
     t.hstore "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "customer_id"
+    t.string "status", default: "New"
+    t.datetime "due_date"
+    t.datetime "completion_date"
+    t.string "cancellation_reason"
+    t.boolean "active", default: true
     t.index ["details"], name: "index_warranty_orders_on_details"
     t.index ["task_id"], name: "index_warranty_orders_on_task_id"
   end

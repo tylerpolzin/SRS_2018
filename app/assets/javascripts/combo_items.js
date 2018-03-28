@@ -11,7 +11,7 @@ $(document).on("turbolinks:load", function(){
 
   $(".newComboItemProductSearch").select2({
     theme:"bootstrap",
-    placeholder: "Select Product...",
+    placeholder: "Select Products..."
   });
   
   $("#builder").closest(".row").html("");

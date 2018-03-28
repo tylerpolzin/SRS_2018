@@ -60,10 +60,39 @@ module ApplicationHelper
   def remove_comment_link(name, f)
     f.hidden_field(:_destroy) + link_to(name, "javascript:void(0)", :class => "remove_comment")
   end
+  
+  def carriers
+    {
+      "Standard Carriers" =>
+      ["UPS", "FedEx", "USPS", "DHL"],
+      "LTL Carriers" =>
+      ["Estes", "Globaltranz", "Hot Line", "SAIA", "USF Holland", "YRC"]
+    }
+  end
+  
+  
+  def ship_methods
+    [
+      ["Standard (Ground)"],
+      ["First Class (USPS)"],
+      ["Priority (USPS)"],
+      ["Snail Mail (USPS)"],
+      ["2nd Day Air"],
+      ["2nd Day Air AM"],
+      ["Next Day Air"],
+      ["Next Day Air Saver"],
+      ["Next Day Air Early"],
+      ["3 Day Select"],
+      ["Freight LTL"],
+      ["Next Day Air Freight"],
+      ["2nd Day Air Freight"],
+      ["3 Day Freight"]
+    ]
+  end
 
   def us_states
     [
-      ['Select State...',''],
+      ['', ''],
       ['Alabama', 'AL'],
       ['Alaska', 'AK'],
       ['Arizona', 'AZ'],
@@ -116,6 +145,64 @@ module ApplicationHelper
       ['West Virginia', 'WV'],
       ['Wisconsin', 'WI'],
       ['Wyoming', 'WY']
+    ]
+  end
+  
+  def us_states_with_abbrv
+    [
+      ['', ''],
+      ['Alabama (AL)', 'AL'],
+      ['Alaska (AK)', 'AK'],
+      ['Arizona (AZ)', 'AZ'],
+      ['Arkansas (AR)', 'AR'],
+      ['California (CA)', 'CA'],
+      ['Colorado (CO)', 'CO'],
+      ['Connecticut (CT)', 'CT'],
+      ['Delaware (DE)', 'DE'],
+      ['District of Columbia (DC)', 'DC'],
+      ['Florida (FL)', 'FL'],
+      ['Georgia (GA)', 'GA'],
+      ['Hawaii (HI)', 'HI'],
+      ['Idaho (ID)', 'ID'],
+      ['Illinois (IL)', 'IL'],
+      ['Indiana (IN)', 'IN'],
+      ['Iowa (IA)', 'IA'],
+      ['Kansas (KS)', 'KS'],
+      ['Kentucky (KY)', 'KY'],
+      ['Louisiana (LA)', 'LA'],
+      ['Maine (ME)', 'ME'],
+      ['Maryland (MD)', 'MD'],
+      ['Massachusetts (MA)', 'MA'],
+      ['Michigan (MI)', 'MI'],
+      ['Minnesota (MN)', 'MN'],
+      ['Mississippi (MS)', 'MS'],
+      ['Missouri (MO)', 'MO'],
+      ['Montana (MT)', 'MT'],
+      ['Nebraska (NE)', 'NE'],
+      ['Nevada (NV)', 'NV'],
+      ['New Hampshire (NH)', 'NH'],
+      ['New Jersey (NJ)', 'NJ'],
+      ['New Mexico (NM)', 'NM'],
+      ['New York (NY)', 'NY'],
+      ['North Carolina (NC)', 'NC'],
+      ['North Dakota (ND)', 'ND'],
+      ['Ohio (OH)', 'OH'],
+      ['Oklahoma (OK)', 'OK'],
+      ['Oregon (OR)', 'OR'],
+      ['Pennsylvania (PA)', 'PA'],
+      ['Puerto Rico (PR)', 'PR'],
+      ['Rhode Island (RI)', 'RI'],
+      ['South Carolina (SC)', 'SC'],
+      ['South Dakota (SD)', 'SD'],
+      ['Tennessee (TN)', 'TN'],
+      ['Texas (TX)', 'TX'],
+      ['Utah (UT)', 'UT'],
+      ['Vermont (VT)', 'VT'],
+      ['Virginia (VA)', 'VA'],
+      ['Washington (WA)', 'WA'],
+      ['West Virginia (WV)', 'WV'],
+      ['Wisconsin (WI)', 'WI'],
+      ['Wyoming (WY)', 'WY']
     ]
   end
   

@@ -14,14 +14,21 @@ $(document).on("turbolinks:load", function() {
       new_field.find(".newUploadProductSearch").select2({
         theme:"bootstrap",
         placeholder: "Select Associated Products...",
-        containerCssClass: "combo-items-table-product-searche",
+        containerCssClass: "combo-items-table-product-search",
         selectOnClose: false,
         dropdownAutoWidth : true
       });
       new_field.find(".newUploadPartSearch").select2({
         theme:"bootstrap",
         placeholder: "Select Associated Parts...",
-        containerCssClass: "combo-items-table-product-searche",
+        containerCssClass: "combo-items-table-product-search",
+        selectOnClose: false,
+        dropdownAutoWidth : true
+      });
+      new_field.find(".newUploadTaskSearch").select2({
+        theme:"bootstrap",
+        placeholder: "Select Associated Parts...",
+        containerCssClass: "combo-items-table-product-search",
         selectOnClose: false,
         dropdownAutoWidth : true
       });

@@ -18,6 +18,7 @@ class UploadBatchesController < ApplicationController
       @upload_batch.comments.build
       @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
       @parts = Part.all
+      @tasks = Task.all
     else
       default_redirect
     end

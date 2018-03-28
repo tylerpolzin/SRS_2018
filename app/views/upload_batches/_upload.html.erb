@@ -29,6 +29,14 @@
                                     {:multiple => true, :class => "newUploadPartSearch"}) %>
           </td>
         </tr>
+        <tr>
+          <td>
+            <%= f.collection_select(:task_ids, @tasks, :id, :name,
+                                    {include_blank: false, :include_hidden => false, hide_label: true, :selected => @upload.tasks.map(&:id)},
+                                    {:multiple => true, :class => "newUploadTaskSearch"}) %>
+            
+          </td>
+        </tr>
       </tbody>
     </table>
     <%= f.hidden_field :uploaded_by, :value => current_user.id %>

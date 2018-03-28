@@ -20,7 +20,7 @@
               <%= u.text_field :file_file_name, hide_label: true, readonly: true, :style => "background-color:white;" %>
             </td>
             <td>
-              <%= u.text_field :description, hide_label: true %>
+              <%= u.text_field :description, hide_label: true, placeholder: "Enter Description..." %>
             </td>
             <td>
               <%= u.check_box :remove_file, :checked => false, label: "Remove File Association" %>

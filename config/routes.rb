@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   
-  resources :tasks
+  resources :stores
+  resources :customers
+  resources :tasks do
+    resources :ecomm_orders, :only => [:destroy]
+  end
   resources :combo_items
   resources :upload_batches
   resources :uploads

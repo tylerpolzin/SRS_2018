@@ -21,8 +21,6 @@ $(document).on("turbolinks:load", function() {
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  $("#jstemplates").find(".productMovementSearchBox").next(".select2-container").addClass("hidden");
-  $("#jstemplates").find(".partMovementSearchBox").next(".select2-container").addClass("hidden");
   $("#jstemplates").find(".current-quantity").hide();
   $("#jstemplates").find(".new-quantity").hide();
   $("#jstemplates").find(".adjust-quantity").hide();
@@ -217,14 +215,12 @@ $(document).on("click", "a.add_child_ia", function() {
   $(this).parent().prev().find(".productMovementSearchBox").select2({
     theme:"bootstrap",
     placeholder: "Select Product...",
-    containerCssClass: "vslpSearchCss",
     selectOnClose: true,
     allowClear: true
   });
   $(this).parent().prev().find(".partMovementSearchBox").select2({
     theme:"bootstrap",
     placeholder: "Select Part...",
-    containerCssClass: "vslpSearchCss",
     selectOnClose: true,
     allowClear: true
   });

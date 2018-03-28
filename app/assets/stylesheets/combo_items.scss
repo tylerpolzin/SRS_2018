@@ -6,7 +6,7 @@
   width: 700px;
 }
 
-//                            New Product 'Form' related CSS                                           |
+//                            New Combo Item 'Form' related CSS                                        |
 
 .comboItemTableContainer {
   width: 100%;
@@ -16,7 +16,7 @@
 #newComboItemTable {
   table-layout: fixed !important;
   width: 100%;
-  margin: 0 0 10px -7.5px;
+  margin: 0 0 10px -10px;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
@@ -141,14 +141,6 @@
   margin: 0;
   border-top: 2px solid #b5b5f7;
 }
-
-// #new-product-uploads {
-//   padding: 0 20px 0 10px;
-// }
-
-// .add_file_button {
-//   margin-bottom: 10px;
-// }
 
 //------------------------------------------------------------------------------------------------------
 //                               Combo Item 'EDIT' related CSS                                         |

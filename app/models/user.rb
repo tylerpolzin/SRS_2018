@@ -27,7 +27,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :profile
-  has_many :tasks, foreign_key: :initiated_by
+  has_many :initiated_tasks, class_name: "Task", foreign_key: "initiated_by_id"
+  has_many :assigned_tasks, class_name: "Task", foreign_key: "initiated_for_id"
   belongs_to :assignment, required: false
   belongs_to :upload, foreign_key: :uploaded_by, required: false
   

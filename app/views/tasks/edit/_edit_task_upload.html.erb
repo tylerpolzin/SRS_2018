@@ -1,0 +1,21 @@
+<%= f.fields_for :uploads, @task.uploads.each do |f| %>
+  <div class="new_task_upload_fields">
+    <table class="table newTaskFileContainer">
+      <thead></thead>
+      <tbody>
+        <%= f.hidden_field :uploaded_by, :value => current_user.id %>
+        <tr>
+          <td>
+            <%= f.text_field :file_file_name, hide_label: true, readonly: true, :style => "cursor:context-menu;" %>
+          </td>
+          <td>
+            <%= f.text_field :description, hide_label: true, placeholder: "Enter Description..." %>
+          </td>
+          <td>
+            <%= f.check_box :remove_file, :checked => false, label: "<i class='fa fa-close edit_task_upload_remove_tooltip'></i>".html_safe, class: "edit_task_upload_remove_tooltip" %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>

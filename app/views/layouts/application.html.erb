@@ -137,6 +137,9 @@
             <% if current_user.admin? %>
               <%= link_to new_task_path do %>
                 <li><i class="fa fa-tasks fa-lg"></i> Create New Task</li>
+              <%= link_to tasks_path do %>
+                <li><i class="fa fa-tasks fa-lg"></i> All Tasks</li>
+              <% end %>
               <% end %>
             <% end %>
             <% if admin_or_employee? %>

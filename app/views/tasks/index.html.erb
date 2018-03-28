@@ -1,39 +1,244 @@
-<p id="notice"><%= notice %></p>
+<% @title = "SRS Portal | All Tasks" %>
+<div class="defaultDiv" id="taskListDiv">
+  <p class="defaultDivHeader">All Tasks</p>
+  <div class="tasksTable">
+    <table id="tasksDataTable" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th style="width:5px;"><p style="display:none;">Details</p></th> <!-- the <p> is a hacky way to get "Details" to show up in the Colvis buttons dropdown -->
+          <th>Description</th>
+          <th>Files</th>
+          <th>
+            <table class="table order_summary_header">
+              <thead>
+                <tr>
+                  <th colspan="5">Order Summary</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Status</td>
+                  <td>Description</td>
+                  <td>Order #</td>
+                  <td>Open/Close Date</td>
+                  <td>Line Items</td>
+                </tr>
+              </tbody>
+            </table>
+          </th>
+          <th>Comments</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <div class="taskTableChildren"
+        data-child-blank=''>
+        
+      </div>
+      <tbody class="task-table">
+        <% @tasks.each do |task| %>
+          <tr
+            data-child-blank="test text"
+            data-child-render="test render">
+            <td class="details-control" title="<%= task.id %>"></td>
+            <td> <!-- Task Name -->
+              <table class="table">
+                <p hidden><%= task.created_at %></p>
+                <p hidden class="task_type_hidden"><%= task.task_type %></p>
+                <thead></thead>
+                <tbody>
+                  <tr>
+                    <td>Initiated for <%= task.initiated_for.header_name %> | Initiated by <%= task.initiated_by.header_name %></td>
+                  </tr>
+                  <tr>
+                    <td><%= task.name %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+            <td class="task_uploads_table"> <!-- Files -->
+              <% if task.uploads.present? %>
+                <table class="table">
+                  <thead></thead>
+                  <tbody>
+                    <% if task.uploads.length < 4 %><% @files_length = task.uploads.length %>
+                      <% task.uploads.each do |upload| %>
+                        <tr>
+                          <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", title: "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}" %></td>
+                          <td><%= upload.description if upload.description.present? %><%= "N/A" if upload.description.blank? %></td>
+                        </tr>
+                      <% end %>
+                    <% else %>
+                      <tr>
+                        <td>
+                          <li class="dropdown" style="list-style:none;">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> Show Files <i class="fa fa-angle-double-down"></i></a>
+                            <ul class="dropdown-menu task_uploads_file_dropdown">
+                              <% task.uploads.each do |upload| %>
+                                <li>
+                                  <table class="table">
+                                    <thead></thead>
+                                    <tbody>
+                                      <tr>
+                                        <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", title: "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}" %></td>
+                                        <td><%= upload.description if upload.description.present? %><%= "N/A" if upload.description.blank? %></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                  
+                                </li>
+                              <% end %>
+                            </ul>
+                          </li>
 
-<h1>Tasks</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Initiated by</th>
-      <th>Initiated for</th>
-      <th>Task type</th>
-      <th>Active</th>
-      <th>Status</th>
-      <th>Due date</th>
-      <th>Completion date</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @tasks.each do |task| %>
-      <tr>
-        <td><%= task.initiated_by %></td>
-        <td><%= task.initiated_for %></td>
-        <td><%= task.task_type %></td>
-        <td><%= task.active %></td>
-        <td><%= task.status %></td>
-        <td><%= task.due_date %></td>
-        <td><%= task.completion_date %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Task', new_task_path %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              <% end %>
+            </td>
+            <td class="task_ecomm_orders_summary_table"> <!-- Order Summary -->
+              <% if task.is_ecomm_order %>
+                <table class="table">
+                  <thead></thead>
+                  <tbody>
+                    <% task.ecomm_orders.each do |ecomm_order| %>
+                      <tr>
+                        <td class="order_status"><%= ecomm_order.status %></td>
+                        <td><%= ecomm_order.retailer %> order for <%= ecomm_order.customer_name %></td>
+                        <td><%= ecomm_order.order_number %></td>
+                        <% if ecomm_order.completion_date.present? %>
+                          <td>Close Date: <%= ecomm_order.completion_date.strftime("%A, %B %d, %Y") %></td>
+                        <% else %>
+                          <td>Due Date: <%= ecomm_order.due_date.strftime("%A, %B %d, %Y") if ecomm_order.due_date.present? %><%= "No Due Date Assigned" if ecomm_order.due_date.blank? %></td>
+                        <% end %>
+                        <td class="line_items_table">
+                          <table class="table">
+                            <thead></thead>
+                            <tbody>
+                              <% if ecomm_order.line_items.present? %><% @line_item_length = ecomm_order.line_items.length %>
+                                <% if ecomm_order.line_items.length < 2 %>
+                                  <% ecomm_order.line_items.each do |line_item| %>
+                                    <tr>
+                                      <td><%= line_item.item_select %></td>
+                                    </tr>
+                                  <% end %>
+                                <% else %>
+                                  <tr>
+                                    <td>
+                                      <li class="dropdown" style="list-style:none;">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> Show <%= @line_item_length %> Line Items <i class="fa fa-angle-double-down"></i></a>
+                                        <ul class="dropdown-menu">
+                                          <% ecomm_order.line_items.each do |line_item| %>
+                                            <li><%= line_item.item_select %></li>
+                                          <% end %>
+                                        </ul>
+                                      </li>
+                                    </td>
+                                  </tr>
+                                <% end %>
+                              <% else %>
+                                <tr>
+                                  <td>No Line Items Present</td>
+                                </tr>
+                              <% end %>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              <% end %>
+              <% if task.is_customer_order %>
+                <table class="table">
+                  <thead></thead>
+                  <tbody>
+                    <% task.warranty_orders.each do |customer_order| %>
+                      <tr>
+                        <td class="order_status"><%= customer_order.status %></td>
+                        <td>Customer order for <%= customer_order.customer.name if customer_order.customer.present? %></td>
+                        <td><%= customer_order.order_number %></td>
+                        <% if customer_order.completion_date.present? %>
+                          <td>Close Date: <%= customer_order.completion_date.strftime("%A, %B %d, %Y") %></td>
+                        <% else %>
+                          <td>Due Date: <%= customer_order.due_date.strftime("%A, %B %d, %Y") if customer_order.due_date.present? %><%= "No Due Date Assigned" if customer_order.due_date.blank? %></td>
+                        <% end %>
+                        <td class="line_items_table">
+                          <table class="table">
+                            <thead></thead>
+                            <tbody>
+                              <% if customer_order.line_items.present? %><% @line_item_length = customer_order.line_items.length %>
+                                <% if customer_order.line_items.length < 2 %>
+                                  <% customer_order.line_items.each do |line_item| %>
+                                    <tr>
+                                      <td><%= line_item.item_select %></td>
+                                    </tr>
+                                  <% end %>
+                                <% else %>
+                                  <tr>
+                                    <td>
+                                      <li class="dropdown" style="list-style:none;">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> Show <%= @line_item_length %> Line Items <i class="fa fa-angle-double-down"></i></a>
+                                        <ul class="dropdown-menu">
+                                          <% customer_order.line_items.each do |line_item| %>
+                                            <li><%= line_item.item_select %></li>
+                                          <% end %>
+                                        </ul>
+                                      </li>
+                                    </td>
+                                  </tr>
+                                <% end %>
+                              <% else %>
+                                <tr>
+                                  <td>No Line Items Present</td>
+                                </tr>
+                              <% end %>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              <% end %>
+            </td>
+            <td class="comments_table"> <!-- Comments -->
+              <% if task.comments.present? %>
+                <table class="table">
+                  <thead></thead>
+                      <tr>
+                        <td>
+                          <li class="dropdown" style="list-style:none;">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> Show Comments <i class="fa fa-angle-double-down"></i></a>
+                            <ul class="dropdown-menu task_comments_dropdown">
+                              <% task.comments.each do |comment| %>
+                                <li>
+                                  <table class="table">
+                                    <thead></thead>
+                                    <tbody>
+                                      <tr>
+                                        <td title="Comment ID: <%= comment.id %>"><%= comment.content %></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </li>
+                              <% end %>
+                            </ul>
+                          </li>
+                        </td>
+                      </tr>
+                </table>
+              <% end %>
+            </td>
+            <td><%= task.status %></td>
+            <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -10,6 +10,12 @@
 #  details               :hstore
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
+#  customer_id           :integer
+#  status                :string           default("New")
+#  due_date              :datetime
+#  completion_date       :datetime
+#  cancellation_reason   :string
+#  active                :boolean          default(TRUE)
 #
 
 require 'test_helper'

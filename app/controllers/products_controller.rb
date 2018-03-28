@@ -124,9 +124,5 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit!
     end
-    
-    def part_params
-      params.require(:part).permit!
-    end
-    
+
 end

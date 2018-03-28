@@ -52,6 +52,13 @@
 //X require dataTables.keyTable.min.js
 //X require dataTables.responsive.min.js
 //X require responsive.bootstrap4.min.js
+//= require inputmask
+//= require jquery.inputmask
+//X require inputmask.extensions
+//X require inputmask.date.extensions
+//= require inputmask.phone.extensions
+//X require inputmask.numeric.extensions
+//X require inputmask.regex.extensions
 //= require jszip.min.js
 //X require pdfmake.min.js.map
 //= require underscore
@@ -65,6 +72,12 @@ $(document).on("turbolinks:load", function() {
   $(".best_in_place").best_in_place(); // Enables the Best In Place gem for in-line editing
   $("input[type='number']").forceNumeric(); // Use to accept only numbers in number_fields
   $(".defaultDiv").animate({left: 200, opacity: 100}, 500); // Slides all main DIV content in from the left
+  $(".phone_mask").inputmask({"mask": "(999) 999-9999"});
+  $(".zip_mask").inputmask({ mask: "99999[-9999]", greedy: false });
+
+  $("select").on("select2:select", function(){
+    $(this).closest("tr").next().find("input select").focus();
+  });
 
   // Child Fields Template Loader
   $(document).on('click', 'a.add_child', function() {
@@ -125,6 +138,8 @@ $.fn.forceNumeric = function () {
        });
    });
 };
+
+
 
 function basicConfirm (element) { // Basic dialog box to confirm any delete call
   bootbox.confirm("Are you sure you want to delete this "+element+"?", function(result){

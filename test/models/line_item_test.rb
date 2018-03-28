@@ -11,6 +11,7 @@
 #  combo_item_id     :integer
 #  ecomm_order_id    :integer
 #  warranty_order_id :integer
+#  item_cost         :decimal(, )      default(0.0)
 #
 
 require 'test_helper'

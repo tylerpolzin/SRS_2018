@@ -332,7 +332,7 @@
 
 
 
-#productFilesContainer {
+#productFilesContainer { // 1-File Name/File Select | 2-Description | 3-Remove
   width: 100%;
   margin: 0;
   font-family: 'Abel', sans-serif;
@@ -348,7 +348,7 @@
       margin: 0;
     }
   }
-  tbody tr td:first-child { // Left Column "File Name/File Select"
+  tbody tr td:first-child { // 1-File Name/File Select
     width: 350px;
     border-right: 1px solid #ddd;
     padding: 0;
@@ -361,7 +361,7 @@
       }
     }
   }
-  tbody tr td:nth-child(2) { // Second Column "Description"
+  tbody tr td:nth-child(2) { // 2-Description
     padding: 0;
     border-right: 1px solid #ddd;
     .form-group input {
@@ -373,7 +373,7 @@
       }
     }
   }
-  tbody tr td:last-child { // Right Column "Delete Entry"
+  tbody tr td:last-child { // 3-Remove
     width: 175px;
     padding: 7px;
     font-weight: bold;

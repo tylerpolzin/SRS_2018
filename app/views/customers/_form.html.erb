@@ -1,0 +1,57 @@
+<div class="container customerTableContainer">
+  <table class="table table-bordered" id="newCustomerTable">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td>First Name</td>
+        <td>
+          <%= f.text_field :firstname, hide_label: true %>
+        </td>
+      </tr>
+      <tr>
+        <td>Last Name</td>
+        <td><%= f.text_field :lastname, hide_label: true %></td>
+      </tr>
+      <tr>
+        <td>Company</td>
+        <td><%= f.text_field :company, hide_label: true %></td>
+      </tr>
+      <tr>
+        <td>Address 1</td>
+        <td><%= f.text_field :address1, hide_label: true %></td>
+      </tr>
+      <tr>
+        <td>Address 2</td>
+        <td><%= f.text_field :address2, hide_label: true %></td>
+      </tr>
+      <tr>
+        <td>Zip Code</td>
+        <td><%= f.text_field :zipcode, hide_label: true, :name => "zipcode" %></td>
+      </tr>
+      <tr>
+        <td>City</td>
+        <td>
+          <%= f.text_field :city, hide_label: true, :name => "city", placeholder: "Automatically filled in with Zip Code entry" %>
+          <%= f.hidden_field :lat %>
+          <%= f.hidden_field :long %>
+        </td>
+      </tr>
+      <tr>
+        <td>State</td>
+        <td><%= f.select :state, options_for_select(us_states),{hide_label: true}, class: "customer_state", :name => "state" %></td>
+      </tr>
+      <tr>
+        <td>Country</td>
+        <td><%= f.country_select :country, selected: "US", priority_countries: ["US", "CA", "CN", "MX", "CO"] %></td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td><%= f.text_field :phone, hide_label: true, class: "phone_mask" %></td> <!-- value: number_to_phone(f.object.phone, area_code: true) -->
+      </tr>
+      <tr>
+        <td>Email Address</td>
+        <td><%= f.email_field :email, hide_label: true %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

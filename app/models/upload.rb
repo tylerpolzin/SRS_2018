@@ -22,6 +22,7 @@ class Upload < ApplicationRecord
   has_many :item_uploads
   has_many :parts, through: :item_uploads, source: :itemable, source_type: 'Part'
   has_many :products, through: :item_uploads, source: :itemable, source_type: 'Product'
+  has_many :tasks, through: :item_uploads, source: :itemable, source_type: 'Task'
   
   validates_presence_of :file
   
