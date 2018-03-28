@@ -65,6 +65,10 @@ Profile.create!({user_id: 15, name: "Anne-Marie Dusseault", company: "Colonial E
 
 Heroku stuff:
 
+!!
+heroku logs
+!!
+
 One-Time Backup:
 heroku pg:backups:capture --app glacial-harbor-41926
 

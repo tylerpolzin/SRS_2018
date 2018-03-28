@@ -58,13 +58,18 @@ GEM
     arel (8.0.0)
     autoprefixer-rails (8.2.0)
       execjs
-    aws-sdk (2.11.23)
-      aws-sdk-resources (= 2.11.23)
-    aws-sdk-core (2.11.23)
+    aws-partitions (1.73.0)
+    aws-sdk-core (3.17.1)
+      aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.11.23)
-      aws-sdk-core (= 2.11.23)
+    aws-sdk-kms (1.5.0)
+      aws-sdk-core (~> 3)
+      aws-sigv4 (~> 1.0)
+    aws-sdk-s3 (1.8.2)
+      aws-sdk-core (~> 3)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.0)
     aws-sigv4 (1.0.2)
     bcrypt (3.1.11)
     best_in_place (3.1.1)
@@ -298,7 +303,7 @@ DEPENDENCIES
   active_record_doctor
   ajax-datatables-rails
   annotate
-  aws-sdk (~> 2.3)
+  aws-sdk-s3
   best_in_place
   bootbox-rails (~> 0.4)
   bootstrap-datepicker-rails
@@ -343,6 +348,9 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   underscore-rails
   web-console (>= 3.3.0)
+
+RUBY VERSION
+   ruby 2.3.4p301
 
 BUNDLED WITH
    1.16.1

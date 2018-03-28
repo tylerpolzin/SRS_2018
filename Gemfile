@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.3.4'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -25,7 +26,7 @@ gem 'devise'
 gem 'rolify'
 gem 'cancancan'
 gem "paperclip"
-gem 'aws-sdk', '~> 2.3' # Use for Paperclip uploads
+gem 'aws-sdk-s3' # Use for Paperclip uploads
 gem 'twitter-bootstrap-rails-confirm'
 gem 'best_in_place'
 gem 'underscore-rails'
