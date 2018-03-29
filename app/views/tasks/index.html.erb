@@ -100,6 +100,9 @@
               <% end %>
             </td>
             <td class="task_ecomm_orders_summary_table"> <!-- Order Summary -->
+              <% if task.is_basic_task %>
+                No Orders For This Task
+              <% end %>
               <% if task.is_ecomm_order %>
                 <table class="table">
                   <thead></thead>
@@ -233,7 +236,10 @@
                 </table>
               <% end %>
             </td>
-            <td><%= task.status %></td>
+            <td>
+              <p><%= task.status %></p>
+              <p><%= link_to "Edit This Task", edit_task_path(id: task), method: :get, class: 'btn btn-sm' if admin_or_employee? %></p>
+            </td>
             <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
             </td>
           </tr>

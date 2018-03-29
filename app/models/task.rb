@@ -54,6 +54,14 @@ class Task < ApplicationRecord
     self.task_type == "Customer Orders"
   end
 
+  def is_store_order
+    self.task_type == "Store Order"
+  end
+
+  def is_basic_task
+    self.task_type == "Basic Task"
+  end
+
   def due_date_trunc
     if self.due_date.present?
       self.due_date.strftime("%Y-%m-%d")

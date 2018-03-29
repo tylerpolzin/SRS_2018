@@ -29,8 +29,18 @@ class LineItem < ApplicationRecord
   def tracking_number_blank(a) # If a item is added to the batch, but an item is not selected in that field, it is automatically rejected & deleted.
     self.new_record? && a[:tracking_number].blank?
   end
-  
-  def item_select
+
+  def item_type
+    if self.product_id.present?
+      "Product"
+    elsif self.part_id.present?
+      "Part"
+    elsif self.combo_item_id.present?
+      "Combo Item"
+    end
+  end
+
+  def item_select # Use this in dropdown to provide a link to each line item
     if self.product_id.present?
       "<a target='_blank' href='/products/#{product.slug}' title='View Product Details (ID: #{product_id})'>#{product.product_select_with_model}</a>".html_safe
     elsif self.part_id.present?

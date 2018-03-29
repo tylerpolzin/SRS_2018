@@ -57,7 +57,8 @@ $(document).on("turbolinks:load", function() {
   if ($("#taskRecipientSelect option:selected").text() == "Select Recipient...") {
     $("#taskRecipientSelect option:selected").attr("disabled", true);
   }
-  
+
+  var currentType = [];
   $("#taskTypeSelect").on("change", function() {
     if ($(this).find("option:selected").val() == "E-Commerce Orders") {
       if ($(".newWarrantyOrdersContainer").find(".warranty_order_fields").length > 0) {
@@ -67,11 +68,13 @@ $(document).on("turbolinks:load", function() {
             $("#newTaskWarrantyOrders").hide();
             $("#newTaskEcommOrders").show();
             $(".newWarrantyOrdersContainer").find(".warranty_order_fields").remove();
+            currentType = "E-Commerce Orders";
           }
           else { // Revert to Customer Order
             $("#newTaskEcommOrders").hide();
             $("#newTaskWarrantyOrders").show();
             $("#taskTypeSelect").val("Customer Orders");
+            currentType = "Customer Orders";
           }
         });
       }
@@ -79,6 +82,7 @@ $(document).on("turbolinks:load", function() {
         $("#newTaskName").val("E-Commerce Orders for " + dateSelect);
         $("#newTaskWarrantyOrders").hide();
         $("#newTaskEcommOrders").show();
+        currentType = "E-Commerce Orders";
       }
     }
     if ($(this).find("option:selected").val() == "Customer Orders") {
@@ -91,11 +95,13 @@ $(document).on("turbolinks:load", function() {
             $(".newEcommOrdersContainer").find(".ecomm_order_fields").remove();
             // Hacky way to remove the extra tracking number template that is generated
             $("#jstemplates_warranty_order").find("input[name^='task[ecomm']").closest(".tracking_numbers_fields_template").remove();
+            currentType = "Customer Orders";
           }
           else { // Revert to Ecomm Order
             $("#newTaskWarrantyOrders").hide();
             $("#newTaskEcommOrders").show();
             $("#taskTypeSelect").val("E-Commerce Orders");
+            currentType = "E-Commerce Orders";
           }
         });
       }
@@ -105,6 +111,30 @@ $(document).on("turbolinks:load", function() {
         $("#newTaskWarrantyOrders").show();
         // Hacky way to remove the extra tracking number template that is generated
         $("#jstemplates_warranty_order").find("input[name^='task[ecomm']").closest(".tracking_numbers_fields_template").remove();
+        currentType = "Customer Orders";
+      }
+    }
+    if ($(this).find("option:selected").val() == "Basic Task") {
+      if ($("div[class*='OrdersContainer']").find("div[class*='_order_fields']").length > 0) {
+        bootbox.confirm("Changing the Task Type now will remove all existing orders.  Are you sure you want to do this?", function(result){
+          if (result === true) { // Remove all orders
+            $("#newTaskName").val("Basic Task for " + dateSelect);
+            $("#newTaskEcommOrders").hide();
+            $("#newTaskWarrantyOrders").hide();
+            $("div[class*='OrdersContainer']").find("div[class*='_order_fields']").remove();
+            $("#jstemplates_warranty_order").find("input[name^='task[ecomm']").closest(".tracking_numbers_fields_template").remove();
+            currentType = "Basic Task";
+          }
+          else {
+            $("#taskTypeSelect").val(currentType);
+          }
+        });
+      }
+      else {
+        $("#newTaskName").val("Basic Task for " + dateSelect);
+        $("#newTaskEcommOrders").hide();
+        $("#newTaskWarrantyOrders").hide();
+        currentType = "Basic Task";
       }
     }
   });
@@ -225,20 +255,6 @@ $(document).on("click", "a.remove_child_ecomm_order", function() { // Triggers t
   $(this).parents(".ecomm_order_fields").remove();
   return false;
 });
-
-$(document).on("click", ".ecomm_order_edit_remove_button", function() {
-  var fields = $(this).closest(".ecomm_order_fields");
-  bootbox.confirm("Are you sure you want to remove this order?", function(result){
-    if (result === true) {
-      fields.find(".remove_child_ecomm_order_edit").attr("value", "true");
-      fields.hide();
-      fields.find("input").prop("required", false);
-      fields.find("select").prop("required", false);
-    }
-  });
-});
-
-
 
 $(document).on("click", "a.add_child_ecomm_order", function() {
   var association, new_id, regexp, template, prev;
@@ -989,14 +1005,7 @@ $(document).on("turbolinks:load", function() {
     }
   });
 
-  $(function() {
-    var regexp = new RegExp("new_ecomm_orders", "g");
-    var grabnum = $(".editEcommOrdersContainer").find(".ecomm_order_fields").next("input[type='hidden']").attr("id");
-    var template = $(".editEcommOrdersContainer").find(".orderAttributeContainer").html();
-    
-    template.replace(regexp, grabnum.match(/\d+/));
-  });
-  
+
   var ecommOrderStatus = $(".editEcommOrdersContainer").find(".ecommOrderStatusSelect");
   ecommOrderStatus.each(function() {
     var cellValue = $(this).find("option:selected").val();
@@ -1009,6 +1018,21 @@ $(document).on("turbolinks:load", function() {
   
 });
 
+$(document).on("click", "#editTaskEcommOrders", function() {
+  var template = $(".editEcommOrdersContainer").find(".orderAttributeContainer").find(".body");
+  
+  template.each(function() {
+    var grabnum = $(this).closest(".ecomm_order_fields").next("input[type='hidden']").attr("id");
+    $(this).children("input[type='hidden']").attr("name", grabnum.match(/\d+/))
+                                            .attr("id", grabnum.match(/\d+/));
+    $(this).children("input[type='hidden']:first-child").attr("name", "task[ecomm_orders_attributes]["+grabnum.match(/\d+/)+"][details]")
+                                                        .attr("id", "task_ecomm_orders_attributes_"+grabnum.match(/\d+/)+"_details");
+  console.log(grabnum);
+  });
+  
+
+});
+
 $(document).on("click", "a.add_child_ecomm_order_edit_comment", function() {
   var new_id, regexp, regexp2, template, grabnum;
   template = $(this).closest(".editEcommOrdersContainer").find(".comments_fields_template").html();
@@ -1018,6 +1042,29 @@ $(document).on("click", "a.add_child_ecomm_order_edit_comment", function() {
   grabnum = $(this).closest(".ecomm_order_fields").next("input[type='hidden']").attr("id");
   $(this).parent().before(template.replace(regexp, new_id).replace(regexp2, grabnum.match(/\d+/)));
   return false;
+});
+
+$(document).on("click", ".ecomm_order_edit_remove_button", function() {
+  var fields = $(this).closest(".ecomm_order_fields");
+  bootbox.confirm("Are you sure you want to remove this order?", function(result){
+    if (result === true) {
+      fields.find(".remove_child_ecomm_order_edit").attr("value", "true");
+      fields.hide();
+      fields.find("input").prop("required", false);
+      fields.find("select").prop("required", false);
+    }
+  });
+});
+
+
+$(document).on("click", ".comment_edit_remove_button", function() {
+  var fields = $(this).closest(".new_task_comment_fields");
+  bootbox.confirm("Are you sure you want to remove this comment?", function(result){
+    if (result === true) {
+      fields.find(".remove_child_ecomm_order_edit_comment").attr("value", "true");
+      fields.hide();
+    }
+  });
 });
 
 
