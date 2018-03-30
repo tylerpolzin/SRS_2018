@@ -75,7 +75,10 @@ class StockmovementBatchesController < ApplicationController
 
   def create
     @products = Product.all
+    @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
     @parts = Part.all
+    @stockmovement_batches = StockmovementBatch.all
+    @stockmovements = Stockmovement.all
     @stockmovement_batch = StockmovementBatch.new(stockmovement_batch_params)
     respond_to do |format|
       if @stockmovement_batch.save

@@ -106,34 +106,54 @@ $(document).on("change", ".item-type", function() { // Changes the "Item Select"
 });
 
 $(document).on("change", ".productMovementSearchBox", function() {
+  var fields = $(this).closest(".fields");
   var tr = $(this).closest("tr");
-  var previous_qty = tr.find(".product-previous-qty").attr("value");
-  $(".productMovementSearchBox option[value="+previous_qty+"]").prop("disabled", false);
+  $(".productMovementSearchBox option").prop("disabled", false); // Start by disabling all "readonly" fields to start the process over of enabling "readonly" on the currently active fields
+  tr.find(".new-quantity").attr("readonly", false); // Enables the quantity fields for this given field
+  tr.find(".adjust-quantity").attr("readonly", false); // Enables the quantity fields for this given field
+  tr.find(".current-quantity").val($(this).find("option:selected").data("quantity")); // imports the quantity from the "data-quantity" attribute of the selected option
+  var current_quantity = tr.find(".current-quantity").val();
+  var new_quantity = tr.find(".new-quantity").val();
+  tr.find(".new-quantity").val(new_quantity = current_quantity - 1); // Math function when adjusting quantity fields
+  var disable_value = []; // Setter for this field to notify the application that this option should be disabled for all other fields
+  if ($(this).find("option:selected").val()) { // Sets the disable value variable to the currently selected option's ID, otherwise, sets to ZERO (will throw error without ZERO setting)
+    disable_value = $(this).find("option:selected").val();
+  }
+  else {
+    disable_value = "0";
+  }
+  fields.find(".product-previous-qty").attr("value", disable_value); // Notifies the hidden field of which Product ID should be disabled across all fields
+  $(".product-previous-qty").each(function() { // Global "each" call that triggers the disabling of all selected Product ID's
+    var value = $(this).val();
+    $(".productMovementSearchBox option[value='"+value+"']").prop("disabled", true);
+  });
+  if (new_quantity == "0") { // Notification of Zero quantity as a warning
+    bootbox.alert("Quantity has reached zero.  Please check inventory before proceeding.");
+  }
+});
+
+$(document).on("change", ".partMovementSearchBox", function() { // Same notes apply here as are found above in ".productMovementSearchBox"
+  var fields = $(this).closest(".fields");
+  var tr = $(this).closest("tr");
+  $(".partMovementSearchBox option").prop("disabled", false);
   tr.find(".new-quantity").attr("readonly", false);
   tr.find(".adjust-quantity").attr("readonly", false);
   tr.find(".current-quantity").val($(this).find("option:selected").data("quantity"));
   var current_quantity = tr.find(".current-quantity").val();
   var new_quantity = tr.find(".new-quantity").val();
   tr.find(".new-quantity").val(new_quantity = current_quantity - 1);
-  var disable_value = $(this).find("option:selected").attr("value"); // To ensure an item doesnt get selected in a batch more than once, the option is disabled the first time it is selected
-  $(".productMovementSearchBox option[value="+disable_value+"]").prop("disabled", true);
-  tr.find(".product-previous-qty").attr("value", disable_value);
-  if (new_quantity == "0") {
-    bootbox.alert("Quantity has reached zero.  Please check inventory before proceeding.");
+  var disable_value = [];
+  if ($(this).find("option:selected").val()) {
+    disable_value = $(this).find("option:selected").val();
   }
-});
-
-$(document).on("change", ".partMovementSearchBox", function() { // Same notes apply here as are found above in ".productMovementSearchBox"
-  var tr = $(this).closest("tr");
-  var previous_qty = tr.find(".part-previous-qty").attr("value");
-  $("#stockmovement_batch_stockmovements_attributes_new_stockmovements_part_id option[value="+previous_qty+"]").prop("disabled", false);
-  tr.find(".current-quantity").val($(this).find("option:selected").data("quantity"));
-  var current_quantity = tr.find(".current-quantity").val();
-  var new_quantity = tr.find(".new-quantity").val();
-  tr.find(".new-quantity").val(new_quantity = current_quantity - 1);
-  var disable_value = $(this).find("option:selected").attr("value");
-  $("#stockmovement_batch_stockmovements_attributes_new_stockmovements_part_id option[value="+disable_value+"]").prop("disabled", true);
-  tr.find(".part-previous-qty").attr("value", disable_value);
+  else {
+    disable_value = "0";
+  }
+  fields.find(".part-previous-qty").val(disable_value);
+  $(".part-previous-qty").each(function() {
+    var value = $(this).val();
+    $(".partMovementSearchBox option[value='"+value+"']").prop("disabled", true);
+  });
   if (new_quantity == "0") {
     bootbox.alert("Quantity has reached zero.  Please check inventory before proceeding.");
   }
