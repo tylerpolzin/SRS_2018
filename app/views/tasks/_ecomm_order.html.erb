@@ -7,7 +7,10 @@
     <span class="ecomm_order_remove_button"><i class="fa fa-close"></i></span>
   </div>
   </br><div class="ecomm_order_details">
-    <div class="ecomm_order_details_header">Basic Details</div>
+    <div class="ecomm_order_details_header">
+      <span class="ecomm_order_details_title">Basic Details</span>
+      <span class="ecomm_order_add_ship_request_button"><i class="fa fa-plus"></i> Ship Method Request<i class="fa fa-question-circle ecomm_order_ship_request_tooltip"></i></span>
+    </div>
     <table class="table table-bordered newEcommOrderContainer">
       <thead>
         <tr>
@@ -22,17 +25,19 @@
       </thead>
       <tbody>
         <tr>
-          <td><%= f.select_without_bootstrap :retailer, options_for_select(["Home Depot", "Wayfair", "Wal-Mart", "Amazon", "Menards"]), {:prompt => "Select Retailer..."}, required: true, class: "form-control ecommOrderRetailerSelect", title: "Retailer" %></td>
+          <td><%= f.select_without_bootstrap :retailer, options_for_select(@retailers), {:prompt => "Select Retailer..."}, required: true, class: "form-control ecommOrderRetailerSelect", title: "Retailer" %></td>
           <td><%= f.text_field :customer_name, hide_label: true, placeholder: "Enter Customer Name...", title: "Customer Name", required: true, class: "ecommOrderCustomerName" %></td>
           <td><%= f.text_field :order_number, hide_label: true, title: "Order Number", placeholder: "Enter Order Number..." %></td>
           <td><%= f.select :status, options_for_select(["New", "Open", "Completed", "Cancelled"]),{hide_label: true, :prompt => "Select Status..."}, class: "ecommOrderStatusSelect" %></td>
-          <td><%= f.text_field :order_date, hide_label: true, readonly: true, placeholder: "Select Order Date...", title: "Order Date", class: "ecommOrderOrderDate" %></td>
-          <td><%= f.text_field :due_date, hide_label: true, readonly: true, :placeholder => "Select Due Date...", class: "ecommOrderDueDate" %></td>
-          <td><%= f.text_field :completion_date, hide_label: true, readonly: true, :placeholder => "Select Completion Date...", class: "ecommOrderCompletionDate" %></td>
+          <td><%= f.text_field :order_date, hide_label: true, readonly: true, placeholder: "Select Order Date...", title: "Order Date", class: "ecommOrderOrderDate taskDefaultDatepicker" %></td>
+          <td><%= f.text_field :due_date, hide_label: true, readonly: true, :placeholder => "Select Due Date...", class: "ecommOrderDueDate taskDefaultDatepicker" %></td>
+          <td><%= f.text_field :completion_date, hide_label: true, readonly: true, :placeholder => "Select Completion Date...", class: "ecommOrderCompletionDate taskDefaultDatepicker" %></td>
           </td>
         </tr>
         <tr class="ecommOrderCancellationReasonRow">
-          <td colspan="3"></td>
+          <td class="shipMethodRow"><span class="form-control method">Ship Method Request:</span></td>
+          <td class="shipMethodRow"><%= f.select :requested_carrier, options_for_select(@carriers), {:prompt => "Select Carrier...", hide_label: true}, class: "ecommOrderCarrierRequestSelect" %></td>
+          <td class="shipMethodRow"><%= f.select :requested_method, options_for_select(ship_methods, selected: "Standard (Ground)"), {:prompt => "Select Ship Method...", hide_label: true}, class: "ecommOrderShipMethodRequestSelect" %></td>
           <td colspan="2">
             <%= f.select :cancellation_reason, options_for_select(["Out of Stock", "Cancelled at Merchants Request", "Item Select Error", "Other (see comments)"]), {hide_label: true, :prompt => "Select Cancellation Reason..."}, class: "ecommOrderCancellationReasonSelect" %>
             <%= f.hidden_field :active, value: true, class: "ecommOrderActiveBoolean" %>

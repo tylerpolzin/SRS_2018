@@ -1,0 +1,283 @@
+<% @title = "SRS Portal | E-Commerce Orders" %>
+<div class="defaultDiv" id="ecommOrdersListDiv">
+  <p class="defaultDivHeader">E-Commerce Orders<span  style="float:right;"><input type="checkbox" class="form-check-input" id="ecommHighlightCheck"><label style="padding-left:5px;" class="form-check-label" for="ecommHighlightCheck">Enable Highlighting</label></span></p>
+  <div class="ecommOrdersTable">
+    <table id="ecommOrdersDataTable" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th style="width:5px;"><p style="display:none;">Details</p></th> <!-- the <p> is a hacky way to get "Details" to show up in the Colvis buttons dropdown -->
+          <th>Order Date</th>
+          <th>Status</th>
+          <th>Due Date</th>
+          <th>Retailer</th>
+          <th>Customer Name</th>
+          <th>Order Number</th>
+          <th style="width:600px;">
+            <table class="table ecomm_orders_line_item_header">
+              <thead>
+                <tr>
+                  <th colspan="5">Line Items & Tracking Information</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="no-hover">
+                  <td>Line Item</td>
+                  <td><span class="table_header_tooltip" title="Item Cost">Cost</span></td>
+                  <td>Qty</td>
+                  <td>Carrier</td>
+                  <td>Ship Method</td>
+                  <td>Tracking Number</td>
+                  <td><span class="table_header_tooltip" title="Shipping Cost">Cost</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </th>
+          <th class="eo_last_row_th">Comments</th>
+          <th></th>
+        </tr>
+      </thead>
+      <div class="ecommOrdersTableChildren"
+        data-child-top_toolbar="<ul class='nav nav-tabs'>
+                                  <li><a class='hidden' id='ecommOrdersHackFixButton'></a></li>
+                                  <li><div class='dataTables_filter'><input class='form-control' id='ecommOrdersTableSearch' placeholder='Search Table...'></div>
+                                  <li>
+                                    <div class='dataTables_length'>
+                                      <select class='form-control' title='Number of records to show' id='ecommOrdersTableLength'>
+                                        <option value='5'>5</option>
+                                        <option value='10'>10</option>
+                                        <option value='25'>25</option>
+                                        <option selected='selected' value='50'>50</option>
+                                        <option value='100'>100</option>
+                                        <option value='-1'>All</option>
+                                      </select>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class='ecommOrdersFilterBy'><i class='fa fa-random' aria-hidden='true'></i> Filters:</div>
+                                  </li>
+                                  <li>
+                                    <div class='orderDateRangeFilter'>
+                                      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-calendar' aria-hidden='true'></i> Order Date Range <span class='caret'></span></button>
+                                      <ul class='dropdown-menu'>
+                                        <li>
+                                          <div class='input-daterange input-group' id='datepicker'>
+                                            <input type='text' class='form-control filterStartDate' id='filterStartDate' name='start' placeholder='Start Date' />
+                                            <span class='input-group-addon'>to</span>
+                                            <input type='text' class='form-control filterEndDate' id='filterEndDate' name='end' placeholder='End Date' />
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class='button-group statusFilter'>
+                                      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-wrench' aria-hidden='true'></i> Status <span class='caret'></span></button>
+                                      <ul class='dropdown-menu ecommOrdersStatusFilterMenu'>
+                                        <li class='selected'><label><input type='checkbox' checked name='status' value='New'/>&nbsp;New</label></li>
+                                        <li class='selected'><label><input type='checkbox' checked name='status' value='Open'/>&nbsp;Open</label></li>
+                                        <li class='selected'><label><input type='checkbox' checked name='status' value='Completed'/>&nbsp;Completed</label></li>
+                                        <li class='selected'><label><input type='checkbox' checked name='status' value='Cancelled'/>&nbsp;Cancelled</label></li>
+                                      </ul>
+                                    </div>
+                                  </li>                            
+                                  <li>
+                                    <div class='button-group retailerFilter'>
+                                      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-wrench' aria-hidden='true'></i> Retailer <span class='caret'></span></button>
+                                      <ul class='dropdown-menu ecommOrdersRetailerFilterMenu'>
+                                        <% @retailer.each do |retailer| %>
+                                          <li class='selected'><label><input type='checkbox' checked name='retailer' value='<%= retailer %>'/>&nbsp;<%= retailer %></label></li>
+                                        <% end %>
+                                      </ul>
+                                    </div>
+                                  </li>                            
+                                </ul>">
+        
+      </div>
+      <tbody class="ecomm-orders-table">
+        <% @ecomm_orders.each do |ecomm_order| %>
+          <tr
+            data-child-expando="<div class='glider'>
+                                  <table class='ecomm-orders-expando'>
+                                    <thead>
+                                      <tr>
+                                        <th>Associated Files</th>
+                                        <th>Additional Attributes</th>
+                                        <th>Completion Date</th>
+                                        <th>Associated Task</th>
+                                        <th>Meta Notes</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr class='no-table'>
+                                        <td class='zero-pad'>
+                                          <table class='clear defaultExpandoInnerTable'>
+                                            <thead></thead>
+                                            <tbody>
+                                              <% if ItemUpload.where(:itemable_id => ecomm_order.task_id).where(:itemable_type => "Task").present? %>
+                                                <% ItemUpload.where(:itemable_id => ecomm_order.task_id).where(:itemable_type => "Task").each do |u| %>
+                                                  <tr>
+                                                    <td><a target='_blank' title='File Size: <%= number_to_human_size(u.upload.file_file_size, precision: 2) %>' href='<%= u.upload.file.url(:original, false) %>'><%= u.upload.file_file_name %></a></td>
+                                                    <td><%= u.upload.description if u.upload.description.present? %><%= "N/A" if u.upload.description.blank? %></td>
+                                                  </tr>
+                                                <% end %>
+                                              <% else %>
+                                                <tr>
+                                                  <td colspan='2'>No Files Found</td>
+                                                </tr>
+                                              <% end %>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                        <td class='zero-pad'>
+                                          <table class='clear defaultExpandoInnerTable'>
+                                            <thead></thead>
+                                            <tbody>
+                                              <tr>
+                                                <td>Assigned For</td>
+                                                <td><span class='assignment_trim' id='v-u-<%= Task.select(:initiated_for_id).where(:id => ecomm_order.task_id).pluck(:initiated_for_id) %>'></span></td>
+                                              </tr>
+                                              <tr>
+                                                <td>Assigned By</td>
+                                                <td><span class='assignment_trim' id='v-u-<%= Task.select(:initiated_by_id).where(:id => ecomm_order.task_id).pluck(:initiated_by_id) %>'></span></td>
+                                              </tr>
+                                              <% if ecomm_order.details.present? %>
+                                                <% ecomm_order.details.try(:each) do |key, value| %>
+                                                  <tr>
+                                                      <td><%= key %></td>
+                                                      <td><%= value %></td>
+                                                  </tr>
+                                                <% end %>
+                                              <% end %>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                        <td>
+                                          <%= ecomm_order.completion_date.strftime("%Y/%m/%d (%R)") if ecomm_order.completion_date.present? %>
+                                          <%= "N/A" if ecomm_order.completion_date.blank? %>
+                                        </td>
+                                        <td>
+                                          <a class='link_trim barebones_tooltip' data-method='get' href='/tasks/<%= ecomm_order.task_id %>' title='View Task Details'><%= Task.where(:id => ecomm_order.task_id).pluck(:name) %></a>
+                                          <br/><a class='btn btn-sm' style='margin:5px 0 0 0;' data-method='get' href='/tasks/<%= ecomm_order.task_id %>/edit'>Edit This Task</a>
+                                        </td>
+                                        <td>
+                                          <p>Entry Created: <%= ecomm_order.created_at.strftime("%Y/%m/%d (%R)") %></p>
+                                          <p>Entry Last Updated: <%= ecomm_order.updated_at.strftime("%Y/%m/%d (%R)") %></p>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>">
+            <td class="details-control" title="<%= ecomm_order.id %>">  <!-- Details Dropdown-->
+              <p hidden><%= ecomm_order.created_at %></p>
+            </td>
+            <td>
+              <%= ecomm_order.order_date.strftime("%Y/%m/%d") if ecomm_order.order_date.present? %>
+            </td>
+            <td class="ecomm_order_status">
+              <span class="order_status_value"><%= ecomm_order.status %></span>
+              <span class="hidden cancellation_reason_grab"><%= ecomm_order.cancellation_reason if ecomm_order.cancellation_reason.present? %></span>
+            </td>
+            <td> <!-- Due Date -->
+              <%= ecomm_order.due_date.strftime("%Y/%m/%d") if ecomm_order.due_date.present? %>
+              <%= "None Indicated" if ecomm_order.due_date.blank? %>
+            </td>
+            <td>
+              <%= ecomm_order.retailer if ecomm_order.retailer.present?%>
+              <%= "N/A" if ecomm_order.retailer.blank? %>
+            </td>
+            <td> <!-- Customer Name -->
+              <%= ecomm_order.customer_name if ecomm_order.customer_name.present? %>
+              <%= "N/A" if ecomm_order.customer_name.blank? %>
+            </td>
+            <td> <!-- Order Number -->
+              <%= ecomm_order.order_number if ecomm_order.order_number.present? %>
+              <%= "N/A" if ecomm_order.order_number.blank? %>
+            </td>
+            <td class="ecomm_orders_line_items_table"> <!-- Line Items -->
+              <% if ecomm_order.line_items.present? %>
+                <table class="table">
+                  <thead></thead>
+                  <tbody>
+                    <% ecomm_order.line_items.each do |line_item| %>
+                      <tr>
+                        <td class="eo_li_sku"><%= line_item.item_select_short %></td>
+                        <td class="eo_li_cost"><%= number_to_currency(line_item.item_cost, delimiter: "", unit: "$") if line_item.item_cost >= 0.01 %><%= "" if line_item.item_cost < 0.01 %></td>
+                        <td class="eo_li_quantity"><%= line_item.quantity %></td>
+                        <td class="ecomm_orders_line_items_tracking_numbers_table">
+                          <% if line_item.tracking_numbers.present? %>
+                            <table class="table">
+                              <thead></thead>
+                              <tbody>
+                                <% line_item.tracking_numbers.each do |tracking_number| %>
+                                  <tr>
+                                    <td class="li_tn_carrier"><%= tracking_number.carrier %></td>
+                                    <td class="li_tn_sm"><%= tracking_number.shipping_method %></td>
+                                    <td class="li_tn_tn"><i class="fa fa-cut copy-cut barebones_tooltip" title="Copy Tracking Number"></i><input class="copy-text" value="<%= tracking_number.tracking_number_present %>"> <%= tracking_number.tracking_number_present %> <a href=<%= tracking_number.tracking_link_select %> target="_blank" title="Go To Carrier Website" class="barebones_tooltip"><i class="fa fa-external-link"></i></a></td>
+                                    <td class="li_tn_sc"><%= number_to_currency(tracking_number.shipping_cost, delimiter: "", unit: "$") if tracking_number.shipping_cost >= 0.01 %><%= "" if tracking_number.shipping_cost < 0.01 %></td>
+                                  </tr>
+                                <% end %>
+                              </tbody>
+                            </table>
+                          <% else %>
+                            Requested: <%= ecomm_order.requested_ship_method %>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              <% end %>
+            </td>
+            <td> <!-- Comments -->
+              <% if ecomm_order.comments.present? %>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#ecommOrderCommentsModal-<%= ecomm_order.id %>">
+                  View Comments
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="ecommOrderCommentsModal-<%= ecomm_order.id %>" tabindex="-1" role="dialog" aria-labelledby="ecommOrderCommentsModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="ecommOrderCommentsModalLongTitle"><%= ecomm_order.retailer %> order for <%= ecomm_order.customer_name %> (Comments)</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <table class="table">
+                          <% ecomm_order.comments.each do |comment| %>
+                            <tr class="modal-tr">
+                              <td><%= comment.content %></td>
+                            <tr>
+                          <% end %>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </td>
+            <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
+            </td>
+            <td class="ecomm_order_status"> <!-- Duplicate of Status row, otherwise the search functionality won't work -->
+              <%= ecomm_order.status %>
+            </td>
+
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="hidden hidden_user_list">
+  <% User.all.each do |u| %>
+    <span id="[<%= u.id %>]"><%= u.header_name %></span>
+  <% end %>
+</div>

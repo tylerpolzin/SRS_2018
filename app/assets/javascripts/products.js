@@ -297,12 +297,12 @@ $(document).on("turbolinks:load", function() {
     var brands = $("input:checkbox[name='brand']:checked").map(function() {
       return "^" + this.value + ".*\$";
       }).get().join("|");
+      console.log(brands);
     if (brands === "") {
       table.column(2).search("xxxxxxxxxx").draw();
     }
     else
       table.column(2).search(brands, true, false, false).draw();
-      console.log(brands);
   });
 
 
@@ -378,10 +378,10 @@ $(document).on("turbolinks:load", function() {
    "    </thead>"+
    "    <tbody>"+
    "      <tr class='no-table'>"+ // "no-table" class allows single-row expandos to not highlight on hover
-   "        <td style='padding:0;'>"+attributes+"</td>"+
-   "        <td style='padding:0;'>"+combos+"</td>"+
-   "        <td style='padding:0;'>"+parts+"</td>"+
-   "        <td style='padding:0;'>"+uploads+"</td>"+
+   "        <td class='zero-pad'>"+attributes+"</td>"+
+   "        <td class='zero-pad'>"+combos+"</td>"+
+   "        <td class='zero-pad'>"+parts+"</td>"+
+   "        <td class='zero-pad'>"+uploads+"</td>"+
    "        <td>"+manufacturer+"</td>"+
    "        <td>"+upc+"</td>"+
    "        <td>"+srs_sku+"</td>"+

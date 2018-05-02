@@ -1,7 +1,7 @@
-<div class="new_customer_attributes">
-  <div class="attributes_header">
-    <span class="attributes_title">Custom Attributes</span>
-    <span class="new_customer_attributes_remove_button"><i class="fa fa-close"></i></span>
+<div class="show_basic_pop_fields customer_attributes_container">
+  <div class="show_basic_pop_header">
+    <span class="show_basic_pop_title">Custom Attributes</span>
+    <span class="customer_attributes_remove_button"><i class="fa fa-close"></i></span>
   </div>
   <div class="attributes_top_border"></div>
   <table class="table newCustomerAttributeContainer">
@@ -12,10 +12,10 @@
         <% @customer.details.try(:each) do |key, value| %>
             <tr class="row">
               <td>
-                <%= text_field_tag key, key, :class => 'text_field customerDynamicAttributeName form-control', required: true %>
+                <%= text_field_tag key, key, :class => 'text_field customerDynamicAttributeName', required: true %>
               </td>
               <td>
-                <%= d.text_field_without_bootstrap key, :class => 'text_field form-control description', :value => value %>
+                <%= d.text_field_without_bootstrap key, :class => 'text_field description', :value => value %>
               </td>
               <td>
                 <a class="customerRemoveAttributeRow"><i class="fa fa-close"></i></a>

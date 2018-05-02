@@ -1,0 +1,51 @@
+<%= f.fields_for :line_items, f.object.line_items.order(:id) do |f| %>
+  <div class="new_task_line_item_fields">
+    <div class="line_item_header">
+      <span class="line_item_title">Line Item</span>
+      <span class="line_item_edit_add_tracking_number_button"><i class="fa fa-plus"></i> Tracking Number</span>
+      <span class="line_item_edit_remove_button" title="Remove This Line Item"><i class="fa fa-close"></i></span>
+    </div>
+    <table class="table newLineItemContainer">
+      <thead>
+        <tr>
+          <th>Item Type</th>
+          <th>Item Select</th>
+          <th>Item Cost</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td> <!-- Item Type Field -->
+            <select class="lineItemEditItemType form-control">
+              <option disabled <%= "selected" if f.object.item_type == nil %>>Select Item Type...</option>
+              <option <%= "selected" if f.object.item_type == "Combo Item" %>>Combo Item</option>
+              <option <%= "selected" if f.object.item_type == "Product" %>>Product</option>
+              <option <%= "selected" if f.object.item_type == "Part" %>>Part</option>
+            </select>
+          </td>
+          <td>
+            <%= f.text_field :product_id, class: "edit_line_item_product_hide_tag hidden", hide_label: true %>
+            <%= f.text_field :part_id, class: "edit_line_item_part_hide_tag hidden", hide_label: true %>
+            <%= f.text_field :combo_item_id, class: "edit_line_item_combo_item_hide_tag hidden", hide_label: true %>
+            <%= @product_select %>
+            <%= @part_select %>
+            <%= @combo_item_select %>
+          </td>
+          <td><%= f.number_field :item_cost, hide_label: true, required: true, prepend: "$", class: "lineItemCost", min: 0, value: number_to_currency(f.object.item_cost.to_f, delimiter: '', unit: ''), :step => 0.01 %></td>
+          <td>
+            <%= f.number_field :quantity, hide_label: true, placeholder: "Order Quantity", min: 0, value: f.object.quantity, required: true, class: "lineItemQuantityBox" %>
+            <%= f.hidden_field :_destroy, value: false, class: "remove_child_edit_line_item" %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="trackingNumbersTopBorder"></div>
+    <%= render "tasks/edit/edit_line_item_tracking_number", :f => f %>
+    <p hidden><%= add_child_link_line_item_edit_tracking_number "", :tracking_numbers %></p>
+    <div class="trackingNumbersBottomBorder"></div>
+    <div class="line_item_tracking_number">
+      <%= render "tasks/edit/edit_line_item_tracking_number_template", :f => f %>
+    </div>
+  </div>
+<% end %>

@@ -16,6 +16,8 @@
 #  completion_date     :datetime
 #  cancellation_reason :string
 #  active              :boolean          default(TRUE)
+#  requested_carrier   :string
+#  requested_method    :string
 #
 
 class EcommOrder < ApplicationRecord
@@ -33,11 +35,15 @@ class EcommOrder < ApplicationRecord
   end
 
   def item_id_blank(a) # If a item is added to the batch, but an item is not selected in that field, it is automatically rejected & deleted.
-    self.new_record? && a[:product_id].blank? && a[:part_id].blank? && a[:combo_item_id].blank?
+    a[:product_id].blank? && a[:part_id].blank? && a[:combo_item_id].blank?
   end
 
   def ecomm_select
     "#{retailer} order for #{customer_name} | Order ##{order_number} | Order created on #{created_at.strftime("%A, %B %-d, %Y")}"
+  end
+
+  def dropdown_select
+    "#{retailer} order ##{order_number} for #{customer_name} (#{status})"
   end
 
   def order_date_trunc
@@ -62,6 +68,22 @@ class EcommOrder < ApplicationRecord
     else
       self.completion_date
     end
+  end
+  
+  def requested_ship_method
+    a = []
+    b = []
+    if self.requested_carrier.present?
+      a = self.requested_carrier
+    else
+      a = "No Carrier Specified"
+    end
+    if self.requested_method.present?
+      b = self.requested_method
+    else
+      b = "No Method Specified"
+    end
+    a + ", " + b
   end
 
 end

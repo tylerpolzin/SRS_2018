@@ -1,0 +1,145 @@
+<div class="showTaskContainer">
+  <div class="show_task_fields">
+    <div class="task_header">
+      <span class="task_title">Task Details</span>
+      <%= link_to "<i class='fa fa-edit'></i> Edit This Task".html_safe, edit_task_path(id: @task), method: :get, class: 'edit_task_button' %>
+    </div>
+    <div class="task_basic_details">
+      <div class="task_basic_details_header">Basic Information</div>
+      <table class="table table-bordered" id="showTaskTable">
+        <thead></thead>
+        <tbody>
+          <tr>
+            <td>Task Type</td>
+            <td>
+              <%= @task.task_type if @task.task_type.present? %>
+              <%= "N/A" if @task.task_type.blank? %>
+            </td>
+          </tr>
+          <tr>
+            <td>Task Name</td>
+            <td>
+              <%= @task.name if @task.name.present? %>
+              <%= "N/A" if @task.name.blank? %>
+            </td>
+          </tr>
+          <tr>
+            <td>Initiated For</td>
+            <td class="task_initiated_id" id="<%= @task.initiated_for_id if @task.initiated_for_id.present? %>">
+              <%= @task.initiated_for_id if @task.initiated_for_id.present? %>
+              <%= "N/A" if @task.initiated_for_id.blank? %>
+            </td>
+          </tr>
+          <tr>
+            <td>Initiated By</td>
+            <td class="task_initiated_id" id="<%= @task.initiated_by_id if @task.initiated_by_id.present? %>">
+              <%= @task.initiated_by_id if @task.initiated_by_id.present? %>
+              <%= "N/A" if @task.initiated_by_id.blank? %>
+            </td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td>
+              <%= @task.status if @task.status.present? %>
+              <%= "N/A" if @task.status.blank? %>
+            </td>
+          </tr>
+          <tr>
+            <td>Due Date</td>
+            <td>
+              <%= @task.due_date_trunc if @task.due_date.present? %>
+              <%= "N/A" if @task.due_date.blank? %>
+            </td>
+          </tr>
+          <tr>
+            <td>Completion Date</td>
+            <td>
+              <%= @task.completion_date_trunc if @task.completion_date.present? %>
+              <%= "N/A" if @task.completion_date.blank? %>
+            </td>
+          </tr>
+          <tr>
+            <td>Active?</td>
+            <td><%= "Yes" if @task.active? %><%= "No" if !@task.active? %></td>
+          </tr>
+          <tr>
+            <td>Task Creation Date</td>
+            <td><%= @task.created_at.strftime("%Y-%m-%d") %></td>
+          </tr>
+          <tr>
+            <td>Task Last Modified</td>
+            <td><%= @task.updated_at.strftime("%Y-%m-%d") %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @task.details.present? %>
+      <div class="show_basic_pop_fields">
+        <div class="show_basic_pop_header">
+          <span class="show_basic_pop_title">Custom Attributes</span>
+        </div>
+        <table class="table table-bordered" id="showTaskAttributes">
+          <thead></thead>
+          <tbody>
+            <% @task.details.try(:each) do |key, value| %>
+              <tr>
+                <td><%= key %></td>
+                <td><%= value %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+    <% if @task.uploads.present? %>
+      <div class="show_basic_pop_fields">
+        <div class="show_basic_pop_header">
+          <span class="show_basic_pop_title">Associated Files</span>
+        </div>
+        <div class="new_task_upload_fields">
+          <table class="table table-bordered" id="showTaskUploads">
+            <thead></thead>
+            <tbody>
+              <% @task.uploads.order(:id).each do |upload| %>
+                <tr>
+                  <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", title: "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}" %></td>
+                  <td><%= upload.description if upload.description.present? %><%= "N/A" if upload.description.blank? %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @task.comments.present? %>
+      <div class="show_basic_pop_fields">
+        <div class="show_basic_pop_header">
+          <span class="show_basic_pop_title">Comments</span>
+        </div>
+        <table class="table table-bordered" id="showTaskComments">
+          <thead></thead>
+          <tbody>
+            <% @task.comments.order(:id).each do |comment| %>
+              <tr>
+                <td>
+                  <%= comment.content %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+  </div>
+</div>
+
+
+<div class="hidden hidden_user_list">
+  <% User.all.each do |u| %>
+    <span id="<%= u.id %>"><%= u.header_name %></span>
+  <% end %>
+</div>

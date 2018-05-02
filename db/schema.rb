@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319034305) do
+ActiveRecord::Schema.define(version: 20180410024529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(version: 20180319034305) do
     t.datetime "completion_date"
     t.string "cancellation_reason"
     t.boolean "active", default: true
+    t.string "requested_carrier"
+    t.string "requested_method"
     t.index ["details"], name: "index_ecomm_orders_on_details"
     t.index ["task_id"], name: "index_ecomm_orders_on_task_id"
   end
@@ -322,7 +324,7 @@ ActiveRecord::Schema.define(version: 20180319034305) do
     t.integer "line_item_id"
     t.string "carrier"
     t.string "tracking_number"
-    t.decimal "shipping_cost"
+    t.decimal "shipping_cost", default: "0.0"
     t.datetime "ship_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -393,6 +395,8 @@ ActiveRecord::Schema.define(version: 20180319034305) do
     t.datetime "completion_date"
     t.string "cancellation_reason"
     t.boolean "active", default: true
+    t.string "requested_carrier"
+    t.string "requested_method"
     t.index ["details"], name: "index_warranty_orders_on_details"
     t.index ["task_id"], name: "index_warranty_orders_on_task_id"
   end

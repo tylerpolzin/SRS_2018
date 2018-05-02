@@ -32,40 +32,42 @@
                                  &lt;input class=&quot;btn btn-sm show-profile-password-button&quot; type=&quot;submit&quot; value=&quot;Edit Profile&quot;&gt;
                                &lt;/form&gt;
                              <% end %>"
-            data-child-name="<% if u.profile.name.present? %>
-                               <%= u.profile.name %>
-                             <% else %>
-                               <p>N/A</p>
-                             <% end %>"
-            data-child-company="<% if u.profile.company.present? %>
-                                  <p><%= u.profile.company %></p>
-                                  <p><%= u.profile.position %></p>
-                                <% else %>
-                                  <p>N/A</p>
-                                <% end %>" 
-            data-child-address="<% if u.profile.address.present? %>
-                                  <p><%= u.profile.address %></p>
-                                  <p><%= u.profile.city %>, <%= u.profile.state %> <%= u.profile.zipcode %></p>
+            <% if u.profile.present? %>
+              data-child-name="<% if u.profile.name.present? %>
+                                 <%= u.profile.name %>
+                               <% else %>
+                                 <p>N/A</p>
+                               <% end %>"
+              data-child-company="<% if u.profile.company.present? %>
+                                    <p><%= u.profile.company %></p>
+                                    <p><%= u.profile.position %></p>
+                                  <% else %>
+                                    <p>N/A</p>
+                                  <% end %>" 
+              data-child-address="<% if u.profile.address.present? %>
+                                    <p><%= u.profile.address %></p>
+                                    <p><%= u.profile.city %>, <%= u.profile.state %> <%= u.profile.zipcode %></p>
+                                  <% else %>
+                                    <p>N/A</p>
+                                  <% end %>"
+              data-child-phone="<% if u.profile.phone1.present? %>
+                                  <p><%= number_to_phone(u.profile.phone1, area_code: true) %> (<%= u.profile.phone1_type %>)</p>
+                                  <% if u.profile.phone2.present? %>
+                                    <p><%= number_to_phone(u.profile.phone2, area_code: true) %> (<%= u.profile.phone2_type %>)</p>
+                                  <% else %><% end %>
                                 <% else %>
                                   <p>N/A</p>
                                 <% end %>"
-            data-child-phone="<% if u.profile.phone1.present? %>
-                                <p><%= number_to_phone(u.profile.phone1, area_code: true) %> (<%= u.profile.phone1_type %>)</p>
-                                <% if u.profile.phone2.present? %>
-                                  <p><%= number_to_phone(u.profile.phone2, area_code: true) %> (<%= u.profile.phone2_type %>)</p>
-                                <% else %><% end %>
-                              <% else %>
-                                <p>N/A</p>
-                              <% end %>"
-            data-child-email="<% if u.profile.email.present? %>
-                                <%= u.profile.email %>
-                              <% else %>N/A<% end %>"
-            data-child-latlong="<% if u.profile.lat.present? %>
-                                  <%= u.profile.lat %>/<%= u.profile.long %>
+              data-child-email="<% if u.profile.email.present? %>
+                                  <%= u.profile.email %>
                                 <% else %>N/A<% end %>"
-            data-child-notes="<% if u.profile.notes.present? %>
-                                <%= simple_format u.profile.notes %>
-                              <% else %>N/A<% end %>">
+              data-child-latlong="<% if u.profile.lat.present? %>
+                                    <%= u.profile.lat %>/<%= u.profile.long %>
+                                  <% else %>N/A<% end %>"
+              data-child-notes="<% if u.profile.notes.present? %>
+                                  <%= simple_format u.profile.notes %>
+                                <% else %>N/A<% end %>"
+            <% end %>>
               <td class="details-control"></td>
               <td><%= link_to u.id, user_path(id: u.id), method: :get %></td>
               <td><%= best_in_place_if current_user.admin?, u, :email, class: 'form-control', inner_class: 'input-small input-width' %></td>

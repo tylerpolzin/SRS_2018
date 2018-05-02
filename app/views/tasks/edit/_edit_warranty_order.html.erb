@@ -1,0 +1,86 @@
+<%= f.fields_for :warranty_orders, @task.warranty_orders.order(:id).each do |f| %>
+  <div class="warranty_order_fields">
+    <div class="warranty_order_header">
+      <span class="warranty_order_title">Customer Order</span>
+      <span class="warranty_order_add_reference_button"><i class="fa fa-plus"></i> Reference<i class="fa fa-question-circle"></i></span>
+      <span class="warranty_order_add_attributes_button"><i class="fa fa-plus"></i> Attribute<i class="fa fa-question-circle"></i></span>
+      <span class="warranty_order_edit_add_comment_button"><i class="fa fa-plus"></i> Comment<i class="fa fa-question-circle"></i></span>
+      <span class="warranty_order_add_line_item_button"><i class="fa fa-plus"></i> Line Item<i class="fa fa-question-circle"></i></span>
+      <span class="warranty_order_edit_remove_button"><i class="fa fa-close"></i></span>
+    </div>
+    </br>
+
+    <div class="warranty_order_details">
+      <div class="warranty_order_details_header">
+        <span class="warranty_order_details_title">Basic Details</span>
+      </div>
+      <table class="table table-bordered newWarrantyOrderContainer">
+        <thead>
+          <tr>
+            <th>Order Number<i class="fa fa-question-circle warranty_order_order_number_tooltip"></i></th>
+            <th>Order Status</th>
+            <th>Due Date</th>
+            <th>Completion Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= f.text_field :order_number, hide_label: true, required: true, placeholder: "Double Click to Generate Order Number...", class: "orderNumberClick" %></td>
+            <td><%= f.select :status, options_for_select(["New", "Open", "Completed", "Cancelled"], selected: f.object.status),{hide_label: true, :prompt => "Select Status..."}, class: "warrantyOrderStatusSelect" %></td>
+            <td><%= f.text_field :due_date, value: f.object.due_date_trunc, hide_label: true, readonly: true, :placeholder => "Select Due Date...", class: "warrantyOrderDueDate taskDefaultDatepicker" %></td>
+            <td><%= f.text_field :completion_date, value: f.object.completion_date_trunc, hide_label: true, readonly: true, :placeholder => "Select Completion Date...", class: "warrantyOrderCompletionDate taskDefaultDatepicker" %></td>
+          </tr>
+          <tr class="warrantyOrderCancellationReasonRow">
+            <td class="shipMethodRow"><span class="form-control method">Ship Method Request:</span></td>
+            <td class="shipMethodRow"><%= f.select :requested_carrier, options_for_select(@carriers, selected: f.object.requested_carrier), {:prompt => "Select Carrier...", hide_label: true}, class: "warrantyOrderCarrierRequestSelect" %></td>
+            <td class="shipMethodRow"><%= f.select :requested_method, options_for_select(ship_methods, selected: f.object.requested_method), {:prompt => "Select Ship Method...", hide_label: true}, class: "warrantyOrderShipMethodRequestSelect" %></td>
+            <td>
+              <%= f.select :cancellation_reason, options_for_select(["Out of Stock", "Cancelled at Customers Request", "Item Select Error", "Other (see comments)"], selected: f.object.cancellation_reason), {hide_label: true, :prompt => "Select Cancellation Reason..."}, class: "warrantyOrderCancellationReasonSelect" %>
+              <%= f.hidden_field :active, value: true, class: "warrantyOrderActiveBoolean" %>
+              <%= remove_child_link_warranty_order "", f %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warranty_order_customer_details">
+      <div class="warranty_order_customer_header" title="<%= f.object.customer.id %>">Customer Details<i class="fa fa-question-circle warranty_order_customer_tooltip"></i></div>
+      <table class="table table-bordered newWarrantyOrderCustomerContainer">
+        <tbody>
+          <%= render "tasks/edit/edit_warranty_order_customer", :f => f %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warrantyOrderReferenceContainer">
+      <div class="warranty_order_reference">
+        <div class="reference_header">
+          <span class="reference_title">Order Reference</span>
+          <span class="reference_remove_button" title="Remove This Reference"><i class="fa fa-close"></i></span>
+        </div>
+        <table class="table orderReferenceContainer">
+          <tbody>
+            <tr>
+              <td><%= f.select :ecomm_order_reference, options_for_select(@ecomm_orders.order(created_at: :desc).map {|f| [f.ecomm_select, f.id, {}]}, selected: f.object.ecomm_order_reference), {:include_blank => "", hide_label: true}, {:class => 'warrantyOrderEcommOrderSelect'} %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="warrantyOrderAttributesContainer"><%= render "warranty_order_attributes", :f => f %></div>
+
+    <%= render "tasks/edit/edit_warranty_order_comment", :f => f %>
+    <p hidden><%= add_child_link_warranty_order_edit_comment "Add Comment", :comments %></p>
+
+    <%= render "tasks/edit/edit_line_item", :f => f %>
+    <p hidden><%= add_child_link_warranty_order_line_item "Add Item", :line_items %></p>
+    <%= new_child_fields_template_warranty_order_line_item f, :line_items %>
+
+    <%= render "tasks/edit/edit_warranty_order_comment_template", :f => f %>
+    <div class="new_task_warranty_order_line_item">
+      <%= yield :new_task_warranty_order_line_item_fields %>
+    </div>
+  </div>
+<% end %>

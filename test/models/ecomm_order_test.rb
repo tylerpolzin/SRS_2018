@@ -16,6 +16,8 @@
 #  completion_date     :datetime
 #  cancellation_reason :string
 #  active              :boolean          default(TRUE)
+#  requested_carrier   :string
+#  requested_method    :string
 #
 
 require 'test_helper'

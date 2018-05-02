@@ -7,7 +7,7 @@
   <table class="table orderAttributeContainer">
     <thead></thead>
     <tbody class="body">
-      <%= f.fields_for_without_bootstrap :details, f.object.comments do |d| %>
+      <%= f.fields_for_without_bootstrap :details, f.object.details do |d| %>
         <%= hidden_field_tag "task[ecomm_orders_attributes][new_ecomm_orders][details]", nil, class: "hide-tag" %>
         <%= hidden_field_tag "new_ecomm_orders", nil, class: "attrTimestamp" %>
         <% f.object.details.try(:each) do |key, value| %>

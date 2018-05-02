@@ -9,7 +9,10 @@
   </div>
   </br>
   <div class="warranty_order_details">
-    <div class="warranty_order_details_header">Basic Details</div>
+    <div class="warranty_order_details_header">
+      <span class="warranty_order_details_title">Basic Details</span>
+      <span class="warranty_order_add_ship_request_button"><i class="fa fa-plus"></i> Ship Method Request<i class="fa fa-question-circle warranty_order_ship_request_tooltip"></i></span>
+    </div>
     <table class="table table-bordered newWarrantyOrderContainer">
       <thead>
         <tr>
@@ -23,17 +26,18 @@
         <tr>
           <td><%= f.text_field :order_number, hide_label: true, required: true, placeholder: "Double Click to Generate Order Number...", class: "orderNumberClick" %></td>
           <td><%= f.select :status, options_for_select(["New", "Open", "Completed", "Cancelled"]),{hide_label: true, :prompt => "Select Status..."}, class: "warrantyOrderStatusSelect" %></td>
-          <td><%= f.text_field :due_date, hide_label: true, readonly: true, :placeholder => "Select Due Date...", class: "warrantyOrderDueDate" %></td>
-          <td><%= f.text_field :completion_date, hide_label: true, readonly: true, :placeholder => "Select Completion Date...", class: "warrantyOrderCompletionDate" %></td>
+          <td><%= f.text_field :due_date, hide_label: true, readonly: true, :placeholder => "Select Due Date...", class: "warrantyOrderDueDate taskDefaultDatepicker" %></td>
+          <td><%= f.text_field :completion_date, hide_label: true, readonly: true, :placeholder => "Select Completion Date...", class: "warrantyOrderCompletionDate taskDefaultDatepicker" %></td>
         </tr>
         <tr class="warrantyOrderCancellationReasonRow">
-          <td></td>
+          <td class="shipMethodRow"><span class="form-control method">Ship Method Request:</span></td>
+          <td class="shipMethodRow"><%= f.select :requested_carrier, options_for_select(@carriers), {:prompt => "Select Carrier...", hide_label: true}, class: "warrantyOrderCarrierRequestSelect" %></td>
+          <td class="shipMethodRow"><%= f.select :requested_method, options_for_select(ship_methods, selected: "Standard (Ground)"), {:prompt => "Select Ship Method...", hide_label: true}, class: "warrantyOrderShipMethodRequestSelect" %></td>
           <td>
             <%= f.select :cancellation_reason, options_for_select(["Out of Stock", "Cancelled at Customers Request", "Item Select Error", "Other (see comments)"]), {hide_label: true, :prompt => "Select Cancellation Reason..."}, class: "warrantyOrderCancellationReasonSelect" %>
             <%= f.hidden_field :active, value: true, class: "warrantyOrderActiveBoolean" %>
             <%= remove_child_link_warranty_order "", f %>
           </td>
-          <td colspan="2"></td>
         </tr>
       </tbody>
     </table>

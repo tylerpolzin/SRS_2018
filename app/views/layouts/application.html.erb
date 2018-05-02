@@ -124,6 +124,37 @@
                   <li>Upload New Files</li>
                 <% end %>
               </ul>
+              <li data-toggle="collapse" data-target="#orders" class="collapsed">
+                <a data-target="#"><i class="fa fa-file fa-lg"></i> Orders<span class="arrow"></span></a>
+              </li>
+              <ul class="sub-menu collapse" id="orders">
+                <%= link_to new_task_path, method: :get do %>
+                  <li>Create New Task</li>
+                <% end %>
+                <%= link_to tasks_path do %>
+                  <li>View All Tasks</li>
+                <% end %>
+                <%= link_to ecomm_orders_path do %>
+                  <li>View All E-Commerce Orders</li>
+                <% end %>
+                <%#= link_to warranty_orders_path do %>
+                  <!--<li>View All Customer Orders</li>-->
+                <%# end %>
+              </ul>
+              <li data-toggle="collapse" data-target="#customers" class="collapsed">
+                <a data-target="#"><i class="fa fa-file fa-lg"></i> Customers<span class="arrow"></span></a>
+              </li>
+              <ul class="sub-menu collapse" id="customers">
+                <%= link_to new_customer_path, method: :get do %>
+                  <li>Create New Customer</li>
+                <% end %>
+                <%#= link_to customers_path do %>
+                  <!--<li>View All Customers</li>-->
+                <%# end %>
+                <%#= link_to warranty_orders_path do %>
+                  <!--<li>View All Customer Orders</li>-->
+                <%# end %>
+              </ul>
             <% end %>
             <% if admin_or_employee? %>
               <%= link_to inventory_adjustments_path, method: :get do %>
@@ -132,14 +163,6 @@
             <% else %>
               <%= link_to inventory_history_path, method: :get do %>
                 <li><i class="fa fa-exchange fa-lg"></i> Inventory History</li>
-              <% end %>
-            <% end %>
-            <% if admin_or_employee? %>
-              <%= link_to new_task_path do %>
-                <li><i class="fa fa-tasks fa-lg"></i> Create New Task</li>
-              <%= link_to tasks_path do %>
-                <li><i class="fa fa-tasks fa-lg"></i> All Tasks</li>
-              <% end %>
               <% end %>
             <% end %>
             <% if admin_or_employee? %>

@@ -61,7 +61,7 @@ module ApplicationHelper
     f.hidden_field(:_destroy) + link_to(name, "javascript:void(0)", :class => "remove_comment")
   end
   
-  def carriers
+  def carriers # Not currently used
     {
       "Standard Carriers" =>
       ["UPS", "FedEx", "USPS", "DHL"],
@@ -69,8 +69,7 @@ module ApplicationHelper
       ["Estes", "Globaltranz", "Hot Line", "SAIA", "USF Holland", "YRC"]
     }
   end
-  
-  
+
   def ship_methods
     [
       ["Standard (Ground)"],

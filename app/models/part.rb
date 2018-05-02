@@ -64,6 +64,18 @@ class Part < ApplicationRecord
   accepts_nested_attributes_for :uploads, :allow_destroy => true
   accepts_nested_attributes_for :products_parts, :allow_destroy => true
 
+  def sku_if_sku  # Takes preference to showing the SRS SKU over the MFR Model Number if it exists
+    if self.srs_sku.present?
+      self.srs_sku
+    else
+      if self.manufacturer_model_number.present?
+        self.manufacturer_model_number
+      else
+        "View Product"
+      end
+    end
+  end
+
   def part_select # "MFR Model Number | Description"
     def a
       if manufacturer_model_number.present?

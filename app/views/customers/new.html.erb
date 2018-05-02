@@ -6,7 +6,7 @@
     <%= bootstrap_form_for @customer, url: customers_path, method: :post, :html => { :class => :form, :multipart => true } do |f| %>
       <% if @customer.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@combo_item.errors.count, "error") %> prohibited this Item from being created:</h2>
+          <h2><%= pluralize(@customer.errors.count, "error") %> prohibited this Item from being created:</h2>
           <ul>
           <% @customer.errors.full_messages.each do |message| %>
             <li><%= message %></li>
@@ -14,21 +14,23 @@
           </ul>
         </div>
       <% end %>
-      <div id="new_customer_form">
-        <div class="new_customer_header">
-          <span class="new_customer_title">Customer Information</span>
-          <span class="new_customer_add_attributes_button"><i class="fa fa-plus"></i> Attribute<i class="fa fa-question-circle"></i></span>
-          <span class="new_customer_add_comment_button"><i class="fa fa-plus"></i> Comment<i class="fa fa-question-circle"></i></span>
+      <div class="show_basic_pop_container new_customer_container">
+        <div class="show_basic_pop_container_header">
+          <span class="show_basic_pop_container_title">Customer Information</span>
+          <span class="customer_add_attributes_button"><i class="fa fa-plus"></i> Attribute<i class="fa fa-question-circle"></i></span>
+          <span class="customer_add_comment_button"><i class="fa fa-plus"></i> Comment<i class="fa fa-question-circle"></i></span>
         </div>
-        <div class="new_customer_basic_details">
-          <div class="new_customer_basic_details_header">Basic Details</div>
+        <div class="show_basic_pop_fields new_customer_basic_details">
+          <div class="show_basic_pop_header">
+            <span class="show_basic_pop_title">Basic Details</span>
+          </div>
           <%= render "form", :f => f %>
         </div>
         <%= render "attributes", :f => f %>
         <p hidden><%= add_child_link_new_customer_comment "", :comments %></p>
         <%= new_child_fields_template_new_customer_comment f, :comments %>
       </div>
-      <button id="customerFirstSubmit" class="btn" style="float:right;">Create Customer</button>
+      <button id="customerFirstSubmit" class="btn">Create Customer</button>
       <%= f.submit "Create Customer", :id => "customerSubmit", :style => "display:none;" %>
     <% end %>
   </div>

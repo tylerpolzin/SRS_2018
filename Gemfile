@@ -24,21 +24,20 @@ gem 'font-awesome-rails'
 gem 'hirb'
 gem 'devise'
 gem 'rolify'
-gem 'cancancan'
+# gem 'cancancan'
 gem "paperclip"
 gem 'aws-sdk-s3' # Use for Paperclip uploads
-gem 'twitter-bootstrap-rails-confirm'
+# gem 'twitter-bootstrap-rails-confirm'
 gem 'best_in_place'
 gem 'underscore-rails'
 gem 'gmaps4rails'
 gem 'ajax-datatables-rails' # Didn't use before, https://github.com/jbox-web/ajax-datatables-rails
 gem 'jquery-datatables-rails'
 gem 'jquery-ui-rails'
-gem 'jquery-fileupload-rails'
-gem 'jquery_context_menu-rails'
+# gem 'jquery-fileupload-rails'
+# gem 'jquery_context_menu-rails'
 gem 'select2-rails'
 gem 'bootstrap-datepicker-rails'
-gem 'seed_dump' # Generates seed file from existing database, use for dumping database and re-upping
 gem 'bootbox-rails', '~>0.4' # Wrappers for Javascript Alerts
 gem 'friendly_id', '~> 5.1.0'
 gem 'csso-rails' # Use for optimizing and compressing CSS
@@ -83,6 +82,9 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  # Custom Installs
+  gem 'derailed' # Use for benchmarking memory usage
+  gem 'seed_dump' # Generates seed file from existing database, use for dumping database and re-upping
 end
 
 group :development do
@@ -99,7 +101,7 @@ group :development do
 end
 
 group :production do
-  # Use the PostgreSQL gem for Heroku production servers
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

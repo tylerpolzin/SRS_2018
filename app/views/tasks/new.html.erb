@@ -47,7 +47,7 @@
                       <tr>
                         <td><%= f.select_without_bootstrap :initiated_for_id, options_for_select([["Tyler Polzin", "1"]]), {:prompt => "Select Recipient..."}, required: true, class: "form-control", :id => "taskRecipientSelect" %></td>
                         <td><%= f.select_without_bootstrap :task_type, options_for_select(["E-Commerce Orders", "Customer Orders", "Basic Task"]), {:prompt => "Select Type..."}, required: true, class: "form-control", :id => "taskTypeSelect" %></td>
-                        <td><%= f.text_field :due_date, hide_label: true, readonly: true, :id => "taskDatepicker", :placeholder => "Select Due Date..." %></td>
+                        <td><%= f.text_field :due_date, hide_label: true, readonly: true, :id => "taskDatepicker", :placeholder => "Select Due Date...", class: "taskDefaultDatepicker" %></td>
                         <td><%= f.text_field :name, hide_label: true, readonly: true, :placeholder => "Select Task Type on the left...", class: "cursor-fix", :id => "newTaskName" %></td>
                         <td><%= f.select :status, options_for_select(["Pending", "Accepted", "Completed"], selected: "Pending"), {hide_label: true}, required: true, :id => "taskStatusSelect" %></td>
                       </tr>

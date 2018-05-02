@@ -3,9 +3,9 @@
     <tbody>
       <tr>
         <td><%= f.text_field :tracking_number, hide_label: true, placeholder: "Add Tracking Number...", class: "lineItemTrackingNumber" %></td>
-        <td><i class="fa fa-question-circle tracking_carrier_tooltip"></i><%= f.select :carrier, grouped_options_for_select(carriers), {:prompt => "Select Carrier...", hide_label: true}, class: "tracking-number-carrier-select" %></td>
+        <td><i class="fa fa-question-circle tracking_carrier_tooltip"></i><%= f.select :carrier, options_for_select(@carriers), {:prompt => "Select Carrier...", hide_label: true}, class: "tracking-number-carrier-select" %></td>
         <td><%= f.select :shipping_method, options_for_select(ship_methods), {:prompt => "Select Ship Method...", hide_label: true}, class: "tracking-number-ship-method-select" %></td>
-        <td><%= f.text_field :ship_date, hide_label: true, readonly: true, placeholder: "Select Ship Date...", class: "tracking-number-ship-date-datepicker" %></td>
+        <td><%= f.text_field :ship_date, hide_label: true, readonly: true, placeholder: "Select Ship Date...", class: "tracking-number-ship-date-datepicker taskDefaultDatepicker" %></td>
         <td>
           <%= f.number_field :shipping_cost, hide_label: true,
                                              min: 0,
@@ -13,6 +13,7 @@
                                              placeholder: "Shipping Cost...",
                                              value: number_to_currency(f.object.shipping_cost.to_f, delimiter: "", unit: ""),
                                              step: 0.01,
+                                             required: true,
                                              class: "lineItemTrackingNumberCost" %>
         </td>
         <td><%= remove_child_link_line_item_tracking_number "<i class='fa fa-close'></i>".html_safe, f %></td>

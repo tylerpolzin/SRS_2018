@@ -7,10 +7,10 @@
   <table class="table orderAttributeContainer">
     <thead></thead>
     <tbody class="body">
-      <%= f.fields_for_without_bootstrap :details, @warranty_order.details do |d| %>
+      <%= f.fields_for_without_bootstrap :details, f.object.details do |d| %>
         <%= hidden_field_tag "task[warranty_orders_attributes][new_warranty_orders][details]", nil, class: "hide-tag" %>
         <%= hidden_field_tag "new_warranty_orders", nil, class: "attrTimestamp" %>
-        <% @warranty_order.details.try(:each) do |key, value| %>
+        <% f.object.details.try(:each) do |key, value| %>
             <tr class="row new_row">
               <td>
                 <%= text_field_tag key, key, :class => 'text_field warrantyOrderDynamicAttributeName form-control', required: true %>

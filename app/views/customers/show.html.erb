@@ -1,4 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_customer_path(@customer) %> |
-<%= link_to 'Back', customers_path %>
+<% @title = "SRS Portal | View Customer Details" %>
+<div class="defaultDiv" id="showCustomerDiv">
+  <p class="defaultDivHeader"><%= @customer.name %></p>
+  <div class="container defaultForm">
+    <ul class="nav nav-tabs">
+      <li class="active"><a id="showCustomerForm" href="#show-customer-form" class="tab-background" data-toggle="tab"><i class="fa fa-address-book"></i> Customer Information</a></li>
+      <li><a id="showCustomerOrdersForm" href="#show-customer-orders-form" class="tab-background" data-toggle="tab"><i class="fa fa-thumb-tack"></i> Recent Orders</a></li>
+    </ul>
+    <div class="defaultTabs">
+      <div class="tab-content">
+        <div id="show-customer-form" class="tab-pane fade in active container">
+          <%= render "show_customer_form" %>
+        </div>
+        <div id="show-customer-orders-form" class="tab-pane fade container">
+          <%= render "show_customer_orders_form" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

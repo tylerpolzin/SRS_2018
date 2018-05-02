@@ -5,12 +5,12 @@
 /* global json */
 
 //------------------------------------------------------------------------------------------------------
-//                               Customer "NEW" related CSS                                            |
+//                               Customer "NEW" related JS                                             |
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
-  $(".new_customer_attributes").hide();
-  $(".customer_state").select2({
+  $(".customer_attributes_container").hide();
+  $(".customerState").select2({
     theme: "bootstrap",
     placeholder: "Automatically filled in with Zip Code entry",
     selectOnClose: true
@@ -32,7 +32,6 @@ $(document).on("turbolinks:load", function() {
     valueElem.attr("id", "customer_details_"+value);
     valueElem.attr("name", "customer[details]["+value+"]");
     if (value == "Phone") {
-      console.log("Phone");
       nameElem.closest(".row").find(".description").inputmask({"mask": "(999) 999-9999"});
     }
   });
@@ -41,40 +40,23 @@ $(document).on("turbolinks:load", function() {
     $(this).closest(".row").html("").parent().find("tr:empty").remove();
   });
 
-  $(".new_customer_add_attributes_button").on("click", function(e){
+  $(".customer_add_attributes_button").on("click", function(e){
     e.preventDefault();
-    $(".new_customer_attributes").show();
+    $(".customer_attributes_container").show();
     var contents = "<tr class='row new_row'>" + $(".customerAttributeTemplate").html() + "</tr>";
     $(".body").append(contents);
     $(".body").find(".row:last-child").find(".dynamicAttributeName").prop("required", true);
   });
 
-  $(".new_customer_add_comment_button").on("click", function() {
+  $(".customer_add_comment_button").on("click", function() {
     $(".add_child_new_customer_comment").click();
   });
 
-  $("input[name='zipcode']").on("change keyup", function() {
-    if ($(this).val().substring(0, 5).length == 5) { console.log("5");
-      $("input[name='city']").focus();
-    }
-  });
-
-
 });
-
-  $(document).on("click", "#customerFirstSubmit", function(e) {
-    e.preventDefault();
-    var tr = $(".body").find("tr").length;
-    if (tr > 1) {
-      $(".hide-tag").remove();
-    }
-    $(".comments_fields_template").html("");
-    $("#customerSubmit").click();
-  });
 
 $(document).on("click", ".customerRemoveAttributeRow", function(){
   if ($(".body").find(".row").length == 2) {
-    $(".new_customer_attributes").hide();
+    $(".customer_attributes_container").hide();
     $(this).closest(".row").remove();
   }
   else {
@@ -83,7 +65,7 @@ $(document).on("click", ".customerRemoveAttributeRow", function(){
 });
 
 $(document).on("click", ".new_customer_attributes_remove_button", function() {
-  var current_order = $(".new_customer_attributes");
+  var current_order = $(".customer_attributes_container");
   bootbox.confirm("This will clear all active attributes.  Are you sure?", function(result){
     if (result === true) {
       current_order.hide();
@@ -112,18 +94,27 @@ $(document).on("click", ".new_customer_comment_remove_button", function() {
   });
 });
 
-$(document).on("turbolinks:load", function() { // Zipcode API City/State filler
+$(document).on("keyup change", "#newCustomerTable", function() {
+  var city = $(this).find(".customerCity").val();
+  $(this).find(".customerCityHidden").val(city);
+  var state = $(this).find(".customerState").find("option:selected").val();
+  $(this).find(".customerStateHidden").val(state);
+});
+
+
+$(document).on("keyup change", ".customerZipcode", function() { // Zipcode API City/State filler
 	var clientKey = "js-pUid3SvjqKdSM2jdU7pj1A3gKqjGNzLbA3YdOJlzEYQOLeRx9weZNl9NfB5MaIE2";
 	var cache = {};
 	var container = $("#newCustomerTable");
 	var errorDiv = container.find("div.text-error");
+	container.find(".customerZipcodeHidden").val($(this).val());
 	function handleResp(data) {
 		if (data.error_msg) errorDiv.text(data.error_msg);
 		else if ("city" in data) {
 			container.find("#customer_lat").val(data.lat);
 			container.find("#customer_long").val(data.lng);
 			container.find("input[name='city']").val(data.city);
-			container.find($(".customer_state").select2({
+			container.find($(".customerState").select2({
                       theme: "bootstrap",
                       placeholder: "Automatically filled in with Zip Code entry",
                     })).val(data.state);
@@ -145,6 +136,7 @@ $(document).on("turbolinks:load", function() { // Zipcode API City/State filler
 				}).done(function(data) {
 					handleResp(data);
 					cache[zipcode] = data;
+					container.find(".phone_mask").focus();
 				}).fail(function(data) {
 					if (data.responseText && (json = $.parseJSON(data.responseText))) {
 						cache[zipcode] = json;
@@ -158,6 +150,16 @@ $(document).on("turbolinks:load", function() { // Zipcode API City/State filler
 		}
 	}).trigger("change keyup");
 
+});
+
+$(document).on("click", "#customerFirstSubmit", function(e) {
+  e.preventDefault();
+  var tr = $(".body").find("tr").length;
+  if (tr > 1) {
+    $(".hide-tag").remove();
+  }
+  $(".comments_fields_template").html("");
+  $("#customerSubmit").click();
 });
 
 var new_customer_attributes_button_tooltip = "<ul>"+
@@ -177,3 +179,11 @@ var new_customer_comments_button_tooltip = "<ul>"+
                                           "  <li>Multiple comments are allowed.</li>"+
                                           "</ul>";
 
+//------------------------------------------------------------------------------------------------------
+//                               Customer "EDIT" related JS                                            |
+//------------------------------------------------------------------------------------------------------
+
+$(document).on("turbolinks:load", function() {
+
+
+});

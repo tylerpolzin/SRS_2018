@@ -21,28 +21,18 @@ class TasksController < ApplicationController
       @task.warranty_orders.build.line_items.build.tracking_numbers.build
       @task.warranty_orders.build.comments.build
       @task.warranty_orders.build.build_customer
-      @products = Product.all
-      @parts = Part.all
-      @combo_items = ComboItem.all
-      @ecomm_orders = EcommOrder.all
-      @customers = Customer.all
+      collect_items
     else
       default_redirect
     end
   end
 
   def edit
-      @ecomm_order = EcommOrder.new
-    @products = Product.all
-    @parts = Part.all
-    @combo_items = ComboItem.all
+    collect_items
   end
 
   def create
-    @products = Product.all
-    @parts = Part.all
-    @combo_items = ComboItem.all
-    @ecomm_orders = EcommOrder.all
+    collect_items
     @warranty_order = WarrantyOrder.new
     @ecomm_order = EcommOrder.new
     @task = Task.new(task_params)
@@ -59,6 +49,7 @@ class TasksController < ApplicationController
   end
 
   def update
+    collect_items
     respond_to do |format|
       if @task.update(task_params)
         @task.uploads.each do |u|
@@ -92,6 +83,15 @@ class TasksController < ApplicationController
   private
     def set_task
       @task = Task.find(params[:id])
+    end
+
+    def collect_items
+      @products = Product.order(manufacturer_model_number: :asc)
+      @parts = Part.order(manufacturer_model_number: :asc)
+      @combo_items = ComboItem.order(model_number: :asc)
+      @retailers = EcommOrder.order(retailer: :asc).distinct.pluck(:retailer)
+      @carriers = TrackingNumber.order(carrier: :asc).distinct.pluck(:carrier)
+      @ecomm_orders = EcommOrder.all
     end
 
     def task_params

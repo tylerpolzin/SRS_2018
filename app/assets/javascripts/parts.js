@@ -336,8 +336,8 @@ $(document).on("turbolinks:load", function() {
    "    </thead>"+
    "    <tbody>"+
    "      <tr class='no-table'>"+ // "no-table" class allows single-row expandos to not highlight on hover
-   "        <td style='padding:0;'>"+attributes+"</td>"+
-   "        <td style='padding:0;'>"+uploads+"</td>"+
+   "        <td class='zero-pad'>"+attributes+"</td>"+
+   "        <td class='zero-pad'>"+uploads+"</td>"+
    "        <td>"+manufacturer+"</td>"+
    "        <td>"+location+"</td>"+
    "        <td>"+upc+"</td>"+

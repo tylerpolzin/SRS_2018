@@ -8,7 +8,9 @@
       <span class="ecomm_order_edit_remove_button"><i class="fa fa-close"></i></span>
     </div>
     </br><div class="ecomm_order_details">
-      <div class="ecomm_order_details_header">Basic Details</div>
+      <div class="ecomm_order_details_header">
+        <span class="ecomm_order_details_title">Basic Details</span>
+      </div>
       <table class="table table-bordered newEcommOrderContainer">
         <thead>
           <tr>
@@ -23,26 +25,26 @@
         </thead>
         <tbody>
           <tr>
-            <td><%= f.select_without_bootstrap :retailer, options_for_select(["Home Depot", "Wayfair", "Wal-Mart", "Amazon", "Menards"], selected: f.object.retailer), {:prompt => "Select Retailer..."}, required: true, class: "form-control ecommOrderRetailerSelect", title: "Retailer" %></td>
+            <td><%= f.select_without_bootstrap :retailer, options_for_select(@retailers, selected: f.object.retailer), {:prompt => "Select Retailer..."}, required: true, class: "form-control ecommOrderRetailerSelect", title: "Retailer" %></td>
             <td><%= f.text_field :customer_name, hide_label: true, placeholder: "Enter Customer Name...", title: "Customer Name", required: true, class: "ecommOrderCustomerName" %></td>
             <td><%= f.text_field :order_number, hide_label: true, title: "Order Number", placeholder: "Enter Order Number..." %></td>
             <td><%= f.select :status, options_for_select(["New", "Open", "Completed", "Cancelled"], selected: f.object.status),{hide_label: true, :prompt => "Select Status..."}, class: "ecommOrderStatusSelect" %></td>
-            <td><%= f.text_field :order_date, value: f.object.order_date_trunc, hide_label: true, readonly: true, placeholder: "Select Order Date...", title: "Order Date", class: "ecommOrderOrderDate" %></td>
-            <td><%= f.text_field :due_date, value: f.object.due_date_trunc, hide_label: true, readonly: true, :placeholder => "Select Due Date...", class: "ecommOrderDueDate" %></td>
-            <td><%= f.text_field :completion_date, value: f.object.completion_date_trunc, hide_label: true, readonly: true, :placeholder => "Select Completion Date...", class: "ecommOrderCompletionDate" %></td>
+            <td><%= f.text_field :order_date, value: f.object.order_date_trunc, hide_label: true, readonly: true, placeholder: "Select Order Date...", title: "Order Date", class: "ecommOrderOrderDate taskDefaultDatepicker" %></td>
+            <td><%= f.text_field :due_date, value: f.object.due_date_trunc, hide_label: true, readonly: true, :placeholder => "Select Due Date...", class: "ecommOrderDueDate taskDefaultDatepicker" %></td>
+            <td><%= f.text_field :completion_date, value: f.object.completion_date_trunc, hide_label: true, readonly: true, :placeholder => "Select Completion Date...", class: "ecommOrderCompletionDate taskDefaultDatepicker" %></td>
             </td>
           </tr>
           <tr class="ecommOrderCancellationReasonRow">
-            <td colspan="3"></td>
+            <td class="shipMethodRow"><span class="form-control method">Ship Method Request:</span></td>
+            <td class="shipMethodRow"><%= f.select :requested_carrier, options_for_select(@carriers, selected: f.object.requested_carrier), {:prompt => "Select Carrier...", hide_label: true}, class: "ecommOrderCarrierRequestSelect" %></td>
+            <td class="shipMethodRow"><%= f.select :requested_method, options_for_select(ship_methods, selected: f.object.requested_method), {:prompt => "Select Ship Method...", hide_label: true}, class: "ecommOrderShipMethodRequestSelect" %></td>
             <td colspan="2">
               <%= f.select :cancellation_reason, options_for_select(["Out of Stock", "Cancelled at Merchants Request", "Item Select Error", "Other (see comments)"], selected: f.object.cancellation_reason), {hide_label: true, :prompt => "Select Cancellation Reason..."}, class: "ecommOrderCancellationReasonSelect" %>
               <%= f.hidden_field :active, value: true, class: "ecommOrderActiveBoolean" %>
-              <%= f.hidden_field :_destroy, value: false, class: "remove_child_ecomm_order_edit" %>
-              <%#= remove_child_link_ecomm_order "", f %>
+              <%= remove_child_link_ecomm_order "", f %>
             </td>
             <td colspan="2"></td>
           </tr>
-  
         </tbody>
       </table>
     </div>
@@ -52,35 +54,14 @@
     </div>
 
     <%= render "tasks/edit/edit_ecomm_order_comment", :f => f %>
-
     <p hidden><%= add_child_link_ecomm_order_edit_comment "", :comments %></p>
 
-    <%= render "tasks/edit/edit_ecomm_order_line_item", :f => f %>
+    <%= render "tasks/edit/edit_line_item", :f => f %>
     <p hidden><%= add_child_link_ecomm_order_line_item "Add Item", :line_items %></p>
     <%= new_child_fields_template_ecomm_order_line_item f, :line_items %>
 
-    <div class="new_task_ecomm_order_comment">
-      <div class="comments_fields_template" style="display: none">
-        <div class="new_task_comment_fields">
-          <div class="comment_header">
-            <span class="comment_title">Comment</span>
-            <span class="comment_remove_button" title="Remove This Comment"><i class="fa fa-close"></i></span>
-          </div>
-          <table class="table newCommentContainer">
-            <tbody>
-              <tr>
-                <td class="textarea-vertical">
-                  <div class="form-group">
-                    <label class="sr-only control-label" for="task_ecomm_orders_attributes_new_ecomm_order_comments_attributes_new_comments_content">Content</label>
-                    <textarea placeholder="Enter Comment..." class="form-control" name="task[ecomm_orders_attributes][new_ecomm_order][comments_attributes][new_comments][content]" id="task_ecomm_orders_attributes_new_ecomm_order_comments_attributes_new_comments_content"></textarea>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <%= render "tasks/edit/edit_ecomm_order_comment_template", :f => f %>
+
     <div class="new_task_ecomm_order_line_item">
       <%= yield :new_task_ecomm_order_line_item_fields %>
     </div>

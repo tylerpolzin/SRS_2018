@@ -38,41 +38,73 @@
       <tbody class="task-table">
         <% @tasks.each do |task| %>
           <tr
-            data-child-blank="test text"
-            data-child-render="test render">
-            <td class="details-control" title="<%= task.id %>"></td>
+            data-child-expando="<div class='glider'>
+                                  <table class='tasks-expando'>
+                                    <thead>
+                                      <tr>
+                                        <th></th>
+                                        <th>Additional Attributes</th>
+                                        <th>Meta Notes</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr class='no-table'>
+                                        <td>
+                                          <a class='btn btn-sm' data-method='get' href='/tasks/<%= task.id %>/edit'>Edit This Task</a>
+                                        </td>
+                                        <td class='zero-pad'>
+                                          <table class='clear defaultExpandoInnerTable'>
+                                            <thead></thead>
+                                            <tbody>
+                                              <tr>
+                                                <td>Assigned For</td>
+                                                <td><%= task.initiated_for.header_name %></td>
+                                              </tr>
+                                              <tr>
+                                                <td>Assigned By</td>
+                                                <td><%= task.initiated_by.header_name %></td>
+                                              </tr>
+                                              <% if task.details.present? %>
+                                                <% task.details.try(:each) do |key, value| %>
+                                                  <tr>
+                                                      <td><%= key %></td>
+                                                      <td><%= value %></td>
+                                                  </tr>
+                                                <% end %>
+                                              <% end %>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                        <td>
+                                          <p>Entry Created: <%= task.created_at.strftime("%Y/%m/%d (%R)") %></p>
+                                          <p>Entry Last Updated: <%= task.updated_at.strftime("%Y/%m/%d (%R)") %></p>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>">
+            <td class="details-control"></td>
             <td> <!-- Task Name -->
-              <table class="table">
-                <p hidden><%= task.created_at %></p>
-                <p hidden class="task_type_hidden"><%= task.task_type %></p>
-                <thead></thead>
-                <tbody>
-                  <tr>
-                    <td>Initiated for <%= task.initiated_for.header_name %> | Initiated by <%= task.initiated_by.header_name %></td>
-                  </tr>
-                  <tr>
-                    <td><%= task.name %></td>
-                  </tr>
-                </tbody>
-              </table>
+              <p hidden><%= task.created_at %></p>
+              <p hidden class="task_type_hidden"><%= task.task_type %></p>
+              <%= link_to task.name, task_path(task), method: :get %>
             </td>
             <td class="task_uploads_table"> <!-- Files -->
               <% if task.uploads.present? %>
                 <table class="table">
                   <thead></thead>
                   <tbody>
-                    <% if task.uploads.length < 4 %><% @files_length = task.uploads.length %>
+                    <% if task.uploads.length <= task.order_size %>
                       <% task.uploads.each do |upload| %>
                         <tr>
-                          <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", title: "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}" %></td>
-                          <td><%= upload.description if upload.description.present? %><%= "N/A" if upload.description.blank? %></td>
+                          <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", class: "task_file_upload_tooltip", :"file-size" => "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}", :"description" => "#{upload.description if upload.description.present?}#{"N/A" if upload.description.blank?}"  %></td>
                         </tr>
                       <% end %>
                     <% else %>
                       <tr>
                         <td>
                           <li class="dropdown" style="list-style:none;">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> Show Files <i class="fa fa-angle-double-down"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> View Files <i class="fa fa-angle-double-down"></i></a>
                             <ul class="dropdown-menu task_uploads_file_dropdown">
                               <% task.uploads.each do |upload| %>
                                 <li>
@@ -80,8 +112,7 @@
                                     <thead></thead>
                                     <tbody>
                                       <tr>
-                                        <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", title: "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}" %></td>
-                                        <td><%= upload.description if upload.description.present? %><%= "N/A" if upload.description.blank? %></td>
+                                        <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", class: "task_file_upload_tooltip", :"file-size" => "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}", :"description" => "#{upload.description if upload.description.present?}#{"N/A" if upload.description.blank?}"  %></td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -109,7 +140,10 @@
                   <tbody>
                     <% task.ecomm_orders.each do |ecomm_order| %>
                       <tr>
-                        <td class="order_status"><%= ecomm_order.status %></td>
+                        <td class="order_status">
+                          <span class="order_status_value"><%= ecomm_order.status %></span>
+                          <span class="hidden cancellation_reason_grab"><%= ecomm_order.cancellation_reason if ecomm_order.cancellation_reason.present? %></span>
+                        </td>
                         <td><%= ecomm_order.retailer %> order for <%= ecomm_order.customer_name %></td>
                         <td><%= ecomm_order.order_number %></td>
                         <% if ecomm_order.completion_date.present? %>
@@ -132,7 +166,7 @@
                                   <tr>
                                     <td>
                                       <li class="dropdown" style="list-style:none;">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> Show <%= @line_item_length %> Line Items <i class="fa fa-angle-double-down"></i></a>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> View <%= @line_item_length %> Line Items <i class="fa fa-angle-double-down"></i></a>
                                         <ul class="dropdown-menu">
                                           <% ecomm_order.line_items.each do |line_item| %>
                                             <li><%= line_item.item_select %></li>
@@ -161,7 +195,10 @@
                   <tbody>
                     <% task.warranty_orders.each do |customer_order| %>
                       <tr>
-                        <td class="order_status"><%= customer_order.status %></td>
+                        <td class="order_status">
+                          <span class="order_status_value"><%= customer_order.status %></span>
+                          <span class="hidden cancellation_reason_grab"><%= customer_order.cancellation_reason if customer_order.cancellation_reason.present? %></span>
+                        </td>
                         <td>Customer order for <%= customer_order.customer.name if customer_order.customer.present? %></td>
                         <td><%= customer_order.order_number %></td>
                         <% if customer_order.completion_date.present? %>
@@ -184,7 +221,7 @@
                                   <tr>
                                     <td>
                                       <li class="dropdown" style="list-style:none;">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> Show <%= @line_item_length %> Line Items <i class="fa fa-angle-double-down"></i></a>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> View <%= @line_item_length %> Line Items <i class="fa fa-angle-double-down"></i></a>
                                         <ul class="dropdown-menu">
                                           <% customer_order.line_items.each do |line_item| %>
                                             <li><%= line_item.item_select %></li>
@@ -215,7 +252,7 @@
                       <tr>
                         <td>
                           <li class="dropdown" style="list-style:none;">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> Show Comments <i class="fa fa-angle-double-down"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> View Comments <i class="fa fa-angle-double-down"></i></a>
                             <ul class="dropdown-menu task_comments_dropdown">
                               <% task.comments.each do |comment| %>
                                 <li>
@@ -236,10 +273,7 @@
                 </table>
               <% end %>
             </td>
-            <td>
-              <p><%= task.status %></p>
-              <p><%= link_to "Edit This Task", edit_task_path(id: task), method: :get, class: 'btn btn-sm' if admin_or_employee? %></p>
-            </td>
+            <td><%= task.status %></td>
             <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
             </td>
           </tr>

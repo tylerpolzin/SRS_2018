@@ -1,6 +1,36 @@
-<h1>Editing Customer</h1>
+<% @title = "SRS Portal | Edit Customer Details" %>
+<div class="defaultDiv" id="editCustomerDiv">
+  <p class="defaultDivHeader">Edit <%= @customer.name %> Details</p>
+  <div class="container defaultNoTabsForm">
+    <%= bootstrap_form_for @customer, url: customer_path, method: :patch, :html => { :multipart => true } do |f| %>
+      <% if @customer.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@customer.errors.count, "error") %> prohibited this product from being saved:</h2>
+          <ul>
+          <% @customer.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="show_basic_pop_container edit_customer_container">
+        <div class="show_basic_pop_container_header">
+          <span class="show_basic_pop_container_title">Customer Details</span>
+          <span class="show_basic_pop_container_margin_button customer_add_attributes_button"><i class="fa fa-plus"></i> Attribute<i class="fa fa-question-circle"></i></span>
+          <span class="show_basic_pop_container_margin_button customer_add_comment_button"><i class="fa fa-plus"></i> Comment<i class="fa fa-question-circle"></i></span>
+        </div>
+        <div class="show_basic_pop_fields edit_customer_basic_details">
+          <div class="show_basic_pop_header">
+            <span class="show_basic_pop_title">Basic Details</span>
+          </div>
+          <%= render "form", :f => f %>
+        </div>
 
-<%= render 'form', customer: @customer %>
+        <div class="customerAttributesContainer"><%= render "attributes", :f => f %></div>
 
-<%= link_to 'Show', @customer %> |
-<%= link_to 'Back', customers_path %>
+      </div>
+    <button id="editCustomerFirstSubmit" class="btn">Update Customer</button>
+    <%= f.submit "Update Customer", class: "hidden", :id => "editCustomerSubmitButton" %>
+    <% end %>
+  </div>
+</div>

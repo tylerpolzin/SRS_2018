@@ -25,20 +25,28 @@
         <td><%= f.text_field :address2, hide_label: true %></td>
       </tr>
       <tr>
-        <td>Zip Code</td>
-        <td><%= f.text_field :zipcode, hide_label: true, :name => "zipcode" %></td>
+        <td>Zip Code <i class="fa fa-question-circle customer_zipcode_tooltip"></i></td>
+        <td>
+          <div class="form-group">
+            <%= text_field_tag "", nil, class: "customerZipcode form-control", :name => "zipcode", placeholder: "Enter Zip Code..." %>
+          </div>
+        </td>
       </tr>
       <tr>
         <td>City</td>
         <td>
-          <%= f.text_field :city, hide_label: true, :name => "city", placeholder: "Automatically filled in with Zip Code entry" %>
-          <%= f.hidden_field :lat %>
-          <%= f.hidden_field :long %>
+          <div class="form-group">
+            <%= text_field_tag "", nil, class: "customerCity form-control", :name => "city" %>
+          </div>
         </td>
       </tr>
       <tr>
         <td>State</td>
-        <td><%= f.select :state, options_for_select(us_states),{hide_label: true}, class: "customer_state", :name => "state" %></td>
+        <td>
+          <div class="form-group">
+            <%= select_tag "", options_for_select(us_states, selected: f.object.state), {class: "customerState form-control", :name => "state"} %>
+          </div>
+        </td>
       </tr>
       <tr>
         <td>Country</td>
@@ -53,5 +61,10 @@
         <td><%= f.email_field :email, hide_label: true %></td>
       </tr>
     </tbody>
+    <%= f.hidden_field :city, class: "customerCityHidden" %>
+    <%= f.hidden_field :state, class: "customerStateHidden" %>
+    <%= f.hidden_field :zipcode, class: "customerZipcodeHidden" %>
+    <%= f.text_field :lat %>
+    <%= f.text_field :long %>
   </table>
 </div>

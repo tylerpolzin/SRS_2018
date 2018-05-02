@@ -8,131 +8,42 @@
 
 //                            New Customer 'Form' related CSS                                          |
 
-#new_customer_form {
-  width: 100%;
-  border: 2px solid #7395bb;
-  border-radius: 15px;
-  background-color: #efede6;
-  padding: 0 10px 0 10px;
-  margin: 30px 0 15px 0;
-  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
-  .new_customer_header {
-    margin-bottom: 10px;
-    cursor: context-menu;
-    span {
-      position: absolute;
-      font-family: 'Abel', sans-serif;
-      font-size: 1.3em;
-      font-weight: bold;
-      width: fit-content;
-      background: white;
-      padding: 0 6px 0 6px;
-      border: 2px solid #7395bb;
-      border-radius: 5px;
-      box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
-      .fa-question-circle {
-        font-size: 0.7em;
-        position: relative;
-        bottom: 7px;
-        left: 4px;
-        &:hover {
-          color: red;
-        }
-        &:active {
-          color: green;
-        }
-      }
-    }
-    .new_customer_title {
-      margin: -15px 0 0 8px;
-    }
-    .new_customer_add_comment_button {
-      margin: -15px 0 0 520px;
-      color: #255aad;
-      cursor: pointer;
-      user-select: none;
-      &:active {
-        color: green;
-      }
-    }
-    .new_customer_add_attributes_button {
-      margin: -15px 0 0 402px;
-      color: #255aad;
-      cursor: pointer;
-      user-select: none;
-      &:active {
-        color: green;
-      }
-    }
+.new_customer_container {
+  margin: 25px 0 10px 0;
+}
+
+.new_customer_basic_details {
+  margin: 30px 0 20px 0;
+}
+
+.customer_add_attributes_button {
+  margin: -15px 0 0 409px;
+  color: #255aad;
+  cursor: pointer;
+  user-select: none;
+  &:active {
+    color: green;
   }
-  .new_customer_basic_details {
-    border: 2px solid #bbbec1;
-    border-radius: 10px;
-    background-color: white;
-    margin: 30px 0 20px 0;
-    padding: 10px 15px 0 5px;
-    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
-    .new_customer_basic_details_header {
-      border: 2px solid #bbbec1;
-      border-radius: 5px;
-      margin: -21px 0 10px 13px;
-      padding: 0 6px 0 6px;
-      background: white;
-      width: fit-content;
-      font-weight: bold;
-      font-family: 'Abel', sans-serif;
-      font-size: 0.9em;
-      cursor: context-menu;
-      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
-    }
-  }
-  .new_customer_attributes, .new_customer_comment_fields {
-    border: 2px solid #bbbec1;
-    border-radius: 10px;
-    background-color: white;
-    padding: 0 10px 5px 10px;
-    margin: 0 0 25px 0;
-    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
-    .comment_header, .attributes_header {
-      margin-bottom: 15px;
-      span {
-        position: absolute;
-        border: 2px solid #bbbec1;
-        border-radius: 5px;
-        padding: 0 6px 0 6px;
-        background: white;
-        width: fit-content;
-        font-family: 'Abel', sans-serif;
-        font-weight: bold;
-        font-size: 0.9em;
-        cursor: context-menu;
-        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
-      }
-      .comment_title, .attributes_title {
-        margin: -12px 0 10px 5px;
-      }
-      .new_customer_comment_remove_button, .new_customer_attributes_remove_button {
-        margin: -12px 0 0 576px;
-        color: red;
-        cursor: pointer;
-        user-select: none;
-        &:active {
-          color: green;
-        }
-      }
-    }
-    .attributes_top_border {
-      border-bottom: 1px solid #b5b5f7;
-      margin-top: 10px;
-    }
-    .attributes_bottom_border {
-      border-top: 1px solid #b5b5f7;
-      margin-bottom: 5px;
-    }
+}
+.customer_add_comment_button {
+  margin: -15px 0 0 526px;
+  color: #255aad;
+  cursor: pointer;
+  user-select: none;
+  &:active {
+    color: green;
   }
 }
 
-
+.customer_comment_remove_button, .customer_attributes_remove_button {
+  margin: -12px 0 0 588px;
+  color: red;
+  cursor: pointer;
+  user-select: none;
+  &:active {
+    color: green;
+  }
+}
 
 
 .customerTableContainer {
@@ -147,7 +58,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid #b5b5f7;
+  border: 1px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
 
   tbody tr td:nth-child(1) { // Left Column "Description"
@@ -184,32 +95,13 @@
       width: 100%;
     }
   }
-  // tbody tr:nth-child(5) td:last-child { // Image Row
-  //   background-color: white;
-  //   div input {
-  //     padding: 6px 6px 10px 6px;
-  //     background-color: white;
-  //   }
-  // }
-  // tbody tr:nth-child(6), tbody tr:nth-child(7), tbody tr:nth-child(8) { // Currency Rows
-  //   td:nth-child(2) {
-  //     .form-group .input-group .input-group-addon {
-  //         border-radius: 0;
-  //         font-weight: bold;
-  //         border-top: 0;
-  //         border-bottom: 0;
-  //         border-left: 0;
-  //         background-color: #fafafa;
-  //     }
-  //   }
-  // }
 }
 
 .newCustomerAttributeContainer { // 1-Attribute Name | 2-Description | 3-Remove
   margin: 0;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
-  font-size: .9em;
+  font-size: .9em !important;
   border-top: 0;
   border-right: 1px solid #b5b5f7;
   border-bottom: 0;
@@ -255,5 +147,182 @@
     font-size: 1.5em;
     cursor: pointer;
     color: red;
+  }
+}
+
+#customerFirstSubmit {
+  float: right;
+}
+
+//------------------------------------------------------------------------------------------------------
+//                               Customer 'EDIT' related CSS                                            |
+//------------------------------------------------------------------------------------------------------
+
+#editCustomerDiv {
+  width: 700px;
+}
+
+.editCustomerTabs {
+  padding: 30px 15px 15px 15px;
+}
+
+.edit_customer_container {
+  margin: 25px 0 10px 0;
+}
+
+.edit_customer_basic_details {
+  margin: 30px 0 20px 0;
+}
+
+
+.edit_customer_add_attributes_button {
+  margin: -15px 0 0 409px;
+}
+
+.edit_customer_add_comment_button {
+  margin: -15px 0 0 526px;
+}
+
+
+#editCustomerFirstSubmit {
+  float: right;
+}
+
+//------------------------------------------------------------------------------------------------------
+//                               Customer 'SHOW' related CSS                                            |
+//------------------------------------------------------------------------------------------------------
+
+#showCustomerDiv {
+  width: 800px;
+}
+
+#show-customer-form {
+  padding: 0 15px 0 0;
+}
+
+#showCustomerTable {
+  margin: 0 0 10px 5px;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 1px solid #b5b5f7;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    width: 35%;
+    text-align: right;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+.show_customer_fields {
+  width: 100%;
+  border: 2px solid #7395bb;
+  border-radius: 15px;
+  background-color: #efede6;
+  padding: 0 10px 0 10px;
+  margin: 30px 0 5px 0;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  .customer_header {
+    margin-bottom: 10px;
+    cursor: context-menu;
+    span, a {
+      position: absolute;
+      font-family: 'Abel', sans-serif;
+      font-size: 1.3em;
+      font-weight: bold;
+      width: fit-content;
+      background: white;
+      padding: 0 6px 0 6px;
+      border: 2px solid #7395bb;
+      border-radius: 5px;
+      box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+      .fa-question-circle {
+        font-size: 0.7em;
+        position: relative;
+        bottom: 7px;
+        left: 4px;
+        &:hover {
+          color: red;
+        }
+        &:active {
+          color: green;
+        }
+      }
+    }
+    .customer_title {
+      margin: -15px 0 0 8px;
+    }
+    .edit_customer_button {
+      margin: -15px 0 0 548px;
+      color: #255aad;
+      cursor: pointer;
+      user-select: none;
+      &:active {
+        color: green;
+      }
+    }
+  }
+  .customer_basic_details {
+    border: 2px solid #bbbec1;
+    border-radius: 10px;
+    background-color: white;
+    margin: 30px 0 20px 0;
+    padding: 10px 15px 0 5px;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+    .customer_basic_details_header {
+      border: 2px solid #bbbec1;
+      border-radius: 5px;
+      margin: -21px 0 10px 13px;
+      padding: 0 6px 0 6px;
+      background: white;
+      width: fit-content;
+      font-weight: bold;
+      font-family: 'Abel', sans-serif;
+      font-size: 0.9em;
+      cursor: context-menu;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+#showCustomerAttributes {
+  margin: 0 0 5px 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 1px solid #b5b5f7;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    width: 35%;
+    text-align: right;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+#showCustomerComments {
+  margin: 0 0 5px 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 1px solid #b5b5f7;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td {
+    text-align: center;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
   }
 }

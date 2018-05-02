@@ -15,11 +15,10 @@
     </thead>
     <tbody class="uploads-table">
       <% @uploads.each do |upload| %>
-        <tr
-          data-child-attributes="
+        <tr data-child-attributes="
           <tbody>
             <tr class='no-table'>
-              <td style='padding:0;'>
+              <td class='zero-pad'>
                 <% if upload.products.present? %>
                   <table class='clear defaultExpandoInnerTable'>
                     <tbody>
@@ -34,7 +33,7 @@
                   No Associations Found
                 <% end %>
               </td>
-              <td style='padding:0;'>
+              <td class='zero-pad'>
                 <% if upload.parts.present? %>
                   <table class='clear defaultExpandoInnerTable'>
                     <tbody>
@@ -50,7 +49,21 @@
                 <% end %>
               </td>
               <td>No Associations Found</td>
-              <td>No Associations Found</td>
+              <td class='zero-pad'>
+                <% if upload.tasks.present? %>
+                  <table class='clear defaultExpandoInnerTable'>
+                    <tbody>
+                      <% upload.tasks.each do |task| %>
+                        <tr>
+                          <td><a title='View Task Details (ID: <%= task.id %>)' data-method='get' href='/tasks/<%= task.id %>'><%= task.name %></a></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                <% else %>
+                  <p style='padding:8px 10px 8px 10px;'>No Associations Found</p>
+                <% end %>
+              </td>
               <td>No Associations Found</td>
               <td>
                 <% if upload.upload_batch.present? %>
@@ -60,15 +73,14 @@
                 <% end %>
               </td>
             </tr>
-          </tbody>
-          ">
+          </tbody>">
           <td class="details-control"></td>
           <td><%= upload.id %></td>
           <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank" %></td>
           <td style="padding:0;"><%= best_in_place upload, :description, class: "form-control", inner_class: "input-small input-width" %></td>
           <td><%= number_to_human_size(upload.file_file_size, precision: 2) %></td>
-          <td><%= upload.file_content_type.upcase %></td>
-          <td><%= upload.user.header_name %></td>
+          <td><%= upload.file_content_type.upcase if upload.file_content_type.present? %></td>
+          <td><%= upload.user.header_name if upload.user.present? %></td>
           <td><%= upload.created_at.strftime('%F') %></td>
           <td><%= upload.updated_at.strftime('%F') %></td>
         </tr>

@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   
   resources :stores
   resources :customers
+  resources :ecomm_orders
+  resources :warranty_orders
   resources :tasks do
     resources :ecomm_orders, :only => [:destroy]
+    resources :warranty_orders, :only => [:destroy]
   end
   resources :combo_items
   resources :upload_batches
@@ -13,9 +16,9 @@ Rails.application.routes.draw do
   resources :stockmovement_batches
   resources :parts
   resources :products
-  get 'changelog', to: 'pages#changelog'
   get 'inventory_adjustments', to: 'stockmovement_batches#new'
   get 'inventory_history', to: 'stockmovement_batches#index'
+  get 'batch_process', to: 'products#batch_process'
   get 'batch_process', to: 'products#batch_process'
   resources :users do
     resource :profile

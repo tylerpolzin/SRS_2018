@@ -1,0 +1,285 @@
+<select multiple id="taskShowCustomerOrderSelect" class="form-control" size="<%= @task.warranty_orders.size + 2 %>">
+  <option value="0" disabled>Select Order...</option>
+  <option <%= "selected" if @task.warranty_orders.size == 1 %> value="-1">View All</option>
+  <% @task.warranty_orders.each do |warranty_order| %>
+    <option value="<%= warranty_order.id %>" status="<%= warranty_order.status %>"><%= warranty_order.dropdown_select %></option>
+  <% end %>
+</select>
+<% @task.warranty_orders.each do |warranty_order| %>
+  <div class="show_task_order_fields" id="warranty_order_number-<%= warranty_order.id %>">
+    <div class="task_order_header">
+      <span class="task_order_title" title="ID: <%= warranty_order.id %>">Customer Order for <%= warranty_order.customer.name %></span>
+      <%= link_to "<i class='fa fa-edit'></i> Edit This Order".html_safe, edit_warranty_order_path(warranty_order), method: :get, class: 'edit_task_order_button' %>
+    </div>
+    </br><div class="task_order_details">
+      <div class="task_order_header">Basic Details</div>
+      <table class="table table-bordered showTaskOrderContainer">
+        <thead></thead>
+        <tbody>
+          <% if warranty_order.ecomm_order_reference.present? %>
+            <tr>
+              <td>Associated E-Commerce Order</td>
+              <td><%= warranty_order.ecomm_order.ecomm_select %></td>
+            </tr>
+          <% end %>
+          <tr>
+            <td>Order Status</td>
+            <td class="show_order_status"><%= warranty_order.status if warranty_order.status.present? %></td>
+          </tr>
+          <% if warranty_order.cancellation_reason.present? %>
+            <tr class="order_status_cancelled">
+              <td>Cancellation Reason</td>
+              <td><%= warranty_order.cancellation_reason %></td>
+            </tr>
+          <% end %>
+          <tr>
+            <td>Customer Name</td>
+            <td><%= warranty_order.customer.name if warranty_order.customer_id.present? %></td>
+          </tr>
+          <tr>
+            <td>Order Number</td>
+            <td><%= warranty_order.order_number if warranty_order.order_number.present? %></td>
+          </tr>
+          <tr>
+            <td>Due Date</td>
+            <td><%= warranty_order.due_date_trunc %></td>
+          </tr>
+          <tr>
+            <td>Completion Date</td>
+            <td><%= warranty_order.completion_date_trunc %></td>
+          </tr>
+          <tr>
+            <td>Requested Carrier</td>
+            <td><%= warranty_order.requested_carrier if warranty_order.requested_carrier.present? %></td>
+          </tr>
+          <tr>
+            <td>Requested Ship Method</td>
+            <td><%= warranty_order.requested_method if warranty_order.requested_method.present? %></td>
+          </tr>
+          <tr>
+            <td>Order Creation Date</td>
+            <td><%= warranty_order.created_at.strftime("%Y-%m-%d") %></td>
+          </tr>
+          <tr>
+            <td>Order Last Modified</td>
+            <td><%= warranty_order.updated_at.strftime("%Y-%m-%d") %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="show_basic_pop_fields">
+      <div class="show_basic_pop_header">
+        <span class="show_basic_pop_title" title="<%= warranty_order.customer.id %>">Customer Information</span>
+      </div>
+      <table class="table table-bordered showWarrantyOrderCustomerDetails">
+        <thead></thead>
+        <tbody>
+          <tr>
+            <td>First Name</td>
+            <td><%= warranty_order.customer.firstname %></td>
+          </tr>
+          <tr>
+            <td>Last Name</td>
+            <td><%= warranty_order.customer.lastname %></td>
+          </tr>
+          <tr>
+            <td>Company</td>
+            <td><%= warranty_order.customer.company %></td>
+          </tr>
+          <tr>
+            <td>Address 1</td>
+            <td><%= warranty_order.customer.address1 %></td>
+          </tr>
+          <tr>
+            <td>Address 2</td>
+            <td><%= warranty_order.customer.address2 %></td>
+          </tr>
+          <tr>
+            <td>City</td>
+            <td><%= warranty_order.customer.city %></td>
+          </tr>
+          <tr>
+            <td>State</td>
+            <td><%= warranty_order.customer.state %></td>
+          </tr>
+          <tr>
+            <td>Zip Code</td>
+            <td><%= warranty_order.customer.zipcode %></td>
+          </tr>
+          <tr>
+            <td>Country</td>
+            <td><%= warranty_order.customer.country %></td>
+          </tr>
+          <tr>
+            <td>Phone Number</td>
+            <td><%= link_to warranty_order.customer.phone, "tel:#{warranty_order.customer.phone}" %></td>
+          </tr>
+          <tr>
+            <td>Email Address</td>
+            <td><%= mail_to warranty_order.customer.email %></td>
+          </tr>
+          <tr>
+            <td>Lat</td>
+            <td><%= warranty_order.customer.lat %> <%= link_to "View on Google Maps", "https://maps.google.com/?q=#{warranty_order.customer.lat},#{warranty_order.customer.long}", target: "_blank", :style => "float:right;" %></td>
+          </tr>
+          <tr>
+            <td>Long</td>
+            <td><%= warranty_order.customer.long %></td>
+          </tr>
+          <tr>
+            <td>Customer Entry Created On</td>
+            <td><%= warranty_order.customer.created_at.strftime("%Y-%m-%d") %></td>
+          </tr>
+          <tr>
+            <td>Customer Entry Last Updated</td>
+            <td><%= warranty_order.customer.updated_at.strftime("%Y-%m-%d") %></td>
+          </tr>
+        </tbody>
+      </table>
+      <% if warranty_order.customer.details.present? %>
+        <div class="show_basic_pop_fields">
+          <div class="show_basic_pop_header">
+            <span class="show_basic_pop_title">Customer Attributes</span>
+          </div>
+          <table class="table table-bordered showTaskOrderAttributes">
+            <thead></thead>
+            <tbody>
+              <% warranty_order.customer.details.try(:each) do |key, value| %>
+                <tr>
+                  <td><%= key %></td>
+                  <td><%= value %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+      <% if warranty_order.customer.comments.present? %>
+        <div class="show_basic_pop_fields">
+          <div class="show_basic_pop_header">
+            <span class="show_basic_pop_title">Customer Comments</span>
+          </div>
+          <table class="table table-bordered showTaskOrderComments">
+            <thead></thead>
+            <tbody>
+              <% warranty_order.comments.order(:id).each do |comment| %>
+                <tr>
+                  <td>
+                    <%= comment.content %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+
+    <% if warranty_order.details.present? %>
+      <div class="show_basic_pop_fields">
+        <div class="show_basic_pop_header">
+          <span class="show_basic_pop_title">Custom Attributes</span>
+        </div>
+        <table class="table table-bordered showTaskOrderAttributes">
+          <thead></thead>
+          <tbody>
+            <% warranty_order.details.try(:each) do |key, value| %>
+              <tr>
+                <td><%= key %></td>
+                <td><%= value %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+    
+    <% if warranty_order.comments.present? %>
+      <div class="show_basic_pop_fields">
+        <div class="show_basic_pop_header">
+          <span class="show_basic_pop_title">Comments</span>
+        </div>
+        <table class="table table-bordered showTaskOrderComments">
+          <thead></thead>
+          <tbody>
+            <% warranty_order.comments.order(:id).each do |comment| %>
+              <tr>
+                <td>
+                  <%= comment.content %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+    <% if warranty_order.line_items.present? %>
+      <% warranty_order.line_items.each do |line_item| %>
+        <div class="show_basic_pop_fields">
+          <div class="show_basic_pop_header">
+            <span class="show_basic_pop_title">Line Item</span>
+          </div>
+          <table class="table table-bordered showTaskOrderLineItem" style=<%= "margin-bottom:20px;" if line_item.tracking_numbers.present? %>>
+            <thead></thead>
+            <tbody>
+              <tr>
+                <td>Item Type</td>
+                <td><%= line_item.item_type %></td>
+              </tr>
+              <tr>
+                <td><%= line_item.item_type %> Details</td>
+                <td><%= line_item.item_select %></td>
+              </tr>
+              <tr>
+                <td><%= line_item.item_type %> Cost</td>
+                <td><%= number_to_currency(line_item.item_cost, delimiter: "", unit: "$") %></td>
+              </tr>
+              <tr>
+                <td>Quantity Ordered</td>
+                <td><%= line_item.quantity %></td>
+              </tr>
+            </tbody>
+          </table>
+          <% if line_item.tracking_numbers.present? %>
+            <% line_item.tracking_numbers.each do |tracking_number| %>
+              <div class="show_basic_pop_fields">
+                <div class="show_basic_pop_header">
+                  <span class="show_basic_pop_title">Tracking Number</span>
+                </div>
+                <table class="table table-bordered showLineItemTrackingNumber">
+                  <thead></thead>
+                  <tbody>
+                    <tr>
+                      <td>Tracking Number</td>
+                      <td class="tracking_number_field"><i class="fa fa-cut copy-cut barebones_tooltip" title="Copy Tracking Number"></i><input class="copy-text" value="<%= tracking_number.tracking_number_present %>"> <%= tracking_number.tracking_number_present %> <a href=<%= tracking_number.tracking_link_select %> target="_blank" title="Go To Carrier Website" class="barebones_tooltip"><i class="fa fa-external-link"></i></a></td>
+                    </tr>
+                    <tr>
+                      <td>Carrier</td>
+                      <td><%= tracking_number.carrier %></td>
+                    </tr>
+                    <tr>
+                      <td>Shipping Method</td>
+                      <td><%= tracking_number.shipping_method %></td>
+                    </tr>
+                    <tr>
+                      <td>Ship Date</td>
+                      <td><%= tracking_number.ship_date_trunc %></td>
+                    </tr>
+                    <tr>
+                      <td>Shipping Cost</td>
+                      <td><%= number_to_currency(tracking_number.shipping_cost, delimiter: "", unit: "$") %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+
+  </div>
+
+<% end %>

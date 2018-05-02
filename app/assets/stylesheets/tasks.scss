@@ -218,7 +218,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
-  border: 2px solid #b5b5f7;
+  border: 1px solid #b5b5f7;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
   thead tr th {
     border-bottom-width: 0 !important;
@@ -374,7 +374,7 @@
       }
     }
     .ecomm_order_add_comment_button, .warranty_order_add_comment_button,
-    .ecomm_order_edit_add_comment_button {
+    .ecomm_order_edit_add_comment_button, .warranty_order_edit_add_comment_button {
       margin: -15px 0 0 837px;
       color: #255aad;
       cursor: pointer;
@@ -393,7 +393,7 @@
       }
     }
     .ecomm_order_remove_button, .warranty_order_remove_button,
-    .ecomm_order_edit_remove_button {
+    .ecomm_order_edit_remove_button, .warranty_order_edit_remove_button {
       margin: -15px 0 0 1081px;
       color: red;
       cursor: pointer;
@@ -403,14 +403,14 @@
       }
     }
   }
-  .ecomm_order_details, .warranty_order_details, .warranty_order_customer_details {
+  .warranty_order_customer_details {
     border: 2px solid #bbbec1;
     border-radius: 10px;
     background-color: white;
     margin: 0 0 20px 0;
     padding: 10px 15px 0 5px;
     box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
-    .ecomm_order_details_header, .warranty_order_details_header, .warranty_order_customer_header {
+    .warranty_order_customer_header {
       border: 2px solid #bbbec1;
       border-radius: 5px;
       margin: -21px 0 10px 10px;
@@ -442,15 +442,16 @@
 
 
 
-.new_task_line_item_fields, .new_task_comment_fields,
-.ecomm_order_attributes, .warranty_order_attributes, .warranty_order_reference, .task_attributes {
+.new_task_line_item_fields, .new_task_comment_fields, .ecomm_order_attributes, .warranty_order_attributes,
+.warranty_order_reference, .task_attributes, .ecomm_order_details, .warranty_order_details {
   border: 2px solid #bbbec1;
   border-radius: 10px;
   background-color: white;
   padding: 0 10px 5px 10px;
   margin: 0 0 25px 0;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
-  .line_item_header, .comment_header, .attributes_header, .reference_header {
+  .line_item_header, .comment_header, .attributes_header, .reference_header,
+  .ecomm_order_details_header, .warranty_order_details_header {
     margin-bottom: 15px;
     span {
       position: absolute;
@@ -465,10 +466,10 @@
       cursor: context-menu;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
     }
-    .line_item_title, .comment_title, .attributes_title, .reference_title {
+    .line_item_title, .comment_title, .attributes_title, .reference_title, .ecomm_order_details_title, .warranty_order_details_title {
       margin: -12px 0 10px 5px;
     }
-    .line_item_add_tracking_number_button {
+    .line_item_add_tracking_number_button, .line_item_edit_add_tracking_number_button {
       margin: -12px 0 10px 75px;
       color: #255aad;
       cursor: pointer;
@@ -477,8 +478,31 @@
         color: green;
       }
     }
+    .ecomm_order_add_ship_request_button, .warranty_order_add_ship_request_button {
+      margin: -12px 0 10px 94px;
+      color: #255aad;
+      cursor: pointer;
+      user-select: none;
+      &:active {
+        color: green;
+      }
+      .fa-question-circle {
+        font-size: 0.9em;
+        color: #255aad;
+        position: relative;
+        left: 4px;
+        bottom: 2px;
+        &:hover {
+          color: red;
+        }
+        &:active {
+          color: green;
+        }
+      }
+    }
     .line_item_remove_button, .comment_remove_button, .reference_remove_button,
-    .attributes_remove_button, .task_attributes_remove_button, .comment_edit_remove_button {
+    .attributes_remove_button, .task_attributes_remove_button, .ecomm_order_comment_edit_remove_button,
+    .warranty_order_comment_edit_remove_button, .line_item_edit_remove_button {
       margin: -12px 0 0 1056px;
       color: red;
       cursor: pointer;
@@ -502,8 +526,9 @@
 
 
 .newEcommOrderContainer { // 1-Retailer | 2-Customer Name | 3-Order Number | 4-Order Status | 5-Order Date | 6-Due Date | 7-Completion Date
+                          // 8-Method Title | 9-Carrier Request | 10-Method Request | 11-Cancellation Reason
   table-layout: fixed !important;
-  margin: -5px 10px 10px 5px;
+  margin: 0 0 5px 0;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
@@ -523,6 +548,15 @@
     padding: 0;
     .form-group {
       margin: 0;
+    }
+    .method {
+      text-align: right;
+      font-size: 1em;
+      background-color: #fafafa;
+      padding: 9px 6px;
+      border: none;
+      border-radius: 0;
+      cursor: context-menu;
     }
   }
   tbody tr td:first-child, tbody tr td:nth-child(4) { // 1-Retailer | 4-Order Status
@@ -567,9 +601,10 @@
   }
 }
 
-.newWarrantyOrderContainer { // 1-Order Number | 2-Status | 3-Due Date | 4-Completion Date | 5-Cancellation Reason
+.newWarrantyOrderContainer { // 1-Order Number | 2-Status | 3-Due Date | 4-Completion Date
+                             // 5-Method Title | 6-Carrier Request | 7-Method Request | 8-Cancellation Reason
   table-layout: fixed !important;
-  margin: -5px 10px 10px 5px;
+  margin: 0 0 5px 0;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
@@ -617,6 +652,15 @@
           box-shadow: inset 0px 0px 5px solid #b5b5f7;
         }
       }
+    }
+    .method {
+      text-align: right;
+      font-size: 1em;
+      background-color: #fafafa;
+      padding: 9px 6px;
+      border: none;
+      border-radius: 0;
+      cursor: context-menu;
     }
   }
   tbody tr td:nth-child(3), tbody tr td:nth-child(4) { // 4-Order Date
@@ -1058,8 +1102,9 @@
       text-align: center;
       width: 40px;
       font-size: 1.5em;
-      a {
+      a, i {
         color: red;
+        cursor: pointer;
       }
     }
   }
@@ -1097,7 +1142,7 @@
   }
 }
 
-#taskFirstSubmit {
+#taskFirstSubmit, #editTaskFirstSubmit {
   float: right;
   z-index: 9999;
 }
@@ -1135,7 +1180,7 @@
 }
 
 //------------------------------------------------------------------------------------------------------
-//                               "EDIT TASK" related CSS                                               |
+//                               Task "EDIT" related CSS                                               |
 //------------------------------------------------------------------------------------------------------
 
 
@@ -1154,6 +1199,233 @@
 
 
 
+
+//------------------------------------------------------------------------------------------------------
+//                               Task "SHOW" related CSS                                               |
+//------------------------------------------------------------------------------------------------------
+
+#showTaskDiv {
+  width: 800px;
+}
+
+//                               'SHOW_PRODUCT_FORM' related CSS                                       |
+
+#show-task-form {
+  padding: 0 15px 0 0;
+}
+
+.show-task-top {
+  width: 100%;
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+.show-task-brand-name {
+  text-align: center;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+.show-task-description {
+  text-align: center;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 0;
+  padding-bottom: 10px;
+}
+
+
+.show_task_fields, .show_task_order_fields {
+  width: 100%;
+  border: 2px solid #7395bb;
+  border-radius: 15px;
+  background-color: #efede6;
+  padding: 0 10px 0 10px;
+  margin: 30px 0 5px 0;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  .task_header, .task_order_header {
+    margin-bottom: 10px;
+    cursor: context-menu;
+    span, a {
+      position: absolute;
+      font-family: 'Abel', sans-serif;
+      font-size: 1.3em;
+      font-weight: bold;
+      width: fit-content;
+      background: white;
+      padding: 0 6px 0 6px;
+      border: 2px solid #7395bb;
+      border-radius: 5px;
+      box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+      .fa-question-circle {
+        font-size: 0.7em;
+        position: relative;
+        bottom: 7px;
+        left: 4px;
+        &:hover {
+          color: red;
+        }
+        &:active {
+          color: green;
+        }
+      }
+    }
+    .task_title, .task_order_title {
+      margin: -15px 0 0 8px;
+    }
+    .edit_task_button {
+      margin: -15px 0 0 582px;
+      color: #255aad;
+      cursor: pointer;
+      user-select: none;
+      &:active {
+        color: green;
+      }
+    }
+    .edit_task_order_button {
+      margin: -15px 0 0 578px;
+      color: #255aad;
+      cursor: pointer;
+      user-select: none;
+      &:active {
+        color: green;
+      }
+    }
+  }
+  .task_basic_details {
+    border: 2px solid #bbbec1;
+    border-radius: 10px;
+    background-color: white;
+    margin: 30px 0 20px 0;
+    padding: 10px 15px 0 5px;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+    .task_basic_details_header {
+      border: 2px solid #bbbec1;
+      border-radius: 5px;
+      margin: -21px 0 10px 13px;
+      padding: 0 6px 0 6px;
+      background: white;
+      width: fit-content;
+      font-weight: bold;
+      font-family: 'Abel', sans-serif;
+      font-size: 0.9em;
+      cursor: context-menu;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
+    }
+  }
+  .task_order_details {
+    border: 2px solid #bbbec1;
+    border-radius: 10px;
+    background-color: white;
+    margin: 0 0 20px 0;
+    padding: 10px 15px 0 5px;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+    .task_order_header {
+      border: 2px solid #bbbec1;
+      border-radius: 5px;
+      margin: -21px 0 10px 13px;
+      padding: 0 6px 0 6px;
+      background: white;
+      width: fit-content;
+      font-weight: bold;
+      font-family: 'Abel', sans-serif;
+      font-size: 0.9em;
+      cursor: context-menu;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+#showTaskTable, .showTaskOrderContainer {
+  margin: 0 0 10px 5px;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 1px solid #b5b5f7;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    width: 35%;
+    text-align: right;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+#showTaskComments, .showTaskOrderComments {
+  margin: 0 0 5px 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 1px solid #b5b5f7;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td {
+    text-align: center;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+#showTaskAttributes, #showTaskUploads, .showTaskOrderAttributes, .showTaskOrderLineItem,
+.showLineItemTrackingNumber, .showWarrantyOrderCustomerDetails {
+  margin: 0 0 5px 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 1px solid #b5b5f7;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr td:nth-child(1) {
+    width: 35%;
+    text-align: right;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+//----------------- ORDERS TAB --------------------//
+
+#show-ecomm-orders-form, #show-customer-orders-form {
+  padding-left: 0;
+}
+
+#taskShowEcommOrderSelect, #taskShowCustomerOrderSelect {
+  margin: 20px 0 10px 0;
+  padding: 0;
+  option {
+    padding: 5px;
+  }
+}
+
+
+.tracking_number_field {
+  width: 41%;
+  .copy-cut {
+    color: #00c500;
+    cursor: pointer;
+    &:hover {
+      color: #006520;
+    }
+    &:active {
+      color: orange;
+    }
+  }
+  .copy-text {
+    position: absolute;
+    z-index: -999;
+    opacity: 0;
+  }
+}
 
 //------------------------------------------------------------------------------------------------------
 //                              Task 'INDEX' related CSS                                               |
@@ -1287,25 +1559,15 @@
 }
 
 .task_uploads_file_dropdown {
-  width: 400px;
-  li table tbody tr {
-    td:first-child {
-      width: 40%;
-    }
-    td:last-child {
-      width: 60%;
-      padding: 4px;
-    }
+  li table tbody tr td {
+    padding: 2px 6px 2px 6px;
   }
 }
 
 .task_comments_dropdown {
   left: -290px;
-  li table {
-    width: 400px;
-    tbody tr td{
-      padding: 2px 6px 2px 6px;
-    }
+  li table tbody tr td {
+    padding: 2px 6px 2px 6px;
   }
 }
 
@@ -1457,13 +1719,13 @@
 }
 
 
-#productTableSearch {
+#taskTableSearch {
   font-family: 'Abel', sans-serif;
   color: black;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
   margin-left: 9px;
 }
-#productTableLength {
+#taskTableLength {
   font-family: 'Abel', sans-serif;
   width: 55px;
   margin-left: 10px;
@@ -1553,7 +1815,7 @@
   }
 }
 
-.task-listing-expando {
+.tasks-expando {
   width: 95%;
   padding-top: 0;
   padding-bottom: 5px;
@@ -1580,25 +1842,5 @@
     text-align: center;
     vertical-align: top;
     border-right: 1px solid #ddd;
-  }
-}
-
-.defaultExpandoInnerTable { // Also used across other Expando views
-  width: 100%;
-  font-size: 0.9em;
-  thead tr th {
-    border-bottom: 1px solid black;
-    border-right: 1px solid #ccc;
-    background-color: #fffdea;
-    color: black;
-    font-weight: bold;
-    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3)
-
-  }
-  tbody tr {
-    border-bottom: 1px solid #ccc;
-  }
-  tbody tr:last-child {
-    border-bottom: 0;
   }
 }

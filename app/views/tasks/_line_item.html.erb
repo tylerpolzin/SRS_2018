@@ -24,11 +24,11 @@
           </select>
         </td>
         <td>
-          <%= f.select :product_id, options_for_select(@products.order(manufacturer_model_number: :asc).map {|product| [product.model_select, product.id, {'data-quantity' => product.quantity_on_hand}]}), {:include_blank => "", hide_label: true}, {:class => 'lineItemProductBox'} %>
-          <%= f.select :part_id, options_for_select(@parts.order(manufacturer_model_number: :asc).map {|part| [part.part_select, part.id, {'data-quantity' => part.quantity_on_hand}]}), {:include_blank => "", hide_label: true}, {:class => 'lineItemPartBox'} %>
-          <%= f.select :combo_item_id, options_for_select(@combo_items.order(model_number: :asc).map {|ci| [ci.combo_select, ci.id, {}]}), {:include_blank => "", hide_label: true}, {:class => 'lineItemComboItemBox'} %>
+          <%= f.select :product_id, options_for_select(@products.map {|product| [product.model_select, product.id, {'data-quantity' => product.quantity_on_hand}]}), {:include_blank => "", hide_label: true}, {:class => 'lineItemProductBox'} %>
+          <%= f.select :part_id, options_for_select(@parts.map {|part| [part.part_select, part.id, {'data-quantity' => part.quantity_on_hand}]}), {:include_blank => "", hide_label: true}, {:class => 'lineItemPartBox'} %>
+          <%= f.select :combo_item_id, options_for_select(@combo_items.map {|ci| [ci.combo_select, ci.id, {}]}), {:include_blank => "", hide_label: true}, {:class => 'lineItemComboItemBox'} %>
         </td>
-        <td><%= f.number_field :item_cost, hide_label: true, prepend: "$", class: "lineItemCost", min: 0, value: number_to_currency(f.object.item_cost.to_f, delimiter: '', unit: ''), :step => 0.01 %></td>
+        <td><%= f.number_field :item_cost, hide_label: true, required: true, prepend: "$", class: "lineItemCost", min: 0, value: number_to_currency(f.object.item_cost.to_f, delimiter: '', unit: ''), :step => 0.01 %></td>
         <td>
           <%= f.number_field :quantity, hide_label: true, placeholder: "Order Quantity", min: 0, value: 1, required: true, class: "lineItemQuantityBox" %>
           <%= remove_child_link_line_item "fra", f %>

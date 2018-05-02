@@ -70,4 +70,22 @@ class Task < ApplicationRecord
     end
   end
 
+  def completion_date_trunc
+    if self.completion_date.present?
+      self.completion_date.strftime("%Y-%m-%d")
+    else
+      self.completion_date
+    end
+  end
+
+  def order_size
+    if self.is_ecomm_order
+      self.ecomm_orders.size
+    else
+      if self.is_customer_order
+        self.warranty_orders.size
+      end
+    end
+  end
+
 end

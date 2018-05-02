@@ -1,0 +1,350 @@
+//------------------------------------------------------------------------------------------------------
+//                              Ecomm Orders 'INDEX' related CSS                                       |
+//------------------------------------------------------------------------------------------------------
+
+.ecommOrdersTable {
+  width: 100%;
+  padding: 20px 0 20px 0px;
+  background-color: #d1dbe4;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+  border-bottom-right-radius: 30px;
+  table thead tr th:nth-child(8) {
+    padding: 0;
+  }
+}
+
+.ecomm-orders-table {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  text-align: center;
+  vertical-align: middle;
+  tr > td {
+    border-right: 1px solid #ccc;
+    border-bottom: 2px solid black;
+    }
+  tr td table tbody tr td:last-child {
+    border-right: 0;
+  }
+}
+
+.ecomm-orders-toolbar {
+  position: relative;
+  bottom: -7px;
+  font-family: 'Abel', sans-serif;
+  float: left;
+  display: inline;
+  padding-left: 5px;
+  .nav {
+    border-bottom: 0 !important;
+    li .ecommOrdersFilterBy {
+      margin: 0;
+      padding: 6px 12px 6px 12px;
+      cursor: context-menu;
+      font-weight: bold;
+      color: black;
+      border-top: 1px solid #ccc;
+      border-right: 0;
+      border-bottom: 1px solid #ccc;
+      border-left: 1px solid #ccc;
+      background: linear-gradient(to bottom, white, #d5dfe7);
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+    li .orderDateRangeFilter {
+      button {
+        margin: 0;
+        border-right: 0;
+        border-radius: 0;
+      }
+      ul {
+        border: 2px solid #2e353d;
+        li {
+        width: 300px;
+        margin: 0 5px 0 5px;
+        border: 2px solid #2e353d;
+        .input-daterange input {
+          border-radius: 0;
+          border: 0;
+        }
+        }
+      }
+    }
+    li .retailerFilter, li .statusFilter {
+      button {
+      margin: 0;
+      border-right: 0;
+      border-radius: 0;
+      }
+      .ecommOrdersRetailerFilterMenu, .ecommOrdersStatusFilterMenu {
+        padding: 5px;
+        border-top: 0;
+        border-right: 2px solid #2e353d;
+        border-bottom: 2px solid #2e353d;
+        border-left: 2px solid #2e353d;
+        li {
+          padding: 0;
+          border-right: 2px solid #2e353d;
+          border-bottom: 2px solid #2e353d;
+          border-left: 2px solid #2e353d;
+          text-align: center;
+          background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
+          color: #a92b04;
+          &:hover {
+            background: linear-gradient(to top, #d6d6d6, #e4e4e4);
+          }
+          &.selected {
+            background: linear-gradient(to bottom, white, #f3f3f3);
+            color: #165407;
+            &:hover {
+              background: linear-gradient(to top, white, #f3f3f3);
+            }
+          }
+
+          &:first-child {
+            border-top: 2px solid #2e353d;
+          }
+          label {
+            padding: 5px;
+            margin: 0;
+            width: 140px;
+            user-select: none;
+            input {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+#ecommOrdersTableSearch {
+  font-family: 'Abel', sans-serif;
+  color: black;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+  margin-left: 9px;
+}
+#ecommOrdersTableLength {
+  font-family: 'Abel', sans-serif;
+  width: 55px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-right: 0;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15)
+}
+
+// Hacky fix to remove the Searchable column because removing the column in the DataTables JS isnt working
+#ecommOrdersDataTable_wrapper {
+  .dt-buttons .dt-button-collection .dt-button:nth-child(10), .dt-buttons .dt-button-collection .dt-button:nth-child(11) {
+    display: none;
+  }
+}
+
+// Export & Column Visibility buttons on toolbar
+#ecommOrdersDataTable_wrapper .dt-buttons {
+  position: relative;
+  bottom: -7px;
+  .buttons-colvis {
+    margin: 0;
+    border-radius: 0;
+    border: 1px solid #ccc;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background: linear-gradient(to bottom, white, #f3f3f3);
+  }
+  .dtExportOptions {
+    margin-left: 10px;
+    padding: 6px 12px 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: linear-gradient(to bottom, white, #f3f3f3);
+  }
+  .dt-button-collection {
+    margin-top: 0;
+    padding: 5px;
+    border-right: 2px solid #2e353d;
+    border-bottom: 2px solid #2e353d;
+    border-left: 2px solid #2e353d;
+    border-radius: 4px;
+    display: inline-grid;
+    .dt-button {
+      padding: 5px;
+      margin: 0;
+      font-family: 'Abel', sans-serif;
+      font-weight: bold;
+      text-align: center;
+      color: #a92b04;
+      border-top: 1px solid #2e353d;
+      border-right: 2px solid #2e353d;
+      border-bottom: 1px solid #2e353d;
+      border-left: 2px solid #2e353d;
+      border-radius: 0;
+      background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
+      &:first-child {
+        border-top: 2px solid #2e353d;
+      }
+      &:last-child {
+        border-bottom: 2px solid #2e353d;
+      }
+      &.active {
+        background: linear-gradient(to bottom, white, #f3f3f3);
+        color: #165407;
+        &:hover {
+          background: linear-gradient(to top, white, #f3f3f3);
+        }
+      }
+      &:hover {
+        background: linear-gradient(to top, #d6d6d6, #e4e4e4);
+        text-decoration: none;
+      }
+
+    }
+    .buttons-excel, .buttons-pdf, .buttons-print, .buttons-copy {
+      background: linear-gradient(to bottom, white, #f3f3f3);
+      color: #165407;
+      &:hover {
+        background: linear-gradient(to top, white, #f3f3f3);
+      }
+    }
+  }
+  .dtColumnVisibility {
+    border-left: 0;
+    margin-left: 0;
+    padding: 6px 12px 6px 12px;
+  }
+}
+
+.ecomm-orders-expando {
+  width: 95%;
+  padding-top: 0;
+  padding-bottom: 5px;
+  border-top: 0;
+  border-right: 2px solid #b5b5f7;
+  border-left: 2px solid #b5b5f7;
+  border-bottom: 2px solid #b5b5f7 !important;
+  margin-bottom: 5px !important;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  thead tr {
+    th {
+      font-size: 1em;
+      font-weight: bold;
+      text-align: center;
+      background-color: #eceaff;
+      color: black;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
+    }
+    th:last-child {
+      border-right: 0;
+    }
+  }
+  tbody tr td {
+    text-align: center;
+    vertical-align: top;
+    border-right: 1px solid #ddd;
+  }
+}
+
+.ecomm_orders_line_items_table {
+  padding: 0 !important;
+  width: 600px;
+  table {
+    tbody td {
+      padding: 3px 5px !important;
+      border-bottom: 1px solid #ddd;
+      &.eo_li_sku { // 1-Item SKU Field
+        // width: 90px;
+      }
+      &.eo_li_cost { // 2-Item Cost Field
+        width: 8%;
+      }
+      &.eo_li_quantity { // 3-Quantity Field
+        width: 5%;
+      }
+      &.ecomm_orders_line_items_tracking_numbers_table { // 4-Tracking Information Table
+        width: 65%;
+        padding: 0 !important;
+        table tbody tr td {
+          &.li_tn_carrier { // 1-Carrier Field
+            width: 17%;
+          }
+          &.li_tn_sm { // 2-Shipping Method Field
+            width: 29%;
+          }
+          &.li_tn_tn { // 3-Tracking Number Field
+            width: 41%;
+            .copy-cut {
+              color: #00c500;
+              cursor: pointer;
+              &:hover {
+                color: #006520;
+              }
+              &:active {
+                color: orange;
+              }
+            }
+            .copy-text {
+              position: absolute;
+              z-index: -999;
+              opacity: 0;
+            }
+          }
+          &.li_tn_sc { // 4-Shipping Cost Field
+            width: 13%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ecomm_orders_line_item_header {
+  font-size: 0.9em;
+  thead tr th {
+    padding-left: 33%;
+    padding-bottom: 9px;
+    border: 0 !important;
+    text-align: center;
+  }
+  tbody tr td {
+    padding: 0 2px;
+    border: 0 !important;
+    text-align: center;
+    &:first-child { // 1-Line Item Header
+      width: 22%;
+    }
+    &:nth-child(2) { // 2-Item Cost Header
+      width: 5%;
+    }
+    &:nth-child(3) { // 3-Quantity Header
+      width: 8%;
+    }
+    &:nth-child(4) { // 4-Carrier Header
+      width: 9%;
+    }
+    &:nth-child(5) { // 5-Ship Method Header
+      width: 20%;
+    }
+    &:nth-child(6) { // 6-Tracking Number Header
+      width: 25%;
+    }
+    &:last-child { // 7-Cost Header
+      width: 11%;
+    }
+  }
+}
+
+.highlightable.enabled {
+  background-color: #92ffcb !important;
+}
+
+.link_trim {
+  margin-bottom: 5px;
+}
+
+.tracking_highlight_selected {
+  color: #bd8d00;
+}

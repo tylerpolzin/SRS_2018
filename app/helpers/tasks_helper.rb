@@ -111,11 +111,14 @@ module TasksHelper
               end
             end
           end
-        
+
           def add_child_link_line_item_tracking_number(name, association)
             link_to(name, "javascript:void(0)", :class => "add_child_line_item_tracking_number", :"data-association" => association)
           end
-        
+          def add_child_link_line_item_edit_tracking_number(name, association)
+            link_to(name, "javascript:void(0)", :class => "add_child_line_item_edit_tracking_number", :"data-association" => association)
+          end
+
           def remove_child_link_line_item_tracking_number(name, f)
             f.hidden_field(:_destroy) + link_to(name, "javascript:void(0)", :class => "remove_child_line_item_tracking_number")
           end
@@ -164,6 +167,9 @@ module TasksHelper
     
       def add_child_link_warranty_order_comment(name, association)
         link_to(name, "javascript:void(0)", :class => "add_child_warranty_order_comment", :"data-association" => association)
+      end
+      def add_child_link_warranty_order_edit_comment(name, association)
+        link_to(name, "javascript:void(0)", :class => "add_child_warranty_order_edit_comment", :"data-association" => association)
       end
 
   #----------------------------WARRANTY ORDER LINE ITEMS NESTED FIELDS-----------------------------------|

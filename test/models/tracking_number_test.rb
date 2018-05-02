@@ -6,7 +6,7 @@
 #  line_item_id    :integer
 #  carrier         :string
 #  tracking_number :string
-#  shipping_cost   :decimal(, )
+#  shipping_cost   :decimal(, )      default(0.0)
 #  ship_date       :datetime
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

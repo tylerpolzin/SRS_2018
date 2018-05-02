@@ -1053,9 +1053,15 @@
 
   }
   tbody tr {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc !important;
+    td {
+      border-bottom: 1px solid #ccc !important;
+    }
   }
   tbody tr:last-child {
-    border-bottom: 0;
+    border-bottom: 0 !important;
+    td {
+      border-bottom: 0 !important;
+    }
   }
 }

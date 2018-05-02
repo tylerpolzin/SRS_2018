@@ -26,8 +26,8 @@ class LineItem < ApplicationRecord
 
   accepts_nested_attributes_for :tracking_numbers, :allow_destroy => true, :reject_if => :tracking_number_blank
 
-  def tracking_number_blank(a) # If a item is added to the batch, but an item is not selected in that field, it is automatically rejected & deleted.
-    self.new_record? && a[:tracking_number].blank?
+  def tracking_number_blank(a)
+    a[:tracking_number].blank?
   end
 
   def item_type
@@ -42,11 +42,21 @@ class LineItem < ApplicationRecord
 
   def item_select # Use this in dropdown to provide a link to each line item
     if self.product_id.present?
-      "<a target='_blank' href='/products/#{product.slug}' title='View Product Details (ID: #{product_id})'>#{product.product_select_with_model}</a>".html_safe
+      "<a target='_blank' href='/products/#{product.slug}' title='View Product Details (ID: #{product_id})' class='barebones_tooltip'>#{product.product_select_with_model}</a>".html_safe
     elsif self.part_id.present?
-      "<a target='_blank' href='/parts/#{part.slug}' title='View Part Details (ID: #{part_id})'>#{part.part_select_with_model}</a>".html_safe
+      "<a target='_blank' href='/parts/#{part.slug}' title='View Part Details (ID: #{part_id})' class='barebones_tooltip'>#{part.part_select_with_model}</a>".html_safe
     elsif self.combo_item_id.present?
-      "<a target='_blank' href='/combo_items/#{combo_item.slug}' title='View Combo Item Details (ID: #{combo_item_id})'>#{combo_item.combo_select_with_model}</a>".html_safe
+      "<a target='_blank' href='/combo_items/#{combo_item.slug}' title='View Combo Item Details (ID: #{combo_item_id})' class='barebones_tooltip'>#{combo_item.combo_select_with_model}</a>".html_safe
+    end
+  end
+
+  def item_select_short
+    if self.product_id.present?
+      "<a target='_blank' href='/products/#{product.slug}' title='#{product.product_select}' class='barebones_tooltip'>#{product.sku_if_sku}</a>".html_safe
+    elsif self.part_id.present?
+      "<a target='_blank' href='/parts/#{part.slug}' title='#{part.part_select}' class='barebones_tooltip'>#{part.sku_if_sku}</a>".html_safe
+    elsif self.combo_item_id.present?
+      "<a target='_blank' href='/combo_items/#{combo_item.slug}' title='#{combo_item.combo_select}' class='barebones_tooltip'>#{combo_item.model_number}</a>".html_safe
     end
   end
 
