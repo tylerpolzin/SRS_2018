@@ -92,6 +92,14 @@ class Task < ApplicationRecord
         else
           0
         end
+      else
+        if self.is_store_order
+          0
+        else
+          if self.is_basic_task
+            0
+          end
+        end
       end
     end
   end
