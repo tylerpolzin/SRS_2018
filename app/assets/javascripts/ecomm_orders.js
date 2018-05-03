@@ -202,24 +202,7 @@ $(document).on("turbolinks:load", function() {
     });
   });
 
-  // $.fn.DataTable.ext.pager.numbers_length = 5; // Number of numbers to show in Pagination controls
-  // $.fn.dataTable.ext.search.push( // Function for the "Quantity Range Filter"
-  //   function( settings, data, dataIndex ) {
-  //     var min = parseInt( $('#productFilterStartQty').val(), 10 );
-  //     var max = parseInt( $('#productFilterEndQty').val(), 10 );
-  //     var qty = parseFloat( data[5] ) || 0; // '5' is the Quantity Column number
-
-  //     if ( ( isNaN( min ) && isNaN( max ) ) ||
-  //       ( isNaN( min ) && qty <= max ) ||
-  //       ( min <= qty   && isNaN( max ) ) ||
-  //       ( min <= qty   && qty <= max ) ) {
-  //       return true;
-  //       }
-  //     return false;
-  //   }
-  // );
-  // $("#productFilterStartQty").on("change keyup", function() { table.draw(); });
-  // $("#productFilterEndQty").on("change keyup", function() { table.draw(); });
+  $.fn.DataTable.ext.pager.numbers_length = 5; // Number of numbers to show in Pagination controls
 
   $("#ecommOrdersHackFixButton").on("click", function(){
     table.page.len(50).draw(); // Fixes header column width issues
@@ -265,7 +248,6 @@ $(document).on("turbolinks:load", function() {
     document.execCommand("Copy");
     $(this).parent().addClass("tracking_highlight_selected");
   });
-
 
 });
 
