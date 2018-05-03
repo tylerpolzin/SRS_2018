@@ -79,3 +79,11 @@ Backup Status:
 heroku pg:backups --app glacial-harbor-41926
 
 Zipcode API: 87mv1ue2jlLEZKmKePeReA5Ej5aamtPqBoalxmKqEluvAmrmRMfvSivpPP8GwnpH
+
+TrackingNumber.create!({carrier: "UPS"})
+EcommOrder.create!({retailer: "Home Depot"})
+
+Task.create!({name: "First Task Test", initiated_by_id: 1, initiated_for_id: 1, task_type: "E-Commerce Orders", active: true, due_date: "2018-03-06 06:00:00"})
+EcommOrder.create!({task_id: 4, retailer: "Home Depot", customer_name: "Jerry Seinfeld", order_number: "1", order_date: "2018-04-10 05:00:00", status: "Cancelled", due_date: "2018-04-13 05:00:00", cancellation_reason: "Out of Stock", active: true, requested_carrier: "Cheapest Method", requested_method: "Standard (Ground)"})
+LineItem.create!({quantity: 1, product_id: 50, ecomm_order_id: 6, item_cost: "0.0"})
+TrackingNumber.create!({line_item_id: 15, carrier: "UPS", tracking_number: "1Z89X9V90384248465", shipping_cost: "0.0", ship_date: "2018-05-09 05:00:00", shipping_method: "Standard (Ground)"})

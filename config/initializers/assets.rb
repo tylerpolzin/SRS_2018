@@ -4,6 +4,7 @@
 Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( *.png *.jpg *.jpeg *.gif *.bmp )
 Rails.application.config.assets.precompile += %w( combo_items.js )
+Rails.application.config.assets.precompile += %w( ecomm_orders.js )
 Rails.application.config.assets.precompile += %w( parts.js )
 Rails.application.config.assets.precompile += %w( products.js )
 Rails.application.config.assets.precompile += %w( stockmovement_batches.js )
