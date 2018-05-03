@@ -94,37 +94,36 @@
                 <table class="table">
                   <thead></thead>
                   <tbody>
-                    <% if task.uploads.length <= task.order_size %>
-                      <% task.uploads.each do |upload| %>
+                    <% if task.uploads.present? %>
+                      <% if task.uploads.length <= task.order_size %>
+                        <% task.uploads.each do |upload| %>
+                          <tr>
+                            <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", class: "task_file_upload_tooltip", :"file-size" => "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}", :"description" => "#{upload.description if upload.description.present?}#{"N/A" if upload.description.blank?}"  %></td>
+                          </tr>
+                        <% end %>
+                      <% else %>
                         <tr>
-                          <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", class: "task_file_upload_tooltip", :"file-size" => "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}", :"description" => "#{upload.description if upload.description.present?}#{"N/A" if upload.description.blank?}"  %></td>
+                          <td>
+                            <li class="dropdown" style="list-style:none;">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> View Files <i class="fa fa-angle-double-down"></i></a>
+                              <ul class="dropdown-menu task_uploads_file_dropdown">
+                                <% task.uploads.each do |upload| %>
+                                  <li>
+                                    <table class="table">
+                                      <thead></thead>
+                                      <tbody>
+                                        <tr>
+                                          <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", class: "task_file_upload_tooltip", :"file-size" => "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}", :"description" => "#{upload.description if upload.description.present?}#{"N/A" if upload.description.blank?}"  %></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </li>
+                                <% end %>
+                              </ul>
+                            </li>
+                          </td>
                         </tr>
                       <% end %>
-                    <% else %>
-                      <tr>
-                        <td>
-                          <li class="dropdown" style="list-style:none;">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> View Files <i class="fa fa-angle-double-down"></i></a>
-                            <ul class="dropdown-menu task_uploads_file_dropdown">
-                              <% task.uploads.each do |upload| %>
-                                <li>
-                                  <table class="table">
-                                    <thead></thead>
-                                    <tbody>
-                                      <tr>
-                                        <td><%= link_to upload.file_file_name, upload.file.url(:original, false), target: "_blank", class: "task_file_upload_tooltip", :"file-size" => "File Size: #{number_to_human_size(upload.file_file_size, precision: 2)}", :"description" => "#{upload.description if upload.description.present?}#{"N/A" if upload.description.blank?}"  %></td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                  
-                                  
-                                </li>
-                              <% end %>
-                            </ul>
-                          </li>
-
-                        </td>
-                      </tr>
                     <% end %>
                   </tbody>
                 </table>
