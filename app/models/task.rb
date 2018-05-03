@@ -81,14 +81,14 @@ class Task < ApplicationRecord
   def order_size
     if self.is_ecomm_order
       if self.ecomm_orders.present?
-        self.ecomm_orders.size
+        self.ecomm_orders.length
       else
         0
       end
     else
       if self.is_customer_order
         if self.warranty_orders.present?
-          self.warranty_orders.size
+          self.warranty_orders.length
         else
           0
         end
