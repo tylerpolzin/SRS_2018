@@ -57,13 +57,13 @@
                                   </li>
                                   <li>
                                     <div class='orderDateRangeFilter'>
-                                      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-calendar' aria-hidden='true'></i> Order Date Range <span class='caret'></span></button>
+
                                       <ul class='dropdown-menu'>
                                         <li>
                                           <div class='input-daterange input-group' id='datepicker'>
-                                            <input type='text' class='form-control filterStartDate' id='filterStartDate' name='start' placeholder='Start Date' />
+                                            <input type='text' class='form-control filterStartDate' id='ecommOrderDatefilterStartDate' name='start' placeholder='Start Date' />
                                             <span class='input-group-addon'>to</span>
-                                            <input type='text' class='form-control filterEndDate' id='filterEndDate' name='end' placeholder='End Date' />
+                                            <input type='text' class='form-control filterEndDate' id='ecommOrderDatefilterEndDate' name='end' placeholder='End Date' />
                                           </div>
                                         </li>
                                       </ul>
@@ -91,7 +91,8 @@
                                     </div>
                                   </li>                            
                                 </ul>">
-        
+                                      <!--<button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-calendar' aria-hidden='true'></i> Order Date Range <span class='caret'></span></button>-->
+
       </div>
       <tbody class="ecomm-orders-table">
         <% @ecomm_orders.each do |ecomm_order| %>

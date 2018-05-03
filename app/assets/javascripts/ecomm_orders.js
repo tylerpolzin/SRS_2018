@@ -100,29 +100,29 @@ $(document).on("turbolinks:load", function() {
       todayBtn: true,
       todayHighlight: true
   });
-  $.fn.dataTableExt.afnFiltering.push( // Used for the "Filter By Date" Function
-    function( oSettings, aData, iDataIndex ) {
-      if(oSettings.nTable.id == "ecommOrdersDataTable"){
-        var startDate = document.getElementById("filterStartDate").value;
-        var endDate = document.getElementById("filterEndDate").value;
-        var iStartDateCol = 1; // Column where the filtering takes place
-        var iEndDateCol = 1;
-        startDate=startDate.substring(0,4) + startDate.substring(5,7)+ startDate.substring(8,10); // 0,4 = yyyyy 5,7 = dd 8,10 = dd == yyyy-mm-dd
-        endDate=endDate.substring(0,4) + endDate.substring(5,7)+ endDate.substring(8,10);
-        var datofini=aData[iStartDateCol].substring(0,4) + aData[iStartDateCol].substring(5,7)+ aData[iStartDateCol].substring(8,10);
-        var datoffin=aData[iEndDateCol].substring(0,4) + aData[iEndDateCol].substring(5,7)+ aData[iEndDateCol].substring(8,10);
-        if ( startDate == "" && endDate == "" ) { return true }
-        else if ( startDate <= datofini && endDate == "") { return true }
-        else if ( endDate >= datoffin && startDate == "") { return true }
-        else if (startDate <= datofini && endDate >= datoffin) { return true }
+  // $.fn.dataTableExt.afnFiltering.push( // Used for the "Filter By Date" Function
+  //   function( oSettings, aData, iDataIndex ) {
+  //     if(oSettings.nTable.id == "ecommOrdersDataTable"){
+  //       var startDate = document.getElementById("ecommOrderDatefilterStartDate").value;
+  //       var endDate = document.getElementById("ecommOrderDatefilterEndDate").value;
+  //       var iStartDateCol = 1; // Column where the filtering takes place
+  //       var iEndDateCol = 1;
+  //       startDate=startDate.substring(0,4) + startDate.substring(5,7)+ startDate.substring(8,10); // 0,4 = yyyyy 5,7 = dd 8,10 = dd == yyyy-mm-dd
+  //       endDate=endDate.substring(0,4) + endDate.substring(5,7)+ endDate.substring(8,10);
+  //       var datofini=aData[iStartDateCol].substring(0,4) + aData[iStartDateCol].substring(5,7)+ aData[iStartDateCol].substring(8,10);
+  //       var datoffin=aData[iEndDateCol].substring(0,4) + aData[iEndDateCol].substring(5,7)+ aData[iEndDateCol].substring(8,10);
+  //       if ( startDate == "" && endDate == "" ) { return true }
+  //       else if ( startDate <= datofini && endDate == "") { return true }
+  //       else if ( endDate >= datoffin && startDate == "") { return true }
+  //       else if (startDate <= datofini && endDate >= datoffin) { return true }
 
-        return false;
-      }
-      return true;
-    }
-  );
-  $("#filterStartDate").on("change keyup", function() { table.draw(); });
-  $("#filterEndDate").on("change keyup", function() { table.draw(); });
+  //       return false;
+  //     }
+  //     return true;
+  //   }
+  // );
+  // $("#ecommOrderDatefilterStartDate").on("change keyup", function() { table.draw(); });
+  // $("#ecommOrderDatefilterEndDate").on("change keyup", function() { table.draw(); });
 
 
 

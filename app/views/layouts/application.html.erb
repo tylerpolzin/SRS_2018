@@ -128,9 +128,6 @@
                 <a data-target="#"><i class="fa fa-file fa-lg"></i> Orders<span class="arrow"></span></a>
               </li>
               <ul class="sub-menu collapse" id="orders">
-                <%= link_to new_task_path, method: :get do %>
-                  <li>Create New Task</li>
-                <% end %>
                 <%= link_to tasks_path do %>
                   <li>View All Tasks</li>
                 <% end %>
@@ -157,6 +154,9 @@
               </ul>
             <% end %>
             <% if admin_or_employee? %>
+              <%= link_to new_task_path, method: :get do %>
+                <li><i class="fa fa-tasks"></i> Create New Task</li>
+              <% end %>
               <%= link_to inventory_adjustments_path, method: :get do %>
                 <li><i class="fa fa-exchange fa-lg"></i> Inventory Adjustments</li>
               <% end %>
