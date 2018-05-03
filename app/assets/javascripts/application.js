@@ -149,8 +149,3 @@ $(document).on('focus', 'span.select2', function () {
   $(this).prev('select:not([multiple])').select2('open');
 });
 
-if (typeof Turbolinks === "undefined" || Turbolinks === null) {
-  location.reload;
-}
-
-Turbolinks.dispatch("turbolinks:load");
