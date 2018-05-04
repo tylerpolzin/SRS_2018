@@ -30,7 +30,7 @@ $(document).on("turbolinks:load", function() {
                 "dom": "<'ecomm-orders-toolbar'>B<'top-row paginate'p>t<'bottom-row paginate'ip>",
                 "buttons": [
                   // Standard Column Visibility Button that lists all columns.  ".noVis" is disabled via CSS in Application.scss because the ":not" method doesn"t work here
-                  {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Columns <span class='caret'></span>", className: "btn btn-header"},
+                  {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Columns <span class='caret'></span>", className: "btn btn-header", columnText: function ( dt, idx, title ) {return ': '+title;}},
 
                   {extend: "collection", text: "<i class='fa fa-download' aria-hidden='true'></i> Export <span class='caret'></span>", className: "btn btn-header dtExportOptions",
                     buttons: [
@@ -75,7 +75,10 @@ $(document).on("turbolinks:load", function() {
                 "order": [[0, "desc"]],
                 "oLanguage": {"sZeroRecords": "No orders to display for this view"}
               });
-              
+
+  // Reduces the amount of text displayed for this particular item in the Columns Dropdown
+  // $(table.buttons()[0].inst.s.buttons[0].conf._collection).find('a:nth-child(8) span').text("Line Items & Tracking Information");
+
   table.page.len(50000).draw();
   
   function top_toolbar (top_toolbar) {
@@ -124,8 +127,6 @@ $(document).on("turbolinks:load", function() {
   // $("#ecommOrderDatefilterStartDate").on("change keyup", function() { table.draw(); });
   // $("#ecommOrderDatefilterEndDate").on("change keyup", function() { table.draw(); });
 
-
-
   $(document).on("click", ".ecommOrdersStatusFilterMenu", function (e) {
     e.stopPropagation(); // Stops the Status Filter Menu from closing when an interior option is clicked
   });
@@ -155,9 +156,6 @@ $(document).on("turbolinks:load", function() {
       table.column(10).search(retailers, true, false, false).draw();
   });
 
-  $(document).on("DOMNodeInserted", ".dt-button-collection", function() { // Reduces the amount of text displayed for this particular item in the Columns Dropdown
-    $(this).find("a:nth-child(8) span").text("Line Items & Tracking Information");
-  });
 
   $("input:checkbox").change(function(){ // Takes care of the non-dataTables specific menu styling
     if($(this).is(":checked"))

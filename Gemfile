@@ -27,12 +27,11 @@ gem 'rolify'
 # gem 'cancancan'
 gem "paperclip"
 gem 'aws-sdk-s3' # Use for Paperclip uploads
-# gem 'twitter-bootstrap-rails-confirm'
 gem 'best_in_place'
 gem 'underscore-rails'
 gem 'gmaps4rails'
 gem 'ajax-datatables-rails' # Didn't use before, https://github.com/jbox-web/ajax-datatables-rails
-gem 'jquery-datatables-rails'
+# gem 'jquery-datatables-rails'
 gem 'jquery-ui-rails'
 # gem 'jquery-fileupload-rails'
 # gem 'jquery_context_menu-rails'

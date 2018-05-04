@@ -8,24 +8,12 @@
 @import "bootstrap-sprockets"; // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 @import "bootstrap";
 @import "bootstrap-datepicker";
-//@import "bootstrap-datetimepicker";
 @import 'rails_bootstrap_forms';
-@import "datatables.min.scss";
-@import "dataTables.bootstrap4.min.scss";
-@import "autoFill.bootstrap4.min.scss";
-@import "buttons.bootstrap4.min.scss";
-@import "colReorder.bootstrap4.min.scss";
-@import "fixedColumns.bootstrap4.min.scss";
-@import "fixedHeader.bootstrap4.min.scss";
-@import "keyTable.bootstrap4.min.scss";
-@import "responsive.bootstrap4.min.scss";
 @import "jquery-ui";
 //@import "jquery.fileupload";
 //@import "jquery.fileupload-ui";
 @import "font-awesome";
-@import "dataTables/jquery.dataTables";
-@import "dataTables/bootstrap/3/jquery.dataTables.bootstrap";
-//@import "jquery.dataTables.yadcf.scss";
+@import "jquery.dataTables.min.scss";
 //@import "jquery.contextMenu.css";
 @import "select2";
 @import "select2-bootstrap";
