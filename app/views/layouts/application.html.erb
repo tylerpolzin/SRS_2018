@@ -18,6 +18,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= yield :js %>
     <link href="//fonts.googleapis.com/css?family=Alegreya+Sans:100|Quicksand:400,700|Abel" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
     <%= yield (:head) %>
   </head>
   <body>
@@ -145,9 +146,9 @@
                 <%= link_to new_customer_path, method: :get do %>
                   <li>Create New Customer</li>
                 <% end %>
-                <%#= link_to customers_path do %>
-                  <!--<li>View All Customers</li>-->
-                <%# end %>
+                <%= link_to customers_path do %>
+                  <li>View All Customers</li>
+                <% end %>
                 <%#= link_to warranty_orders_path do %>
                   <!--<li>View All Customer Orders</li>-->
                 <%# end %>

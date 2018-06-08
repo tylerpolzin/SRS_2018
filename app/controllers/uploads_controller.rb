@@ -16,6 +16,7 @@ class UploadsController < ApplicationController
   end
 
   def edit
+    collect_items
   end
 
   def create
@@ -53,6 +54,12 @@ class UploadsController < ApplicationController
   end
 
   private
+
+    def collect_items
+      @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)
+      @parts = Part.all
+      @tasks = Task.all
+    end
 
     def set_upload
       @upload = Upload.find(params[:id])

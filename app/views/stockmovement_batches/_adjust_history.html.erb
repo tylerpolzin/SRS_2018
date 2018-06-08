@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody class="adjust-history-table">
-      <% @stockmovement_batches.each do |i| %>
+      <% @stockmovement_batches.last(25).each do |i| %>
         <tr
           data-child-undo_header="<% if current_user.admin? %>
                                     <th>Undo Entry</th>

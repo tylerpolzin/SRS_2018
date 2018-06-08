@@ -1,179 +1,182 @@
-<select multiple id="taskShowEcommOrderSelect" class="form-control" size="<%= @task.ecomm_orders.size + 2 %>">
-  <option value="0" disabled>Select Order...</option>
-  <option <%= "selected" if @task.ecomm_orders.size == 1 %> value="-1">View All</option>
+<% if @task.ecomm_orders.present? %>
+  <select multiple id="taskShowEcommOrderSelect" class="form-control" size="<%= @task.ecomm_orders.size + 2 %>">
+    <option value="0" disabled>Select Order...</option>
+    <option <%= "selected" if @task.ecomm_orders.size == 1 %> value="-1">View All</option>
+    <% @task.ecomm_orders.each do |ecomm_order| %>
+      <option value="<%= ecomm_order.id %>" status="<%= ecomm_order.status %>"><%= ecomm_order.dropdown_select %></option>
+    <% end %>
+  </select>
   <% @task.ecomm_orders.each do |ecomm_order| %>
-    <option value="<%= ecomm_order.id %>" status="<%= ecomm_order.status %>"><%= ecomm_order.dropdown_select %></option>
-  <% end %>
-</select>
-<% @task.ecomm_orders.each do |ecomm_order| %>
-  <div class="show_task_order_fields" id="ecomm_order_number-<%= ecomm_order.id %>">
-    <div class="task_order_header">
-      <span class="task_order_title" title="ID: <%= ecomm_order.id %>">Ecomm Order for <%= ecomm_order.customer_name %></span>
-      <%= link_to "<i class='fa fa-edit'></i> Edit This Order".html_safe, edit_ecomm_order_path(ecomm_order), method: :get, class: 'edit_task_order_button' %>
-    </div>
-    </br><div class="task_order_details">
-      <div class="task_order_header">Basic Details</div>
-      <table class="table table-bordered showTaskOrderContainer">
-        <thead></thead>
-        <tbody>
-          <tr>
-            <td>Order Status</td>
-            <td class="show_order_status"><%= ecomm_order.status if ecomm_order.status.present? %></td>
-          </tr>
-          <% if ecomm_order.cancellation_reason.present? %>
-            <tr class="order_status_cancelled">
-              <td>Cancellation Reason</td>
-              <td><%= ecomm_order.cancellation_reason %></td>
+    <div class="show_task_order_fields" id="ecomm_order_number-<%= ecomm_order.id %>">
+      <div class="task_order_header">
+        <span class="task_order_title" title="ID: <%= ecomm_order.id %>">Ecomm Order for <%= ecomm_order.customer_name %></span>
+        <%= link_to "<i class='fa fa-edit'></i> Edit This Order".html_safe, edit_ecomm_order_path(ecomm_order), method: :get, class: 'edit_task_order_button' %>
+      </div>
+      </br><div class="task_order_details">
+        <div class="task_order_header">Basic Details</div>
+        <table class="table table-bordered showTaskOrderContainer">
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td>Order Status</td>
+              <td class="show_order_status"><%= ecomm_order.status if ecomm_order.status.present? %></td>
             </tr>
-          <% end %>
-          <tr>
-            <td>Retailer</td>
-            <td><%= ecomm_order.retailer if ecomm_order.retailer.present? %></td>
-          </tr>
-          <tr>
-            <td>Customer Name</td>
-            <td><%= ecomm_order.customer_name if ecomm_order.customer_name.present? %></td>
-          </tr>
-          <tr>
-            <td>Order Number</td>
-            <td><%= ecomm_order.order_number if ecomm_order.order_number.present? %></td>
-          </tr>
-          <tr>
-            <td>Order Date</td>
-            <td><%= ecomm_order.order_date_trunc %></td>
-          </tr>
-          <tr>
-            <td>Due Date</td>
-            <td><%= ecomm_order.due_date_trunc %></td>
-          </tr>
-          <tr>
-            <td>Completion Date</td>
-            <td><%= ecomm_order.completion_date_trunc %></td>
-          </tr>
-          <tr>
-            <td>Requested Carrier</td>
-            <td><%= ecomm_order.requested_carrier if ecomm_order.requested_carrier.present? %></td>
-          </tr>
-          <tr>
-            <td>Requested Ship Method</td>
-            <td><%= ecomm_order.requested_method if ecomm_order.requested_method.present? %></td>
-          </tr>
-          <tr>
-            <td>Order Creation Date</td>
-            <td><%= ecomm_order.created_at.strftime("%Y-%m-%d") %></td>
-          </tr>
-          <tr>
-            <td>Order Last Modified</td>
-            <td><%= ecomm_order.updated_at.strftime("%Y-%m-%d") %></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <% if ecomm_order.details.present? %>
-      <div class="show_basic_pop_fields">
-        <div class="show_basic_pop_header">
-          <span class="show_basic_pop_title">Custom Attributes</span>
-        </div>
-        <table class="table table-bordered showTaskOrderAttributes">
-          <thead></thead>
-          <tbody>
-            <% ecomm_order.details.try(:each) do |key, value| %>
-              <tr>
-                <td><%= key %></td>
-                <td><%= value %></td>
+            <% if ecomm_order.cancellation_reason.present? %>
+              <tr class="order_status_cancelled">
+                <td>Cancellation Reason</td>
+                <td><%= ecomm_order.cancellation_reason %></td>
               </tr>
             <% end %>
+            <tr>
+              <td>Retailer</td>
+              <td><%= ecomm_order.retailer if ecomm_order.retailer.present? %></td>
+            </tr>
+            <tr>
+              <td>Customer Name</td>
+              <td><%= ecomm_order.customer_name if ecomm_order.customer_name.present? %></td>
+            </tr>
+            <tr>
+              <td>Order Number</td>
+              <td><%= ecomm_order.order_number if ecomm_order.order_number.present? %></td>
+            </tr>
+            <tr>
+              <td>Order Date</td>
+              <td><%= ecomm_order.order_date_trunc %></td>
+            </tr>
+            <tr>
+              <td>Due Date</td>
+              <td><%= ecomm_order.due_date_trunc %></td>
+            </tr>
+            <tr>
+              <td>Completion Date</td>
+              <td><%= ecomm_order.completion_date_trunc %></td>
+            </tr>
+            <tr>
+              <td>Requested Carrier</td>
+              <td><%= ecomm_order.requested_carrier if ecomm_order.requested_carrier.present? %></td>
+            </tr>
+            <tr>
+              <td>Requested Ship Method</td>
+              <td><%= ecomm_order.requested_method if ecomm_order.requested_method.present? %></td>
+            </tr>
+            <tr>
+              <td>Order Creation Date</td>
+              <td><%= ecomm_order.created_at.strftime("%Y-%m-%d") %></td>
+            </tr>
+            <tr>
+              <td>Order Last Modified</td>
+              <td><%= ecomm_order.updated_at.strftime("%Y-%m-%d") %></td>
+            </tr>
           </tbody>
         </table>
       </div>
-    <% end %>
-    
-    <% if ecomm_order.comments.present? %>
-      <div class="show_basic_pop_fields">
-        <div class="show_basic_pop_header">
-          <span class="show_basic_pop_title">Comments</span>
-        </div>
-        <table class="table table-bordered showTaskOrderComments">
-          <thead></thead>
-          <tbody>
-            <% ecomm_order.comments.order(:id).each do |comment| %>
-              <tr>
-                <td>
-                  <%= comment.content %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% end %>
-
-    <% if ecomm_order.line_items.present? %>
-      <% ecomm_order.line_items.each do |line_item| %>
+  
+      <% if ecomm_order.details.present? %>
         <div class="show_basic_pop_fields">
           <div class="show_basic_pop_header">
-            <span class="show_basic_pop_title">Line Item</span>
+            <span class="show_basic_pop_title">Custom Attributes</span>
           </div>
-          <table class="table table-bordered showTaskOrderLineItem" style=<%= "margin-bottom:20px;" if line_item.tracking_numbers.present? %>>
+          <table class="table table-bordered showTaskOrderAttributes">
             <thead></thead>
             <tbody>
-              <tr>
-                <td>Item Type</td>
-                <td><%= line_item.item_type %></td>
-              </tr>
-              <tr>
-                <td><%= line_item.item_type %> Details</td>
-                <td><%= line_item.item_select %></td>
-              </tr>
-              <tr>
-                <td><%= line_item.item_type %> Cost</td>
-                <td><%= number_to_currency(line_item.item_cost, delimiter: "", unit: "$") %></td>
-              </tr>
-              <tr>
-                <td>Quantity Ordered</td>
-                <td><%= line_item.quantity %></td>
-              </tr>
+              <% ecomm_order.details.try(:each) do |key, value| %>
+                <tr>
+                  <td><%= key %></td>
+                  <td><%= value %></td>
+                </tr>
+              <% end %>
             </tbody>
           </table>
-          <% if line_item.tracking_numbers.present? %>
-            <% line_item.tracking_numbers.each do |tracking_number| %>
-              <div class="show_basic_pop_fields">
-                <div class="show_basic_pop_header">
-                  <span class="show_basic_pop_title">Tracking Number</span>
-                </div>
-                <table class="table table-bordered showLineItemTrackingNumber">
-                  <thead></thead>
-                  <tbody>
-                    <tr>
-                      <td>Tracking Number</td>
-                      <td class="tracking_number_field"><i class="fa fa-cut copy-cut barebones_tooltip" title="Copy Tracking Number"></i><input class="copy-text" value="<%= tracking_number.tracking_number_present %>"> <%= tracking_number.tracking_number_present %> <a href=<%= tracking_number.tracking_link_select %> target="_blank" title="Go To Carrier Website" class="barebones_tooltip"><i class="fa fa-external-link"></i></a></td>
-                    </tr>
-                    <tr>
-                      <td>Carrier</td>
-                      <td><%= tracking_number.carrier %></td>
-                    </tr>
-                    <tr>
-                      <td>Shipping Method</td>
-                      <td><%= tracking_number.shipping_method %></td>
-                    </tr>
-                    <tr>
-                      <td>Ship Date</td>
-                      <td><%= tracking_number.ship_date_trunc %></td>
-                    </tr>
-                    <tr>
-                      <td>Shipping Cost</td>
-                      <td><%= number_to_currency(tracking_number.shipping_cost, delimiter: "", unit: "$") %></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            <% end %>
-          <% end %>
         </div>
       <% end %>
-    <% end %>
-
-  </div>
-
+      
+      <% if ecomm_order.comments.present? %>
+        <div class="show_basic_pop_fields">
+          <div class="show_basic_pop_header">
+            <span class="show_basic_pop_title">Comments</span>
+          </div>
+          <table class="table table-bordered showTaskOrderComments">
+            <thead></thead>
+            <tbody>
+              <% ecomm_order.comments.order(:id).each do |comment| %>
+                <tr>
+                  <td>
+                    <%= comment.content %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+  
+      <% if ecomm_order.line_items.present? %>
+        <% ecomm_order.line_items.each do |line_item| %>
+          <div class="show_basic_pop_fields">
+            <div class="show_basic_pop_header">
+              <span class="show_basic_pop_title">Line Item</span>
+            </div>
+            <table class="table table-bordered showTaskOrderLineItem" style=<%= "margin-bottom:20px;" if line_item.tracking_numbers.present? %>>
+              <thead></thead>
+              <tbody>
+                <tr>
+                  <td>Item Type</td>
+                  <td><%= line_item.item_type %></td>
+                </tr>
+                <tr>
+                  <td><%= line_item.item_type %> Details</td>
+                  <td><%= line_item.item_select %></td>
+                </tr>
+                <tr>
+                  <td><%= line_item.item_type %> Cost</td>
+                  <td><%= number_to_currency(line_item.item_cost, delimiter: "", unit: "$") %></td>
+                </tr>
+                <tr>
+                  <td>Quantity Ordered</td>
+                  <td><%= line_item.quantity %></td>
+                </tr>
+              </tbody>
+            </table>
+            <% if line_item.tracking_numbers.present? %>
+              <% line_item.tracking_numbers.each do |tracking_number| %>
+                <div class="show_basic_pop_fields">
+                  <div class="show_basic_pop_header">
+                    <span class="show_basic_pop_title">Tracking Number</span>
+                  </div>
+                  <table class="table table-bordered showLineItemTrackingNumber">
+                    <thead></thead>
+                    <tbody>
+                      <tr>
+                        <td>Tracking Number</td>
+                        <td class="tracking_number_field"><i class="fa fa-cut copy-cut barebones_tooltip" title="Copy Tracking Number"></i><input class="copy-text" value="<%= tracking_number.tracking_number_present %>"> <%= tracking_number.tracking_number_present %> <a href=<%= tracking_number.tracking_link_select %> target="_blank" title="Go To Carrier Website" class="barebones_tooltip"><i class="fa fa-external-link"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td>Carrier</td>
+                        <td><%= tracking_number.carrier %></td>
+                      </tr>
+                      <tr>
+                        <td>Shipping Method</td>
+                        <td><%= tracking_number.shipping_method %></td>
+                      </tr>
+                      <tr>
+                        <td>Ship Date</td>
+                        <td><%= tracking_number.ship_date_trunc %></td>
+                      </tr>
+                      <tr>
+                        <td>Shipping Cost</td>
+                        <td><%= number_to_currency(tracking_number.shipping_cost, delimiter: "", unit: "$") %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="show-task-description" style="margin-top:10px;">No orders available for this task</div>
+  <%= link_to "<i class='fa fa-edit'></i> Edit This Task".html_safe, edit_task_path(id: @task), method: :get, class: 'btn btn-sm show-task-description', :style => "" %>
 <% end %>

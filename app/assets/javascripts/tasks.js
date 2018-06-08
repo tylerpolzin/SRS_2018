@@ -491,7 +491,7 @@ $(document).on("keyup change", ".warrantyOrderCustomerZipcode", function() { // 
 				handleResp(cache[zipcode]);
 			}
 			else {
-				var url = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + zipcode + "/radians";
+				var url = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + zipcode + "/degrees";
 				$.ajax({
 					"url": url,
 					"dataType": "json"
@@ -978,7 +978,7 @@ var warranty_order_ship_request_tooltip = "<ul>"+
 
 var warranty_order_customer_zipcode_tooltip = "<ul>"+
                                               "  <li>Once you enter a valid Zip Code, the 'City' and 'State' fields should automatically fill in.</li>"+
-                                              "  <li>Please note that we are using a free third party service for this feature and are limited to 50 requests a day, so please try to not abuse this field!</li>"+
+                                              "  <li>Please note that we are using a free third party service for this feature and are limited to 50 requests a day, so please try to not abuse it!</li>"+
                                               "</ul>";
 
 var warranty_order_reference_button_tooltip = "<ul>"+
@@ -1597,63 +1597,62 @@ $(document).on("turbolinks:load", function () {
 $(document).on("turbolinks:load", function() {
   setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#ihHackFixButton" below
   $("#tasksHackFixButton").click();},200);
-  // // Function to add a leading zero to dates between 1-9
-  // var MyDate = new Date();
-  // var date;
-  // MyDate.setDate(MyDate.getDate());
-  // date = MyDate.getFullYear() + "-" + ("0" + (MyDate.getMonth()+1)).slice(-2) + "-" + ("0" + MyDate.getDate()).slice(-2);
-  // var child_columns = $(".productTableChildren").data("child-columns"); // Employees & Vendors have a different set of columns visible to them adjusted via the ProductTableChildren div on index.html.erb
+  // Function to add a leading zero to dates between 1-9
+  var MyDate = new Date();
+  var date;
+  MyDate.setDate(MyDate.getDate());
+  date = MyDate.getFullYear() + "-" + ("0" + (MyDate.getMonth()+1)).slice(-2) + "-" + ("0" + MyDate.getDate()).slice(-2);
+  // var child_columns = $(".taskTableChildren").data("child-columns"); // Employees & Vendors have a different set of columns visible to them adjusted via the ProductTableChildren div on index.html.erb
   var table = $("#tasksDataTable").DataTable({
                 // fixedHeader: { headerOffset: 56 },
                 "scrollX": true,
                 "scrollY": "75vh",
                 "scrollCollapse": true,
-                "colReorder": true,
                 // "products-toolbar" = "top_toobar" function below. "B" = Buttons. "top-row paginate" = Parent class to help with adding CSS to Pagination controls. "t" = The Table. "bottom-row paginate ip" = "Showing x of x" and Pagination controls.
                 "dom": "<'tasks-toolbar'>B<'top-row paginate'p>t<'bottom-row paginate'ip>",
-                // "buttons": [
-                //   // Standard Column Visibility Button that lists all columns.  ".noVis" is disabled via CSS in Application.scss because the ":not" method doesn"t work here
-                //   {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Columns <span class='caret'></span>", className: "btn btn-header"},
+                "buttons": [
+                  // Standard Column Visibility Button that lists all columns.  ".noVis" is disabled via CSS in Application.scss because the ":not" method doesn"t work here
+                  {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Columns <span class='caret'></span>", className: "btn btn-header taskColumnsButton"},
 
-                //   {extend: "collection", text: "<i class='fa fa-download' aria-hidden='true'></i> Export <span class='caret'></span>", className: "btn btn-header dtExportOptions",
-                //     buttons: [
+                  {extend: "collection", text: "<i class='fa fa-download' aria-hidden='true'></i> Export <span class='caret'></span>", className: "btn btn-header dtExportOptions",
+                    buttons: [
 
-                //       {extend: "excelHtml5",
-                //         text: "<i class='fa fa-file-excel-o' aria-hidden='true'></i> Excel",
-                //         title: "SRS Inventory Report, "+date+".xlsx",
-                //         // customize:
-                //         //   // Custom function to set the header row green and outlined.
-                //         //   function( xlsx ) {
-                //         //     var sheet = xlsx.xl.worksheets["sheet1.xml"];
-                //         //     $("row c[r*='2']", sheet).attr( "s", "42" );
-                //         //   },
-                //         // Only exports columns that are currently visible.  Adjusted by the "Visibility" dropdown and Filtered text.
-                //         exportOptions: { columns: ":visible" },
-                //         className: "btn"
-                //       },
+                      {extend: "excelHtml5",
+                        text: "<i class='fa fa-file-excel-o' aria-hidden='true'></i> Excel",
+                        title: "SRS Task Report, "+date+".xlsx",
+                        // customize:
+                        //   // Custom function to set the header row green and outlined.
+                        //   function( xlsx ) {
+                        //     var sheet = xlsx.xl.worksheets["sheet1.xml"];
+                        //     $("row c[r*='2']", sheet).attr( "s", "42" );
+                        //   },
+                        // Only exports columns that are currently visible.  Adjusted by the "Visibility" dropdown and Filtered text.
+                        exportOptions: { columns: ":visible" },
+                        className: "btn"
+                      },
 
-                //       {extend: "pdfHtml5",
-                //         text: "<i class='fa fa-file-pdf-o' aria-hidden='true'></i> PDF",
-                //         title: "SRS Inventory Report, "+date+".pdf",
-                //         exportOptions: {columns: ":visible"},
-                //         className: "btn"},
+                      {extend: "pdfHtml5",
+                        text: "<i class='fa fa-file-pdf-o' aria-hidden='true'></i> PDF",
+                        title: "SRS Task Report, "+date+".pdf",
+                        exportOptions: {columns: ":visible"},
+                        className: "btn"},
 
-                //       {extend: "print",
-                //         text: "<i class='fa fa-print' aria-hidden='true'></i> Print",
-                //         exportOptions: {columns: ":visible"},
-                //         className: "btn"},
+                      {extend: "print",
+                        text: "<i class='fa fa-print' aria-hidden='true'></i> Print",
+                        exportOptions: {columns: ":visible"},
+                        className: "btn"},
 
-                //       {extend: "copyHtml5",
-                //         text: "<i class='fa fa-copy' aria-hidden='true'></i> Copy",
-                //         exportOptions: {columns: ":visible"},
-                //         className: "btn"},
-                //     ]
-                //   }
-                // ],
+                      {extend: "copyHtml5",
+                        text: "<i class='fa fa-copy' aria-hidden='true'></i> Copy",
+                        exportOptions: {columns: ":visible"},
+                        className: "btn"},
+                    ]
+                  }
+                ],
                 "bJQueryUI": true,
                 "columnDefs": [
                   {
-                  "targets": 6,
+                  "targets": [6,7,8,9,10],
                   "visible": false,
                   },
                   {
@@ -1667,119 +1666,115 @@ $(document).on("turbolinks:load", function() {
               
   table.page.len(50000).draw();
   
-  function top_toolbar (user_check, brand_names, variables) {
-    return ""+
-    "<ul class='nav nav-tabs'>"+
-    "  <li><a class='btn hidden' id='tasksHackFixButton'></a></li>"+
-    "  <li><div class='dataTables_filter'><input class='form-control' id='taskTableSearch' placeholder='Search Table...'></div>"+
-    "  <li>"+
-    "    <div class='dataTables_length'>"+
-    "      <select class='form-control' title='Number of records to show' id='taskTableLength'>"+
-    "        <option value='5'>5</option>"+
-    "        <option value='10'>10</option>"+
-    "        <option value='25'>25</option>"+
-    "        <option selected='selected' value='50'>50</option>"+
-    "        <option value='100'>100</option>"+
-    "        <option value='-1'>All</option>"+
-    "      </select>"+
-    "    </div>"+
-    "  </li>"+
-    // "  <li>"+
-    // "    <div class='productsFilterBy'><i class='fa fa-random' aria-hidden='true'></i> Filters:</div>"+
-    // "  </li>"+
-    // "  <li>"+
-    // "    <div class='productsQuantityRangeFilter'>"+
-    // "      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-exchange' aria-hidden='true'></i> Quantity <span class='caret'></span></button>"+
-    // "      <ul class='dropdown-menu'>"+
-    // "        <li>"+
-    // "          <div class='input-quantity input-group'>"+
-    // "            <input type='number' class='form-control filterStartQty' id='productFilterStartQty' name='start' placeholder='Min' />"+
-    // "            <span class='input-group-addon'>to</span>"+
-    // "            <input type='number' class='form-control filterEndQty' id='productFilterEndQty' name='end' placeholder='Max' />"+
-    // "          </div>"+
-    // "        </li>"+
-    // "      </ul>"+
-    // "    </div>"+
-    // "  </li>"+
-    // ""+brand_names+
-    // ""+variables+
-    "</ul>"+
-    "";
-  }
+  function top_toolbar (top_toolbar) {return top_toolbar; }
 
   var children = $(".taskTableChildren");
-  $("div.tasks-toolbar").html(top_toolbar(children.data("child-user_check"),
-                                            children.data("child-brand_names"),
-                                            children.data("child-variables")));
+  $("div.tasks-toolbar").html(top_toolbar(children.data("child-top_toolbar")));
   $("#taskTableSearch").addClear();
   $("#taskTableSearch").next().on("click", function(){ // Adds "X" button and clears properly when clicked
     table.search("").draw();
   });
 
-  // $(document).on("click", ".productsQuantityRangeFilter", function (e) {
-  //   e.stopPropagation(); // Stops the Quantity Range Filter Menu from closing when an interior option is clicked
-  // });
-  // $(document).on("click", ".productsBrandFilterMenu", function (e) {
-  //   e.stopPropagation(); // Stops the Brand Name Filter Menu from closing when an interior option is clicked
-  // });
-  // $(".productsBrandFilterMenu").on("change", function() {
-  //   var brands = $("input:checkbox[name='brand']:checked").map(function() {
-  //     return "^" + this.value + ".*\$";
-  //     }).get().join("|");
-  //   if (brands === "") {
-  //     table.column(2).search("xxxxxxxxxx").draw();
-  //   }
-  //   else
-  //     table.column(2).search(brands, true, false, false).draw();
-  // });
+  // Reduces the amount of text displayed for this particular item in the Columns Dropdown
+  $(".taskColumnsButton").one("click", function() {
+    $(table.buttons()[0].inst.s.buttons[0].conf._collection).find('a:nth-child(4) span').text("Orders Summary");
+  });
 
+  $(document).on("click", ".taskDateRangeFilter", function (e) {
+    e.stopPropagation(); // Stops the Filter Menu from closing when an interior option is clicked
+  });
+  $(document).on("click", ".taskTypeFilter", function (e) {
+    e.stopPropagation();
+  });
+  $(document).on("click", ".taskStatusFilter", function (e) {
+    e.stopPropagation();
+  });
+  $(document).on("click", ".taskAssignedForFilter", function (e) {
+    e.stopPropagation();
+  });
+  $(document).on("click", ".taskAssignedByFilter", function (e) {
+    e.stopPropagation();
+  });
+  $(".taskTypeFilterMenu").on("change", function() {
+    var types = $("input:checkbox[name='type']:checked").map(function() {
+      return "^" + this.value + ".*\$";
+      }).get().join("|");
+    if (types === "") {
+      table.column(7).search("xxxxxxxxxx").draw();
+    }
+    else
+      table.column(7).search(types, true, false, false).draw();
+  });
+  $(".taskStatusFilterMenu").on("change", function() {
+    var status = $("input:checkbox[name='status']:checked").map(function() {
+      return "^" + this.value + ".*\$";
+      }).get().join("|");
+    if (status === "") {
+      table.column(2).search("xxxxxxxxxx").draw();
+    }
+    else
+      table.column(2).search(status, true, false, false).draw();
+  });
+  $(".taskAssignedForFilterMenu").on("change", function() {
+    var assigned_for = $("input:checkbox[name='assigned_for']:checked").map(function() {
+      return "^" + this.value + ".*\$";
+      }).get().join("|");
+    if (assigned_for === "") {
+      table.column(9).search("xxxxxxxxxx").draw();
+    }
+    else
+      table.column(9).search(assigned_for, true, false, false).draw();
+  });
+  $(".taskAssignedByFilterMenu").on("change", function() {
+    var assigned_by = $("input:checkbox[name='assigned_by']:checked").map(function() {
+      return "^" + this.value + ".*\$";
+      }).get().join("|");
+    if (assigned_by === "") {
+      table.column(10).search("xxxxxxxxxx").draw();
+    }
+    else
+      table.column(10).search(assigned_by, true, false, false).draw();
+  });
 
-  // $(document).on("click", ".booleanFilterMenu", function (e) {
-  //   e.stopPropagation();
-  // });
+  $(".input-daterange").datepicker({
+      format: "yyyy-mm-dd",
+      clearBtn: true,
+      startView: 1,
+      maxViewMode: 2,
+      todayBtn: true,
+      todayHighlight: true
+  });
+  $(document).on("click", ".taskDateRangeFilter", function() {
+    $.fn.dataTableExt.afnFiltering.push( // Used for the "Filter By Date" Function
+      function( oSettings, aData, iDataIndex ) {
+        if(oSettings.nTable.id == "tasksDataTable"){
+          var startDate = $("#taskDateRangeFilterStartDate").val();
+          var endDate = $("#taskDateRangeFilterEndDate").val();
+          var iStartDateCol = 8; // Column where the filtering takes place
+          var iEndDateCol = 8;
+          startDate=startDate.substring(0,4) + startDate.substring(5,7)+ startDate.substring(8,10); // 0,4 = yyyyy 5,7 = dd 8,10 = dd == yyyy-mm-dd
+          endDate=endDate.substring(0,4) + endDate.substring(5,7)+ endDate.substring(8,10);
+          var datofini=aData[iStartDateCol].substring(0,4) + aData[iStartDateCol].substring(5,7)+ aData[iStartDateCol].substring(8,10);
+          var datoffin=aData[iEndDateCol].substring(0,4) + aData[iEndDateCol].substring(5,7)+ aData[iEndDateCol].substring(8,10);
+          if ( startDate == "" && endDate == "" ) { return true }
+          else if ( startDate <= datofini && endDate == "") { return true }
+          else if ( endDate >= datoffin && startDate == "") { return true }
+          else if (startDate <= datofini && endDate >= datoffin) { return true }
+          return false;
+        }
+        return true;
+      }
+    );
+  });
+  $("#taskDateRangeFilterStartDate").on("change keyup", function() { table.draw(); });
+  $("#taskDateRangeFilterEndDate").on("change keyup", function() { table.draw(); });
 
-  // function toggle_boolean (def, col) { // "Filter" toggle menu which toggles whether the filters below are "On", "Off" or "Nil"
-  //   if ($("input:checkbox[def="+def+"]").attr("bool") == "true" ) {
-  //     table.column(col).search("true").draw();
-  //     $("#"+def+"Clear").prop("disabled", false);
-  //   }
-  //   if ($("input:checkbox[def="+def+"]").attr("bool") == "false" ) {
-  //     table.column(col).search("false").draw();
-  //     $("#"+def+"Clear").prop("disabled", false);
-  //     $("input:checkbox[def="+def+"]").parent().removeClass("nil");
-  //   }
-  //   $("#"+def+"Clear").on("click", function() { // Clears the search and puts the specified column back to "Nil" state
-  //     if ($("input:checkbox[def="+def+"]").attr("bool") == "false") {
-  //       $("input:checkbox[def="+def+"]").click();
-  //     }
-  //     $("input:checkbox[def="+def+"]").attr("bool", "");
-  //     table.column(col).search("").draw();
-  //     $(this).prop("disabled", true);
-  //     $(this).prev().addClass("nil");
-  //   });
-  // }
-
-  // $(".booleanFilterMenu").on("change", function() {
-  //   $("input:checkbox[name='boolean']").on("change", function(){ // Activates the above "toggle_boolean" function
-  //     if($(this).is(":checked"))
-  //       $(this).attr("bool", "true");
-  //     else
-  //       $(this).attr("bool", "false");
-  //   });
-  //   toggle_boolean ("active", 15);
-  //   toggle_boolean ("storeOrderable", 16);
-  //   toggle_boolean ("warrantyOrderable", 17);
-  //   toggle_boolean ("ecommSku", 18);
-  //   toggle_boolean ("inStock", 19);
-  //   toggle_boolean ("hasParts", 14);
-  // });
-
-  // $("input:checkbox").change(function(){ // Takes care of the non-dataTables specific menu styling
-  //   if($(this).is(":checked"))
-  //     $(this).parent().parent().addClass("selected");
-  //   else
-  //     $(this).parent().parent().removeClass("selected");
-  // });
+  $("input:checkbox").change(function(){ // Takes care of the non-dataTables specific menu styling
+    if($(this).is(":checked"))
+      $(this).parent().parent().addClass("selected");
+    else
+      $(this).parent().parent().removeClass("selected");
+  });
 
   $("#taskTableSearch").keyup(function(){
     table.search($(this).val()).draw();
@@ -1809,25 +1804,6 @@ $(document).on("turbolinks:load", function() {
     }
   });
 
-  // $.fn.DataTable.ext.pager.numbers_length = 5; // Number of numbers to show in Pagination controls
-  // $.fn.dataTable.ext.search.push( // Function for the "Quantity Range Filter"
-  //   function( settings, data, dataIndex ) {
-  //     var min = parseInt( $('#productFilterStartQty').val(), 10 );
-  //     var max = parseInt( $('#productFilterEndQty').val(), 10 );
-  //     var qty = parseFloat( data[5] ) || 0; // '5' is the Quantity Column number
-
-  //     if ( ( isNaN( min ) && isNaN( max ) ) ||
-  //       ( isNaN( min ) && qty <= max ) ||
-  //       ( min <= qty   && isNaN( max ) ) ||
-  //       ( min <= qty   && qty <= max ) ) {
-  //       return true;
-  //       }
-  //     return false;
-  //   }
-  // );
-  // $("#productFilterStartQty").on("change keyup", function() { table.draw(); });
-  // $("#productFilterEndQty").on("change keyup", function() { table.draw(); });
-
   $("#tasksHackFixButton").on("click", function(){
     table.page.len(50).draw(); // Fixes header column width issues
   });
@@ -1836,17 +1812,30 @@ $(document).on("turbolinks:load", function() {
     var field = $(this);
     var cellValue = $(this).children(".order_status_value").html();
     if (cellValue == "New") {
-      $(this).parent().addClass("order_status_new");
+      field.parent().addClass("order_status_new");
     }
     if (cellValue == "Open") {
-      $(this).parent().addClass("order_status_open");
+      field.parent().addClass("order_status_open");
     }
     if (cellValue == "Completed") {
-      $(this).parent().addClass("order_status_completed");
+      field.parent().addClass("order_status_completed");
     }
     if (cellValue == "Cancelled") {
-      $(this).parent().addClass("order_status_cancelled");
+      field.parent().addClass("order_status_cancelled");
       basic_tooltip(field.find(".order_status_value"), "Cancellation Reason", "<ul><li>"+field.find(".cancellation_reason_grab").html()+".</li></ul>");
+    }
+  });
+
+  $(".task_status").each(function() {
+    var cellValue = $(this).html();
+    if (cellValue == "Pending") {
+      $(this).addClass("order_status_new");
+    }
+    if (cellValue == "Accepted") {
+      $(this).addClass("order_status_open");
+    }
+    if (cellValue == "Completed") {
+      $(this).addClass("order_status_completed");
     }
   });
 
@@ -1854,12 +1843,19 @@ $(document).on("turbolinks:load", function() {
     var cellValue = $(this).html();
     if (cellValue == "E-Commerce Orders") {
       $(this).closest("td").addClass("order_type_ecomm");
-      $(this).parent().find("td").addClass("order_type_ecomm");
+      $(this).closest("tr").find(".details-control").addClass("order_type_ecomm");
     }
     if (cellValue == "Customer Orders") {
       $(this).closest("td").addClass("order_type_customer");
-      $(this).parent().find("td").addClass("order_type_customer");
+      $(this).closest("tr").find(".details-control").addClass("order_type_customer");
     }
+  });
+
+  $(".modal-tr.commentExists").each(function() { // Hides the "View Order Comments" button when no comments are present for any orders
+    $(this).closest(".modal-body").prev().removeClass("commentHeaderHidden");
+    $(this).closest(".modal-body").parent().removeClass("commentHeaderHidden");
+    $(this).closest("td").find("button").removeClass("commentHidden");
+    $(this).closest("td").find("div").removeClass("commentHidden");
   });
 
   $(".task_file_upload_tooltip").each(function() {
@@ -1867,4 +1863,3 @@ $(document).on("turbolinks:load", function() {
   });
 
 });
-

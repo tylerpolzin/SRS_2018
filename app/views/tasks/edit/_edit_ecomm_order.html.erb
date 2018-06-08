@@ -60,7 +60,7 @@
     <p hidden><%= add_child_link_ecomm_order_line_item "Add Item", :line_items %></p>
     <%= new_child_fields_template_ecomm_order_line_item f, :line_items %>
 
-    <%= render "tasks/edit/edit_ecomm_order_comment_template", :f => f %>
+    <%= render "tasks/edit/edit_ecomm_order_comment_template" %>
 
     <div class="new_task_ecomm_order_line_item">
       <%= yield :new_task_ecomm_order_line_item_fields %>

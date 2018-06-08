@@ -7,12 +7,14 @@
         <tr>
           <th style="width:5px;"><p style="display:none;">Details</p></th> <!-- the <p> is a hacky way to get "Details" to show up in the Colvis buttons dropdown -->
           <th>Description</th>
+          <th>Status</th>
           <th>Files</th>
+          <th>Comments</th>
           <th>
             <table class="table order_summary_header">
               <thead>
                 <tr>
-                  <th colspan="5">Order Summary</th>
+                  <th colspan="5">Orders Summary</th>
                 </tr>
               </thead>
               <tbody>
@@ -26,13 +28,88 @@
               </tbody>
             </table>
           </th>
-          <th>Comments</th>
-          <th>Status</th>
           <th></th>
+          <th>Task Type Hidden</th>
+          <th>Task Date Hidden</th>
+          <th>Assigned For Hidden</th>
+          <th>Assigned By Hidden</th>
         </tr>
       </thead>
       <div class="taskTableChildren"
-        data-child-blank=''>
+        data-child-top_toolbar="<ul class='nav nav-tabs'>
+                                  <li><a class='hidden' id='tasksHackFixButton'></a></li>
+                                  <li><div class='dataTables_filter'><input class='form-control' id='taskTableSearch' placeholder='Search Table...'></div>
+                                  <li>
+                                    <div class='dataTables_length'>
+                                      <select class='form-control' title='Number of records to show' id='taskTableLength'>
+                                        <option value='5'>5</option>
+                                        <option value='10'>10</option>
+                                        <option value='25'>25</option>
+                                        <option selected='selected' value='50'>50</option>
+                                        <option value='100'>100</option>
+                                        <option value='-1'>All</option>
+                                      </select>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class='tasksFilterBy'><i class='fa fa-random' aria-hidden='true'></i> Filters:</div>
+                                  </li>
+                                  <li>
+                                    <div class='taskDateRangeFilter'>
+                                      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-calendar' aria-hidden='true'></i> Task Date Range <span class='caret'></span></button>
+                                      <ul class='dropdown-menu'>
+                                        <li>
+                                          <div class='input-daterange input-group' id='datepicker'>
+                                            <input type='text' class='form-control filterStartDate' id='taskDateRangeFilterStartDate' name='start' placeholder='Start Date' />
+                                            <span class='input-group-addon'>to</span>
+                                            <input type='text' class='form-control filterEndDate' id='taskDateRangeFilterEndDate' name='end' placeholder='End Date' />
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class='button-group taskTypeFilter'>
+                                      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-wrench' aria-hidden='true'></i> Task Type <span class='caret'></span></button>
+                                      <ul class='dropdown-menu taskTypeFilterMenu'>
+                                        <li class='selected'><label><input type='checkbox' checked name='type' value='Basic Task'/>&nbsp;Basic Task</label></li>
+                                        <li class='selected'><label><input type='checkbox' checked name='type' value='E-Commerce Orders'/>&nbsp;E-Commerce Orders</label></li>
+                                        <li class='selected'><label><input type='checkbox' checked name='type' value='Customer Orders'/>&nbsp;Customer Orders</label></li>
+                                        <li class='selected'><label><input type='checkbox' checked name='type' value='Store Orders'/>&nbsp;Store Orders</label></li>
+                                      </ul>
+                                    </div>
+                                  </li>                            
+                                  <li>
+                                    <div class='button-group taskStatusFilter'>
+                                      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-wrench' aria-hidden='true'></i> Task Status <span class='caret'></span></button>
+                                      <ul class='dropdown-menu taskStatusFilterMenu'>
+                                        <li class='selected'><label><input type='checkbox' checked name='status' value='Pending'/>&nbsp;Pending</label></li>
+                                        <li class='selected'><label><input type='checkbox' checked name='status' value='Accepted'/>&nbsp;Accepted</label></li>
+                                        <li class='selected'><label><input type='checkbox' checked name='status' value='Completed'/>&nbsp;Completed</label></li>
+                                      </ul>
+                                    </div>
+                                  </li>                            
+                                  <li>
+                                    <div class='button-group taskAssignedForFilter'>
+                                      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-user' aria-hidden='true'></i> Assigned For <span class='caret'></span></button>
+                                      <ul class='dropdown-menu taskAssignedForFilterMenu'>
+                                        <% @assigned_for.each do |assigned| %>
+                                          <li class='selected'><label><input type='checkbox' checked name='assigned_for' value='<%= assigned.header_name %>'/> <%= assigned.header_name %></label></li>
+                                        <% end %>
+                                      </ul>
+                                    </div>
+                                  </li>                            
+                                  <li>
+                                    <div class='button-group taskAssignedByFilter'>
+                                      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-user' aria-hidden='true'></i> Assigned By <span class='caret'></span></button>
+                                      <ul class='dropdown-menu taskAssignedByFilterMenu'>
+                                        <% @assigned_by.each do |assigned| %>
+                                          <li class='selected'><label><input type='checkbox' checked name='assigned_by' value='<%= assigned.header_name %>'/> <%= assigned.header_name %></label></li>
+                                        <% end %>
+                                      </ul>
+                                    </div>
+                                  </li>                            
+                                </ul>">
         
       </div>
       <tbody class="task-table">
@@ -87,8 +164,9 @@
             <td> <!-- Task Name -->
               <p hidden><%= task.created_at %></p>
               <p hidden class="task_type_hidden"><%= task.task_type %></p>
-              <%= link_to task.name, task_path(task), method: :get %>
+              <%= link_to task.name, task_path(task), method: :get, class: "barebones_tooltip", title: "View Task Information Page" %>
             </td>
+            <td class="task_status"><%= task.status if task.status.present? %></td>
             <td class="task_uploads_table"> <!-- Files -->
               <% if task.uploads.present? %>
                 <table class="table">
@@ -129,152 +207,235 @@
                 </table>
               <% end %>
             </td>
+            <td> <!-- Comments -->
+              <% if task.comments.present? %>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#taskCommentsModal-<%= task.id %>">View Task Comments</button>
+                <!-- Modal -->
+                <div class="modal fade" id="taskCommentsModal-<%= task.id %>" tabindex="-1" role="dialog" aria-labelledby="taskCommentsModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="taskCommentsModalLongTitle"><%= task.name if task.name.present? %> (Task Comments)</h4>
+                      </div>
+                      <div class="modal-body">
+                        <table class="table">
+                          <% task.comments.each do |comment| %>
+                            <tr class="modal-tr">
+                              <td><%= comment.content %></td>
+                            <tr>
+                          <% end %>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br/>
+              <% end %>
+              <% if task.is_ecomm_order %>
+                <% if task.ecomm_orders.present? %>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-sm commentHidden" style="margin-top:5px;" data-toggle="modal" data-target="#ecommOrderCommentsModal-<%= task.id %>">View Order Comments</button>
+                  <!-- Modal -->
+                  <div class="modal fade commentHidden" id="ecommOrderCommentsModal-<%= task.id %>" tabindex="-1" role="dialog" aria-labelledby="ecommOrderCommentsModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <% task.ecomm_orders.each do |ecomm_order| %>
+                          <div class="modal-container commentHeaderHidden">
+                            <div class="modal-header commentHeaderHidden">
+                              <h4 class="modal-title" id="ecommOrderCommentsModalLongTitle"><%= ecomm_order.retailer if ecomm_order.retailer.present? %> order for <%= ecomm_order.customer_name if ecomm_order.customer_name.present? %> (Order Comments)</h4>
+                            </div>
+                            <% if ecomm_order.comments.present? %>
+                              <div class="modal-body">
+                                <table class="table">
+                                  <% ecomm_order.comments.each do |comment| %>
+                                    <tr class="modal-tr commentExists">
+                                      <td><%= comment.content %></td>
+                                    <tr>
+                                  <% end %>
+                                  </tr>
+                                </table>
+                              </div>
+                            <% end %>
+                          </div>
+                        <% end %>
+                        <div class="modal-footer">
+                          <button type="button" class="btn" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+              <% if task.is_customer_order %>
+                <% if task.warranty_orders.present? %>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-sm commentHidden" style="margin-top:10px;" data-toggle="modal" data-target="#warrantyOrderCommentsModal-<%= task.id %>">View Order Comments</button>
+                  <!-- Modal -->
+                  <div class="modal fade commentHidden" id="warrantyOrderCommentsModal-<%= task.id %>" tabindex="-1" role="dialog" aria-labelledby="warrantyOrderCommentsModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <% task.warranty_orders.each do |warranty_order| %>
+                          <div class="modal-container">
+                            <div class="modal-header commentHeaderHidden">
+                              <h4 class="modal-title" id="warrantyOrderCommentsModalLongTitle">Customer Order for <%= warranty_order.customer.name if warranty_order.customer.present? %> (Order Comments)</h4>
+                            </div>
+                            <% if warranty_order.comments.present? %>
+                              <div class="modal-body">
+                                <table class="table">
+                                  <% warranty_order.comments.each do |comment| %>
+                                    <tr class="modal-tr commentExists">
+                                      <td><%= comment.content %></td>
+                                    <tr>
+                                  <% end %>
+                                  </tr>
+                                </table>
+                              </div>
+                            <% end %>
+                          </div>
+                        <% end %>
+                        <div class="modal-footer">
+                          <button type="button" class="btn" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </td>
             <td class="task_ecomm_orders_summary_table"> <!-- Order Summary -->
               <% if task.is_basic_task %>
                 No Orders For This Task
               <% end %>
               <% if task.is_ecomm_order %>
-                <table class="table">
-                  <thead></thead>
-                  <tbody>
-                    <% task.ecomm_orders.each do |ecomm_order| %>
-                      <tr>
-                        <td class="order_status">
-                          <span class="order_status_value"><%= ecomm_order.status %></span>
-                          <span class="hidden cancellation_reason_grab"><%= ecomm_order.cancellation_reason if ecomm_order.cancellation_reason.present? %></span>
-                        </td>
-                        <td><%= ecomm_order.retailer %> order for <%= ecomm_order.customer_name %></td>
-                        <td><%= ecomm_order.order_number %></td>
-                        <% if ecomm_order.completion_date.present? %>
-                          <td>Close Date: <%= ecomm_order.completion_date.strftime("%A, %B %d, %Y") %></td>
-                        <% else %>
-                          <td>Due Date: <%= ecomm_order.due_date.strftime("%A, %B %d, %Y") if ecomm_order.due_date.present? %><%= "No Due Date Assigned" if ecomm_order.due_date.blank? %></td>
-                        <% end %>
-                        <td class="line_items_table">
-                          <table class="table">
-                            <thead></thead>
-                            <tbody>
-                              <% if ecomm_order.line_items.present? %><% @line_item_length = ecomm_order.line_items.length %>
-                                <% if ecomm_order.line_items.length < 2 %>
-                                  <% ecomm_order.line_items.each do |line_item| %>
+                <% if task.ecomm_orders.present? %>
+                  <table class="table">
+                    <thead></thead>
+                    <tbody>
+                      <% task.ecomm_orders.each do |ecomm_order| %>
+                        <tr>
+                          <td class="order_status">
+                            <span class="order_status_value"><%= ecomm_order.status %></span>
+                            <span class="hidden cancellation_reason_grab"><%= ecomm_order.cancellation_reason if ecomm_order.cancellation_reason.present? %></span>
+                          </td>
+                          <td><%= ecomm_order.retailer %> order for <%= ecomm_order.customer_name %></td>
+                          <td><%= ecomm_order.order_number %></td>
+                          <% if ecomm_order.completion_date.present? %>
+                            <td>Close Date: <%= ecomm_order.completion_date.strftime("%A, %B %d, %Y") %></td>
+                          <% else %>
+                            <td>Due Date: <%= ecomm_order.due_date.strftime("%A, %B %d, %Y") if ecomm_order.due_date.present? %><%= "No Due Date Assigned" if ecomm_order.due_date.blank? %></td>
+                          <% end %>
+                          <td class="line_items_table">
+                            <table class="table">
+                              <thead></thead>
+                              <tbody>
+                                <% if ecomm_order.line_items.present? %><% @line_item_length = ecomm_order.line_items.length %>
+                                  <% if ecomm_order.line_items.length < 2 %>
+                                    <% ecomm_order.line_items.each do |line_item| %>
+                                      <tr>
+                                        <td><%= line_item.item_select %></td>
+                                      </tr>
+                                    <% end %>
+                                  <% else %>
                                     <tr>
-                                      <td><%= line_item.item_select %></td>
+                                      <td>
+                                        <li class="dropdown" style="list-style:none;">
+                                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> View <%= @line_item_length %> Line Items <i class="fa fa-angle-double-down"></i></a>
+                                          <ul class="dropdown-menu edge">
+                                            <% ecomm_order.line_items.each do |line_item| %>
+                                              <li><%= line_item.item_select %></li>
+                                            <% end %>
+                                          </ul>
+                                        </li>
+                                      </td>
                                     </tr>
                                   <% end %>
                                 <% else %>
                                   <tr>
-                                    <td>
-                                      <li class="dropdown" style="list-style:none;">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> View <%= @line_item_length %> Line Items <i class="fa fa-angle-double-down"></i></a>
-                                        <ul class="dropdown-menu">
-                                          <% ecomm_order.line_items.each do |line_item| %>
-                                            <li><%= line_item.item_select %></li>
-                                          <% end %>
-                                        </ul>
-                                      </li>
-                                    </td>
+                                    <td>No Line Items Present</td>
                                   </tr>
                                 <% end %>
-                              <% else %>
-                                <tr>
-                                  <td>No Line Items Present</td>
-                                </tr>
-                              <% end %>
-                            </tbody>
-                          </table>
-                        </td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                <% else %>
+                  No Orders For This Task
+                <% end %>
               <% end %>
               <% if task.is_customer_order %>
-                <table class="table">
-                  <thead></thead>
-                  <tbody>
-                    <% task.warranty_orders.each do |customer_order| %>
-                      <tr>
-                        <td class="order_status">
-                          <span class="order_status_value"><%= customer_order.status %></span>
-                          <span class="hidden cancellation_reason_grab"><%= customer_order.cancellation_reason if customer_order.cancellation_reason.present? %></span>
-                        </td>
-                        <td>Customer order for <%= customer_order.customer.name if customer_order.customer.present? %></td>
-                        <td><%= customer_order.order_number %></td>
-                        <% if customer_order.completion_date.present? %>
-                          <td>Close Date: <%= customer_order.completion_date.strftime("%A, %B %d, %Y") %></td>
-                        <% else %>
-                          <td>Due Date: <%= customer_order.due_date.strftime("%A, %B %d, %Y") if customer_order.due_date.present? %><%= "No Due Date Assigned" if customer_order.due_date.blank? %></td>
-                        <% end %>
-                        <td class="line_items_table">
-                          <table class="table">
-                            <thead></thead>
-                            <tbody>
-                              <% if customer_order.line_items.present? %><% @line_item_length = customer_order.line_items.length %>
-                                <% if customer_order.line_items.length < 2 %>
-                                  <% customer_order.line_items.each do |line_item| %>
+                <% if task.warranty_orders.present? %>
+                  <table class="table">
+                    <thead></thead>
+                    <tbody>
+                      <% task.warranty_orders.each do |customer_order| %>
+                        <tr>
+                          <td class="order_status">
+                            <span class="order_status_value"><%= customer_order.status %></span>
+                            <span class="hidden cancellation_reason_grab"><%= customer_order.cancellation_reason if customer_order.cancellation_reason.present? %></span>
+                          </td>
+                          <td>Customer order for <%= customer_order.customer.name if customer_order.customer.present? %></td>
+                          <td><%= customer_order.order_number %></td>
+                          <% if customer_order.completion_date.present? %>
+                            <td>Close Date: <%= customer_order.completion_date.strftime("%A, %B %d, %Y") %></td>
+                          <% else %>
+                            <td>Due Date: <%= customer_order.due_date.strftime("%A, %B %d, %Y") if customer_order.due_date.present? %><%= "No Due Date Assigned" if customer_order.due_date.blank? %></td>
+                          <% end %>
+                          <td class="line_items_table">
+                            <table class="table">
+                              <thead></thead>
+                              <tbody>
+                                <% if customer_order.line_items.present? %><% @line_item_length = customer_order.line_items.length %>
+                                  <% if customer_order.line_items.length < 2 %>
+                                    <% customer_order.line_items.each do |line_item| %>
+                                      <tr>
+                                        <td><%= line_item.item_select %></td>
+                                      </tr>
+                                    <% end %>
+                                  <% else %>
                                     <tr>
-                                      <td><%= line_item.item_select %></td>
+                                      <td>
+                                        <li class="dropdown" style="list-style:none;">
+                                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> View <%= @line_item_length %> Line Items <i class="fa fa-angle-double-down"></i></a>
+                                          <ul class="dropdown-menu edge">
+                                            <% customer_order.line_items.each do |line_item| %>
+                                              <li><%= line_item.item_select %></li>
+                                            <% end %>
+                                          </ul>
+                                        </li>
+                                      </td>
                                     </tr>
                                   <% end %>
                                 <% else %>
                                   <tr>
-                                    <td>
-                                      <li class="dropdown" style="list-style:none;">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> View <%= @line_item_length %> Line Items <i class="fa fa-angle-double-down"></i></a>
-                                        <ul class="dropdown-menu">
-                                          <% customer_order.line_items.each do |line_item| %>
-                                            <li><%= line_item.item_select %></li>
-                                          <% end %>
-                                        </ul>
-                                      </li>
-                                    </td>
+                                    <td>No Line Items Present</td>
                                   </tr>
                                 <% end %>
-                              <% else %>
-                                <tr>
-                                  <td>No Line Items Present</td>
-                                </tr>
-                              <% end %>
-                            </tbody>
-                          </table>
-                        </td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                <% else %>
+                  No Orders For This Task
+                <% end %>
               <% end %>
             </td>
-            <td class="comments_table"> <!-- Comments -->
-              <% if task.comments.present? %>
-                <table class="table">
-                  <thead></thead>
-                      <tr>
-                        <td>
-                          <li class="dropdown" style="list-style:none;">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-angle-double-down"></i> View Comments <i class="fa fa-angle-double-down"></i></a>
-                            <ul class="dropdown-menu task_comments_dropdown">
-                              <% task.comments.each do |comment| %>
-                                <li>
-                                  <table class="table">
-                                    <thead></thead>
-                                    <tbody>
-                                      <tr>
-                                        <td title="Comment ID: <%= comment.id %>"><%= comment.content %></td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </li>
-                              <% end %>
-                            </ul>
-                          </li>
-                        </td>
-                      </tr>
-                </table>
-              <% end %>
-            </td>
-            <td><%= task.status %></td>
             <td class="noVis">  <!-- Hidden field to add table search ability to Expando -->
             </td>
+            <td><%= task.task_type %></td> <!-- Hidden field for filtering ability -->
+            <td><%= task.created_at.strftime("%Y-%m-%d") %></td> <!-- Hidden field for filtering ability -->
+            <td><%= task.initiated_for.header_name %></td> <!-- Hidden field for filtering ability -->
+            <td><%= task.initiated_by.header_name %></td> <!-- Hidden field for filtering ability -->
           </tr>
         <% end %>
       </tbody>

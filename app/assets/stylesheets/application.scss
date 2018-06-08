@@ -288,24 +288,29 @@ body {
   box-shadow: 5px 0px 15px solid #b5b5f7
 }
 
-.order_status_new {
-  background-color: #f4cccc !important;
+.order_status_new { // red
+  background-color: #ffe3e3 !important;
 }
 
-.order_status_open {
-  background-color: #fff2cc !important;
+.order_status_open { // yellow
+  background-color: #fff8e4 !important;
 }
-.order_status_completed {
-  background-color: #d9ead3 !important;
+.order_status_completed { // green
+  background-color: #f0ffeb !important;
 }
-.order_status_cancelled {
-  background-color: #d9d2e9 !important;
+.order_status_cancelled { // purple
+  background-color: #eae4f7 !important;
 }
 .order_type_customer {
-  background-color: #cfe2f3 !important;
+  background-color: #f0f8ff !important;
 }
 .order_type_ecomm {
-  background-color: #fce5cd !important;
+  background-color: #fff5ea !important;
+}
+
+.edge { // Floats dropdown menus to the left for ones that are defaulting off-screen
+  right: 0 !important;
+  left: auto !important;
 }
 
 //------------------------------------------------
@@ -882,6 +887,17 @@ tr.even td.zeroQuantity {
   margin-top: 85px;
 }
 
+// Generic top and bottom border for dynamically created field rows
+.attributes_top_border {
+  border-bottom: 1px solid #b5b5f7;
+  margin-top: 10px;
+}
+.attributes_bottom_border {
+  border-top: 1px solid #b5b5f7;
+  margin-bottom: 5px;
+}
+
+
 // ----------------- "POP" field related CSS -----------------------//
 
 .show_basic_pop_container {
@@ -929,6 +945,22 @@ tr.even td.zeroQuantity {
       user-select: none;
       &:active {
         color: green;
+      }
+      &.disabled {
+        color: gray;
+        cursor: not-allowed;
+      }
+      .fa-question-circle {
+        font-size: 0.7em;
+        position: relative;
+        bottom: 7px;
+        left: 4px;
+        &:hover {
+          color: red;
+        }
+        &:active {
+          color: green;
+        }
       }
     }
   }
@@ -979,9 +1011,64 @@ tr.even td.zeroQuantity {
     }
     .show_basic_pop_title {
       margin: -12px 0 10px 5px;
+      .fa-question-circle {
+        font-size: 0.9em;
+        color: #255aad;
+        position: relative;
+        left: 4px;
+        bottom: 2px;
+        &:hover {
+          color: red;
+        }
+        &:active {
+          color: green;
+        }
+      }
+    }
+    .show_basic_remove_button {
+      color: red;
+      cursor: pointer;
+      user-select: none;
+      &:active {
+        color: green;
+      }
     }
   }
   &:last-child {
     margin: 0 0 10px 0;
   }
+}
+
+
+//------------------ Comment Modal CSS --------------------//
+
+.commentHidden, .commentHeaderHidden {
+  display: none;
+}
+
+.modal-content {
+  border: 1px solid #bbbec1;
+  border-radius: 10px;
+}
+
+.modal-header {
+  padding: 10px 0 0 0;
+}
+
+.modal-body {
+  padding: 2px;
+  table {
+    margin: 0 !important;
+  }
+}
+
+.modal-container {
+  border: 2px solid #7395bb;
+  border-radius: 10px;
+  margin: 5px;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+}
+
+.table {
+  margin: 0;
 }

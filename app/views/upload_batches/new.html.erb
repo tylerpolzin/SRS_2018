@@ -1,8 +1,9 @@
 <% @title = "SRS Portal | Upload New Files" %>
 <div class="defaultDiv" id="newUploadsDiv">
   <p class="defaultDivHeader">Upload New Files</p>
-  <div class="container defaultForm">
-    <%= bootstrap_form_for @upload_batch, url: upload_batches_path, method: :post do |f| %>
+  <div class="container defaultNoTabsForm">
+    <a class="btn tempMargin" id="addFileButton">Add File</a>
+    <%= bootstrap_form_for @upload_batch, url: upload_batches_path, method: :post, :html => { :class => :form, :multipart => true } do |f| %>
       <% if @upload_batch.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@upload_batch.errors.count, "error") %> prohibited this product from being saved:</h2>
@@ -13,40 +14,15 @@
           </ul>
         </div>
       <% end %>
-      <ul class="nav nav-tabs">
-        <li class="active"><a id="newUploads" href="#new-uploads" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Files</a></li>
-        <!--<li><a id="newUploadBatchComments" href="#new-comments" class="tab-background" data-toggle="tab"><i class="fa fa-comment"></i> Comments</a></li>-->
-        <li><a id="addFileButton"class="btn btn-toolbar"><i class="fa fa-plus"></i> Add File</a></li> <!-- This button acts as a proxy to click the hidden 'add_child_link' button below -->
-        <!--<li><a id="addUploadBatchCommentButton"class="btn"><i class="fa fa-plus"></i> Add Comment</a></li>-->
-      </ul>
-      <div class="defaultTabs">
-        <div class="tab-content">
-          <div id="new-uploads" class="tab-pane fade in active container">
-            <div class="container newUploadsContainer">
-              </br>
-              <%= new_child_fields_template f, :uploads %>
-              <%= add_child_link_upload "Add File", :uploads %> <!-- Renders "_upload.html.erb" -->
-            </div>
-          </div>
-          <!--<div id="new-comments" class="tab-pane fade container">-->
-          <!--  <div class="newCommentsContainer">-->
-          <!--    </br>-->
-          <!--    <p class="commentsHeader">Comments about this file upload batch can be added here.  Multiple comments are allowed.</p>-->
-          <!--    <div class="commentFields">-->
-          <!--      <%#= new_comment_fields_template f, :comments %>-->
-          <!--      <%#= add_comment_link "Add Comment", :comments %> <!-- Renders "_comment.html.erb" -->
-          <!--    </div>-->
-          <!--  </div>-->
-          <!--</div>-->
-        </div>
+      <div>
+        <%= new_child_fields_template f, :uploads %>
+        <%= add_child_link_upload "Add File", :uploads %> <!-- Renders "_upload.html.erb" -->
       </div>
-    <%= f.submit "Upload Files", :id => "uploadFilesButton", :style => "float:right;" %>
+      <button id="uploadBatchFirstSubmit" class="btn" style="float:right;">Upload Files</button>
+      <%= f.submit "", class: "hidden", :id => "uploadFilesButton" %>
     <% end %>
   </div>
 </div>
 <div id="jstemplates">
   <%= yield :jstemplates %>
 </div>
-<!--<div id="commentable">-->
-<!--  <%#= yield :commentable %>-->
-<!--</div>-->

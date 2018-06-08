@@ -1,6 +1,105 @@
-<h1>Editing Upload</h1>
+<% @title = "SRS Portal | Edit File" %>
+<div class="defaultDiv" id="editUploadDiv">
+  <p class="defaultDivHeader">Edit File</p>
+  <div class="container defaultNoTabsForm">
+    <%= bootstrap_form_for @upload, url: upload_path, method: :patch, :html => { :multipart => true } do |f| %>
+      <% if @upload.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@upload.errors.count, "error") %> prohibited this file from being saved:</h2>
+          <ul>
+            <% @upload.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="fields new_upload_fields">
+        <div class="show_basic_pop_container">
+          <div class="show_basic_pop_container_header">
+            <span class="show_basic_pop_container_title">File</span>
+            <span class="show_basic_pop_container_margin_button new_upload_add_comment_button"><i class="fa fa-plus"></i> Comment</span>
+            <span class="show_basic_pop_container_margin_button new_upload_add_product_association_button"><i class="fa fa-plus"></i> Product Association<i class="fa fa-question-circle"></i></span>
+            <span class="show_basic_pop_container_margin_button new_upload_add_part_association_button"><i class="fa fa-plus"></i> Part Association<i class="fa fa-question-circle"></i></span>
+            <span class="show_basic_pop_container_margin_button new_upload_add_task_association_button"><i class="fa fa-plus"></i> Task Association<i class="fa fa-question-circle"></i></span>
+            <span class="show_basic_pop_container_margin_button new_upload_remove_file_button"><i class="fa fa-close"></i></span>
+          </div>
+      
+          <div class="show_basic_pop_container_basic_details">
+            <div class="show_basic_pop_container_details_header new_upload_file_select_header">File Select</div>
+            <table class="newUploadContainer">
+              <tbody>
+                <tr>
+                  <td>
+                    <%= f.text_field :file_file_name, hide_label: true, readonly: true, :style => "cursor:context-menu;" %>
+                  </td>
+                  <td>
+                    <%= f.text_field :description, hide_label: true, placeholder: "File Description" %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      
+          <div class="show_basic_pop_fields newUploadProductAssociation">
+            <div class="show_basic_pop_header">
+              <span class="show_basic_pop_title">Product Associations<i class="fa fa-question-circle product_association_tooltip"></i></span>
+              <span class="show_basic_remove_button product_association_remove_button"><i class="fa fa-close"></i></span>
+            </div>
+            <table class="productAssociationTable">
+              <tr>
+                <td>
+                  <%= f.collection_select(:product_ids, @products, :id, :product_select_with_model,
+                                          {include_blank: false, :include_hidden => false, hide_label: true, :selected => f.object.products.map(&:id)},
+                                          {:multiple => true, :class => "newUploadProductSearch"}) %>
+                </td>
+              </tr>        
+            </table>
+          </div>
+      
+          <div class="show_basic_pop_fields newUploadPartAssociation">
+            <div class="show_basic_pop_header">
+              <span class="show_basic_pop_title">Part Associations<i class="fa fa-question-circle part_association_tooltip"></i></span>
+              <span class="show_basic_remove_button part_association_remove_button"><i class="fa fa-close"></i></span>
+            </div>
+            <table class="partAssociationTable">
+              <tr>
+                <td>
+                  <%= f.collection_select(:part_ids, @parts, :id, :part_select_with_model,
+                                          {include_blank: false, :include_hidden => false, hide_label: true, :selected => f.object.parts.map(&:id)},
+                                          {:multiple => true, :class => "newUploadPartSearch", :style => "margin-bottom:5px;"}) %>
+                </td>
+              </tr>        
+            </table>
+          </div>
+      
+          <div class="show_basic_pop_fields newUploadTaskAssociation">
+            <div class="show_basic_pop_header">
+              <span class="show_basic_pop_title">Task Associations<i class="fa fa-question-circle task_association_tooltip"></i></span>
+              <span class="show_basic_remove_button task_association_remove_button"><i class="fa fa-close"></i></span>
+            </div>
+            <table class="taskAssociationTable">
+              <tr>
+                <td>
+                  <%= f.collection_select(:task_ids, @tasks, :id, :name,
+                                          {include_blank: false, :include_hidden => false, hide_label: true, :selected => f.object.tasks.map(&:id)},
+                                          {:multiple => true, :class => "newUploadTaskSearch"}) %>
+                </td>
+              </tr>        
+            </table>
+          </div>
+      
+          <p hidden><%= add_child_link_upload_comment "", :comments %></p>
+          <%= new_child_fields_template_upload_comment f, :comments %>
+      
+          <%= f.hidden_field :uploaded_by, :value => current_user.id %>
+          <%= remove_child_link_upload "X", f %>
+        </div>
+        <div id="new_upload_comment">
+          <%= yield :new_upload_comment_fields %>
+        </div>
+      </div>
+      
 
-<%= render 'form', upload: @upload %>
-
-<%= link_to 'Show', @upload %> |
-<%= link_to 'Back', uploads_path %>
+    <% end %>
+  </div>
+</div>

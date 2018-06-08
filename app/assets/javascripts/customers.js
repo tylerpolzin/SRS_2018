@@ -23,7 +23,8 @@ $(document).on("turbolinks:load", function() {
 
   basic_tooltip(".new_customer_add_attributes_button .fa-question-circle", "Custom Attributes", new_customer_attributes_button_tooltip);
   basic_tooltip(".new_customer_add_comment_button .fa-question-circle", "Comments", new_customer_comments_button_tooltip);
-  basic_tooltip("#customerFirstSubmit", "Create Customer", "<ul><li>If you click this and nothing happens, make sure any required fields are filled in or removed.</li><li>Required fields have a red border around them.</li></ul>")
+  basic_tooltip(".customer_zipcode_tooltip", "Zip Code Select", customer_zipcode_tooltip, "right");
+  basic_tooltip("#customerFirstSubmit", "Create Customer", "<ul><li>If you click this and nothing happens, make sure any required fields are either filled in or removed.</li><li>Required fields have a red border around them.</li></ul>");
 
   $(".newCustomerAttributeContainer").on("keyup", ".customerDynamicAttributeName", function(){
     var nameElem = $(this);
@@ -129,7 +130,7 @@ $(document).on("keyup change", ".customerZipcode", function() { // Zipcode API C
 				handleResp(cache[zipcode]);
 			}
 			else {
-				var url = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + zipcode + "/radians";
+				var url = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + zipcode + "/degrees";
 				$.ajax({
 					"url": url,
 					"dataType": "json"
@@ -179,11 +180,166 @@ var new_customer_comments_button_tooltip = "<ul>"+
                                           "  <li>Multiple comments are allowed.</li>"+
                                           "</ul>";
 
+var customer_zipcode_tooltip = "<ul>"+
+                               "  <li>Once you enter a valid Zip Code, the 'City' and 'State' fields should automatically fill in.</li>"+
+                               "  <li>Please note that we are using a free third party service for this feature and are limited to 50 requests a day, so please try to not abuse it!</li>"+
+                               "</ul>";
+
+var customer_latlong_tooltip = "<ul>"+
+                               "  <li>Once you enter a valid Zip Code, the 'Latitude' and 'Longitude' fields should automatically fill in.</li>"+
+                               "  <li>Please note that we are using a free third party service for this feature and are limited to 50 requests a day, so please try to not abuse it!</li>"+
+                               "  <li>While these fields are automatically filled in, the numbers are generalized to the zipcode, <b>NOT</b> the customers address.</li>"+
+                               "  <li>If you know the customers specific Latitude/Longitude details, you can enter them manually here.</li>"+
+                               "</ul>";
+
+
 //------------------------------------------------------------------------------------------------------
 //                               Customer "EDIT" related JS                                            |
 //------------------------------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
 
+  basic_tooltip(".customer_latlong_tooltip", "Latitude/Longitude", customer_latlong_tooltip, "right");
+  basic_tooltip("#editCustomerFirstSubmit", "Update Customer", "<ul><li>If you click this and nothing happens, make sure any required fields are either filled in or removed.</li><li>Required fields have a red border around them.</li></ul>");
 
+  var container = $("#editCustomerDiv");
+
+  container.find(".customer_attributes_container").each(function() { // Shows the E-Commerce Order Attributes Container if any attributes are present
+     var fields = $(this);
+    if ($(this).find(".row").length > 1) {
+        fields.show();
+    }
+  });
+
+
+
+});
+
+$(document).on("click", ".customer_edit_add_comment_button", function() {
+  $(".add_child_customer_edit_comment").click();
+});
+
+
+$(document).on("click", "a.add_child_customer_edit_comment", function() {
+  var new_id, regexp, template;
+  template = $(".comments_fields_template").html();
+  regexp = new RegExp("new_comments", "g");
+  new_id = (new Date).getTime();
+  $(this).parent().before(template.replace(regexp, new_id));
+  return false;
+});
+
+$(document).on("click", ".customer_comment_edit_remove_button", function() {
+  var fields = $(this).closest(".show_basic_pop_fields");
+  bootbox.confirm("Are you sure you want to remove this comment?", function(result){
+    if (result === true) {
+      fields.find(".remove_child_customer_edit_comment").attr("value", "true");
+      fields.hide();
+    }
+  });
+});
+
+$(document).on("click", "#editCustomerFirstSubmit", function(e) {
+  e.preventDefault();
+  var tr = $(".body").find("tr").length;
+  if (tr > 1) {
+    $(".hide-tag").remove();
+  }
+  $(".comments_fields_template").html("");
+  $("#editCustomerSubmit").click();
+});
+
+
+//------------------------------------------------------------------------------------------------------
+//                               Customer "INDEX" related JS                                           |
+//------------------------------------------------------------------------------------------------------
+
+$(document).on("turbolinks:load", function() {
+  var table = $("#customersDataTable").DataTable({
+    renderer: "bootstrap",
+    "aaSorting": [],
+    "scrollX": true,
+    "scrollY": true,
+    "colReorder": true,
+    "dom": "<'customers-toolbar'><'top-row paginate'p>t<'bottom-row paginate'ip>",
+    "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
+    "bJQueryUI": true,
+    "columnDefs": [
+      {
+        "targets": 0,
+        "orderable": false
+      },
+      {
+        "targets": 13,
+        "visible": false
+      }
+    ],
+    "order": [[2, "desc"]],
+    "oLanguage": {"sZeroRecords": "No customers to display for this view"}
+  });
+  table.page.len(50).draw();
+  $("div.customers-toolbar").html(""+
+    "<ul class='nav nav-tabs'>"+
+    "  <li><div class='dataTables_filter'><input type='search' class='form-control' id='customersSearch' placeholder='Search Table...'></div>"+
+    "  <li>"+
+    "    <div class='dataTables_length'>"+
+    "     <select "+
+    "       class='form-control'"+
+    "       title='Number of records to show'"+
+    "       id='customersLength'>"+
+    "       <option value='5'>5</option>"+
+    "       <option value='25'>25</option>"+
+    "       <option selected='selected' value='50'>50</option>"+
+    "       <option value='100'>100</option>"+
+    "       <option value='-1'>All</option>"+
+    "     </select>"+
+    "   </div>"+
+    "  </li>"+
+    "</ul>"+
+    "");
+  $("#customersSearch").addClear();
+  $("#customersSearch").next().on("click", function(){ // Adds "X" button and clears properly when clicked
+    table.search("").draw();
+  });
+      $("#customersSearch").keyup(function(){
+    table.search($(this).val()).draw();
+  });
+
+  $("#customersLength").on("change", function(){
+    table.page.len($(this).find("option:selected").attr("value")).draw() ;
+  });
+
+  function format (attributes) {
+    return ""+
+   "<div class='glider'>"+
+   "  <table class='customer-listing-expando'>"+
+   "    <thead>"+
+   "      <tr>"+
+   "        <th></th>"+
+   "        <th>Additional Attributes</th>"+
+   "        <th>Customer Order Associations</th>"+
+   "        <th>Latitude/Longitude</th>"+
+   "        <th>Meta Notes</th>"+
+   "      </tr>"+
+   "    </thead>"+
+   ""+attributes+
+   "  </table>"+
+   "</div>";
+  }
+
+  $("#customersDataTable").on("click", "td.details-control", function() {
+    var tr = $(this).closest("tr");
+    var row = table.row(tr);
+    if (row.child.isShown()) {
+      $("div.glider", row.child()).slideUp(function() {
+        row.child.hide();
+        tr.removeClass("shown");
+      });
+    }
+    else {
+      row.child(format(tr.data("child-attributes")), "no-padding").show();
+      tr.addClass("shown");
+      $("div.glider", row.child()).slideDown();
+    }
+  });
 });

@@ -25,12 +25,11 @@ $(document).on("turbolinks:load", function() {
                 "scrollX": true,
                 "scrollY": "75vh",
                 "scrollCollapse": true,
-                "colReorder": true,
                 // "products-toolbar" = "top_toobar" function below. "B" = Buttons. "top-row paginate" = Parent class to help with adding CSS to Pagination controls. "t" = The Table. "bottom-row paginate ip" = "Showing x of x" and Pagination controls.
                 "dom": "<'ecomm-orders-toolbar'>B<'top-row paginate'p>t<'bottom-row paginate'ip>",
                 "buttons": [
                   // Standard Column Visibility Button that lists all columns.  ".noVis" is disabled via CSS in Application.scss because the ":not" method doesn"t work here
-                  {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Columns <span class='caret'></span>", className: "btn btn-header", columnText: function ( dt, idx, title ) {return ': '+title;}},
+                  {extend: "colvis", restore: "Revert", text: "<i class='fa fa-wrench' aria-hidden='true'></i> Columns <span class='caret'></span>", className: "btn btn-header ecommColumnsButton"},
 
                   {extend: "collection", text: "<i class='fa fa-download' aria-hidden='true'></i> Export <span class='caret'></span>", className: "btn btn-header dtExportOptions",
                     buttons: [
@@ -77,13 +76,13 @@ $(document).on("turbolinks:load", function() {
               });
 
   // Reduces the amount of text displayed for this particular item in the Columns Dropdown
-  // $(table.buttons()[0].inst.s.buttons[0].conf._collection).find('a:nth-child(8) span').text("Line Items & Tracking Information");
+  $(".ecommColumnsButton").one("click", function() {
+    $(table.buttons()[0].inst.s.buttons[0].conf._collection).find('a:nth-child(8) span').text("Line Items & Tracking Information");
+  });
 
   table.page.len(50000).draw();
   
-  function top_toolbar (top_toolbar) {
-    return top_toolbar;
-  }
+  function top_toolbar (top_toolbar) { return top_toolbar; }
 
   var children = $(".ecommOrdersTableChildren");
   $("div.ecomm-orders-toolbar").html(top_toolbar(children.data("child-top_toolbar")));
@@ -103,29 +102,30 @@ $(document).on("turbolinks:load", function() {
       todayBtn: true,
       todayHighlight: true
   });
-  // $.fn.dataTableExt.afnFiltering.push( // Used for the "Filter By Date" Function
-  //   function( oSettings, aData, iDataIndex ) {
-  //     if(oSettings.nTable.id == "ecommOrdersDataTable"){
-  //       var startDate = document.getElementById("ecommOrderDatefilterStartDate").value;
-  //       var endDate = document.getElementById("ecommOrderDatefilterEndDate").value;
-  //       var iStartDateCol = 1; // Column where the filtering takes place
-  //       var iEndDateCol = 1;
-  //       startDate=startDate.substring(0,4) + startDate.substring(5,7)+ startDate.substring(8,10); // 0,4 = yyyyy 5,7 = dd 8,10 = dd == yyyy-mm-dd
-  //       endDate=endDate.substring(0,4) + endDate.substring(5,7)+ endDate.substring(8,10);
-  //       var datofini=aData[iStartDateCol].substring(0,4) + aData[iStartDateCol].substring(5,7)+ aData[iStartDateCol].substring(8,10);
-  //       var datoffin=aData[iEndDateCol].substring(0,4) + aData[iEndDateCol].substring(5,7)+ aData[iEndDateCol].substring(8,10);
-  //       if ( startDate == "" && endDate == "" ) { return true }
-  //       else if ( startDate <= datofini && endDate == "") { return true }
-  //       else if ( endDate >= datoffin && startDate == "") { return true }
-  //       else if (startDate <= datofini && endDate >= datoffin) { return true }
-
-  //       return false;
-  //     }
-  //     return true;
-  //   }
-  // );
-  // $("#ecommOrderDatefilterStartDate").on("change keyup", function() { table.draw(); });
-  // $("#ecommOrderDatefilterEndDate").on("change keyup", function() { table.draw(); });
+  $(document).on("click", ".orderDateRangeFilter", function() {
+    $.fn.dataTableExt.afnFiltering.push( // Used for the "Filter By Date" Function
+      function( oSettings, aData, iDataIndex ) {
+        if(oSettings.nTable.id == "ecommOrdersDataTable"){
+          var startDate = $("#ecommOrderDateFilterStartDate").val();
+          var endDate = $("#ecommOrderDateFilterEndDate").val();
+          var iStartDateCol = 1; // Column where the filtering takes place
+          var iEndDateCol = 1;
+          startDate=startDate.substring(0,4) + startDate.substring(5,7)+ startDate.substring(8,10); // 0,4 = yyyyy 5,7 = dd 8,10 = dd == yyyy-mm-dd
+          endDate=endDate.substring(0,4) + endDate.substring(5,7)+ endDate.substring(8,10);
+          var datofini=aData[iStartDateCol].substring(0,4) + aData[iStartDateCol].substring(5,7)+ aData[iStartDateCol].substring(8,10);
+          var datoffin=aData[iEndDateCol].substring(0,4) + aData[iEndDateCol].substring(5,7)+ aData[iEndDateCol].substring(8,10);
+          if ( startDate == "" && endDate == "" ) { return true }
+          else if ( startDate <= datofini && endDate == "") { return true }
+          else if ( endDate >= datoffin && startDate == "") { return true }
+          else if (startDate <= datofini && endDate >= datoffin) { return true }
+          return false;
+        }
+        return true;
+      }
+    );
+  });
+  $("#ecommOrderDateFilterStartDate").on("change keyup", function() { table.draw(); });
+  $("#ecommOrderDateFilterEndDate").on("change keyup", function() { table.draw(); });
 
   $(document).on("click", ".ecommOrdersStatusFilterMenu", function (e) {
     e.stopPropagation(); // Stops the Status Filter Menu from closing when an interior option is clicked
@@ -150,10 +150,10 @@ $(document).on("turbolinks:load", function() {
       }).get().join("|");
     console.log(retailers);
     if (retailers === "") {
-      table.column(10).search("xxxxxxxxxx").draw();
+      table.column(4).search("xxxxxxxxxx").draw();
     }
     else
-      table.column(10).search(retailers, true, false, false).draw();
+      table.column(4).search(retailers, true, false, false).draw();
   });
 
 

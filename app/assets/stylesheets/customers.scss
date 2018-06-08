@@ -25,7 +25,7 @@
     color: green;
   }
 }
-.customer_add_comment_button {
+.customer_add_comment_button, .customer_edit_add_comment_button {
   margin: -15px 0 0 526px;
   color: #255aad;
   cursor: pointer;
@@ -35,7 +35,7 @@
   }
 }
 
-.customer_comment_remove_button, .customer_attributes_remove_button {
+.customer_comment_remove_button, .customer_attributes_remove_button, .customer_comment_edit_remove_button {
   margin: -12px 0 0 588px;
   color: red;
   cursor: pointer;
@@ -48,7 +48,7 @@
 
 .customerTableContainer {
   width: 100%;
-  padding: 0;
+  padding: 0 5px 0 0;
 }
 
 #newCustomerTable {
@@ -90,6 +90,40 @@
   tbody tr {
     background-color: #eee;
   }
+  tbody tr:nth-child(6) { // 6-Zipcode
+    td:first-child {
+      .fa-question-circle {
+        font-size: 1em;
+        position: relative;
+        bottom: 8px;
+        left: 6px;
+        color: #255aad;
+        &:hover {
+          color: red;
+        }
+        &:active {
+          color: green;
+        }
+      }
+    }
+  }
+  tbody tr:nth-child(12) { // 12-Latitude
+    td:first-child {
+      .fa-question-circle {
+        font-size: 1em;
+        position: relative;
+        bottom: 8px;
+        left: 6px;
+        color: #255aad;
+        &:hover {
+          color: red;
+        }
+        &:active {
+          color: green;
+        }
+      }
+    }
+  }
   tbody tr:nth-child(9) td:last-child {
     select {
       width: 100%;
@@ -116,10 +150,11 @@
     padding: 0;
     width: 30%;
     input {
+      width: 100%;
       padding: 6px 8px 6px 6px;
       border: none;
       border-radius: 0;
-      text-align:right;
+      text-align: right;
       background-color: #fafafa;
       &:focus {
         box-shadow: inset 0px 0px 5px solid #b5b5f7;
@@ -147,6 +182,9 @@
     font-size: 1.5em;
     cursor: pointer;
     color: red;
+    a {
+      color: red;
+    }
   }
 }
 
@@ -325,4 +363,81 @@
   tbody tr:nth-child(even) {
     background-color: #f9f9f9;
   }
+}
+
+//------------------------------------------------------------------------------------------------------
+//                               Customer 'INDEX' related CSS                                            |
+//------------------------------------------------------------------------------------------------------
+
+.customersTable {
+  width: 100%;
+  padding: 20px 0 20px 0px;
+  background-color: #d1dbe4;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+  border-bottom-right-radius: 30px;
+}
+
+.customers-table {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  text-align: center;
+  vertical-align: middle;
+  tr td {
+    border-right: 1px solid #ccc;
+  }
+}
+
+.customers-toolbar {
+  float: left;
+  margin-right: 4px;
+  padding-left: 30px;
+  display: inline;
+  .nav {
+    border-bottom: 0 !important;
+  }
+}
+
+.customer-listing-expando {
+  width: 95%;
+  padding-top: 0;
+  padding-bottom: 5px;
+  border-top: 0;
+  border-right: 2px solid #b5b5f7;
+  border-left: 2px solid #b5b5f7;
+  border-bottom: 2px solid #b5b5f7 !important;
+  margin-bottom: 5px !important;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  thead tr {
+    th {
+      font-size: 1em;
+      font-weight: bold;
+      text-align: center;
+      background-color: #eceaff;
+      color: black;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
+    }
+    th:last-child {
+      border-right: 0;
+    }
+  }
+  tbody tr td {
+    text-align: center;
+    vertical-align: top;
+    border-right: 1px solid #ddd;
+  }
+}
+
+#customersSearch {
+  color: black;
+  font-family: 'Abel', sans-serif;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+  margin: 5px;
+}
+#customersLength {
+  font-family: 'Abel', sans-serif;
+  width: 55px;
+  margin: 5px 10px 5px 10px;
+  padding-right: 0;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15)
 }

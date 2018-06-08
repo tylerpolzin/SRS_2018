@@ -131,7 +131,7 @@
 #ecommOrdersTableLength {
   font-family: 'Abel', sans-serif;
   width: 55px;
-  margin-left: 10px;
+  margin-left: 19px;
   margin-right: 10px;
   padding-right: 0;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15)
@@ -252,6 +252,7 @@
   padding: 0 !important;
   width: 600px;
   table {
+    margin: 0;
     tbody td {
       padding: 3px 5px !important;
       border-bottom: 1px solid #ddd;
@@ -267,33 +268,36 @@
       &.ecomm_orders_line_items_tracking_numbers_table { // 4-Tracking Information Table
         width: 65%;
         padding: 0 !important;
-        table tbody tr td {
-          &.li_tn_carrier { // 1-Carrier Field
-            width: 17%;
-          }
-          &.li_tn_sm { // 2-Shipping Method Field
-            width: 29%;
-          }
-          &.li_tn_tn { // 3-Tracking Number Field
-            width: 41%;
-            .copy-cut {
-              color: #00c500;
-              cursor: pointer;
-              &:hover {
-                color: #006520;
+        table {
+          margin: 0;
+          tbody tr td {
+            &.li_tn_carrier { // 1-Carrier Field
+              width: 17%;
+            }
+            &.li_tn_sm { // 2-Shipping Method Field
+              width: 29%;
+            }
+            &.li_tn_tn { // 3-Tracking Number Field
+              width: 41%;
+              .copy-cut {
+                color: #00c500;
+                cursor: pointer;
+                &:hover {
+                  color: #006520;
+                }
+                &:active {
+                  color: orange;
+                }
               }
-              &:active {
-                color: orange;
+              .copy-text {
+                position: absolute;
+                z-index: -999;
+                opacity: 0;
               }
             }
-            .copy-text {
-              position: absolute;
-              z-index: -999;
-              opacity: 0;
+            &.li_tn_sc { // 4-Shipping Cost Field
+              width: 13%;
             }
-          }
-          &.li_tn_sc { // 4-Shipping Cost Field
-            width: 13%;
           }
         }
       }

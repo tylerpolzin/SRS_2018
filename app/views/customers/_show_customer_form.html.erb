@@ -55,11 +55,11 @@
             <td><%= mail_to @customer.email %></td>
           </tr>
           <tr>
-            <td>Lat</td>
+            <td>Latitude</td>
             <td><%= @customer.lat %> <%= link_to "View on Google Maps", "https://www.google.com/maps/search/?api=1&query=#{@customer.lat},#{@customer.long}", target: "_blank", :style => "float:right;" %></td>
           </tr>
           <tr>
-            <td>Long</td>
+            <td>Longitude</td>
             <td><%= @customer.long %></td>
           </tr>
           <tr>

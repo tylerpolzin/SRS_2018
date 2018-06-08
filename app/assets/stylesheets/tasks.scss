@@ -60,6 +60,7 @@
       }
       &.disabled {
         color: gray;
+        cursor: not-allowed;
       }
     }
     .task_add_comment_button {
@@ -1437,7 +1438,7 @@
   background-color: #d1dbe4;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
   border-bottom-right-radius: 30px;
-  table thead tr th:nth-child(4) {
+  table thead tr th:nth-child(6) {
     padding: 0;
   }
 }
@@ -1453,7 +1454,7 @@
       border-right: 1px solid #ccc;
       border-bottom: 2px solid black;
     }
-  tr td:nth-child(2), tr td:nth-child(3), tr td:nth-child(4) {
+  tr td:nth-child(4), tr td:nth-child(6) {
     padding: 0;
     table tbody {
       tr {
@@ -1561,13 +1562,18 @@
 .task_uploads_file_dropdown {
   li table tbody tr td {
     padding: 2px 6px 2px 6px;
+    text-align: center;
   }
 }
 
-.task_comments_dropdown {
-  left: -290px;
-  li table tbody tr td {
-    padding: 2px 6px 2px 6px;
+// Hacky fix to remove the Searchable column because removing the column in the DataTables JS isnt working
+#tasksDataTable_wrapper {
+  .dt-buttons .dt-button-collection .dt-button:nth-child(7),
+  .dt-buttons .dt-button-collection .dt-button:nth-child(8),
+  .dt-buttons .dt-button-collection .dt-button:nth-child(9),
+  .dt-buttons .dt-button-collection .dt-button:nth-child(10),
+  .dt-buttons .dt-button-collection .dt-button:nth-child(11) {
+    display: none;
   }
 }
 
@@ -1580,141 +1586,87 @@
   padding-left: 5px;
   .nav {
     border-bottom: 0 !important;
-    // li .productsFilterBy {
-    //   margin: 0;
-    //   padding: 6px 12px 6px 12px;
-    //   cursor: context-menu;
-    //   font-weight: bold;
-    //   color: black;
-    //   border-top: 1px solid #ccc;
-    //   border-right: 0;
-    //   border-bottom: 1px solid #ccc;
-    //   border-left: 1px solid #ccc;
-    //   background: linear-gradient(to bottom, white, #d5dfe7);
-    //   border-top-left-radius: 4px;
-    //   border-bottom-left-radius: 4px;
-    //   border-bottom-right-radius: 0;
-    //   border-top-right-radius: 0;
-    // }
-    // li .productsQuantityRangeFilter {
-    //   button {
-    //     margin: 0;
-    //     border-right: 0;
-    //     border-radius: 0;
-    //   }
-    //   ul {
-    //     border: 2px solid #2e353d;
-    //     li {
-    //     width: 200px;
-    //     margin: 0 5px 0 5px;
-    //     border: 2px solid #2e353d;
-    //     .input-quantity input {
-    //       border-radius: 0;
-    //       border: 0;
-    //     }
-    //     }
-    //   }
-    // }
-    // li .brandFilter {
-    //   button {
-    //   margin: 0;
-    //   border-right: 0;
-    //   border-radius: 0;
-    //   }
-    //   .productsBrandFilterMenu {
-    //     padding: 5px;
-    //     border-top: 0;
-    //     border-right: 2px solid #2e353d;
-    //     border-bottom: 2px solid #2e353d;
-    //     border-left: 2px solid #2e353d;
-    //     li {
-    //       padding: 0;
-    //       border-right: 2px solid #2e353d;
-    //       border-bottom: 2px solid #2e353d;
-    //       border-left: 2px solid #2e353d;
-    //       text-align: center;
-    //       background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
-    //       color: #a92b04;
-    //       &:hover {
-    //         background: linear-gradient(to top, #d6d6d6, #e4e4e4);
-    //       }
-    //       &.selected {
-    //         background: linear-gradient(to bottom, white, #f3f3f3);
-    //         color: #165407;
-    //         &:hover {
-    //           background: linear-gradient(to top, white, #f3f3f3);
-    //         }
-    //       }
+    li .tasksFilterBy {
+      margin: 0;
+      padding: 6px 12px 6px 12px;
+      cursor: context-menu;
+      font-weight: bold;
+      color: black;
+      border-top: 1px solid #ccc;
+      border-right: 0;
+      border-bottom: 1px solid #ccc;
+      border-left: 1px solid #ccc;
+      background: linear-gradient(to bottom, white, #d5dfe7);
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+    li .taskDateRangeFilter {
+      button {
+        margin: 0;
+        border-right: 0;
+        border-radius: 0;
+      }
+      ul {
+        border: 2px solid #2e353d;
+        li {
+        width: 300px;
+        margin: 0 5px 0 5px;
+        border: 2px solid #2e353d;
+        .input-daterange input {
+          border-radius: 0;
+          border: 0;
+        }
+        }
+      }
+    }
+    li .taskTypeFilter, li .taskStatusFilter, li .taskAssignedForFilter, li .taskAssignedByFilter {
+      button {
+      margin: 0;
+      border-right: 0;
+      border-radius: 0;
+      }
+      .taskTypeFilterMenu, .taskStatusFilterMenu, .taskAssignedForFilterMenu, .taskAssignedByFilterMenu {
+        padding: 5px;
+        border-top: 0;
+        border-right: 2px solid #2e353d;
+        border-bottom: 2px solid #2e353d;
+        border-left: 2px solid #2e353d;
+        li {
+          padding: 0;
+          border-right: 2px solid #2e353d;
+          border-bottom: 2px solid #2e353d;
+          border-left: 2px solid #2e353d;
+          text-align: center;
+          background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
+          color: #a92b04;
+          &:hover {
+            background: linear-gradient(to top, #d6d6d6, #e4e4e4);
+          }
+          &.selected {
+            background: linear-gradient(to bottom, white, #f3f3f3);
+            color: #165407;
+            &:hover {
+              background: linear-gradient(to top, white, #f3f3f3);
+            }
+          }
 
-    //       &:first-child {
-    //         border-top: 2px solid #2e353d;
-    //       }
-    //       label {
-    //         padding: 5px;
-    //         margin: 0;
-    //         width: 140px;
-    //         user-select: none;
-    //         input {
-    //           display: none;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-    // li .booleanFilter {
-    //   button {
-    //   margin: 0;
-    //   border-right: 0;
-    //   border-radius: 0;
-    //   }
-    //   .booleanFilterMenu {
-    //     padding: 5px;
-    //     border-top: 0;
-    //     border-right: 2px solid #2e353d;
-    //     border-bottom: 2px solid #2e353d;
-    //     border-left: 2px solid #2e353d;
-    //     li {
-    //       display: inline-flex;
-    //       padding: 0;
-    //       border-right: 2px solid #2e353d;
-    //       border-bottom: 2px solid #2e353d;
-    //       border-left: 2px solid #2e353d;
-    //       text-align: center;
-    //       background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
-    //       color: #a92b04;
-    //       &:hover {
-    //         background: linear-gradient(to top, #d6d6d6, #e4e4e4);
-    //       }
-    //       &.selected {
-    //         background: linear-gradient(to bottom, white, #f3f3f3);
-    //         color: #165407;
-    //         &:hover {
-    //           background: linear-gradient(to top, white, #f3f3f3);
-    //         }
-    //       }
-
-    //       &:first-child {
-    //         border-top: 2px solid #2e353d;
-    //       }
-    //       label {
-    //         padding: 5px;
-    //         margin: 0;
-    //         width: 140px;
-    //         user-select: none;
-    //         &.nil {
-    //           color: #255aad;
-    //         }
-    //         input {
-    //           display: none;
-    //         }
-    //       }
-    //       button {
-    //         width: 41%;
-    //         font-size: 0.8em;
-    //       }
-    //     }
-    //   }
-    // }
+          &:first-child {
+            border-top: 2px solid #2e353d;
+          }
+          label {
+            padding: 5px;
+            margin: 0;
+            width: 140px;
+            user-select: none;
+            input {
+              display: none;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -1728,7 +1680,7 @@
 #taskTableLength {
   font-family: 'Abel', sans-serif;
   width: 55px;
-  margin-left: 10px;
+  margin-left: 19px;
   margin-right: 10px;
   padding-right: 0;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15)
@@ -1840,7 +1792,7 @@
   }
   tbody tr td {
     text-align: center;
-    vertical-align: top;
     border-right: 1px solid #ddd;
   }
 }
+

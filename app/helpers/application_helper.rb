@@ -45,7 +45,7 @@ module ApplicationHelper
     options[:form_builder_local] ||= :f
 
     content_for :commentable do
-      content_tag(:div, :id => "#{association}_fields_template", :style => "display: none", :"data-count" => 0) do
+      content_tag(:div, :id => "#{association}_fields_template", :style => "display: none") do
         form_builder.fields_for(association, options[:object], :child_index => "new_#{association}") do |f|
           render(:partial => options[:partial], :locals => { options[:form_builder_local] => f })
         end
@@ -54,7 +54,7 @@ module ApplicationHelper
   end
 
   def add_comment_link(name, association)
-    link_to(name, "javascript:void(0)", :class => "add_comment hidden", :"data-association" => association, :"data-count" => "new_#{association}")
+    link_to(name, "javascript:void(0)", :class => "add_comment hidden", :"data-association" => association)
   end
 
   def remove_comment_link(name, f)

@@ -1,25 +1,148 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Customers</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @customers.each do |customer| %>
-      <tr>
-        <td><%= link_to 'Show', customer %></td>
-        <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
-        <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Customer', new_customer_path %>
+<% @title = "SRS Portal | Customer List" %>
+<div class="defaultDiv" id="customersDiv">
+  <p class="defaultDivHeader">Customer List</p>
+    <div class="customersTable">
+      <table id="customersDataTable" class="display" style="width:100%">
+        <thead>
+          <tr>
+            <th style="width:5px;"><p style="display:none;">Details</p></th> <!-- hacky way to get the word "Details" to show up in the Colvis buttons dropdown -->
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Company</th>
+            <th>Address 1</th>
+            <th>Address 2</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zipcode</th>
+            <th>Country</th>
+            <th>Phone Number</th>
+            <th>Email Address</th>
+            <th>Comments</th>
+            <th></th> <!-- Hidden field for search -->
+          </tr>
+        </thead>
+        <tbody class="customers-table">
+          <% @customers.each do |customer| %>
+            <tr data-child-attributes="
+              <tbody>
+                <tr class='no-table'>
+                  <td>
+                    <a class='btn btn-sm' style='margin-bottom:5px;' data-method='get' href='/customers/<%= customer.id %>'>View Customer Details</a></br>
+                    <a class='btn btn-sm' data-method='get' href='/customers/<%= customer.id %>/edit'>Edit This Customer</a>
+                  </td>
+                  <td class='zero-pad'>
+                    <table class='clear defaultExpandoInnerTable'>
+                      <thead></thead>
+                      <tbody>
+                        <% if customer.details.present? %>
+                          <% customer.details.try(:each) do |key, value| %>
+                            <tr>
+                                <td><%= key %></td>
+                                <td><%= value %></td>
+                            </tr>
+                          <% end %>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </td>
+                  <td class='zero-pad'>
+                    <table class='clear defaultExpandoInnerTable'>
+                      <thead></thead>
+                      <tbody>
+                        <% if WarrantyOrder.where(:customer_id => customer.id).present? %>
+                          <% WarrantyOrder.where(:customer_id => customer.id).each do |association| %>
+                            <tr>
+                              <td><a data-method='get' href='/warranty_orders/<%= association.customer_id %>'><%= association.dropdown_select %></a></td>
+                            </tr>
+                          <% end %>
+                        <% else %>
+                          <tr>
+                            <td>No Associations Found</td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </td>
+                  <td><%= customer.lat if customer.lat.present? %><%= "0" if customer.lat.blank? %>/<%= customer.long if customer.long.present? %><%= "0" if customer.long.blank? %></td>
+                  <td class='zero-pad'>
+                    <table class='clear defaultExpandoInnerTable'>
+                      <thead></thead>
+                      <tbody>
+                        <tr>
+                          <td>Entry Created</td>
+                          <td><%= customer.created_at.strftime("%Y/%m/%d (%R)") %></td>
+                        </tr>
+                        <tr>
+                          <td>Entry Last Updated</td>
+                          <td><%= customer.updated_at.strftime("%Y/%m/%d (%R)") %></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>">
+              <td class="details-control"></td>
+              <td><%= customer.firstname %></td>
+              <td><%= customer.lastname %></td>
+              <td><%= customer.company %></td>
+              <td><%= customer.address1 %></td>
+              <td><%= customer.address2 %></td>
+              <td><%= customer.city %></td>
+              <td><%= customer.state %></td>
+              <td><%= customer.zipcode %></td>
+              <td><%= customer.country %></td>
+              <td><%= customer.phone %></td>
+              <td><%= customer.email %></td>
+              <td> <!-- Comments -->
+                <% if customer.comments.present? %>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#customerCommentsModal-<%= customer.id %>">
+                    View Comments
+                  </button>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="customerCommentsModal-<%= customer.id %>" tabindex="-1" role="dialog" aria-labelledby="customerCommentsModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="customerCommentsModalLongTitle"><%= customer.name %> (Comments)</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <table class="table">
+                            <% customer.comments.each do |comment| %>
+                              <tr class="modal-tr">
+                                <td><%= comment.content %></td>
+                              <tr>
+                            <% end %>
+                            </tr>
+                          </table>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </td>
+              <td> <!-- Hidden field for search capabilities -->
+                <% if customer.details.present? %>
+                  <% customer.details.try(:each) do |key, value| %>
+                    <%= key %> | <%= value %> | <% end %>
+                <% end %>
+                <% if WarrantyOrder.where(:customer_id => customer.id).present? %>
+                  <% WarrantyOrder.where(:customer_id => customer.id).each do |association| %>
+                      <%= association.dropdown_select %> | <% end %>
+                <% end %>
+                <%= customer.lat if customer.lat.present? %> | <%= customer.long if customer.long.present? %> | 
+                <%= customer.created_at.strftime("%Y/%m/%d (%R)") %> | <%= customer.updated_at.strftime("%Y/%m/%d (%R)") %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+</div>

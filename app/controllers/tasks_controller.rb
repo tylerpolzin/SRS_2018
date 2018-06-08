@@ -4,6 +4,8 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
+    @assigned_for = User.where(:id => Task.select(:initiated_for_id))
+    @assigned_by = User.where(:id => Task.select(:initiated_by_id))
   end
 
   def show

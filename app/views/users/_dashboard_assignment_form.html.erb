@@ -12,6 +12,7 @@
 </ul>
 
 <div id="assignmentsTabs">
+
   <div class="tab-content">
     <% if development? %>
       <div id="assignments-active" class="tab-pane fade <%= "in active" if development? %> container">
@@ -32,3 +33,379 @@
   </div>
 
 </div>
+<% if current_user.admin? %>
+<div id="pagesStatus">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th>View</th>
+        <th>Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td>Products</td>
+        <td>New</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Needs new styling updates</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Products</td>
+        <td>Edit</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Needs new styling updates</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Products</td>
+        <td>Show</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Needs new styling updates</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Products</td>
+        <td>Index</td>
+        <td class="order_status_completed">Complete</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Parts</td>
+        <td>New</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Needs new styling updates</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Parts</td>
+        <td>Edit</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Needs new styling updates</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Parts</td>
+        <td>Show</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Needs new styling updates</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Parts</td>
+        <td>Index</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Combo Items</td>
+        <td>New</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Needs new styling updates</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Combo Items</td>
+        <td>Edit</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Needs new styling updates</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Combo Items</td>
+        <td>Show</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Needs new styling updates</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Combo Items</td>
+        <td>Index</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Files</td>
+        <td>New</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Files</td>
+        <td>Edit</td>
+        <td class="order_status_open">In Progress</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Files</td>
+        <td>Show</td>
+        <td class="order_status_new">Incomplete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Files</td>
+        <td>Show (Upload Batch)</td>
+        <td class="order_status_new">Incomplete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Files</td>
+        <td>Index</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Needs filter buttons added</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Tasks</td>
+        <td>New</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Tasks</td>
+        <td>Edit</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Tasks</td>
+        <td>Show</td>
+        <td class="order_status_open">In Progress</td>
+        <td>
+          <ul>
+            <li>Show "E-Commerce Orders" tab is <b>incomplete</b></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Tasks</td>
+        <td>Index</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>E-Commerce Orders</td>
+        <td>New</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Part of "Tasks"</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>E-Commerce Orders</td>
+        <td>Edit</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Part of "Tasks"</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>E-Commerce Orders</td>
+        <td>Show</td>
+        <td class="order_status_new">Incomplete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>E-Commerce Orders</td>
+        <td>Index</td>
+        <td class="order_status_completed">Complete</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Customer Orders</td>
+        <td>New</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Part of "Tasks"</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Customer Orders</td>
+        <td>Edit</td>
+        <td class="order_status_completed">Complete</td>
+        <td>
+          <ul>
+            <li>Part of "Tasks"</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Customer Orders</td>
+        <td>Show</td>
+        <td class="order_status_new">Incomplete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Customer Orders</td>
+        <td>Index</td>
+        <td class="order_status_new">Incomplete</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Store Orders</td>
+        <td>New</td>
+        <td class="order_status_new">Incomplete</td>
+        <td>
+          <ul>
+            <li>Part of "Tasks"</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Store Orders</td>
+        <td>Edit</td>
+        <td class="order_status_new">Incomplete</td>
+        <td>
+          <ul>
+            <li>Part of "Tasks"</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Store Orders</td>
+        <td>Show</td>
+        <td class="order_status_new">Incomplete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Store Orders</td>
+        <td>Index</td>
+        <td class="order_status_new">Incomplete</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Stores</td>
+        <td>New</td>
+        <td class="order_status_new">Incomplete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Stores</td>
+        <td>Edit</td>
+        <td class="order_status_new">Incomplete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Stores</td>
+        <td>Show</td>
+        <td class="order_status_new">Incomplete</td>
+        <td>
+          <ul>
+            <li></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Stores</td>
+        <td>Index</td>
+        <td class="order_status_new">Incomplete</td>
+        <td></td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+<% end %>

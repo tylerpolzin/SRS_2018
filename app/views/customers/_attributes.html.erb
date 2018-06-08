@@ -7,9 +7,9 @@
   <table class="table newCustomerAttributeContainer">
     <thead></thead>
     <tbody class="body">
-      <%= f.fields_for_without_bootstrap :details, @customer.details do |d| %>
+      <%= f.fields_for_without_bootstrap :details, f.object.details do |d| %>
         <%= hidden_field_tag "customer[details]", nil, class: "hide-tag" %>
-        <% @customer.details.try(:each) do |key, value| %>
+        <% f.object.details.try(:each) do |key, value| %>
             <tr class="row">
               <td>
                 <%= text_field_tag key, key, :class => 'text_field customerDynamicAttributeName', required: true %>

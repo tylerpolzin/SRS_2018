@@ -6,6 +6,7 @@ class CustomersController < ApplicationController
   end
 
   def show
+    @warranty_orders = WarrantyOrder.where(:customer_id => params[:id])
   end
 
   def new

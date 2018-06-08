@@ -1,3 +1,208 @@
-// Place all the styles related to the UploadBatches controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+//-----------------------------------------------------------------------------------
+//          START 'NEW UPLOADS' CSS                                                 |
+//-----------------------------------------------------------------------------------
+
+#newUploadsDiv {
+  width: 1000px;
+}
+
+.newUploadProductSearchDiv, .newUploadPartSearchDiv {
+  display: none;
+}
+
+.newUploadsContainer {
+  width: 100%;
+  padding: 0;
+}
+
+.commentFields {
+  margin-bottom: 15px;
+}
+
+.new_upload_fields {
+  margin: 0 0 20px 0;
+}
+
+#addFileButton {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  &.tempMargin {
+    margin-bottom: 15px;
+  }
+}
+
+.new_upload_add_comment_button {
+  margin: -15px 0 0 260px;
+}
+.new_upload_add_product_association_button {
+  margin: -15px 0 0 371px;
+}
+.new_upload_add_part_association_button {
+  margin: -15px 0 0 565px;
+}
+.new_upload_add_task_association_button {
+  margin: -15px 0 0 735px;
+}
+.new_upload_remove_file_button {
+  margin: -15px 0 0 908px;
+  cursor: pointer;
+  user-select: none;
+  .fa {
+    color: red;
+    &:active {
+      color: green;
+    }
+  }
+}
+
+.upload_comment_remove_button {
+  margin: -12px 0 0 893px;
+}
+
+.new_upload_file_select_header {
+  margin: -11px 0 5px 13px !important;
+}
+
+.newUploadContainer {
+  border: 1px solid #b5b5f7;
+  margin: 0 0 10px 10px;
+  width: 98%;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  tbody tr td {
+    padding: 0;
+    .form-group {
+      margin: 0;
+    }
+    .form-group textarea {
+      width: 900px;
+    }
+  }
+  tbody tr td:first-child {
+    width: 450px;
+  }
+  tbody tr td:nth-child(2) {
+    width: 450px;
+  }
+  tbody tr:first-child { // Left Column "File Field"
+    td:first-child {
+      .form-group input {
+        padding: 6px 2px 6px 6px;
+        border-right: 1px solid #ddd;
+      }
+    }
+    td:nth-child(2) { // Middle Column "Description"
+      border-right: 1px solid #ddd;
+      .form-group input {
+        border: 0;
+        border-radius: 0;
+        &:focus {
+          box-shadow: inset 0px 0px 5px solid #b5b5f7;
+        }
+      }
+    }
+  }
+  tbody tr:last-child {
+    td:first-child {
+      border-right: 1px solid #ddd;
+    }
+  }
+  
+}
+
+.productAssociationTable, .partAssociationTable, .taskAssociationTable {
+  width: 100%;
+  tbody tr td .form-group {
+    margin-bottom: 5px !important;
+  } 
+}
+
+.product_association_remove_button, .part_association_remove_button, .task_association_remove_button {
+  margin: -12px 0 0 893px;
+}
+
+//-----------------------------------------------------------------------------------
+//          START 'UPLOADS INDEX' CSS                                               |
+//-----------------------------------------------------------------------------------
+
+.upload-listing-expando {
+  width: 95%;
+  padding-top: 0;
+  padding-bottom: 5px;
+  border-top: 0;
+  border-right: 2px solid #b5b5f7;
+  border-left: 2px solid #b5b5f7;
+  border-bottom: 2px solid #b5b5f7 !important;
+  margin-bottom: 5px !important;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  thead tr {
+    th {
+      font-size: 1em;
+      font-weight: bold;
+      text-align: center;
+      background-color: #eceaff;
+      color: black;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3)
+    }
+    th:last-child {
+      border-right: 0;
+    }
+  }
+  tbody tr td {
+    text-align: center;
+    vertical-align: top;
+    border-right: 1px solid #ddd;
+  }
+}
+
+
+
+.uploadsTable, .productUploadsTable, .partUploadsTable, .comboItemUploadsTable {
+  margin-left: -15px;
+  padding: 10px 0 5px 0px;
+  .dataTables_wrapper {
+    margin-top: 15px;
+  }
+  table tbody tr td span {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: #ffffff00;
+  }
+}
+
+.uploads-table, .product-uploads-table, .part-uploads-table, .combo-item-uploads-table {
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  text-align: center;
+  vertical-align: middle;
+  tr td {
+    border-right: 1px solid #ccc;
+  }
+}
+
+.uploads-toolbar, .productUploads-toolbar, .partUploads-toolbar, .comboItemUploads-toolbar {
+  float: left;
+  margin-right: 4px;
+  padding-left: 30px;
+  display: inline;
+  .nav {
+    border-bottom: 0 !important;
+  }
+}
+
+#uploadsSearch, #productUploadsSearch, #partUploadsSearch, #comboItemUploadsSearch {
+  color: black;
+  font-family: 'Abel', sans-serif;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+  margin: 5px;
+}
+#uploadsLength, #productUploadsLength, #partUploadsLength, #comboItemUploadsLength {
+  font-family: 'Abel', sans-serif;
+  width: 55px;
+  margin: 5px 10px 5px 10px;
+  padding-right: 0;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15)
+}

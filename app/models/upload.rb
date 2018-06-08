@@ -29,6 +29,7 @@ class Upload < ApplicationRecord
   accepts_nested_attributes_for :item_uploads, :allow_destroy => true
   accepts_nested_attributes_for :products, :allow_destroy => true
   accepts_nested_attributes_for :parts, :allow_destroy => true
+  accepts_nested_attributes_for :comments, :allow_destroy => true
   
   has_attached_file :file, :styles => {:medium => "300x300>", :thumb => "100x100>" }
   before_post_process :resize_images

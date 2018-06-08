@@ -9,6 +9,7 @@
         <th>File Size</th>
         <th>File Type</th>
         <th>Uploaded By</th>
+        <th>Comments</th>
         <th>Upload Date</th>
         <th>Last Modified Date</th>
       </tr>
@@ -48,7 +49,6 @@
                   <p style='padding:8px 10px 8px 10px;'>No Associations Found</p>
                 <% end %>
               </td>
-              <td>No Associations Found</td>
               <td class='zero-pad'>
                 <% if upload.tasks.present? %>
                   <table class='clear defaultExpandoInnerTable'>
@@ -64,7 +64,6 @@
                   <p style='padding:8px 10px 8px 10px;'>No Associations Found</p>
                 <% end %>
               </td>
-              <td>No Associations Found</td>
               <td>
                 <% if upload.upload_batch.present? %>
                   <a title='View Batch Details (ID: <%= upload.upload_batch.id %>)' data-method='get' href='/upload_batches/<%= upload.upload_batch.id %>'><%= upload.upload_batch.created_at.strftime("%F (%T)") %></a>
@@ -81,6 +80,37 @@
           <td><%= number_to_human_size(upload.file_file_size, precision: 2) %></td>
           <td><%= upload.file_content_type.upcase if upload.file_content_type.present? %></td>
           <td><%= upload.user.header_name if upload.user.present? %></td>
+          <td>
+            <% if upload.comments.present? %>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#uploadCommentsModal-<%= upload.id %>">View File Comments</button>
+              <!-- Modal -->
+              <div class="modal fade" id="uploadCommentsModal-<%= upload.id %>" tabindex="-1" role="dialog" aria-labelledby="uploadCommentsModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="uploadCommentsModalLongTitle"><%= upload.file_file_name if upload.file_file_name.present? %> (Comments)</h4>
+                    </div>
+                    <div class="modal-body">
+                      <table class="table">
+                        <% upload.comments.each do |comment| %>
+                          <tr class="modal-tr">
+                            <td><%= comment.content %></td>
+                          <tr>
+                        <% end %>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br/>
+            <% end %>
+
+          </td>
           <td><%= upload.created_at.strftime('%F') %></td>
           <td><%= upload.updated_at.strftime('%F') %></td>
         </tr>

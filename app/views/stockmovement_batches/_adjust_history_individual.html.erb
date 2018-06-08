@@ -28,7 +28,7 @@
                               <% end %>'>
     </div>
     <tbody class="adjust-history-individual-table">
-      <% @stockmovements.each do |i| %>
+      <% @stockmovements.last(200).each do |i| %>
         <tr>
           <td><%= i.created_at.strftime('%Y-%m-%d (%R)') %></td>
           <td> <!-- Item Type -->
@@ -40,7 +40,7 @@
               Error, No Sku Present
             <% end %>
           </td>
-          <td> <!-- Brand Name -->
+          <td>
             <% if i.is_product %>
               <% if i.product.present? %>
                 <%= i.product.brand_name %>

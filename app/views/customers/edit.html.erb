@@ -17,7 +17,7 @@
         <div class="show_basic_pop_container_header">
           <span class="show_basic_pop_container_title">Customer Details</span>
           <span class="show_basic_pop_container_margin_button customer_add_attributes_button"><i class="fa fa-plus"></i> Attribute<i class="fa fa-question-circle"></i></span>
-          <span class="show_basic_pop_container_margin_button customer_add_comment_button"><i class="fa fa-plus"></i> Comment<i class="fa fa-question-circle"></i></span>
+          <span class="show_basic_pop_container_margin_button customer_edit_add_comment_button"><i class="fa fa-plus"></i> Comment<i class="fa fa-question-circle"></i></span>
         </div>
         <div class="show_basic_pop_fields edit_customer_basic_details">
           <div class="show_basic_pop_header">
@@ -26,11 +26,15 @@
           <%= render "form", :f => f %>
         </div>
 
-        <div class="customerAttributesContainer"><%= render "attributes", :f => f %></div>
+        <%= render "attributes", :f => f %>
+        <%= render "edit_customer_comment", :f => f %>
+        <p hidden><%= add_child_link_customer_edit_comment "", :comments %></p>
+
+        <%= render "edit_customer_comment_template" %>
 
       </div>
     <button id="editCustomerFirstSubmit" class="btn">Update Customer</button>
-    <%= f.submit "Update Customer", class: "hidden", :id => "editCustomerSubmitButton" %>
+    <%= f.submit "Update Customer", class: "hidden", :id => "editCustomerSubmit" %>
     <% end %>
   </div>
 </div>

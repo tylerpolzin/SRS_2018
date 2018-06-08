@@ -546,7 +546,7 @@
 }
 
 #showProductNotes {
-  margin-top: 15px;
+  margin: 20px 0 20px 0;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;
@@ -564,6 +564,7 @@
 }
 
 #showProductAttributes, #showProductComboItems, #showProductUploads {
+  margin-bottom: 20px;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   font-size: .9em;

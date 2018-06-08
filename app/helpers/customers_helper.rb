@@ -18,5 +18,9 @@ module CustomersHelper
     link_to(name, "javascript:void(0)", :class => "add_child_new_customer_comment", :"data-association" => association)
   end
 
+  def add_child_link_customer_edit_comment(name, association)
+    link_to(name, "javascript:void(0)", :class => "add_child_customer_edit_comment", :"data-association" => association)
+  end
+
 
 end

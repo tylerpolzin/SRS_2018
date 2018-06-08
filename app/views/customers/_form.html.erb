@@ -28,7 +28,7 @@
         <td>Zip Code <i class="fa fa-question-circle customer_zipcode_tooltip"></i></td>
         <td>
           <div class="form-group">
-            <%= text_field_tag "", nil, class: "customerZipcode form-control", :name => "zipcode", placeholder: "Enter Zip Code..." %>
+            <%= text_field_tag "", nil, class: "customerZipcode form-control", :name => "zipcode", placeholder: "Enter Zip Code...", value: f.object.zipcode %>
           </div>
         </td>
       </tr>
@@ -36,7 +36,7 @@
         <td>City</td>
         <td>
           <div class="form-group">
-            <%= text_field_tag "", nil, class: "customerCity form-control", :name => "city" %>
+            <%= text_field_tag "", nil, class: "customerCity form-control", :name => "city", value: f.object.city %>
           </div>
         </td>
       </tr>
@@ -54,17 +54,27 @@
       </tr>
       <tr>
         <td>Phone</td>
-        <td><%= f.text_field :phone, hide_label: true, class: "phone_mask" %></td> <!-- value: number_to_phone(f.object.phone, area_code: true) -->
+        <td><%= f.text_field :phone, hide_label: true, class: "phone_mask" %></td>
       </tr>
       <tr>
         <td>Email Address</td>
         <td><%= f.email_field :email, hide_label: true %></td>
       </tr>
+      <% if @customer.persisted? %>
+        <tr>
+          <td>Latitude <i class="fa fa-question-circle customer_latlong_tooltip"></i></td>
+          <td><%= f.number_field :lat, hide_label: true, step: 0.0000001 %></td>
+        </tr>
+        <tr>
+          <td>Longitude</td>
+          <td><%= f.number_field :long, hide_label: true, step: 0.0000001 %></td>
+        </tr>
+      <% end %>
     </tbody>
     <%= f.hidden_field :city, class: "customerCityHidden" %>
     <%= f.hidden_field :state, class: "customerStateHidden" %>
     <%= f.hidden_field :zipcode, class: "customerZipcodeHidden" %>
-    <%= f.text_field :lat %>
-    <%= f.text_field :long %>
+    <%= f.hidden_field :lat if @customer.new_record? %>
+    <%= f.hidden_field :long if @customer.new_record? %>
   </table>
 </div>

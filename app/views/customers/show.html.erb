@@ -1,10 +1,10 @@
 <% @title = "SRS Portal | View Customer Details" %>
 <div class="defaultDiv" id="showCustomerDiv">
-  <p class="defaultDivHeader"><%= @customer.name %></p>
+  <p class="defaultDivHeader">Customer Information For <%= @customer.name %></p>
   <div class="container defaultForm">
     <ul class="nav nav-tabs">
       <li class="active"><a id="showCustomerForm" href="#show-customer-form" class="tab-background" data-toggle="tab"><i class="fa fa-address-book"></i> Customer Information</a></li>
-      <li><a id="showCustomerOrdersForm" href="#show-customer-orders-form" class="tab-background" data-toggle="tab"><i class="fa fa-thumb-tack"></i> Recent Orders</a></li>
+      <li><a id="showCustomerOrdersForm" href="#show-customer-orders-form" class="tab-background" data-toggle="tab"><i class="fa fa-thumb-tack"></i> Associated Orders</a></li>
     </ul>
     <div class="defaultTabs">
       <div class="tab-content">

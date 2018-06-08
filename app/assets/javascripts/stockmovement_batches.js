@@ -57,7 +57,7 @@ $(function() { // Removes the "Submit" and "Add Item" buttons if either of the "
     $("#add10ItemsButton").fadeOut(300);
     $("#adjustSubmitButton").fadeOut(300).delay( 800 );
     setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#ihHackFixButton" below
-    $("#ihHackFixButton").click();},200);
+    $("#ihHackFixButton").click();},400);
   });
 });
 
@@ -482,7 +482,7 @@ $(document).on("turbolinks:load", function() {
     "  </li>"+
     "  <li>"+
     "    <div class='inventoryDateRangeFilter'>"+
-    // "      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-calendar' aria-hidden='true'></i> Date Range <span class='caret'></span></button>"+
+    "      <button type='button' class='btn header-btn dropdown-toggle' data-toggle='dropdown'><i class='fa fa-calendar' aria-hidden='true'></i> Date Range <span class='caret'></span></button>"+
     "      <ul class='dropdown-menu'>"+
     "        <li>"+
     "          <div class='input-daterange input-group' id='datepicker'>"+
@@ -571,30 +571,29 @@ $(document).on("turbolinks:load", function() {
       $(this).parent().parent().removeClass("selected");
   });
 
-
-
-  // $.fn.dataTableExt.afnFiltering.push( // Used for the "Filter By Date" Function
-  //   function( oSettings, aData, iDataIndex ) {
-  //     if(oSettings.nTable.id == "adjustHistoryIndividualDataTable"){
-  //       var startDate = document.getElementById("stockmovementIndividualfilterStartDate").value;
-  //       var endDate = document.getElementById("stockmovementIndividualfilterEndDate").value;
-  //       var iStartDateCol = 0;
-  //       var iEndDateCol = 0;
-  //       startDate=startDate.substring(0,4) + startDate.substring(5,7)+ startDate.substring(8,10); // 0,4 = yyyyy 5,7 = dd 8,10 = dd == yyyy-mm-dd
-  //       endDate=endDate.substring(0,4) + endDate.substring(5,7)+ endDate.substring(8,10);
-  //       var datofini=aData[iStartDateCol].substring(0,4) + aData[iStartDateCol].substring(5,7)+ aData[iStartDateCol].substring(8,10);
-  //       var datoffin=aData[iEndDateCol].substring(0,4) + aData[iEndDateCol].substring(5,7)+ aData[iEndDateCol].substring(8,10);
-  //       if ( startDate == "" && endDate == "" ) { return true }
-  //       else if ( startDate <= datofini && endDate == "") { return true }
-  //       else if ( endDate >= datoffin && startDate == "") { return true }
-  //       else if (startDate <= datofini && endDate >= datoffin) { return true }
-
-  //       return false;
-  //     }
-  //     return true;
-  //   }
-  // );
-  // $("#stockmovementIndividualfilterStartDate").on("change keyup", function() { table.draw(); });
-  // $("#stockmovementIndividualfilterEndDate").on("change keyup", function() { table.draw(); });
+  $(document).on("click", ".inventoryDateRangeFilter", function() {
+    $.fn.dataTableExt.afnFiltering.push( // Used for the "Filter By Date" Function
+      function( oSettings, aData, iDataIndex ) {
+        if(oSettings.nTable.id == "adjustHistoryIndividualDataTable"){
+          var startDate = $("#stockmovementIndividualfilterStartDate").val();
+          var endDate = $("#stockmovementIndividualfilterEndDate").val();
+          var iStartDateCol = 0;
+          var iEndDateCol = 0;
+          startDate=startDate.substring(0,4) + startDate.substring(5,7)+ startDate.substring(8,10); // 0,4 = yyyyy 5,7 = dd 8,10 = dd == yyyy-mm-dd
+          endDate=endDate.substring(0,4) + endDate.substring(5,7)+ endDate.substring(8,10);
+          var datofini=aData[iStartDateCol].substring(0,4) + aData[iStartDateCol].substring(5,7)+ aData[iStartDateCol].substring(8,10);
+          var datoffin=aData[iEndDateCol].substring(0,4) + aData[iEndDateCol].substring(5,7)+ aData[iEndDateCol].substring(8,10);
+          if ( startDate == "" && endDate == "" ) { return true }
+          else if ( startDate <= datofini && endDate == "") { return true }
+          else if ( endDate >= datoffin && startDate == "") { return true }
+          else if (startDate <= datofini && endDate >= datoffin) { return true }
+          return false;
+        }
+        return true;
+      }
+    );
+  });
+  $("#stockmovementIndividualfilterStartDate").on("change keyup", function() { table.draw(); });
+  $("#stockmovementIndividualfilterEndDate").on("change keyup", function() { table.draw(); });
 
 });
