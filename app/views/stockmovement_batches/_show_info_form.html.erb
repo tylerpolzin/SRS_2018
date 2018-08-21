@@ -39,6 +39,7 @@
       <th>Item Type</th>
       <th>Brand Name</th>
       <th>Model #</th>
+      <th>SRS SKU</th>
       <th>Description</th>
       <th>Difference</th>
       <th>New Quantity</th>
@@ -72,6 +73,19 @@
           <% end %>
         <% else %>
           <td>No Model Numbers Present</td>
+        <% end %>
+        <% if s.is_product %>
+          <% if s.product.srs_sku.present? %>
+            <td><%= s.product.srs_sku %></td>
+          <% else %>
+            <td>N/A</td>
+          <% end %>
+        <% elsif s.is_part %>
+          <% if s.part.srs_sku.present? %>
+            <td><%= s.part.srs_sku %></td>
+          <% else %>
+            <td>N/A</td>
+          <% end %>
         <% end %>
         <% if s.is_product %>
           <td><%= s.product.description if s.product.present? %><%= "Product no longer exists" if s.product.blank? %></td>

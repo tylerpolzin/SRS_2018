@@ -115,6 +115,13 @@ class Product < ApplicationRecord
         end
       end
     end
+    def s
+      if srs_sku.present?
+        " / #{srs_sku}"
+      else
+        ""
+      end
+    end
     def b
       if description.present?
         " | #{description}"
@@ -122,7 +129,7 @@ class Product < ApplicationRecord
         " | No Description Present"
       end
     end
-    a+b
+    a+s+b
   end
   
   def product_select_with_model # "Brand Name (MFR Model Number | Description)"
