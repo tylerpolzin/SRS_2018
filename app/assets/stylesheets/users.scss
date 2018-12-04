@@ -266,6 +266,38 @@
 }
 
 
+//          'SHOW_QUICK_INVENTORY  ' RENDER                                      |
+
+.show-profile-quick-inventory-top {
+  margin-top: 15px;
+  text-align: center;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+#showQuickInventoryTable {
+  float: left;
+  margin: 15px 0 5px 0;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: .9em;
+  border: 2px solid #b5b5f7;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  tbody tr:nth-child(odd) {
+    background-color: white;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tbody tr:nth-child(1) {
+    td {
+      text-align: center;
+    }
+  }
+}
+
+
 
 //          'SHOW_CHANGELOG' RENDER                                              |
 

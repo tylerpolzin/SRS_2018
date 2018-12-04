@@ -103,7 +103,7 @@ class Product < ApplicationRecord
     a+b
   end
 
-  def model_select # "MFR Model Number | Description"
+  def model_select # "MFR Model Number / SRS SKU | Description"
     def a
       if manufacturer_model_number.present?
         "#{manufacturer_model_number}"

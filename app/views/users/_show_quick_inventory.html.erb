@@ -1,0 +1,35 @@
+<div class="show-profile-top">
+  <p class="show-profile-quick-inventory-top">Quick Inventory Check</p>
+</div>
+
+<table class="table table-bordered" id="showQuickInventoryTable">
+  <thead>
+    <tr>
+      <th>Brand Name</th>
+      <th>SRS Sku</th>
+      <th>Description</th>
+      <th>Qty On Hand</th>
+      <th>Qty Last Modified</th>
+    </tr>
+  </thead>
+  <tbody class="product-table">
+    <% @products.each do |product| %>
+      <tr>
+        <td>
+          <%= product.brand_name if product.brand_name.present? %>
+          <%= "N/A" if product.brand_name.blank? %>
+        </td>
+        <td>
+          <%= link_to product.sku_if_sku, product_path(id: product), method: :get, title: "View Product Details (ID: #{product.id})" %>
+          <%= link_to "N/A", product_path(id: product), method: :get, title: "View Product Details (ID: #{product.id})" if product.manufacturer_model_number.blank? %>
+        </td>
+        <td>
+          <%= product.description if product.description.present? %>
+          <%= "N/A" if product.description.blank? %>
+        </td>
+        <td class="quantities"><%= product.quantity_on_hand %></td>
+        <td><%= product.qty_last_updated %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

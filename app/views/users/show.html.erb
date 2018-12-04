@@ -7,13 +7,14 @@
   <% end %>
   <div class="container defaultForm">
     <ul class="nav nav-tabs">
-      <li class="<%= "active" if !current_user.admin? %>">
+      <li>
         <a id="showProfileForm" href="#show-profile-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Profile</a>
       </li>
       <!--<li><a id="showTaskForm" href="#show-task-form" class="tab-background" data-toggle="tab"><i class="fa fa-user"></i> Tasks</a></li>-->
       <% if current_user.admin? and current_user == @user %>
-        <li class="active"><a id="assignmentForm" href="#dashboard-assignment-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Assignments</a></li>
+        <li><a id="assignmentForm" href="#dashboard-assignment-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Assignments</a></li>
       <% end %>
+      <li class="active"><a id="quickInventoryForm" href="#quick-inventory-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Inventory</a></li>
       <!--<li><a id="showFilesForm" href="#show-files-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Files</a></li>-->
       <% if !current_user.admin? %>
         <li><a id="showBugReportsForm" href="#show-bug-reports-form" class="tab-background" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Bug Reports</a></li>
@@ -25,15 +26,20 @@
     
     <div class="defaultTabs">
       <div class="tab-content">
-        <div id="show-profile-form" class="tab-pane fade <%= "in active" if !current_user.admin? %> container">
+        <div id="show-profile-form" class="tab-pane fade container">
           <%= render "show_profile_form" %>
         </div>
         <!--<div id="show-task-form" class="tab-pane fade container">-->
         <!--  <%#= render "show_task_form" %>-->
         <!--</div>-->
         <% if current_user.admin? and current_user == @user %>
-          <div id="dashboard-assignment-form" class="tab-pane fade in active container">
+          <div id="dashboard-assignment-form" class="tab-pane fade container">
             <%= render "dashboard_assignment_form" %>
+          </div>
+        <% end %>
+        <% if admin_or_employee? %>
+          <div id="quick-inventory-form" class="tab-pane fade in active container">
+            <%= render "show_quick_inventory" %>
           </div>
         <% end %>
         <!--<div id="show-files-form" class="tab-pane fade container">-->

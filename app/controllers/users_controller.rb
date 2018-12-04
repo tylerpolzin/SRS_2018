@@ -25,6 +25,17 @@ class UsersController < ApplicationController
     end
     @activebugreports = Assignment.order(priority: :asc).order(created_at: :desc).where(:user_id => current_user).where(:active => true)
     @completedbugreports = Assignment.order(priority: :asc).order(created_at: :desc).where(:user_id => current_user).where(:active => false)
+
+    if admin_or_employee?
+      @products = Product.where(:brand_name => "Liftbridge Kitchen & Bath")
+    elsif current_user.has_role?(:drsharp)
+      @products = Product.where(:brand_name => "Dr Sharp")
+    elsif current_user.has_role?(:colonial)
+      @products = Product.where(:brand_name => "Colonial Elegance")
+    elsif current_user.has_role?(:padula)
+      @products = Product.where(:brand_name => "Ray Padula")
+    end
+
   end
   
   def index

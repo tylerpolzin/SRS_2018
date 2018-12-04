@@ -60,8 +60,8 @@ Roles:
     
 New user creation templates:
 
-User.create!({email: "karim.lahlou@raypadula.com", password: "password", password_confirmation: "password", sign_in_count: 0, admin: false})
-Profile.create!({user_id: 17, name: "Karim Lahlou", company: "Ray Padula Holdings", position: "Director of Operations"})
+User.create!({email: "abilodeau@colonialelegance.com", password: "password", password_confirmation: "password", sign_in_count: 0, admin: false})
+Profile.create!({user_id: 18, name: "Alex Bilodeau", company: "Colonial Elgance", position: "Director of Sales"})
 
 Heroku stuff:
 
