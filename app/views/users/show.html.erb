@@ -37,11 +37,9 @@
             <%= render "dashboard_assignment_form" %>
           </div>
         <% end %>
-        <% if admin_or_employee? %>
-          <div id="quick-inventory-form" class="tab-pane fade in active container">
-            <%= render "show_quick_inventory" %>
-          </div>
-        <% end %>
+        <div id="quick-inventory-form" class="tab-pane fade in active container">
+          <%= render "show_quick_inventory" %>
+        </div>
         <!--<div id="show-files-form" class="tab-pane fade container">-->
         <!--  <%#= render "show_files_form" %>-->
         <!--</div>-->

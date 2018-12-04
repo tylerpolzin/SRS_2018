@@ -34,6 +34,8 @@ class UsersController < ApplicationController
       @products = Product.where(:brand_name => "Colonial Elegance")
     elsif current_user.has_role?(:padula)
       @products = Product.where(:brand_name => "Ray Padula")
+    else
+      default_redirect
     end
 
   end
