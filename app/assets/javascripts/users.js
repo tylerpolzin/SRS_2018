@@ -13,7 +13,68 @@
         var content_id = '#changelog_expandable-'.concat(target_num);
         $(content_id).slideToggle('fast');
     });
+
+    var table = $("#showQuickInventoryTable").DataTable({
+                  "scrollX": true,
+                  "scrollY": "75vh",
+                  "scrollCollapse": true,
+                  "colReorder": true,
+                  // fixedHeader: { headerOffset: 56 },
+                  // "products-toolbar" = "top_toobar" function below. "B" = Buttons. "t" = The Table. "ip" = "Showing x of x" and Pagination controls.
+                  "dom": "<'quick_inventory-toolbar'>B<'col-md-12't><'col-md-12'ip>",
+                  "pageLength": 10000,
+                  "bJQueryUI": true,
+                  "columnDefs": [
+                    // {
+                    // "targets": child_columns,
+                    // "visible": false,
+                    // },
+                    // {
+                    // "targets": [0,1],
+                    // "orderable": false
+                    // }
+                  ],
+                  "order": [[1, "asc"]],
+                  "oLanguage": {"sZeroRecords": "No products to display for this view"}
+                });
+    table.page.len(-1).draw();
+  
+    function top_toolbar () {
+      return ""+
+      "<ul class='nav nav-tabs'>"+
+      " <li><div class='dataTables_filter'><input class='form-control' id='quickInventoryTableSearch' placeholder='Search Table...'></div>"+
+      " <li>"+
+      "    <div class='dataTables_length'>"+
+      "     <select "+
+      "       class='form-control'"+
+      "       title='Number of records to show'"+
+      "       id='quickInventoryTableLength'>"+
+      "       <option value='5'>5</option>"+
+      "       <option value='10'>10</option>"+
+      "       <option value='25'>25</option>"+
+      "       <option selected='selected' value='50'>50</option>"+
+      "       <option value='100'>100</option>"+
+      "       <option value='-1'>All</option>"+
+      "     </select>"+
+      "   </div>"+
+      " </li>"+
+      "</ul>"+
+      "";
+    }
+    $("div.quick_inventory-toolbar").html(top_toolbar());
+  
+    $("#quickInventoryTableSearch").keyup(function(){
+      table.search($(this).val()).draw() ;
+    });
+    $("#quickInventoryTableLength").on("change", function(){
+      table.page.len($(this).find("option:selected").attr("value")).draw() ;
+    });
+
+
+
   });
+
+
 
 
 

@@ -276,26 +276,104 @@
   font-size: 30px;
 }
 
-#showQuickInventoryTable {
-  float: left;
-  margin: 15px 0 5px 0;
+.quick_inventory-toolbar {
+  position: relative;
+  bottom: 7px;
   font-family: 'Abel', sans-serif;
-  font-weight: bold;
-  font-size: .9em;
-  border: 2px solid #b5b5f7;
-  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
-  tbody tr:nth-child(odd) {
-    background-color: white;
+  float: left;
+  display: inline;
+  padding-left: 5px;
+  .nav {
+    border-bottom: 0 !important;
   }
-  tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  tbody tr:nth-child(1) {
-    td {
-      text-align: center;
+}
+
+
+#quickInventoryTableSearch {
+  font-family: 'Abel', sans-serif;
+  color: black;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+  margin-left: 9px;
+}
+#quickInventoryTableLength {
+  font-family: 'Abel', sans-serif;
+  width: 55px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-right: 0;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15)
+}
+
+
+// Export & Column Visibility buttons on toolbar
+#showQuickInventoryTable_wrapper {
+  margin-left: -45px; 
+  .dt-buttons {
+    position: relative;
+    bottom: 7px;
+    .dtExportOptions {
+      margin-left: 10px;
+      padding: 6px 12px 6px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: linear-gradient(to bottom, white, #f3f3f3);
+    }
+    .dt-button-collection {
+      margin-top: 0;
+      padding: 5px;
+      border-right: 2px solid #2e353d;
+      border-bottom: 2px solid #2e353d;
+      border-left: 2px solid #2e353d;
+      border-radius: 4px;
+      display: inline-grid;
+      .dt-button {
+        padding: 5px;
+        margin: 0;
+        font-family: 'Abel', sans-serif;
+        font-weight: bold;
+        text-align: center;
+        color: #a92b04;
+        border-top: 1px solid #2e353d;
+        border-right: 2px solid #2e353d;
+        border-bottom: 1px solid #2e353d;
+        border-left: 2px solid #2e353d;
+        border-radius: 0;
+        background: linear-gradient(to bottom, #d6d6d6, #e4e4e4);
+        &:first-child {
+          border-top: 2px solid #2e353d;
+        }
+        &:last-child {
+          border-bottom: 2px solid #2e353d;
+        }
+        &.active {
+          background: linear-gradient(to bottom, white, #f3f3f3);
+          color: #165407;
+          &:hover {
+            background: linear-gradient(to top, white, #f3f3f3);
+          }
+        }
+        &:hover {
+          background: linear-gradient(to top, #d6d6d6, #e4e4e4);
+          text-decoration: none;
+        }
+  
+      }
+      .buttons-excel, .buttons-pdf, .buttons-print, .buttons-copy {
+        background: linear-gradient(to bottom, white, #f3f3f3);
+        color: #165407;
+        &:hover {
+          background: linear-gradient(to top, white, #f3f3f3);
+        }
+      }
+    }
+    .dtColumnVisibility {
+      border-left: 0;
+      margin-left: 0;
+      padding: 6px 12px 6px 12px;
     }
   }
 }
+
 
 
 
