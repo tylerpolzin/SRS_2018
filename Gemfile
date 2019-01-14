@@ -44,6 +44,7 @@ gem 'html5_validators' # converts Rails validators to HTML5 "required" validator
 gem 'jquery-inputmask-rails', github: 'knapo/jquery-inputmask-rails'
 gem 'country_select'
 gem 'rabl'
+gem 'devise-token_authenticatable'
 
 # gem 'nprogress-rails' # Use to add Loading Progress bar, https://github.com/caarlos0-graveyard/nprogress-rails
 # gem 'approval' # Use to require approval on database changes

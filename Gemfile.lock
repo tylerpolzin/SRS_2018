@@ -134,6 +134,8 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
+    devise-token_authenticatable (1.0.2)
+      devise (>= 4.0.0, < 4.6.0)
     erubi (1.8.0)
     execjs (2.7.0)
     ffi (1.9.25)
@@ -323,6 +325,7 @@ DEPENDENCIES
   csso-rails
   derailed
   devise
+  devise-token_authenticatable
   font-awesome-rails
   friendly_id (~> 5.1.0)
   gmaps4rails
