@@ -19,21 +19,10 @@
                   "scrollY": "75vh",
                   "scrollCollapse": true,
                   "colReorder": true,
-                  // fixedHeader: { headerOffset: 56 },
                   // "products-toolbar" = "top_toobar" function below. "B" = Buttons. "t" = The Table. "ip" = "Showing x of x" and Pagination controls.
                   "dom": "<'quick_inventory-toolbar'>B<'col-md-12't><'col-md-12'ip>",
                   "pageLength": 10000,
                   "bJQueryUI": true,
-                  "columnDefs": [
-                    // {
-                    // "targets": child_columns,
-                    // "visible": false,
-                    // },
-                    // {
-                    // "targets": [0,1],
-                    // "orderable": false
-                    // }
-                  ],
                   "order": [[1, "asc"]],
                   "oLanguage": {"sZeroRecords": "No products to display for this view"}
                 });
@@ -52,9 +41,9 @@
       "       <option value='5'>5</option>"+
       "       <option value='10'>10</option>"+
       "       <option value='25'>25</option>"+
-      "       <option selected='selected' value='50'>50</option>"+
+      "       <option value='50'>50</option>"+
       "       <option value='100'>100</option>"+
-      "       <option value='-1'>All</option>"+
+      "       <option selected='selected' value='-1'>All</option>"+
       "     </select>"+
       "   </div>"+
       " </li>"+

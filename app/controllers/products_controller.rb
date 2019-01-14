@@ -116,7 +116,7 @@ class ProductsController < ApplicationController
       @product = Product.friendly.find(params[:id])
     end
 
-    def load_prelims
+    def load_prelims # Populates the "Vendor" and "Brand" dropdowns in Create & Edit forms
       @vendor = Product.order(vendor_name: :asc).distinct.pluck(:vendor_name)
       @brand = Product.order(brand_name: :asc).distinct.pluck(:brand_name)
     end

@@ -43,6 +43,7 @@ gem 'csso-rails' # Use for optimizing and compressing CSS
 gem 'html5_validators' # converts Rails validators to HTML5 "required" validators
 gem 'jquery-inputmask-rails', github: 'knapo/jquery-inputmask-rails'
 gem 'country_select'
+gem 'rabl'
 
 # gem 'nprogress-rails' # Use to add Loading Progress bar, https://github.com/caarlos0-graveyard/nprogress-rails
 # gem 'approval' # Use to require approval on database changes
