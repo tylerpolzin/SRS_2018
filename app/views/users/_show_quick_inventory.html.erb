@@ -10,6 +10,7 @@
       <th>Description</th>
       <th>Qty On Hand</th>
       <th>Qty Last Modified</th>
+      <th>Dec 31 Inventory</th>
     </tr>
   </thead>
   <tbody class="product-table">
@@ -29,6 +30,7 @@
         </td>
         <td class="quantities"><%= product.quantity_on_hand %></td>
         <td><%= product.qty_last_updated %></td>
+        <td><%= product.quantity_eoy %></td>
       </tr>
     <% end %>
   </tbody>

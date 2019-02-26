@@ -185,6 +185,22 @@ class Product < ApplicationRecord
     quantity
   end
   
+  def quantity_eoy # Shows quantity for End Of Year purposes
+    quantity = []
+    if self.stockmovements.exists?
+      self.stockmovements.where(:created_at => '2018-12-17'..'2018-12-31').last(1).each do |s|
+        quantity = s.quantity
+      end
+    else
+      if self.count_on_hand == nil
+        "0"
+      else
+        quantity = self.count_on_hand
+      end
+    end
+    quantity
+  end
+  
   def qty_last_updated
     last_update = []
     if self.stockmovements.exists?
