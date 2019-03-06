@@ -360,32 +360,22 @@ $(document).on("turbolinks:load", function() {
     table.page.len($(this).find("option:selected").attr("value")).draw() ;
   });
 
-  function format (attributes, combos, parts, manufacturer, upc, srs_sku, uploads, notes) {
+  function format (manufacturer, upc, srs_sku) {
     return ""+
    "<div class='glider'>"+
    "  <table class='product-listing-expando'>"+
    "    <thead>"+
    "      <tr>"+
-   "        <th>Additional Attributes</th>"+
-   "        <th>Associated Combo Items</th>"+
-   "        <th>Associated Parts</th>"+
-   "        <th>Associated Files</th>"+
    "        <th>Manufacturer</th>"+
    "        <th>UPC</th>"+
    "        <th>SRS SKU</th>"+
-   "        <th>Meta Notes</th>"+
    "      </tr>"+
    "    </thead>"+
    "    <tbody>"+
    "      <tr class='no-table'>"+ // "no-table" class allows single-row expandos to not highlight on hover
-   "        <td class='zero-pad'>"+attributes+"</td>"+
-   "        <td class='zero-pad'>"+combos+"</td>"+
-   "        <td class='zero-pad'>"+parts+"</td>"+
-   "        <td class='zero-pad'>"+uploads+"</td>"+
    "        <td>"+manufacturer+"</td>"+
    "        <td>"+upc+"</td>"+
    "        <td>"+srs_sku+"</td>"+
-   "        <td>"+notes+"</td>"+
    "      </tr>"+
    "    </tbody>"+
    "  </table>"+
@@ -403,14 +393,9 @@ $(document).on("turbolinks:load", function() {
       });
     }
     else {
-      row.child(format(tr.data("child-attributes"),
-                       tr.data("child-combos"),
-                       tr.data("child-parts"),
-                       tr.data("child-manufacturer"),
+      row.child(format(tr.data("child-manufacturer"),
                        tr.data("child-upc"),
-                       tr.data("child-srs_sku"),
-                       tr.data("child-uploads"),
-                       tr.data("child-notes")), "no-padding").show();
+                       tr.data("child-srs_sku")), "no-padding").show();
       tr.addClass("shown");
       $("div.glider", row.child()).slideDown();
     }

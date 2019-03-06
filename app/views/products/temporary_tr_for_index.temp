@@ -1,0 +1,157 @@
+          <tr
+            data-child-attributes=" <table class='clear defaultExpandoInnerTable'>
+                                      <thead>
+                                        <tr>
+                                          <th>Attribute</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <% if product.details.present? %>
+                                          <% product.details.try(:each) do |key, value| %>
+                                            <tr>
+                                                <td><%= key %></td>
+                                                <td><%= value %></td>
+                                            </tr>
+                                          <% end %>
+                                        <% else %>
+                                          <td colspan='2'>No Attributes Found</td>
+                                        <% end %>
+                                      </tbody>
+                                    </table>"
+            data-child-combos=" <table class='clear defaultExpandoInnerTable'>
+                                  <thead>
+                                    <tr>
+                                      <th>Combo Item</th>
+                                      <th>Description</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <% if product.combo_items.present? %>
+                                      <% product.combo_items.each do |combo| %>
+                                        <tr>
+                                            <td>
+                                              <a target='_blank' href='/combo_items/<%= combo.slug %>' title='View Combo Item Details(ID: <%= combo.id %>)'>
+                                                <%= combo.model_number if combo.model_number.present? %><%= "N/A" if combo.model_number.blank? %>
+                                              </a>
+                                            </td>
+                                            <td><%= combo.description %></td>
+                                        </tr>
+                                      <% end %>
+                                    <% else %>
+                                      <td colspan='2'>No Combo Items found</td>
+                                    <% end %>
+                                  </tbody>
+                                </table>"
+            data-child-parts="<table class='clear defaultExpandoInnerTable'>
+                                <thead>
+                                  <tr>
+                                    <th>Model #</th>
+                                    <th>Description</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <% if product.parts.exists? %>
+                                    <% product.parts.each do |part| %>
+                                      <tr>
+                                        <td>
+                                          <a target='_blank' href='/parts/<%= part.slug %>' title='View Part Details (ID: <%= part.id %>)'>
+                                            <%= part.part_select if part.manufacturer_model_number.present? %>
+                                            <%= "N/A" if part.manufacturer_model_number.blank? %>
+                                          </a>
+                                        </td>
+                                        <td><%= part.description if part.description.present? %><%= "N/A" if part.description.blank? %></td>
+                                      </tr>
+                                    <% end %>
+                                  <% else %>
+                                    <td colspan='2'>No Associated Parts</td>
+                                  <% end %>
+                                </tbody>
+                              </table>"
+            data-child-manufacturer="<%= product.vendor_name if product.vendor_name.present? %><%= "N/A" if product.vendor_name.blank? %>"
+            data-child-upc="<%= product.upc if product.upc.present? %><%= "N/A" if product.upc.blank? %>"
+            data-child-srs_sku="<%= product.srs_sku if product.srs_sku.present? %><%= "N/A" if product.srs_sku.blank? %>"
+            data-child-uploads="<table class='clear defaultExpandoInnerTable'>
+                                  <thead>
+                                    <tr>
+                                      <th>File Name</th>
+                                      <th>Description</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <% if product.uploads.present? %>
+                                      <% product.uploads.each do |upload| %>
+                                        <tr>
+                                          <td><a target='_blank' title='File Size: <%= number_to_human_size(upload.file_file_size, precision: 2) %>' href='<%= upload.file.url(:original, false) %>'><%= upload.file_file_name %></a></td>
+                                          <td><%= upload.description if upload.description.present? %><%= "N/A" if upload.description.blank? %></td>
+                                        </tr>
+                                      <% end %>
+                                    <% else %>
+                                      <td colspan='2'>No Files Found</td>
+                                    <% end %>
+                                  </tbody>
+                                </table>"
+            data-child-notes="<p><i class='<%= "fa fa-check-square-o fa-green" if product.active? %><%= "fa fa-close fa-red" if !product.active? %>'></i> Active</p>
+                              <p><i class='<%= "fa fa-check-square-o fa-green" if product.store_orderable? %><%= "fa fa-close fa-red" if !product.store_orderable? %>'></i> Store Orderable</p>
+                              <p><i class='<%= "fa fa-check-square-o fa-green" if product.ecomm_sku? %><%= "fa fa-close fa-red" if !product.ecomm_sku? %>'></i> E-Commerce SKU</p>
+                              <p><i class='<%= "fa fa-check-square-o fa-green" if product.warranty_orderable? %><%= "fa fa-close fa-red" if !product.warranty_orderable? %>'></i> Warranty Orderable</p>
+                              <p>Added on <%= product.created_at.strftime('%B %d, %Y') %></p>
+                              <p>Last Modified on <%= product.updated_at.strftime('%B %d, %Y') %></p>">
+
+JAVASCRIPT
+
+  function format (attributes, combos, parts, manufacturer, upc, srs_sku, uploads, notes) {
+    return ""+
+   "<div class='glider'>"+
+   "  <table class='product-listing-expando'>"+
+   "    <thead>"+
+   "      <tr>"+
+   "        <th>Additional Attributes</th>"+
+   "        <th>Associated Combo Items</th>"+
+   "        <th>Associated Parts</th>"+
+   "        <th>Associated Files</th>"+
+   "        <th>Manufacturer</th>"+
+   "        <th>UPC</th>"+
+   "        <th>SRS SKU</th>"+
+   "        <th>Meta Notes</th>"+
+   "      </tr>"+
+   "    </thead>"+
+   "    <tbody>"+
+   "      <tr class='no-table'>"+ // "no-table" class allows single-row expandos to not highlight on hover
+   "        <td class='zero-pad'>"+attributes+"</td>"+
+   "        <td class='zero-pad'>"+combos+"</td>"+
+   "        <td class='zero-pad'>"+parts+"</td>"+
+   "        <td class='zero-pad'>"+uploads+"</td>"+
+   "        <td>"+manufacturer+"</td>"+
+   "        <td>"+upc+"</td>"+
+   "        <td>"+srs_sku+"</td>"+
+   "        <td>"+notes+"</td>"+
+   "      </tr>"+
+   "    </tbody>"+
+   "  </table>"+
+   "</div>";
+  }
+
+  $("#productsDataTable").on("click", "td.details-control", function() {
+    var tr = $(this).closest("tr");
+    var td = $(tr).find("td:first-child");
+    var row = table.row(tr);
+    if (row.child.isShown()) {
+      $("div.glider", row.child()).slideUp(function() {
+        row.child.hide();
+        tr.removeClass("shown");
+      });
+    }
+    else {
+      row.child(format(tr.data("child-attributes"),
+                       tr.data("child-combos"),
+                       tr.data("child-parts"),
+                       tr.data("child-manufacturer"),
+                       tr.data("child-upc"),
+                       tr.data("child-srs_sku"),
+                       tr.data("child-uploads"),
+                       tr.data("child-notes")), "no-padding").show();
+      tr.addClass("shown");
+      $("div.glider", row.child()).slideDown();
+    }
+  });
