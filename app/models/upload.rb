@@ -60,10 +60,6 @@ class Upload < ApplicationRecord
     end
   end
   
-  def products_or_parts
-    
-  end
-
   private
 
     def resize_images

@@ -66,7 +66,7 @@
           <td><%= i.stockmovement_type %></td>
           <td>
             <%= i.user.header_name %>
-            <% i.stockmovements.each do |delete| %>
+            <% i.stockmovements.each do |delete| %> <!-- Delete function is hidden in this column, but is triggered by the 'Undo' button in the details dropdown -->
               <%= link_to delete.id, delete, :method => :delete, class: 'hidden stockmovementDelete', :id => delete.id if current_user.admin? %>
             <% end %>
           </td>

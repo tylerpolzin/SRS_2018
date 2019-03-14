@@ -268,6 +268,7 @@ $(document).on("turbolinks:load", function() {
    "        <th>Task Associations</th>"+
   // "        <th>Vendor Upload Associations</th>"+
    "        <th>Belongs to File Upload Batch</th>"+
+   "        <th>Delete File</th>"+
    "      </tr>"+
    "    </thead>"+
    ""+attributes+
@@ -290,6 +291,14 @@ $(document).on("turbolinks:load", function() {
       tr.addClass("shown");
       $("div.glider", row.child()).slideDown();
     }
+  });
+  $(".deleteUpload").on("click", function() {
+    var id = $(this).attr("id");
+    bootbox.confirm("Are you sure you want to delete this file?", function(result){
+      if (result === true) {
+        $(".uploadDelete[id='"+id+"'").click();
+      }
+    });
   });
 });
 

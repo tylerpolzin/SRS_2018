@@ -11,7 +11,7 @@
         <th>Uploaded By</th>
         <th>Comments</th>
         <th>Upload Date</th>
-        <th>Last Modified Date</th>
+        <th>Delete File</th>
       </tr>
     </thead>
     <tbody class="uploads-table">
@@ -64,13 +64,20 @@
                   <p style='padding:8px 10px 8px 10px;'>No Associations Found</p>
                 <% end %>
               </td>
-              <td>
+              <td class='zero-pad'>
                 <% if upload.upload_batch.present? %>
                   <a title='View Batch Details (ID: <%= upload.upload_batch.id %>)' data-method='get' href='/upload_batches/<%= upload.upload_batch.id %>'><%= upload.upload_batch.created_at.strftime("%F (%T)") %></a>
                 <% else %>
                   No Association Found
                 <% end %>
               </td>
+              
+              
+              
+              <td class='deleteUpload bootbox-confirm' id='<%= upload.id %>'>Delete File</td>
+              
+              
+              
             </tr>
           </tbody>">
           <td class="details-control"></td>
@@ -112,7 +119,10 @@
 
           </td>
           <td><%= upload.created_at.strftime('%F') %></td>
-          <td><%= upload.updated_at.strftime('%F') %></td>
+          <td>
+            <%= link_to "(X)", upload, :method => :delete, class: 'hidden uploadDelete', :id => upload.id %>
+            <p class='deleteUpload bootbox-confirm' id='<%= upload.id %>'>X</p>
+          </td>
         </tr>
       <% end %>
     </tbody>
