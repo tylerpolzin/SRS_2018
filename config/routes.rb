@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'inventory_history', to: 'stockmovement_batches#index'
   get 'batch_process', to: 'products#batch_process'
   get 'batch_process', to: 'products#batch_process'
+  get 'ecomm_products', to: 'products#ecomm_products'
   resources :users do
     resource :profile
   end

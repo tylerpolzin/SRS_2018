@@ -188,10 +188,13 @@ var task_association_tooltip = "<ul>"+
 //-----------------------------------------------------------------------------------
 
 $(document).on("turbolinks:load", function() {
+  $("#uploadsIndex").on("click", function() {
+    setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#ihHackFixButton" below
+    $("#uploadsHackFixButton").click();},200);
+  });
   $("#productUploadsIndex").on("click", function() {
     setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#ihHackFixButton" below
-    $("#productUploadsHackFixButton").click();
-    },200);
+    $("#productUploadsHackFixButton").click();},200);
   });
   $("#partUploadsIndex").on("click", function() {
     setTimeout(function(){ // Hacky way to fix the "Individual" tables header columns.  Used in conjunction with the hidden "#ihHackFixButton" below
@@ -224,9 +227,10 @@ $(document).on("turbolinks:load", function() {
     "order": [[1, "desc"]],
     "oLanguage": {"sZeroRecords": "No uploads to display for this view"}
   });
-  table.page.len(25).draw();
+  table.page.len(50000).draw();
   $("div.uploads-toolbar").html(""+
     "<ul class='nav nav-tabs'>"+
+    "  <li><a class='btn hidden' id='uploadsHackFixButton'></a></li>"+
     "  <li><div class='dataTables_filter'><input type='search' class='form-control' id='uploadsSearch' placeholder='Search Table...'></div>"+
     "  <li>"+
     "    <div class='dataTables_length'>"+
@@ -268,7 +272,6 @@ $(document).on("turbolinks:load", function() {
    "        <th>Task Associations</th>"+
   // "        <th>Vendor Upload Associations</th>"+
    "        <th>Belongs to File Upload Batch</th>"+
-   "        <th>Delete File</th>"+
    "      </tr>"+
    "    </thead>"+
    ""+attributes+
@@ -299,6 +302,9 @@ $(document).on("turbolinks:load", function() {
         $(".uploadDelete[id='"+id+"'").click();
       }
     });
+  });
+  $("#uploadsHackFixButton").on("click", function(){
+    table.page.len(25).draw(); // Fixes header column width issues
   });
 });
 

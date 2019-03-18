@@ -18,6 +18,15 @@ class ProductsController < ApplicationController
     end
   end
   
+  def ecomm_products
+    if admin_or_employee?
+      @products = Product.all
+      @combo_items = ComboItem.all
+    else
+      default_redirect
+    end
+  end
+  
   def batch_process
     if current_user.admin?
       @products = Product.order(brand_name: :asc).order(manufacturer_model_number: :asc)

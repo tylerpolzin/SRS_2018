@@ -76,6 +76,21 @@ $(function() { // Ensures that the "Add Item" and "Submit" buttons arent visible
       $("#addItemButton").fadeIn(300);
       $("#add10ItemsButton").fadeIn(300);
       $("#adjustSubmitButton").fadeIn(300);
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
+      $(".add_child_ia").click();
     }
   });
 });
