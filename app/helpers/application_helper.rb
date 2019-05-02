@@ -213,6 +213,7 @@ module ApplicationHelper
       ['Colonial Elegance', 'Colonial Elegance'],
       ['Dr Sharp', 'Dr Sharp'],
       ['Firplak', 'Firplak'],
+      ['Azembla', 'Azembla'],
       ['Lift Bridge', 'Lift Bridge'],
       ['Turn of the Century', 'Turn of the Century'],
       ['Other...', 'Other']

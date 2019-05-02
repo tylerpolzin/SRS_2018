@@ -55,13 +55,14 @@ Roles:
     :colonial
     :padula
     :firplak
+    :azembla
     :guest
     :newuser
     
 New user creation templates:
 
-User.create!({email: "abilodeau@colonialelegance.com", password: "password", password_confirmation: "password", sign_in_count: 0, admin: false})
-Profile.create!({user_id: 18, name: "Alex Bilodeau", company: "Colonial Elgance", position: "Director of Sales"})
+User.create!({email: "acristancho@azembla.com.co", password: "password", password_confirmation: "password", sign_in_count: 0, admin: false})
+Profile.create!({user_id: 18, name: "Alejandra Cristancho Caceres", company: "Azembla", position: "Key Account Manager"})
 
 Heroku stuff:
 
@@ -87,3 +88,21 @@ Task.create!({name: "First Task Test", initiated_by_id: 1, initiated_for_id: 1, 
 EcommOrder.create!({task_id: 4, retailer: "Home Depot", customer_name: "Jerry Seinfeld", order_number: "1", order_date: "2018-04-10 05:00:00", status: "Cancelled", due_date: "2018-04-13 05:00:00", cancellation_reason: "Out of Stock", active: true, requested_carrier: "Cheapest Method", requested_method: "Standard (Ground)"})
 LineItem.create!({quantity: 1, product_id: 50, ecomm_order_id: 6, item_cost: "0.0"})
 TrackingNumber.create!({line_item_id: 15, carrier: "UPS", tracking_number: "1Z89X9V90384248465", shipping_cost: "0.0", ship_date: "2018-05-09 05:00:00", shipping_method: "Standard (Ground)"})
+
+
+-----------------------
+
+Reddit user posted this "Heroku Start Guide":
+
+def self.push(maintenance: true)
+    Shell.run('heroku maintenance:on') if maintenance
+    Git.push(:heroku, 'release:master')
+    Shell.run('heroku run rake db:migrate db:seed')
+    Shell.run('heroku restart')
+    Shell.run('heroku maintenance:off') if maintenance
+    Shell.run('heroku run NEW_RELIC_AGENT_ENABLED=false rake release:slack')
+end
+
+https://www.reddit.com/r/rails/comments/b3l5do/trouble_with_pushing_app_to_heroku/
+
+----------------------
