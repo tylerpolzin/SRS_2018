@@ -62,7 +62,7 @@ Roles:
 New user creation templates:
 
 User.create!({email: "acristancho@azembla.com.co", password: "password", password_confirmation: "password", sign_in_count: 0, admin: false})
-Profile.create!({user_id: 18, name: "Alejandra Cristancho Caceres", company: "Azembla", position: "Key Account Manager"})
+Profile.create!({user_id: 19, name: "Alejandra Cristancho Caceres", company: "Azembla", position: "Key Account Manager"})
 
 Heroku stuff:
 

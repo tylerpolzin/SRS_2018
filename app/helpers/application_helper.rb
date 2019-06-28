@@ -214,6 +214,7 @@ module ApplicationHelper
       ['Dr Sharp', 'Dr Sharp'],
       ['Firplak', 'Firplak'],
       ['Azembla', 'Azembla'],
+      ['Bodo', 'Bodo'],
       ['Lift Bridge', 'Lift Bridge'],
       ['Turn of the Century', 'Turn of the Century'],
       ['Other...', 'Other']

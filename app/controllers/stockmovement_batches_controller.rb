@@ -24,6 +24,10 @@ class StockmovementBatchesController < ApplicationController
       @stockmovements = @stockmovement_batch.stockmovements.where(:stockmovements => {:id => Stockmovement.select(:id)
                                             .where(:product_id => Product.select(:id)
                                             .where(:brand_name => "Azembla"))})
+    elsif current_user.has_role?(:bodo)
+      @stockmovements = @stockmovement_batch.stockmovements.where(:stockmovements => {:id => Stockmovement.select(:id)
+                                            .where(:product_id => Product.select(:id)
+                                            .where(:brand_name => "Bodo"))})
     end
   end
 
@@ -61,6 +65,12 @@ class StockmovementBatchesController < ApplicationController
                                                  .where(:stockmovements => {:id => Stockmovement.select(:id)
                                                  .where(:product_id => Product.select(:id)
                                                  .where(:brand_name => "Azembla"))})
+    elsif current_user.has_role?(:bodo)
+      @stockmovements = Stockmovement.includes(:product).where(:products => {:brand_name => "Bodo"})
+      @stockmovement_batches = StockmovementBatch.includes(:stockmovements)
+                                                 .where(:stockmovements => {:id => Stockmovement.select(:id)
+                                                 .where(:product_id => Product.select(:id)
+                                                 .where(:brand_name => "Bodo"))})
     else
       default_redirect
     end

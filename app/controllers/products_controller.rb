@@ -15,6 +15,8 @@ class ProductsController < ApplicationController
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Firplak")
     elsif current_user.has_role? :azembla
       @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Azembla")
+    elsif current_user.has_role? :bodo
+      @products = Product.order(manufacturer_model_number: :asc).where(:brand_name => "Bodo")
     else
       default_redirect
     end
@@ -50,6 +52,8 @@ class ProductsController < ApplicationController
       @product = Product.friendly.where(:brand_name => "Firplak").find(params[:id])
     elsif current_user.has_role? :azembla
       @product = Product.friendly.where(:brand_name => "Azembla").find(params[:id])
+    elsif current_user.has_role? :bodo
+      @product = Product.friendly.where(:brand_name => "Bodo").find(params[:id])
     else
       redirect_to products_url, notice: "// You can't do that!"
     end
