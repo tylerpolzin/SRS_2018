@@ -61,8 +61,13 @@ Roles:
     
 New user creation templates:
 
-User.create!({email: "acristancho@azembla.com.co", password: "password", password_confirmation: "password", sign_in_count: 0, admin: false})
-Profile.create!({user_id: 19, name: "Alejandra Cristancho Caceres", company: "Azembla", position: "Key Account Manager"})
+User.create!({email: "login@bodo-industrial.com", password: "password", password_confirmation: "password", sign_in_count: 0, admin: false})
+Profile.create!({user_id: 21, name: "Bodo", company: "Bodo", position: "Generic Login"})
+
+User.create!({email: "bodo@test", password: "password", password_confirmation: "password", sign_in_count: 0, admin: false})
+Profile.create!({user_id: 22, name: "Bodo Test", company: "Bodo", position: "N/A"})
+
+
 
 Heroku stuff:
 
